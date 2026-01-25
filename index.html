@@ -1398,7 +1398,7 @@ transition: opacity .25s ease, transform .25s ease, color .2s ease;
 
   border-radius: 999px;
   background: #4d4d4d;
-  opacity: 0.75
+  opacity: 0.75;
   pointer-events: none;
 }
 
@@ -1633,7 +1633,26 @@ html.js-reveal .reveal.is-inview {
   margin-top: clamp(28px, 5vh, 64px) !important;
 }
 
+/* rc-range のピル（;抜け修正） */
+.rc-range::before{
+  content:"";
+  position:absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: var(--pill-h);
+
+  width: var(--seg);
+  left: var(--x);
+
+  border-radius: 999px;
+  background: #4d4d4d;
+  opacity: 0.75;         /* ← ; 追加 */
+  pointer-events: none;
+}
+
 @media (max-width: 768px){
+
+  /* rangeのつまみを“触れるけど見えない”に */
   .rc-range{
     -webkit-appearance: none;
     appearance: none;
@@ -1657,30 +1676,28 @@ html.js-reveal .reveal.is-inview {
     border: 0;
     opacity: 0;
   }
+
   .rc-controls{
     margin-top: 38px;
   }
 
-@media (max-width: 768px){
+  /* Works captionの整列 */
   #works .works-caption{
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 8px;
     text-align: center;
   }
-
   #works .works-caption__center{
     justify-self: center;
     text-align: center;
   }
-
   #works .works-more-wrap{
-    justify-self: end;   /* ← 右寄せ */
+    justify-self: end;
     margin-top: 6px;
   }
-}
-   
-@media (max-width: 768px){
+
+  /* graph */
   .graph-wrap{
     width: min(400px, 92vw);
     padding-inline: var(--sp-pad);
@@ -1694,8 +1711,8 @@ html.js-reveal .reveal.is-inview {
   .graph-labels .top{ top: 2%; }
   .graph-labels .bottom-left{ bottom: 2%; left: 20%; }
   .graph-labels .bottom-right{ bottom: 2%; right: 20%; }
-   
-@media (max-width: 768px){
+
+  /* skill */
   .skill-text{
     width: min(900px, 84vw) !important;
   }
@@ -1705,6 +1722,7 @@ html.js-reveal .reveal.is-inview {
     padding-inline: 2px;
   }
 
+  /* About: SPだけ画像を消す */
   .about__media,
   .about-photo,
   .about-img,
