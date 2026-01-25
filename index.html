@@ -1660,24 +1660,24 @@ html.js-reveal .reveal.is-inview {
   }
 
 @media (max-width: 768px){
-  .works-caption{
+  #works .works-caption{
+    display: grid;
     grid-template-columns: 1fr;
-    row-gap: 10px;
-  }
-  .works-caption__spacer{ display: none; }
-
-  .works-caption__center{
-    justify-self: center !important;
-    text-align: center !important;
-    width: 100%;
+    row-gap: 8px;
+    text-align: center;
   }
 
-  .works-more-wrap{
-    grid-column: 1;
-    justify-self: end !important;
-    margin-top: 8px;
+  #works .works-caption__center{
+    justify-self: center;
+    text-align: center;
+  }
+
+  #works .works-more-wrap{
+    justify-self: end;   /* ← 右寄せ */
+    margin-top: 6px;
   }
 }
+   
 @media (max-width: 768px){
   .graph-wrap{
     width: min(400px, 92vw);
@@ -1776,6 +1776,21 @@ html.js-reveal .reveal.is-inview {
   .contact-mail .contact-icon{
     margin-inline: auto !important;
     display: block;
+  }
+}
+   
+/* =========================
+   FIX 2: Contact Mail center
+========================= */
+@media (max-width: 768px){
+  .contact-icons--single{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+  }
+
+  .contact-icons--single .contact-icon{
+    margin: 0 auto !important;
   }
 }
    
