@@ -7,6 +7,12 @@
 <title>Yui Portfolio</title>
 
 <style>
+/* ===== global reset ===== */
+
+*{
+  box-sizing: border-box;
+}
+
 /* =========================
    Base
 ========================= */
@@ -2119,9 +2125,12 @@ if (graphSection) {
 const pageTop = document.querySelector(".page-top");
 const SHOW_Y = 420;
 
+const scroller = document.scrollingElement || document.documentElement;
+const getScrollY = () => window.pageYOffset || scroller.scrollTop || 0;
+
 function togglePageTop(){
   if(!pageTop) return;
-  pageTop.classList.toggle("is-visible", window.scrollY > SHOW_Y);
+  pageTop.classList.toggle("is-visible", getScrollY() > SHOW_Y);
 }
 
 window.addEventListener("scroll", togglePageTop, { passive: true });
