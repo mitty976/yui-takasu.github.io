@@ -246,7 +246,7 @@ bottom: 22px;
 z-index: 1200;
 
 width: 44px;
-height: calc(var(--line-h) + 20px);
+height: 80px;
 
 display: block;
 text-decoration: none;
@@ -2127,18 +2127,30 @@ if (graphSection) {
 const pageTop = document.querySelector(".page-top");
 const SHOW_Y = 420;
 
+// 今のCSSだとスクロール担当は body
+const scroller = document.scrollingElement || document.documentElement;
+
+function getScrollY(){
+  // どっちでも取れるように保険（環境差吸収）
+  return (document.body?.scrollTop || 0) || (scroller?.scrollTop || 0);
+}
+
 function togglePageTop(){
   if(!pageTop) return;
-  pageTop.classList.toggle("is-visible", window.scrollY > SHOW_Y);
+  pageTop.classList.toggle("is-visible", getScrollY() > SHOW_Y);
 }
 
 window.addEventListener("scroll", togglePageTop, { passive: true });
+document.body.addEventListener("scroll", togglePageTop, { passive: true });
 togglePageTop();
 
+// クリックで確実にトップへ（#top も維持）
 if(pageTop){
   pageTop.addEventListener("click", (e)=>{
     e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // bodyスクロールでも確実に戻す
+    document.body.scrollTo({ top: 0, behavior: "smooth" });
+    scroller.scrollTo?.({ top: 0, behavior: "smooth" });
     location.hash = "#top";
   });
 }
