@@ -1147,9 +1147,29 @@
   }
 }
 
+/* ===== Works: Mobile width tuning ===== */
+@media (max-width: 520px){
+
+  main{ padding-left: 0; padding-right: 0; }
+  .works-container{ padding-left: 0; padding-right: 0; max-width: 100%; }
+
+  .works-grid{
+    padding: 0 14px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 14px;
+  }
+
+  .work-thumb{ border-radius: 10px; }
+  .work-title{ font-size: 14px; }
+  .work-sub{ font-size: 12px; }
+}
+
+	.page-works .site-nav__brand{ display:none; }
+	
 </style>
 </head>
-<body<body class="is-subpage is-works">>
+	
+<body class="is-subpage is-works">>
 <div id="top"></div>
 <header class="site-nav">
 <div class="site-nav__inner">
