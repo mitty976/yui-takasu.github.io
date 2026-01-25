@@ -2599,90 +2599,6 @@ if(pageTop){
   targets.forEach(el => io.observe(el));
 })();
 
-(() => {
-  // 1) カルーセルの「いちばん外側の箱」を掴む
-  //    例: .rc（あなたの実装に合わせて変更OK）
-  const rcRoot = document.querySelector('.rc') 
-              || document.querySelector('.rc-wrap')
-              || document.querySelector('.rc-stage')
-              || document.querySelector('.modal')  // 最悪ここでも可
-              ;
-
-  // 2) 既存の prev/next ボタンを掴む（あなたのHTMLに一致）
-  const prevBtn = document.querySelector('.rc-btn[data-prev]');
-  const nextBtn = document.querySelector('.rc-btn[data-next]');
-
-  if (!rcRoot || !prevBtn || !nextBtn) return;
-
-  // --- スワイプ判定パラメータ ---
-  const SWIPE_MIN_PX = 28;     // これ以上動いたら「意思あるスワイプ」
-  const SWIPE_MAX_Y  = 36;     // 縦にこれ以上動いたらスクロール優先
-  const EDGE_GUARD   = 6;      // 端っこタップ誤爆を少し減らす
-
-  let startX = 0, startY = 0;
-  let dx = 0, dy = 0;
-  let tracking = false;
-
-  const isTouch = () => matchMedia('(hover: none) and (pointer: coarse)').matches;
-
- /* ===== RC Swipe (works preview) ===== */
-(() => {
-  // 1) カルーセル全体（外側）を掴む：ここにイベントを“全部”付ける
-  const rcRoot =
-    document.querySelector('.rc') ||
-    document.querySelector('.rc-wrap') ||
-    document.querySelector('.rc-stage') ||
-    document.querySelector('#works'); // 最後の保険
-
-  // 2) 既存の prev/next ボタン（あなたのHTMLに一致）
-  const prevBtn = document.querySelector('.rc-btn[data-prev]');
-  const nextBtn = document.querySelector('.rc-btn[data-next]');
-
-  if (!rcRoot || !prevBtn || !nextBtn) return;
-
-  // --- スワイプ判定パラメータ ---
-  const SWIPE_MIN_PX = 28;  // 横にこれ以上動いたら「意思あるスワイプ」
-  const SWIPE_MAX_Y  = 36;  // 縦ブレがこれ以上ならスクロール優先でキャンセル
-
-  let startX = 0, startY = 0;
-  let dx = 0, dy = 0;
-  let tracking = false;
-
-  rcRoot.addEventListener('touchstart', (e) => {
-    if (!e.touches || e.touches.length !== 1) return;
-    const t = e.touches[0];
-    startX = t.clientX;
-    startY = t.clientY;
-    dx = 0; dy = 0;
-    tracking = true;
-  }, { passive: true });
-
-  rcRoot.addEventListener('touchmove', (e) => {
-    if (!tracking) return;
-    const t = e.touches[0];
-    dx = t.clientX - startX;
-    dy = t.clientY - startY;
-
-    // 縦スクロールっぽいなら早めにやめる
-    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > SWIPE_MAX_Y) {
-      tracking = false;
-    }
-  }, { passive: true });
-
-  rcRoot.addEventListener('touchend', () => {
-    if (!tracking) return;
-    tracking = false;
-
-    // 横が短い or 縦ブレ大 → 無視
-    if (Math.abs(dx) < SWIPE_MIN_PX) return;
-    if (Math.abs(dy) > SWIPE_MAX_Y) return;
-
-    // iPhone感：左フリック＝戻る、右フリック＝次
-    if (dx < 0) prevBtn.click();
-    else nextBtn.click();
-  }, { passive: true });
-})();
-
   rcRoot.addEventListener('touchcancel', () => {
     tracking = false;
   }, { passive: true });
@@ -2706,6 +2622,65 @@ if(pageTop){
       // ここは addEventListener のオプションでやる方法もあるけど、
       // まずは「縦スクロール優先」なので無しでもOK
     }
+  }, { passive: true });
+
+   /* ===== Swipe helper (ONE IIFE only) ===== */
+(() => {
+  const root = document.querySelector('[data-rc-carousel]');
+  if (!root) return;
+
+  // 3イベントを全部「同じ要素」に付ける（ここが肝）
+  const rcRoot = root; // ← 迷わずこれ
+
+  // 既存の prev/next を click() で叩く（新ロジック作らない）
+  // ※ root内に複数ある（rc-nav/rc-btn）ので “最初の1個” を拾えばOK
+  const prevBtn = root.querySelector('[data-prev]');
+  const nextBtn = root.querySelector('[data-next]');
+  if (!prevBtn || !nextBtn) return;
+
+  const SWIPE_MIN_PX = 32; // 横の最低移動
+  const SWIPE_MAX_Y  = 36; // 縦ブレ許容（超えたらスクロール優先）
+
+  let tracking = false;
+  let startX = 0, startY = 0;
+
+  rcRoot.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    tracking = true;
+  }, { passive: true });
+
+  rcRoot.addEventListener('touchmove', (e) => {
+    if (!tracking) return;
+    if (!e.touches || e.touches.length !== 1) return;
+    const t = e.touches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    // 縦スクロール優先（縦が強い・かつ一定以上）
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > SWIPE_MAX_Y) {
+      tracking = false;
+    }
+  }, { passive: true });
+
+  rcRoot.addEventListener('touchend', (e) => {
+    if (!tracking) return;
+    tracking = false;
+
+    const t = e.changedTouches && e.changedTouches[0];
+    if (!t) return;
+
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    if (Math.abs(dy) > SWIPE_MAX_Y) return;
+    if (Math.abs(dx) < SWIPE_MIN_PX) return;
+
+    // iPhone感：左フリック＝戻る / 右フリック＝次
+    if (dx < 0) prevBtn.click();
+    else nextBtn.click();
   }, { passive: true });
 })();
 </script>
