@@ -625,11 +625,42 @@ html.cursor-on, html.cursor-on * { cursor: none; }
     --line-h: 92px;
   }
 }
+  .is-subpage .nav-left,
+  .is-subpage .nav-brand,
+  .is-subpage .nav-title,
+  .is-subpage .site-title{
+    display: none !important;
+  }
+  
+  .is-about .strength__media,
+  .is-about .strength-media,
+  .is-about .strength-img,
+  .is-about .strength figure,
+  .is-about .strength img{
+    display: none !important;
+  }
+  
+  .is-about .about,
+  .is-about .about__inner,
+  .is-about .strength,
+  .is-about .section-inner{
+    width: min(900px, 86vw);
+    margin-inline: auto;
+  }
+  
+  @media (max-width: 768px){
+    .is-about .about,
+    .is-about .about__inner,
+    .is-about .strength,
+    .is-about .section-inner{
+      width: 88vw;
+    }
+  }
   
 </style>
 </head>
 
-<body id="top">
+<body class="is-subpage is-about">
 
 <header class="site-nav">
   <div class="site-nav__inner">
