@@ -8,9 +8,9 @@
 
 <style>
 
-  <!-- =========================
-       Mobile Fix CSS
-  ========================= -->
+/* =========================
+   Mobile Fix CSS
+========================= */
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -35,8 +35,6 @@
     }
 
     @media (max-width: 768px) {
-
-      /* ナビ切れ防止 */
       header nav {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -54,7 +52,6 @@
         flex: 0 0 auto;
       }
 
-      /* スクロールマーク */
       .scrollmark,
       .scroll-indicator,
       .page-top,
@@ -66,14 +63,12 @@
         z-index: 50;
       }
 
-      /* Works 謎の白□ */
       input[type="range"] {
         -webkit-appearance: none;
         appearance: none;
         background: transparent;
       }
 
-      /* スキルグラフ切れ */
       .skills-graph,
       .radar-wrap,
       .chart-wrap {
@@ -86,7 +81,6 @@
         height: auto !important;
       }
 
-      /* スキル文字サイズ */
       .skills,
       .skills p,
       .skills li {
@@ -94,7 +88,6 @@
         line-height: 1.7;
       }
 
-      /* About：スマホのみ画像非表示 */
       .about img,
       .about-photo,
       .about-img {
@@ -109,7 +102,11 @@
         line-height: 1.85;
       }
 
-      /* Contact切れ */
+#about .about__media { display: none; }
+
+#about .about__inner { grid-template-columns: 1fr; }
+#about .about__text  { max-width: 100%; }
+
       .contact-card,
       .contact-note,
       .card {
@@ -119,7 +116,6 @@
         padding: 16px;
       }
 
-      /* JP矢印分解 */
       .lang,
       .lang-switch,
       .page-jp {
@@ -135,7 +131,10 @@
         width: 16px;
         height: 16px;
         flex-shrink: 0;
-      }
+ }
+
+}
+
 /* =========================
    Base
 ========================= */
@@ -178,11 +177,6 @@ h3{
   font-size:18px;
   letter-spacing:.06em;
   margin-bottom:32px;
-}
-
-html{
-  height: 100%;
-  overflow: hidden;
 }
 
 body{
