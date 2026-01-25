@@ -2575,6 +2575,80 @@ if(pageTop){
   targets.forEach(el => io.observe(el));
 })();
 
+   <script>
+(() => {
+  // 1) カルーセルの「いちばん外側の箱」を掴む
+  //    例: .rc（あなたの実装に合わせて変更OK）
+  const rcRoot = document.querySelector('.rc') 
+              || document.querySelector('.rc-wrap')
+              || document.querySelector('.rc-stage')
+              || document.querySelector('.modal')  // 最悪ここでも可
+              ;
+
+  // 2) 既存の prev/next ボタンを掴む（あなたのHTMLに一致）
+  const prevBtn = document.querySelector('.rc-btn[data-prev]');
+  const nextBtn = document.querySelector('.rc-btn[data-next]');
+
+  if (!rcRoot || !prevBtn || !nextBtn) return;
+
+  // --- スワイプ判定パラメータ ---
+  const SWIPE_MIN_PX = 28;     // これ以上動いたら「意思あるスワイプ」
+  const SWIPE_MAX_Y  = 36;     // 縦にこれ以上動いたらスクロール優先
+  const EDGE_GUARD   = 6;      // 端っこタップ誤爆を少し減らす
+
+  let startX = 0, startY = 0;
+  let dx = 0, dy = 0;
+  let tracking = false;
+
+  const isTouch = () => matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  rcRoot.addEventListener('touchstart', (e) => {
+    if (!isTouch()) return;
+    if (!e.touches || e.touches.length !== 1) return;
+
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    dx = dy = 0;
+    tracking = true;
+  }, { passive: true });
+
+  rcRoot.addEventListener('touchmove', (e) => {
+    if (!tracking) return;
+    const t = e.touches[0];
+    dx = t.clientX - startX;
+    dy = t.clientY - startY;
+
+    // 縦スクロールっぽいなら即終了（ページスクロールを邪魔しない）
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > SWIPE_MAX_Y) {
+      tracking = false;
+      return;
+    }
+
+    // 横スワイプっぽい時だけ「スクロール抑止」を許可
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > EDGE_GUARD) {
+      // passive:false じゃないと preventDefaultできないので、
+      // ここは addEventListener のオプションでやる方法もあるけど、
+      // まずは「縦スクロール優先」なので無しでもOK
+    }
+  }, { passive: true });
+
+  rcRoot.addEventListener('touchend', () => {
+    if (!tracking) return;
+    tracking = false;
+
+    // 斜め/縦が強い場合は無視
+    if (Math.abs(dx) < SWIPE_MIN_PX) return;
+    if (Math.abs(dy) > SWIPE_MAX_Y) return;
+
+    // 左にスワイプ → 次 / 右にスワイプ → 前
+    if (dx < 0) nextBtn.click();
+    else prevBtn.click();
+  }, { passive: true });
+})();
+</script>
+
+
 </script>
 </body>
 </html>
