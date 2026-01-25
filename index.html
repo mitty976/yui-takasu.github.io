@@ -1667,15 +1667,15 @@ html.js-reveal .reveal.is-inview {
   .works-caption__spacer{ display: none; }
 
   .works-caption__center{
-    justify-self: center;
-    text-align: center;
+    justify-self: center !important;
+    text-align: center !important;
     width: 100%;
   }
 
   .works-more-wrap{
     grid-column: 1;
     justify-self: end !important;
-    margin-top: 6px;
+    margin-top: 8px;
   }
 }
 @media (max-width: 768px){
@@ -1765,6 +1765,8 @@ html.js-reveal .reveal.is-inview {
   }
 
   .contact-mail{
+    display: grid;
+    place-items: center;
     margin-inline: auto !important;
     text-align: center !important;
   }
