@@ -1621,11 +1621,8 @@ html.js-reveal .reveal.is-inview {
 
 /* =========================
    FINAL OVERRIDE PATCH
-   （styleの一番下に貼る）
 ========================= */
 
-/* 1) ー●ー（scroll-indicator）がサブタイトルにめり込む問題
-   → Baseの absolute を最終的に潰す */
 .scroll-indicator{
   position: relative !important;
   left: auto !important;
@@ -1634,8 +1631,6 @@ html.js-reveal .reveal.is-inview {
   margin-top: clamp(28px, 5vh, 64px) !important;
 }
 
-/* 2) スマホだけ Works のスクロールバーの「謎の白い□」
-   → rc-range の “つまみ” を完全透明化（iOS対策） */
 @media (max-width: 768px){
   .rc-range{
     -webkit-appearance: none;
@@ -1660,31 +1655,25 @@ html.js-reveal .reveal.is-inview {
     border: 0;
     opacity: 0;
   }
-}
-
-/* 3) スキルグラフ切れ（左右ラベルがはみ出す）
-   → はみ出し禁止をやめて“内側に収める” */
+  .rc-controls{
+    margin-top: 22px; /* 好みで 18〜28px で微調整OK */
+  }
+   
 @media (max-width: 768px){
   .graph-wrap{
-    width: min(520px, 100%);
-    padding-inline: calc(var(--sp-pad) + 14px);
+    width: min(440px, 92vw);
+    padding-inline: var(--sp-pad);
     overflow: visible;
   }
-  /* viewBoxの外に行かないよう内側寄せ */
-  .graph-labels .left{
-    left: 8px !important;
-    transform: translate(0, -50%) !important;
+  .graph-labels{
+    font-size: 12px;
   }
-  .graph-labels .right{
-    right: 8px !important;
-    transform: translate(0, -50%) !important;
-  }
-  .graph-labels .top{
-    top: 10px !important;
-    transform: translate(-50%, 0) !important;
-  }
-}
-
+  .graph-labels .left{ left: 2%; }
+  .graph-labels .right{ right: 2%; }
+  .graph-labels .top{ top: 2%; }
+  .graph-labels .bottom-left{ bottom: 2%; left: 20%; }
+  .graph-labels .bottom-right{ bottom: 2%; right: 20%; }
+   
 /* 4) メインスキル / About の左右余白をもう少し増やす */
 @media (max-width: 768px){
   .skill-text{
@@ -1735,6 +1724,31 @@ html.js-reveal .reveal.is-inview {
   /* アイコン段やボタンが横に伸びて切れる場合の保険 */
   .contact-card *{
     max-width: 100%;
+  }
+}
+  .contact__inner,
+  .contact-links,
+  .contact-split,
+  .contact-icons,
+  .contact-mail,
+  .accordion{
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* アイコン行：vw由来の横はみ出しを消す */
+  .contact-icons{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .contact-icon{
+    width: 100%;
+    max-width: 120px;
+  }
+
+  /* それでも端末によっては1〜2pxはみ出すことがあるので保険 */
+  #contact{
+    overflow-x: hidden;
   }
 }
    
