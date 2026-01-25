@@ -2625,16 +2625,58 @@ if(pageTop){
 
   const isTouch = () => matchMedia('(hover: none) and (pointer: coarse)').matches;
 
-  rcRoot.addEventListener('touchstart', (e) => {
-    if (!isTouch()) return;
-    if (!e.touches || e.touches.length !== 1) return;
+  // ===== RC Swipe (works preview) =====
+(() => {
+  const rcRoot  = document.querySelector('.rc');        // カルーセル全体
+  const prevBtn = document.querySelector('.rc-btn[data-prev]');
+  const nextBtn = document.querySelector('.rc-btn[data-next]');
+  if (!rcRoot || !prevBtn || !nextBtn) return;
 
+  const SWIPE_MIN_PX = 42;
+  const SWIPE_MAX_Y  = 70;
+
+  let tracking = false;
+  let startX = 0, startY = 0;
+  let dx = 0, dy = 0;
+
+  // ★ 重要：3つとも rcRoot に統一
+  rcRoot.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
     const t = e.touches[0];
     startX = t.clientX;
     startY = t.clientY;
     dx = dy = 0;
     tracking = true;
   }, { passive: true });
+
+  rcRoot.addEventListener('touchmove', (e) => {
+    if (!tracking) return;
+    const t = e.touches[0];
+    dx = t.clientX - startX;
+    dy = t.clientY - startY;
+
+    // 縦スクロール優先
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > SWIPE_MAX_Y) {
+      tracking = false;
+    }
+  }, { passive: true });
+
+  rcRoot.addEventListener('touchend', () => {
+    if (!tracking) return;
+    tracking = false;
+
+    if (Math.abs(dx) < SWIPE_MIN_PX) return;
+    if (Math.abs(dy) > SWIPE_MAX_Y) return;
+
+    // 左フリック＝戻る / 右フリック＝次（iPhone感）
+    if (dx < 0) prevBtn.click();
+    else nextBtn.click();
+  }, { passive: true });
+
+  rcRoot.addEventListener('touchcancel', () => {
+    tracking = false;
+  }, { passive: true });
+})();
 
   rcRoot.addEventListener('touchmove', (e) => {
     if (!tracking) return;
@@ -2656,15 +2698,13 @@ if(pageTop){
     }
   }, { passive: true });
 
-rcRoot.addEventListener('touchend', () => {
+stage.addEventListener('touchend', () => {
   if (!tracking) return;
   tracking = false;
 
-  // 縦のブレが大きい or 横が短いなら無視
   if (Math.abs(dx) < SWIPE_MIN) return;
   if (Math.abs(dy) > VERT_CANCEL) return;
 
-  // ★ここを逆にする：左フリック=戻る、右フリック=次
   if (dx < 0) prevBtn.click();
   else nextBtn.click();
 }, { passive: true });
