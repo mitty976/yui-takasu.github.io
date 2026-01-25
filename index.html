@@ -8,98 +8,6 @@
 
 <style>
 /* =========================
-   Mobile Fix CSS (safe)
-========================= */
-
-*, *::before, *::after { box-sizing: border-box; }
-
-html, body{
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-img, svg, canvas{
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* スマホ左右余白の基準 */
-:root{
-  --sp-pad: clamp(14px, 4vw, 22px);
-}
-
-/* “端までベタ”を防ぐ（必要なら対象を増減OK） */
-main, section, .container{
-  padding-inline: var(--sp-pad);
-}
-
-/* ① ー●ー がサブタイトルに刺さる：absoluteをやめて流れに乗せる */
-.scroll-indicator{
-  position: relative;
-  left: auto;
-  bottom: auto;
-  transform: none;
-  margin-top: clamp(28px, 5vh, 64px);
-}
-
-/* ② Worksの謎白□（iOSのrangeつまみ）：rc-rangeだけ潰す */
-@media (max-width: 768px){
-  .rc-controls{ gap: 10px; }
-  .rc-range{
-    height: 18px;
-  }
-  .rc-range::-webkit-slider-thumb{
-    -webkit-appearance: none;
-    appearance: none;
-    width: 0;
-    height: 0;
-  }
-  .rc-range::-moz-range-thumb{
-    width: 0;
-    height: 0;
-    border: 0;
-  }
-
-  /* ③ スキルグラフ切れ：ラベルを内側に寄せる＋余白追加 */
-  .graph-wrap{
-    width: min(520px, 100%);
-    padding-inline: calc(var(--sp-pad) + 12px);
-    overflow: visible;
-  }
-  .graph-labels .left{ left: 0; }
-  .graph-labels .right{ right: 0; }
-
-  /* ④ Main Skills / About の左右余白を増やす */
-  .skill-text,
-  .about__inner{
-    width: min(900px, 86vw);
-  }
-
-  /* ⑤ Contact切れ：カードを100%にして折り返し許可 */
-  .contact-split,
-  .contact-card,
-  .contact-note{
-    width: 100%;
-    max-width: 100%;
-  }
-  .contact-note, .contact-card{
-    overflow: visible;
-    word-break: break-word;
-  }
-}
-
-/* About画像：スマホのみ非表示（OK！） */
-@media (max-width: 768px){
-  .about img,
-  .about-photo,
-  .about-img,
-  .about__avatar{
-    display: none !important;
-  }
-}
-
-/* =========================
    Base
 ========================= */
 :root{
@@ -1711,6 +1619,125 @@ html.js-reveal .reveal.is-inview {
   }
 }
 
+/* =========================
+   FINAL OVERRIDE PATCH
+   （styleの一番下に貼る）
+========================= */
+
+/* 1) ー●ー（scroll-indicator）がサブタイトルにめり込む問題
+   → Baseの absolute を最終的に潰す */
+.scroll-indicator{
+  position: relative !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  margin-top: clamp(28px, 5vh, 64px) !important;
+}
+
+/* 2) スマホだけ Works のスクロールバーの「謎の白い□」
+   → rc-range の “つまみ” を完全透明化（iOS対策） */
+@media (max-width: 768px){
+  .rc-range{
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    outline: none;
+  }
+  .rc-range::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;          /* 0にすると逆に出る端末があるので“透明の当たり判定”にする */
+    height: 28px;
+    background: transparent;
+    border: 0;
+    opacity: 0;           /* ←これが白□を消す本命 */
+    box-shadow: none;
+  }
+  .rc-range::-moz-range-thumb{
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: 0;
+    opacity: 0;
+  }
+}
+
+/* 3) スキルグラフ切れ（左右ラベルがはみ出す）
+   → はみ出し禁止をやめて“内側に収める” */
+@media (max-width: 768px){
+  .graph-wrap{
+    width: min(520px, 100%);
+    padding-inline: calc(var(--sp-pad) + 14px);
+    overflow: visible;
+  }
+  /* viewBoxの外に行かないよう内側寄せ */
+  .graph-labels .left{
+    left: 8px !important;
+    transform: translate(0, -50%) !important;
+  }
+  .graph-labels .right{
+    right: 8px !important;
+    transform: translate(0, -50%) !important;
+  }
+  .graph-labels .top{
+    top: 10px !important;
+    transform: translate(-50%, 0) !important;
+  }
+}
+
+/* 4) メインスキル / About の左右余白をもう少し増やす */
+@media (max-width: 768px){
+  .skill-text{
+    width: min(900px, 84vw) !important;
+  }
+  .skill-text,
+  .skills-list,
+  .skills-note{
+    padding-inline: 2px; /* “端ピッタリ感”を軽く消す */
+  }
+
+  /* About：画像をスマホで非表示にした時の「謎の空白」と「右寄り細長い」を消す
+     → 画像枠そのものを消して、1カラムに戻す */
+  .about__media,
+  .about-photo,
+  .about-img,
+  .about__avatar{
+    display: none !important;
+  }
+  .about__inner{
+    grid-template-columns: 1fr !important;
+    width: min(900px, 84vw) !important;
+  }
+  .about__text{
+    max-width: 100% !important;
+  }
+}
+
+/* 5) Contact の切れ
+   → カード/中身を 100% 幅・折り返し・はみ出し禁止 */
+@media (max-width: 768px){
+  #contact,
+  .contact,
+  .contact-split,
+  .contact-card,
+  .contact-note{
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .contact-card,
+  .contact-note{
+    overflow: hidden;            /* はみ出しを見せるより、スマホは切れ防止優先 */
+    overflow-wrap: anywhere;     /* 長い英字/URLも折る */
+    word-break: break-word;
+  }
+
+  /* アイコン段やボタンが横に伸びて切れる場合の保険 */
+  .contact-card *{
+    max-width: 100%;
+  }
+}
+   
 </style>
 </head>
 
