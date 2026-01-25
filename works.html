@@ -1078,9 +1078,74 @@
       color: #fff;
     }
 
+	/* works/aboutページ：ナビ左タイトルを非表示 */
+	.is-subpage .nav-left,
+	.is-subpage .nav-brand,
+	.is-subpage .nav-title,
+	.is-subpage .site-title{
+	  display: none !important;
+	}
+
+	/* works：スマホで左右余白を消して横幅を安定させる */
+@media (max-width: 768px){
+
+  /* ① worksセクション自体の余白をゼロに */
+  #works,
+  .works,
+  .works-section{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* ② 中身のコンテナもゼロに（ここで“左右の白”が消える） */
+  #works .section-inner,
+  #works .container,
+  #works .wrap,
+  #works .inner{
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* ③ 作品一覧のグリッドを「2列・固定幅」にする（端末が変わっても崩れない） */
+  /* ↓ この“候補セレクタ”のどれかが当たる想定 */
+  .works-grid,
+  .work-grid,
+  .works-list,
+  .work-list{
+    display: grid !important;
+    grid-template-columns: repeat(2, 168px) !important; /* ←固定幅（必要なら 160/172 に調整OK） */
+    justify-content: center !important;                /* 2列を中央に寄せて整える */
+    gap: 18px 16px !important;
+    padding: 0 12px !important;                        /* “0にすると端末によってギリ当たる”ので最小だけ残す */
+    box-sizing: border-box;
+  }
+
+  /* ④ カード幅を固定列に合わせる */
+  .work-card,
+  .works-card{
+    width: 168px !important;
+    max-width: 168px !important;
+  }
+
+  /* ⑤ 画像はカード内に収める */
+  .work-card img,
+  .works-card img{
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+  }
+}
+	
 </style>
 </head>
-<body>
+<body<body class="is-subpage is-works">>
 <div id="top"></div>
 <header class="site-nav">
 <div class="site-nav__inner">
