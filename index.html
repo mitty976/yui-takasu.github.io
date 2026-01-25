@@ -1815,7 +1815,13 @@ html.js-reveal .reveal.is-inview {
 .rc-controls .rc-btn:disabled{
   color: rgba(30,30,30,.35);
 }
-   
+
+/* スワイプしやすくする（iOSの変な拡大や選択を減らす） */
+.rc, .rc-stage, .rc-media, .modal{
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
 </style>
 </head>
 
