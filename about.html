@@ -656,7 +656,20 @@ html.cursor-on, html.cursor-on * { cursor: none; }
       width: 88vw;
     }
   }
-  
+
+/* ===== About: remove Strength image + widen text ===== */
+.page-about .strength-media{ display:none; }
+.page-about .strength-layout{
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* スマホで “文章の左右余白” をTop寄せに整える */
+@media (max-width: 520px){
+  .page-about section{ padding-left: 20px; padding-right: 20px; }
+  .page-about .wrap{ width: 100%; } /* wrapの92vw制限を実質解除 */
+}
+
 </style>
 </head>
 
