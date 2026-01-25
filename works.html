@@ -1154,6 +1154,27 @@
     }
 
     .page-works .site-nav__brand{ display:none; }
+
+	/* =========================
+   Works Thumbnail Fix (SP)
+   イラストが縮んで見える問題の解消
+   ========================= */
+@media (max-width: 768px){
+
+  /* サムネの「固定アスペクト」を解除 */
+  .work-thumb{
+    aspect-ratio: auto;
+    height: auto;
+  }
+
+  /* 画像は自然サイズで表示 */
+  .work-thumb img{
+    height: auto;
+    object-fit: contain; /* cover → contain */
+    background: #f3f3f1; /* 余白が出ても汚くならない */
+  }
+}
+
 </style>
 
 </head>
