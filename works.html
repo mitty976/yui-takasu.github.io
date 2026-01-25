@@ -1099,42 +1099,46 @@
     margin-right: 0 !important;
   }
 
-  /* ② 中身のコンテナもゼロに（ここで“左右の白”が消える） */
+/* =========================
+   Works: SPは横幅いっぱい＆2列
+   ========================= */
+@media (max-width: 768px){
+
+  /* 親コンテナの“センター寄せmax-width”を強制的に解除して、画面幅にする */
   #works .section-inner,
   #works .container,
   #works .wrap,
   #works .inner{
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
     box-sizing: border-box;
   }
 
-  /* ③ 作品一覧のグリッドを「2列・固定幅」にする（端末が変わっても崩れない） */
-  /* ↓ この“候補セレクタ”のどれかが当たる想定 */
+  /* 作品一覧：2列で画面幅にフィット（左右だけ少し余白） */
   .works-grid,
   .work-grid,
   .works-list,
   .work-list{
     display: grid !important;
-    grid-template-columns: repeat(2, 168px) !important; /* ←固定幅（必要なら 160/172 に調整OK） */
-    justify-content: center !important;                /* 2列を中央に寄せて整える */
-    gap: 18px 16px !important;
-    padding: 0 12px !important;                        /* “0にすると端末によってギリ当たる”ので最小だけ残す */
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 18px 14px !important;
+    padding: 0 14px 24px !important;  /* ←左右余白。ゼロにしたいなら 0 でもOK */
+    margin: 0 !important;
     box-sizing: border-box;
   }
 
-  /* ④ カード幅を固定列に合わせる */
+  /* カードは列いっぱいに伸びる（固定幅をやめる） */
   .work-card,
   .works-card{
-    width: 168px !important;
-    max-width: 168px !important;
+    width: 100% !important;
+    max-width: none !important;
   }
 
-  /* ⑤ 画像はカード内に収める */
+  /* 画像はカード幅に追従 */
   .work-card img,
   .works-card img{
     width: 100% !important;
@@ -1142,7 +1146,7 @@
     display: block;
   }
 }
-	
+
 </style>
 </head>
 <body<body class="is-subpage is-works">>
