@@ -2656,18 +2656,18 @@ if(pageTop){
     }
   }, { passive: true });
 
-  rcRoot.addEventListener('touchend', () => {
-    if (!tracking) return;
-    tracking = false;
+stage.addEventListener('touchend', () => {
+  if (!tracking) return;
+  tracking = false;
 
-    // 斜め/縦が強い場合は無視
-    if (Math.abs(dx) < SWIPE_MIN_PX) return;
-    if (Math.abs(dy) > SWIPE_MAX_Y) return;
+  // 縦のブレが大きい or 横が短いなら無視
+  if (Math.abs(dx) < SWIPE_MIN) return;
+  if (Math.abs(dy) > VERT_CANCEL) return;
 
-    // 左にスワイプ → 次 / 右にスワイプ → 前
-    if (dx < 0) nextBtn.click();
-    else prevBtn.click();
-  }, { passive: true });
+  // ★ここを逆にする：左フリック=戻る、右フリック=次
+  if (dx < 0) prevBtn.click();
+  else nextBtn.click();
+}, { passive: true });
 })();
 </script>
 </body>
