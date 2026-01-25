@@ -11,7 +11,6 @@
   <!-- =========================
        Mobile Fix CSS
   ========================= -->
-  <style>
     *, *::before, *::after {
       box-sizing: border-box;
     }
@@ -283,14 +282,13 @@ html{ scrollbar-gutter: auto; }
    Hero
 ========================= */
 .hero{
-  position:relative;
-  height: auto
+  position: relative;
+  height: auto;
   min-height: 420px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:flex-start;
-
   padding-top: clamp(24px, 6vh, 56px);
   padding-bottom: clamp(24px, 6vh, 56px);
   text-align:center;
@@ -356,7 +354,7 @@ html{ scrollbar-gutter: auto; }
   margin-top: 0.7rem;
   font-size: 11px;
   letter-spacing: 0.18em;
-  color: var(--text-muted)
+  color: var(--text-muted);
   opacity: 0.75;
 }
 
@@ -1739,6 +1737,19 @@ html.js-reveal .reveal.is-inview {
     transition: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ===== spacing fix (Top → Works) ===== */
+#works{
+  padding-top: 72px;   /* 120px → 72px */
+  padding-bottom: 110px;
+}
+
+@media (max-width: 720px){
+  #works{
+    padding-top: 56px;
+    padding-bottom: 90px;
   }
 }
 
