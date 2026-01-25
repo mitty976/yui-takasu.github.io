@@ -1658,7 +1658,25 @@ html.js-reveal .reveal.is-inview {
   .rc-controls{
     margin-top: 38px;
   }
-   
+
+@media (max-width: 768px){
+  .works-caption{
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+  .works-caption__spacer{ display: none; }
+
+  .works-caption__center{
+    justify-self: center;
+    text-align: center;
+  }
+
+  .works-more-wrap{
+    grid-column: 1;
+    justify-self: end;
+    margin-top: 6px;
+  }
+}
 @media (max-width: 768px){
   .graph-wrap{
     width: min(400px, 92vw);
@@ -1699,48 +1717,55 @@ html.js-reveal .reveal.is-inview {
   }
 }
 
+/* ===== Contact (SP) : overflow/cut fix ===== */
 @media (max-width: 768px){
+
   #contact,
   .contact,
-  .contact-split,
-  .contact-card,
-  .contact-note{
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  .contact-card,
-  .contact-note{
-    overflow: hidden;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-  .contact-card *{
-    max-width: auto;
-  }
-}
   .contact__inner,
   .contact-links,
   .contact-split,
+  .contact-card,
+  .contact-note,
   .contact-icons,
   .contact-mail,
   .accordion{
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .contact-icons{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .contact-icon{
-    width: 100%;
-    max-width: 120px;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   #contact{
-    overflow-x: hidden;
+    overflow-x: hidden !important;
+  }
+
+  .contact-card,
+  .contact-note{
+    overflow: hidden !important; 
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+
+  .contact-card *,
+  .contact-note *{
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .contact-icons{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .contact-icon{
+    width: 100% !important;
+    max-width: 120px !important;
+    margin: 0 auto !important;
+  }
+
+  .contact-mail{
+    max-width: 520px !important;
+    margin-inline: auto !important;
   }
 }
    
