@@ -43,7 +43,7 @@
       grid-template-columns:1fr 1fr;
       gap:6px;
       transition: box-shadow .2s ease;
-    
+
       pointer-events: auto;
     }
 
@@ -56,7 +56,7 @@
       font-size:14px;
       letter-spacing:.06em;
       color:rgba(30,30,30,.6);
-    
+
       pointer-events: auto;
     }
 
@@ -82,12 +82,13 @@
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap:56px;
+      min-width: 0; /* はみ出し保険 */
     }
 
     @media (max-width:900px){
       .works-grid{ grid-template-columns:repeat(2,1fr); gap:40px; }
     }
-  
+
     /* =========================
       Navigation
     ========================= */
@@ -247,18 +248,18 @@
     }
 
     .page-top::after{
-	  content:"";
-	  position: absolute;
-	  right: -5px;
-	
-	  bottom: calc(var(--line-h) - 13px);
-	
-	  width: 10px;
-	  height: 10px;
-	  border-top: 1px solid rgba(30,30,30,.55);
-	  border-bottom:0;
-	  transform: rotate(45deg);
-	}
+      content:"";
+      position: absolute;
+      right: -5px;
+
+      bottom: calc(var(--line-h) - 13px);
+
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid rgba(30,30,30,.55);
+      border-bottom:0;
+      transform: rotate(45deg);
+    }
 
     .page-top__text{
       position: absolute;
@@ -399,18 +400,18 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      overflow: hidden; 
-    
+      overflow: hidden;
+
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 6vh 0; 
+      padding: 6vh 0;
     }
 
     .modal__overlay{
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,.55); 
+      background: rgba(0,0,0,.55);
     }
 
     .modal__dialog{
@@ -480,12 +481,12 @@
     }
 
     .mwork__langbar{
-      display: flex;                 /* block化 */
+      display: flex;
       justify-content: center;
       gap: 8px;
 
-      width: fit-content;            /* 中身幅だけ */
-      margin: 24px auto 32px;        /* ブロック中央 */
+      width: fit-content;
+      margin: 24px auto 32px;
       padding: 6px 10px;
       border-radius: 999px;
     }
@@ -506,7 +507,6 @@
       font-weight: 600;
     }
 
-    
     /* Pill style for JP/EN (opt-in) */
     .mwork__langbar.is-pill{
       display:flex;
@@ -538,6 +538,7 @@
       color:rgba(0,0,0,.88);
       box-shadow: 0 1px 2px rgba(0,0,0,.08);
     }
+
     .mwork__en{
       color: #777;
       font-size: 0.95em;
@@ -564,11 +565,10 @@
       object-fit: contain;
     }
 
-
     .mwork__img.is-logo{
       max-width: 360px;
     }
-    
+
     .modal__caption{
       margin-top: 10px;
       color: #555;
@@ -582,7 +582,6 @@
       color: #666;
       line-height: 1.7;
     }
-
 
     @media (max-width: 520px){
       .modal{ padding: 10vh 0; }
@@ -682,7 +681,7 @@
       cursor:default;
     }
 
-     .modal .mgallery-ghost{
+    .modal .mgallery-ghost{
       position:absolute;
       inset:0;
       width:100%;
@@ -786,7 +785,6 @@
 
     .mwork__note dt{ font-weight: 500; color: #555; }
     .mwork__note dd{ margin: 0; }
-  
 
     /* ===== Illustration Modal ===== */
     .mwork--illu{
@@ -904,7 +902,7 @@
       justify-content: space-between;
       gap: 12px;
       margin: 10px 0 0;
-      pointer-events: none; 
+      pointer-events: none;
       transform: translateY(-18px);
       padding-inline: 75px;
     }
@@ -915,7 +913,7 @@
       z-index: 20;
       display: flex;
       justify-content: center;
-      padding: 10px 0 14px; 
+      padding: 10px 0 14px;
       background: rgba(255,255,255,0.9);
       backdrop-filter: blur(6px);
 
@@ -958,7 +956,7 @@
       gap: 8px;
 
       margin: 0 auto;
-      transform: none; 
+      transform: none;
       top: auto; left: auto;
     }
 
@@ -981,7 +979,6 @@
     /* =========================
       Illustration : 画像制限解除
     ========================= */
-
     .illu-variants.is-carousel img{
       width: auto;
       max-width: 100%;
@@ -998,58 +995,58 @@
     #illuGrid{display:contents;}
 
     .work-card__thumb{
-          width: 100%;
-          aspect-ratio: 1/1;
-          object-fit: cover;
-          display: block;
-          background: #f0f1f3;
-        }
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+      background: #f0f1f3;
+    }
     .work-card__body{
-          padding: 10px 12px 12px;
-        }
+      padding: 10px 12px 12px;
+    }
     .work-card__title{
-          font-size: .92rem;
-          line-height: 1.35;
-          margin: 0;
-          font-weight: 600;
-        }
+      font-size: .92rem;
+      line-height: 1.35;
+      margin: 0;
+      font-weight: 600;
+    }
     .work-card__meta{
-          margin-top: 6px;
-          font-size: .78rem;
-          color: var(--muted);
-        }
+      margin-top: 6px;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
     /* gallery */
-        .gallery{
-          display: grid;
-          gap: 10px;
-        }
+    .gallery{
+      display: grid;
+      gap: 10px;
+    }
     .gallery__stage{ position: relative; }
     .gallery__nav{
-          position: absolute; top: 50%;
-          transform: translateY(-50%);
-          width: 44px; height: 44px;
-          border-radius: 999px;
-          border: none;
-          background: rgba(0,0,0,.45);
-          color: #fff;
-          cursor: pointer;
-          font-size: 22px;
-          line-height: 44px;
-        }
+      position: absolute; top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(0,0,0,.45);
+      color: #fff;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 44px;
+    }
     .gallery__prev{ left: 10px; }
     .gallery__next{ right: 10px; }
     .gallery__dots{
-          display:flex; justify-content:center; gap: 6px; flex-wrap: wrap;
-          padding-bottom: 4px;
-        }
-    .gallery__dot{
-          width: 8px; height: 8px; border-radius: 999px;
-          border: 1px solid rgba(0,0,0,.25);
-          background: rgba(0,0,0,.08);
-          cursor: pointer;
-        }
-    .gallery__dot[aria-current="true"]{ background: rgba(0,0,0,.55); 
+      display:flex; justify-content:center; gap: 6px; flex-wrap: wrap;
+      padding-bottom: 4px;
     }
+    .gallery__dot{
+      width: 8px; height: 8px; border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.25);
+      background: rgba(0,0,0,.08);
+      cursor: pointer;
+    }
+    .gallery__dot[aria-current="true"]{ background: rgba(0,0,0,.55); }
 
     .works-sort{
       display: inline-flex;
@@ -1078,98 +1075,94 @@
       color: #fff;
     }
 
-	/* works/aboutページ：ナビ左タイトルを非表示 */
-	.is-subpage .nav-left,
-	.is-subpage .nav-brand,
-	.is-subpage .nav-title,
-	.is-subpage .site-title{
-	  display: none !important;
-	}
+    /* =========================================================
+       ✅ ここから：壊れてた「SP幅調整」を正しい @media に修復した版
+       ========================================================= */
 
-	/* works：スマホで左右余白を消して横幅を安定させる */
-@media (max-width: 768px){
+    /* works/aboutページ：ナビ左タイトルを非表示 */
+    .is-subpage .nav-left,
+    .is-subpage .nav-brand,
+    .is-subpage .nav-title,
+    .is-subpage .site-title{
+      display: none !important;
+    }
 
-  /* ① worksセクション自体の余白をゼロに */
-  #works,
-  .works,
-  .works-section{
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
+    /* 768px以下：横スクロール防止 + 2列グリッド固定 */
+    @media (max-width: 768px){
 
-/* =========================
-   Works: SPは横幅いっぱい＆2列
-   ========================= */
-@media (max-width: 768px){
+      #works,
+      .works,
+      .works-section{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
 
-  /* 親コンテナの“センター寄せmax-width”を強制的に解除して、画面幅にする */
-  #works .section-inner,
-  #works .container,
-  #works .wrap,
-  #works .inner{
-    width: 100vw !important;
-    max-width: none !important;
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: calc(50% - 50vw) !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    box-sizing: border-box;
-  }
+      #works .section-inner,
+      #works .container,
+      #works .wrap,
+      #works .inner{
+        width: 100% !important;
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+      }
 
-  /* 作品一覧：2列で画面幅にフィット（左右だけ少し余白） */
-  .works-grid,
-  .work-grid,
-  .works-list,
-  .work-list{
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 18px 14px !important;
-    padding: 0 14px 24px !important;  /* ←左右余白。ゼロにしたいなら 0 でもOK */
-    margin: 0 !important;
-    box-sizing: border-box;
-  }
+      .works-grid,
+      .work-grid,
+      .works-list,
+      .work-list{
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 18px 14px !important;
+        padding: 0 14px 24px !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+      }
 
-  /* カードは列いっぱいに伸びる（固定幅をやめる） */
-  .work-card,
-  .works-card{
-    width: 100% !important;
-    max-width: none !important;
-  }
+      .work-card,
+      .works-card{
+        width: 100% !important;
+        max-width: none !important;
+      }
 
-  /* 画像はカード幅に追従 */
-  .work-card img,
-  .works-card img{
-    width: 100% !important;
-    height: auto !important;
-    display: block;
-  }
-}
+      .work-card img,
+      .works-card img{
+        width: 100% !important;
+        height: auto !important;
+        display: block;
+      }
+    }
 
-/* ===== Works: Mobile width tuning ===== */
-@media (max-width: 520px){
+    /* 520px以下：さらに整える */
+    @media (max-width: 520px){
 
-  main{ padding-left: 0; padding-right: 0; }
-  .works-container{ padding-left: 0; padding-right: 0; max-width: 100%; }
+      main{ padding-left: 0; padding-right: 0; }
+      .works-container{ padding-left: 0; padding-right: 0; max-width: 100%; }
 
-  .works-grid{
-    padding: 0 14px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px 14px;
-  }
+      .works-grid{
+        padding: 0 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px 14px;
+      }
 
-  .work-thumb{ border-radius: 10px; }
-  .work-title{ font-size: 14px; }
-  .work-sub{ font-size: 12px; }
-}
+      .work-thumb{ border-radius: 10px; }
+      .work-title{ font-size: 14px; }
+      .work-sub{ font-size: 12px; }
 
-	.page-works .site-nav__brand{ display:none; }
-	
+      .back-fab{ bottom: 16px; left: 16px; }
+    }
+
+    .page-works .site-nav__brand{ display:none; }
 </style>
+
 </head>
 	
-<body class="is-subpage is-works">>
+<body class="is-subpage is-works">
 <div id="top"></div>
 <header class="site-nav">
 <div class="site-nav__inner">
