@@ -2625,27 +2625,35 @@ if(pageTop){
 
   const isTouch = () => matchMedia('(hover: none) and (pointer: coarse)').matches;
 
-  // ===== RC Swipe (works preview) =====
+ /* ===== RC Swipe (works preview) ===== */
 (() => {
-  const rcRoot  = document.querySelector('.rc');        // カルーセル全体
+  // 1) カルーセル全体（外側）を掴む：ここにイベントを“全部”付ける
+  const rcRoot =
+    document.querySelector('.rc') ||
+    document.querySelector('.rc-wrap') ||
+    document.querySelector('.rc-stage') ||
+    document.querySelector('#works'); // 最後の保険
+
+  // 2) 既存の prev/next ボタン（あなたのHTMLに一致）
   const prevBtn = document.querySelector('.rc-btn[data-prev]');
   const nextBtn = document.querySelector('.rc-btn[data-next]');
+
   if (!rcRoot || !prevBtn || !nextBtn) return;
 
-  const SWIPE_MIN_PX = 42;
-  const SWIPE_MAX_Y  = 70;
+  // --- スワイプ判定パラメータ ---
+  const SWIPE_MIN_PX = 28;  // 横にこれ以上動いたら「意思あるスワイプ」
+  const SWIPE_MAX_Y  = 36;  // 縦ブレがこれ以上ならスクロール優先でキャンセル
 
-  let tracking = false;
   let startX = 0, startY = 0;
   let dx = 0, dy = 0;
+  let tracking = false;
 
-  // ★ 重要：3つとも rcRoot に統一
   rcRoot.addEventListener('touchstart', (e) => {
     if (!e.touches || e.touches.length !== 1) return;
     const t = e.touches[0];
     startX = t.clientX;
     startY = t.clientY;
-    dx = dy = 0;
+    dx = 0; dy = 0;
     tracking = true;
   }, { passive: true });
 
@@ -2655,7 +2663,7 @@ if(pageTop){
     dx = t.clientX - startX;
     dy = t.clientY - startY;
 
-    // 縦スクロール優先
+    // 縦スクロールっぽいなら早めにやめる
     if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > SWIPE_MAX_Y) {
       tracking = false;
     }
@@ -2665,13 +2673,15 @@ if(pageTop){
     if (!tracking) return;
     tracking = false;
 
+    // 横が短い or 縦ブレ大 → 無視
     if (Math.abs(dx) < SWIPE_MIN_PX) return;
     if (Math.abs(dy) > SWIPE_MAX_Y) return;
 
-    // 左フリック＝戻る / 右フリック＝次（iPhone感）
+    // iPhone感：左フリック＝戻る、右フリック＝次
     if (dx < 0) prevBtn.click();
     else nextBtn.click();
   }, { passive: true });
+})();
 
   rcRoot.addEventListener('touchcancel', () => {
     tracking = false;
@@ -2697,17 +2707,6 @@ if(pageTop){
       // まずは「縦スクロール優先」なので無しでもOK
     }
   }, { passive: true });
-
-stage.addEventListener('touchend', () => {
-  if (!tracking) return;
-  tracking = false;
-
-  if (Math.abs(dx) < SWIPE_MIN) return;
-  if (Math.abs(dy) > VERT_CANCEL) return;
-
-  if (dx < 0) prevBtn.click();
-  else nextBtn.click();
-}, { passive: true });
 })();
 </script>
 </body>
