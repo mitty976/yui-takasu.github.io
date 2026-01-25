@@ -595,10 +595,13 @@ html.cursor-on, html.cursor-on * { cursor: none; }
   content:"";
   position: absolute;
   right: -5px;
-  bottom: 97px;
+
+  bottom: calc(var(--line-h) - 13px);
+
   width: 10px;
   height: 10px;
   border-top: 1px solid rgba(30,30,30,.55);
+  border-bottom:0;
   transform: rotate(45deg);
 }
 .page-top__text{
@@ -622,7 +625,7 @@ html.cursor-on, html.cursor-on * { cursor: none; }
     --line-h: 92px;
   }
 }
-
+  
 </style>
 </head>
 
