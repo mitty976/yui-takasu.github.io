@@ -626,14 +626,6 @@ html.cursor-on, html.cursor-on * { cursor: none; }
   display: none !important;
 }
 
-.is-about .strength__media,
-.is-about .strength-media,
-.is-about .strength-img,
-.is-about .strength figure,
-.is-about .strength img{
-  display: none !important;
-}
-
 .is-about .about,
 .is-about .about__inner,
 .is-about .strength,
@@ -653,12 +645,28 @@ html.cursor-on, html.cursor-on * { cursor: none; }
     display: none !important;
   }
 }
+  
+/* ===== About page modifiers ===== */
+.is-subpage .nav-left,
+.is-subpage .nav-brand,
+.is-subpage .nav-title,
+.is-subpage .site-title{
+  display: none !important;
+}
 
-/* “文章の左右余白” をスマホで整える（クラス不一致を修正して is-about で効かせる） */
+/* スマホだけ Strength の画像を非表示 */
+@media (max-width: 768px){
+  .is-about .strength-media{
+    display: none !important;
+  }
+}
+
+/* “文章の左右余白” をスマホで整える（閉じカッコも修正） */
 @media (max-width: 520px){
   .is-about section{ padding-left: 40px; padding-right: 40px; }
-  .is-about .wrap{ width: 100%;
+  .is-about .wrap{ width: 100%; }
 }
+  
 </style>
 </head>
 
