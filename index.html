@@ -1656,12 +1656,12 @@ html.js-reveal .reveal.is-inview {
     opacity: 0;
   }
   .rc-controls{
-    margin-top: 22px; /* 好みで 18〜28px で微調整OK */
+    margin-top: 28px; /* 好みで 18〜28px で微調整OK */
   }
    
 @media (max-width: 768px){
   .graph-wrap{
-    width: min(440px, 92vw);
+    width: min(400px, 92vw);
     padding-inline: var(--sp-pad);
     overflow: visible;
   }
@@ -1674,7 +1674,6 @@ html.js-reveal .reveal.is-inview {
   .graph-labels .bottom-left{ bottom: 2%; left: 20%; }
   .graph-labels .bottom-right{ bottom: 2%; right: 20%; }
    
-/* 4) メインスキル / About の左右余白をもう少し増やす */
 @media (max-width: 768px){
   .skill-text{
     width: min(900px, 84vw) !important;
@@ -1685,8 +1684,6 @@ html.js-reveal .reveal.is-inview {
     padding-inline: 2px; /* “端ピッタリ感”を軽く消す */
   }
 
-  /* About：画像をスマホで非表示にした時の「謎の空白」と「右寄り細長い」を消す
-     → 画像枠そのものを消して、1カラムに戻す */
   .about__media,
   .about-photo,
   .about-img,
@@ -1702,8 +1699,6 @@ html.js-reveal .reveal.is-inview {
   }
 }
 
-/* 5) Contact の切れ
-   → カード/中身を 100% 幅・折り返し・はみ出し禁止 */
 @media (max-width: 768px){
   #contact,
   .contact,
@@ -1721,7 +1716,6 @@ html.js-reveal .reveal.is-inview {
     word-break: break-word;
   }
 
-  /* アイコン段やボタンが横に伸びて切れる場合の保険 */
   .contact-card *{
     max-width: 100%;
   }
@@ -1737,7 +1731,6 @@ html.js-reveal .reveal.is-inview {
     box-sizing: border-box;
   }
 
-  /* アイコン行：vw由来の横はみ出しを消す */
   .contact-icons{
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1746,7 +1739,6 @@ html.js-reveal .reveal.is-inview {
     max-width: 120px;
   }
 
-  /* それでも端末によっては1〜2pxはみ出すことがあるので保険 */
   #contact{
     overflow-x: hidden;
   }
