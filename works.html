@@ -1125,13 +1125,6 @@
         width: 100% !important;
         max-width: none !important;
       }
-
-      .work-card img,
-      .works-card img{
-        width: 100% !important;
-        height: auto !important;
-        display: block;
-      }
     }
 
     /* 520px以下：さらに整える */
@@ -1155,29 +1148,77 @@
 
     .page-works .site-nav__brand{ display:none; }
 
-/* =========================
-   Thumb Layout Lock (SP)
-   ========================= */
 @media (max-width: 768px){
 
-  .works-grid{
+  #works,
+  .works,
+  .works-section{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  #works .section-inner,
+  #works .container,
+  #works .wrap,
+  #works .inner{
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .works-grid,
+  .work-grid,
+  .works-list,
+  .work-list{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 18px 14px !important;
+    padding: 0 14px 24px !important;
+    margin: 0 !important;
+    box-sizing: border-box;
     align-items: stretch;
+  }
+
+  .work-card,
+  .works-card{
+    width: 100% !important;
+    max-width: none !important;
   }
 
   .work-thumb{
     aspect-ratio: 4 / 3;
-    height: auto;
     overflow: hidden;
     background: rgba(0,0,0,.06);
+    border-radius: 10px;
   }
 
   .work-thumb img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
     object-position: center;
     display: block;
   }
+}
+
+@media (max-width: 520px){
+  main{ padding-left: 0; padding-right: 0; }
+  .works-container{ padding-left: 0; padding-right: 0; max-width: 100%; }
+
+  .works-grid{
+    padding: 0 14px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 14px;
+  }
+
+  .work-title{ font-size: 14px; }
+  .work-sub{ font-size: 12px; }
 }
 
 </style>
