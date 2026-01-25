@@ -274,7 +274,9 @@ transition: opacity .25s ease, transform .25s ease, color .2s ease;
   content:"";
   position: absolute;
   right: -5px;
-  bottom: 97px;
+
+  bottom: calc(var(--line-h) - 13px);
+
   width: 10px;
   height: 10px;
   border-top: 1px solid rgba(30,30,30,.55);
@@ -1778,6 +1780,7 @@ html.js-reveal .reveal.is-inview {
     display: block;
   }
 }
+
    
 /* =========================
    FIX 2: Contact Mail center
