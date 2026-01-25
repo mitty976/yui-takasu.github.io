@@ -1,0 +1,5065 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Works | Yui Portfolio</title>
+<style>
+    :root{
+      --content-w: min(1100px, 92vw);
+      --nav-h: 64px;
+    }
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;
+      color:#2e2e2e;
+      background:#f7f7f5;
+    }
+
+    main{ padding:120px 16px; }
+
+    h1{
+      text-align:center;
+      font-size:24px;
+      letter-spacing:.08em;
+      margin:0 0 64px;
+    }
+
+    .works-tabs{
+      position: sticky;
+      top: calc(var(--nav-h) + 8px);
+      z-index: 900;
+
+      width:min(520px,92vw);
+      margin:0 auto 48px;
+
+      background:#E8E8E6;
+      padding:12px 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.04);
+      border-radius:999px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:6px;
+      transition: box-shadow .2s ease;
+    
+      pointer-events: auto;
+    }
+
+    .works-tab{
+      border:0;
+      background:transparent;
+      border-radius:999px;
+      padding:12px 10px;
+      cursor:pointer;
+      font-size:14px;
+      letter-spacing:.06em;
+      color:rgba(30,30,30,.6);
+    
+      pointer-events: auto;
+    }
+
+    .works-tab.is-active{
+      background:#fff;
+      color:rgba(30,30,30,.9);
+      box-shadow:0 6px 18px rgba(0,0,0,.06);
+    }
+
+    .works-tabs.is-scrolled{
+      box-shadow: 0 6px 18px rgba(0,0,0,.08);
+    }
+
+    .works-container{
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .works-grid{
+      width:auto;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap:56px;
+    }
+
+    @media (max-width:900px){
+      .works-grid{ grid-template-columns:repeat(2,1fr); gap:40px; }
+    }
+  
+    /* =========================
+      Navigation
+    ========================= */
+    .site-nav{
+      position: static;
+      top: auto;
+      z-index:1000;
+      height:var(--nav-h);
+      backdrop-filter: blur(8px);
+      background: rgba(247,247,245,.8);
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+
+    .site-nav__inner{
+      width:min(1100px,92vw);
+      height:100%;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+    }
+
+    .site-nav__brand{
+      font-size:14px;
+      letter-spacing:.08em;
+      text-decoration:none;
+      color:rgba(30,30,30,.85);
+      white-space:nowrap;
+    }
+
+    .site-nav__menu{
+      list-style:none;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      margin:0 0 0 auto;
+      padding:0;
+    }
+
+    .nav-link{
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+
+      text-decoration:none;
+      font-size:13px;
+      letter-spacing:.08em;
+      color:rgba(30,30,30,.65);
+      padding:8px 6px;
+      border-radius:8px;
+      white-space:nowrap;
+    }
+
+    .nav-link:hover{
+      color:rgba(30,30,30,.95);
+    }
+
+    .nav-link--cta{
+      margin-left:8px;
+      padding:8px 14px;
+      border:1px solid rgba(0,0,0,.15);
+      border-radius:12px;
+    }
+
+    .nav-link::after{
+      content: "＞";
+      font-size: 11px;
+      line-height: 1;
+      transform: rotate(90deg);
+      opacity: .85;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .nav-link:hover::after{
+      opacity: .75;
+      transform: rotate(90deg) translateY(1px);
+    }
+
+    .nav-link--cta::after{
+      content:none;
+    }
+
+    /* =========================
+      Custom Cursor (PC only)
+    ========================= */
+    html.cursor-on, html.cursor-on * { cursor: none; }
+
+    .cursor{
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+
+      background: rgba(30,30,30,.65);
+      border: none;
+
+      pointer-events: none;
+      z-index: 10001;
+
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity .2s ease, transform .12s ease, width .15s ease, height .15s ease;
+    }
+
+    .cursor.is-hover{
+      width: 16px;
+      height: 16px;
+      border-color: rgba(30,30,30,.9);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html.cursor-on, html.cursor-on * { cursor: auto; }
+      .cursor{ display: none; }
+    }
+
+    /* =========================
+      Page Top
+    ========================= */
+    .page-top{
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 1200;
+
+      width: 44px;
+      height: 80px;
+
+      display: block;
+      text-decoration: none;
+      color: rgba(30,30,30,.55);
+
+      --line-h: 110px;
+
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity .25s ease, transform .25s ease, color .2s ease;
+    }
+
+    .page-top.is-visible{
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .page-top::before{
+      content:"";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      height: var(--line-h);
+      background: rgba(30,30,30,.35);
+    }
+
+    .page-top::after{
+      content:"";
+      position: absolute;
+      right: -5px;
+      bottom: 97px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid rgba(30,30,30,.55);
+      transform: rotate(45deg);
+    }
+
+    .page-top__text{
+      position: absolute;
+      right: 17px;
+      bottom: 0;
+      font-size: 12px;
+      letter-spacing: .12em;
+      white-space: nowrap;
+      transform-origin: right bottom;
+      transform: rotate(90deg);
+    }
+
+    .page-top:hover{
+      color: rgba(30,30,30,.9);
+    }
+
+    .page-top:hover::after{
+      border-color: rgba(30,30,30,.9);
+    }
+
+    @media (max-width: 720px){
+      .page-top{
+        right: 14px;
+        bottom: 14px;
+        height: 120px;
+        --line-h: 92px;
+      }
+    }
+
+    /* ===== Work Card ===== */
+    .work-card{ text-decoration:none; color:inherit; display:block; }
+    .work-thumb{ border-radius:8px; overflow:hidden; aspect-ratio:4/3; background:rgba(0,0,0,.06); }
+    .work-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .work-meta{ margin-top:16px; }
+    .work-title{ margin:0; font-size:16px; letter-spacing:.06em; }
+    .work-sub{ margin:8px 0 0; font-size:13px; color:rgba(30,30,30,.55); }
+    html.js .work-card.is-hidden { display: none; }
+
+    html.js-reveal .work-card.reveal {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .6s ease, transform .6s ease;
+      will-change: opacity, transform;
+      transition-delay: .05s;
+    }
+
+    html.js-reveal .work-card.reveal.is-inview {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .work-card.reveal {
+        transition: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .work-tags{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .work-tag{
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.06);
+      color: rgba(0,0,0,.6);
+      letter-spacing: .04em;
+    }
+
+    .works-footnote{
+      margin: 80px auto 0;
+      max-width: 760px;
+      padding-top: 24px;
+
+      font-size: 12px;
+      line-height: 1.8;
+      letter-spacing: .02em;
+      text-align: center;
+
+      color: rgba(0,0,0,.45);
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+
+    /* ===== Back FAB ===== */
+    .back-fab{
+      position: fixed;
+      left: max(24px, calc((100vw - var(--content-w)) / 2));
+      bottom: 24px;
+      z-index: 50;
+
+      display: inline-block;
+      padding: 10px 18px;
+      border: 1px solid rgba(0,0,0,.12);
+      background: rgba(247,247,245,.92);
+      backdrop-filter: blur(6px);
+      border-radius: 999px;
+
+      font-size: 13px;
+      letter-spacing: .08em;
+      color: rgba(30,30,30,.75);
+      text-decoration: none;
+    }
+
+    .back-fab:hover{
+      border-color: rgba(0,0,0,.2);
+      color: rgba(30,30,30,.95);
+    }
+
+    @media (max-width: 520px){
+      .back-fab{ bottom: 16px; left: 16px; }
+    }
+
+    /* ===== Modal ===== */
+    .modal[aria-hidden="true"] { display: none; }
+
+    html.modal-open,
+    body.modal-open{ overflow: hidden; }
+
+    .mpanel{ display:none; }
+
+    .mpanel.is-active{
+      display:block;
+      animation: mpanelIn 520ms ease both;
+    }
+
+    @keyframes mpanelIn{
+      from{ opacity: 0; transform: translateY(10px) scale(.99); }
+      to  { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      overflow: hidden; 
+    
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 6vh 0; 
+    }
+
+    .modal__overlay{
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.55); 
+    }
+
+    .modal__dialog{
+      position: relative;
+      overflow: hidden;
+      max-width: min(920px, 92vw);
+      width: 100%;
+      margin: 0;
+
+      max-height: calc(100vh - 12vh);
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal__content{
+      overflow: auto;
+      overflow-x: hidden;
+      padding: 56px 22px 22px;
+
+      flex: 1;
+      min-height: 0;
+    }
+
+    .modal__close{
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      z-index: 1000;
+
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(0,0,0,.06);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal__title{ margin: 0 0 6px; font-size: 1.35rem; text-align: center; }
+    .modal__subtitle{ margin: 0 0 18px; color: #666; font-size: .95rem; text-align: center; }
+
+    .modal__figure{
+      max-width: 100%;
+      margin: 0 0 36px;
+      padding-top: 18px;
+    }
+
+    .mwork__lang{
+      margin-top: 32px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .mwork__lang summary{
+      cursor: pointer;
+      font-weight: 500;
+      list-style: none;
+    }
+
+    .mwork__lang summary::-webkit-details-marker{
+      display: none;
+    }
+
+    .mwork__langbar{
+      display: flex;                 /* block化 */
+      justify-content: center;
+      gap: 8px;
+
+      width: fit-content;            /* 中身幅だけ */
+      margin: 24px auto 32px;        /* ブロック中央 */
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .mwork__langbtn{
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      font-size: 13px;
+      letter-spacing: .12em;
+      opacity: .45;
+      cursor: pointer;
+    }
+
+    .mwork__langbtn.is-active{
+      opacity: 1;
+      font-weight: 600;
+    }
+
+    
+    /* Pill style for JP/EN (opt-in) */
+    .mwork__langbar.is-pill{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width: fit-content;
+      gap:0;
+      padding:4px;
+      border-radius:999px;
+      background:rgba(0,0,0,.05);
+      border:1px solid rgba(0,0,0,.08);
+      margin: 18px auto 22px;
+    }
+
+    .mwork__langbar.is-pill .mwork__langbtn{
+      opacity:1;
+      font-weight:600;
+      letter-spacing:.06em;
+      padding:6px 10px;
+      border-radius:999px;
+      transition: background .2s ease, color .2s ease, opacity .2s ease;
+    }
+    .mwork__langbar.is-pill .mwork__langbtn:not(.is-active){
+      background:transparent;
+      color:rgba(0,0,0,.55);
+    }
+    .mwork__langbar.is-pill .mwork__langbtn.is-active{
+      background:#fff;
+      color:rgba(0,0,0,.88);
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
+    }
+    .mwork__en{
+      color: #777;
+      font-size: 0.95em;
+      line-height: 1.8;
+    }
+
+    .modal__figure img,
+    .mwork__img{
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 70vh;
+      margin: 0 auto;
+      display: block;
+      border-radius: 12px;
+      object-fit: contain;
+      background: #f6f6f6;
+    }
+
+    .mwork__img.is-small{
+      width: auto;
+      max-width: 520px;
+      height: auto;
+      object-fit: contain;
+    }
+
+
+    .mwork__img.is-logo{
+      max-width: 360px;
+    }
+    
+    .modal__caption{
+      margin-top: 10px;
+      color: #555;
+      font-size: 18px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .modal__caption p + p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+
+    @media (max-width: 520px){
+      .modal{ padding: 10vh 0; }
+      .modal__content{ padding: 52px 16px 16px; }
+      .modal__dialog{ max-height: calc(100vh - 20vh); }
+    }
+
+    /* ===== Modal Work Layout ===== */
+    .mwork{
+      max-width: 720px;
+      margin-inline: auto;
+      padding-inline: 18px;
+    }
+    @media (max-width: 520px){
+      .mwork{ padding-inline: 14px; }
+    }
+
+    .mwork__lead{
+      margin: 0 0 14px;
+      color: rgba(0,0,0,.55);
+      line-height: 1.9;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      text-align: center;
+      max-width: 60ch;
+      margin-inline: auto;
+    }
+
+    .mwork__img{
+      display:block;
+      width:100%;
+      max-width:100%;
+      height:auto;
+    }
+
+    .modal .mwork__img{
+      opacity: 1;
+      transition: opacity .6s ease, transform .8s ease;
+      transform: translateZ(0) scale(1);
+    }
+    .modal .mwork__img.is-switching{
+      opacity: 0;
+      transform: translateZ(0) scale(1.04);
+    }
+
+    .mgallery-ui{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      width: fit-content;
+      max-width: calc(100% - 32px);
+      margin-left: auto;
+      margin-right: auto;
+
+      transform: translateY(8px);
+      margin-bottom: -8px;
+
+      position: relative;
+      z-index: 6;
+
+      padding: 8px 12px;
+      gap: 10px;
+
+      border-radius: 999px;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    }
+
+    .mgallery-ui__btn{
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 999px;
+
+      display: grid;
+      place-items: center;
+
+      background: rgba(255,255,255,.98);
+      border: 1px solid rgba(0,0,0,.14);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .mgallery-ui__label{
+      min-width: 8ch;
+      text-align: center;
+      white-space: nowrap;
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    .mgallery-ui__btn:disabled{
+      opacity:.35;
+      cursor:default;
+    }
+
+     .modal .mgallery-ghost{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      pointer-events:none;
+      border-radius:12px;
+      opacity:1;
+      transform:scale(1);
+      filter:none;
+      transition: opacity .6s ease, transform .8s ease;
+    }
+
+    .modal .mgallery-ghost.is-done{
+      opacity:0;
+      transform:scale(1.05);
+      filter:none;
+    }
+
+    .mtabs{
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.05);
+      margin: 6px 0 18px;
+      margin-inline: auto;
+      justify-content: center;
+    }
+
+    .mtab{
+      border: 0;
+      background: transparent;
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: .9rem;
+      color: #333;
+    }
+
+    .mtab.is-active{
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+
+    .mwork__divider{
+      position: relative;
+      margin-top: 36px;
+      padding-top: 36px;
+    }
+
+    .mwork__divider::before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 8px;
+      background:
+        linear-gradient(currentColor, currentColor) left center / 24px 1px no-repeat,
+        linear-gradient(currentColor, currentColor) right center / 24px 1px no-repeat,
+        radial-gradient(circle, currentColor 50%, transparent 52%) center / 10px 10px no-repeat;
+      color: rgba(0,0,0,.35);
+    }
+
+    .mwork__points h3,
+    .mwork__process h3{ margin: 18px 0 8px; font-size: 1rem; }
+
+    .mwork__points ul{
+      margin: 0;
+      padding-left: 1.1em;
+      color: #555;
+      line-height: 1.8;
+      font-size: .92rem;
+    }
+
+    .mwork__process ol{
+      margin: 0;
+      padding-left: 1.2em;
+      color: #555;
+      line-height: 1.8;
+      font-size: .92rem;
+    }
+
+    .mwork__note{
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0,0,0,.08);
+      color: #777;
+      font-size: .85rem;
+      line-height: 1.6;
+    }
+
+    .mwork__note dl{
+      display: grid;
+      grid-template-columns: 6em 1fr;
+      gap: 6px 12px;
+      margin: 0;
+    }
+
+    .mwork__note dt{ font-weight: 500; color: #555; }
+    .mwork__note dd{ margin: 0; }
+  
+
+    /* ===== Illustration Modal ===== */
+    .mwork--illu{
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .illu-main img{
+      width: 100%;
+      border-radius: 12px;
+      background: #f3f3f1;
+    }
+
+    .illu-cap{
+      margin-top: 6px;
+      font-size: 12px;
+      color: rgba(0,0,0,.45);
+      text-align: center;
+    }
+
+    .illu-variants{
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 16px;
+    }
+
+    .illu-variants img{
+      width: 100%;
+      border-radius: 10px;
+      background: #f3f3f1;
+    }
+
+    .illu-variants figcaption{
+      margin-top: 4px;
+      font-size: 12px;
+      color: rgba(0,0,0,.45);
+      text-align: center;
+    }
+
+    .illu-note{
+      margin: 28px auto 0;
+      max-width: 56ch;
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(0,0,0,.65);
+      text-align: center;
+    }
+
+    .illu-link{
+      margin-top: 18px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .illu-link a{
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .illu-date{
+      margin: 22px 0 0;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(0,0,0,.45);
+      letter-spacing: .02em;
+    }
+
+    .illu-desc{
+      margin: 18px auto 0;
+      max-width: 56ch;
+      text-align: center;
+      line-height: 1.9;
+      color: rgba(0,0,0,.6);
+      font-size: 13px;
+    }
+
+    .illu-handle{
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,0,0,.22);
+      padding-bottom: 1px;
+    }
+
+    .illu-handle:hover{
+      border-bottom-color: rgba(0,0,0,.5);
+    }
+
+    .illu-variants.is-carousel{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      justify-items: center;
+      position: relative;
+    }
+
+    .illu-variants.is-carousel figure{
+      width: auto;
+      max-width: none;
+      display: none;
+      margin: 0;
+    }
+
+    .illu-variants.is-carousel figure.is-active {
+      display: block;
+    }
+
+    .illu-carousel-nav{
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 10px 0 0;
+      pointer-events: none; 
+      transform: translateY(-18px);
+      padding-inline: 75px;
+    }
+
+    .illu-carousel-ui{
+      position: static;
+      top: 96px;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0 14px; 
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(6px);
+
+      margin: 14px 0 18px;
+    }
+
+    .illu-carousel-btn{
+      pointer-events: auto;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.12);
+      background: rgba(165, 165, 165, 0.7);
+      border-color: rgba(0,0,0,.18);
+      color: rgba(0,0,0,.65);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      opacity: .65;
+    }
+
+    .illu-carousel-count{
+      display: none !important;
+    }
+
+    .illu-carousel-btn:hover{
+      opacity: 1;
+    }
+
+    .illu-carousel-btn:disabled{
+      opacity: .35;
+      cursor: default;
+    }
+
+    .illu-carousel-dots{
+      position: static;
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+
+      margin: 0 auto;
+      transform: none; 
+      top: auto; left: auto;
+    }
+
+    .illu-carousel-dot{
+      width: 18px;
+      height: 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.18);
+      background: transparent;
+      opacity: .55;
+      transition: background .2s ease, opacity .2s ease;
+    }
+
+    .illu-carousel-dot.is-active{
+      background: rgba(0,0,0,.28);
+      border-color: rgba(0,0,0,.18);
+      opacity: 1;
+    }
+
+    /* =========================
+      Illustration : 画像制限解除
+    ========================= */
+
+    .illu-variants.is-carousel img{
+      width: auto;
+      max-width: 100%;
+      max-height: none;
+      height: auto;
+      object-fit: unset;
+    }
+
+    .mwork--illu{
+      max-height: none;
+    }
+
+    /* ===== Illustration Works (from works-illustration.html) ===== */
+    #illuGrid{display:contents;}
+
+    .work-card__thumb{
+          width: 100%;
+          aspect-ratio: 1/1;
+          object-fit: cover;
+          display: block;
+          background: #f0f1f3;
+        }
+    .work-card__body{
+          padding: 10px 12px 12px;
+        }
+    .work-card__title{
+          font-size: .92rem;
+          line-height: 1.35;
+          margin: 0;
+          font-weight: 600;
+        }
+    .work-card__meta{
+          margin-top: 6px;
+          font-size: .78rem;
+          color: var(--muted);
+        }
+    /* gallery */
+        .gallery{
+          display: grid;
+          gap: 10px;
+        }
+    .gallery__stage{ position: relative; }
+    .gallery__nav{
+          position: absolute; top: 50%;
+          transform: translateY(-50%);
+          width: 44px; height: 44px;
+          border-radius: 999px;
+          border: none;
+          background: rgba(0,0,0,.45);
+          color: #fff;
+          cursor: pointer;
+          font-size: 22px;
+          line-height: 44px;
+        }
+    .gallery__prev{ left: 10px; }
+    .gallery__next{ right: 10px; }
+    .gallery__dots{
+          display:flex; justify-content:center; gap: 6px; flex-wrap: wrap;
+          padding-bottom: 4px;
+        }
+    .gallery__dot{
+          width: 8px; height: 8px; border-radius: 999px;
+          border: 1px solid rgba(0,0,0,.25);
+          background: rgba(0,0,0,.08);
+          cursor: pointer;
+        }
+    .gallery__dot[aria-current="true"]{ background: rgba(0,0,0,.55); 
+    }
+
+    .works-sort{
+      display: inline-flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.04);
+      margin-bottom: 16px;
+      margin: 12px auto 18px;
+      width: fit-content;
+    }
+
+    .sort-btn{
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      background: transparent;
+      color: rgba(0,0,0,.6);
+      border: none;
+      cursor: pointer;
+    }
+
+    .sort-btn.is-active{
+      background: rgba(0,0,0,.85);
+      color: #fff;
+    }
+
+</style>
+</head>
+<body>
+<div id="top"></div>
+<header class="site-nav">
+<div class="site-nav__inner">
+<a class="site-nav__brand" href="index.html#top">Yui Takasu Portfolio</a>
+<ul class="site-nav__menu">
+<li><a class="nav-link" href="index.html#top">Top</a></li>
+<li><a class="nav-link" href="works.html#top">Works</a></li>
+<li><a class="nav-link" href="index.html#skills">Skill</a></li>
+<li><a class="nav-link" href="index.html#about">About</a></li>
+<li><a class="nav-link" href="index.html#contact">Contact</a></li>
+<li>
+<a class="nav-link nav-link--cta" href="mailto:yui.sanki.takasu@gmail.com">Mail</a>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<h1>Works</h1>
+<div aria-label="Works category" class="works-tabs" role="tablist">
+<button aria-selected="false" class="works-tab" data-filter="illustration" role="tab" type="button">Illustration</button>
+<button aria-selected="true" class="works-tab is-active" data-filter="design" role="tab" type="button">Design</button>
+</div>
+<div class="works-container">
+<div aria-label="並び順" class="works-sort">
+<button class="sort-btn is-active" data-sort="new">新しい順</button>
+<button class="sort-btn" data-sort="old">古い順</button>
+</div>
+<div class="works-grid">
+<!-- Illustration -->
+<a class="work-card" data-cat="illustration" data-date="2025-11" data-modal="illust_shiraishiayameheader" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】白石あやめ様‐ヘッダー" src="images/works/illust/shiraishiayameheader.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】白石あやめ様‐ヘッダー</p>
+<div class="work-tags">
+<span class="work-tag">Header</span>
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2025-10" data-modal="illust_koihachi" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】今、恋がはじまれ。(cover by 小鳥遊せせり)" src="images/works/illust/koihachi.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】今、恋がはじまれ。(cover by 小鳥遊せせり)</p>
+<div class="work-tags">
+<span class="work-tag">Illustration</span>
+<span class="work-tag">Thumbnail</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2025-01" data-modal="illust_characterdesign" href="#">
+<div class="work-thumb"><img alt="【仕事絵】キャラデザサンプルまとめ" src="images/works/illust/characterdesign.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【仕事絵】キャラデザサンプルまとめ</p>
+<div class="work-tags">
+<span class="work-tag">CharacterDesign</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2024-03" data-modal="illust_otome" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】乙女解剖 / DECO*27(cover by 花ノ院とあ)" src="images/works/illust/otome.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】乙女解剖 / DECO*27(cover by 花ノ院とあ)</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Still illustration</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-12" data-modal="illust_sokkenai" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】そっけない(cover by Numa)" src="images/works/illust/sokkenai.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】そっけない(cover by Numa)</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-12" data-modal="illust_rarumucris" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】クリスマステーマの一枚絵" src="images/works/illust/rarumucris.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】クリスマステーマの一枚絵</p>
+<div class="work-tags">
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-10" data-modal="illust_hujii" href="#">
+<div class="work-thumb"><img alt="配信用兼グッズに使うイラスト作成依頼" src="images/works/illust/hujii.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">配信用兼グッズに使うイラスト作成の依頼</p>
+<div class="work-tags">
+<span class="work-tag">Goods</span>
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-09" data-modal="illust_sukiccyu" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】すきっちゅーの！" src="images/works/illust/sukiccyu.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】すきっちゅーの！</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-09" data-modal="illust_dokusou" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】独奏(cover by うみか)" src="images/works/illust/dokusou.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】独奏(cover by うみか)</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">MV</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-07" data-modal="illust_allback" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】強風オールバック(cover by うみか)" src="images/works/illust/allback.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】強風オールバック(cover by うみか)</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-03" data-modal="illust_ramuneko" href="#">
+<div class="work-thumb"><img alt="アイドルグッズのイラスト依頼" src="images/works/illust/ramuneko.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">アイドルグッズのイラスト依頼</p>
+<div class="work-tags">
+<span class="work-tag">Goods</span>
+<span class="work-tag">Still illustration</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-03" data-modal="illust_aota" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】可愛くてごめん" src="images/works/illust/aota.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】可愛くてごめん</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-03" data-modal="illust_bloody" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】ブラッディメアリー" src="images/works/illust/bloody.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】ブラッディメアリー</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-02" data-modal="illust_nonokawai" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】可愛くてごめん(cover by 高梨のの)‐sample" src="images/works/illust/nonokawai.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】可愛くてごめん/高梨のの(cover)</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2023-01" data-modal="illust_chibi" href="#">
+<div class="work-thumb"><img alt="ちびキャラまとめ" src="images/works/illust/chibi.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">ちびキャラまとめ</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2022-12" data-modal="illust_chiikawaii" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】可愛くてごめん(cover by ちぃ)" src="images/works/illust/chiikawaii.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】可愛くてごめん‐サムネイル</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2022-01" data-modal="illust_myselfheader" href="#">
+<div class="work-thumb"><img alt="自分用のXヘッダーイラスト" src="images/works/illust/myselfheader.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">自分用のXヘッダーイラスト</p>
+<div class="work-tags">
+<span class="work-tag">Header</span>
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2021-11" data-modal="illust_sayu" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】オリジナル楽曲イメージイラスト" src="images/works/illust/sayu.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">オリジナル楽曲イメージイラスト</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">MV</span>
+<span class="work-tag">Still illustration</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2021-05" data-modal="illust_melon" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】オリジナル楽曲イメージイラスト" src="images/works/illust/melon.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">オリジナル楽曲イメージイラスト</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Still illustration</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2021-04" data-modal="illust_rabuka" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】ラブカ？‐サムネイル" src="images/works/illust/rabuka.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】ラブカ？‐サムネイル</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2021-03" data-modal="illust_ready" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】レディメイド‐サムネイル" src="images/works/illust/ready.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】レディメイド‐サムネイル</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2021-02" data-modal="illust_ussewa" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】うっせぇわ‐サムネイル" src="images/works/illust/ussewa.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】うっせぇわ‐サムネイル</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2021-02" data-modal="illust_kaen" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】火炎" src="images/works/illust/kaen.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】火炎‐サムネイルsample</p>
+<div class="work-tags">
+<span class="work-tag">Thumbnail</span>
+<span class="work-tag">MV</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2020-12" data-modal="illust_yamazaki" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】Vtuberの一式依頼" src="images/works/illust/three-sample.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】Vtuberの一式依頼</p>
+<div class="work-tags">
+<span class="work-tag">Vtuber</span>
+<span class="work-tag">Background</span>
+<span class="work-tag">Layout</span>
+<span class="work-tag">Logo</span>
+</div>
+</div>
+</a>
+<a class="work-card" data-cat="illustration" data-date="2020-08" data-modal="illust_meria" href="#">
+<div class="work-thumb"><img alt="【依頼】オリジナル楽曲イメージイラスト" src="images/works/illust/meria.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">オリジナル楽曲イメージイラスト</p>
+<div class="work-tags">
+<span class="work-tag">MV</span>
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
+<!-- Design -->
+<a class="work-card" data-cat="design" data-modal="design_uru_hada" href="#">
+<div class="work-thumb"><img alt="URU-HADA 潤肌 美容液 ブランドデザイン" src="images/works/design/uru-hada.webp"/></div>
+<div class="work-meta">
+<p class="work-title">潤肌（URU-HADA）導入美容液</p>
+<p class="work-sub">Concept Work / Emotion / Sensory Branding</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="business_statistics" href="#">
+<div class="work-thumb"><img alt="ゼロから学ぶビジネス統計学 オンライン講座 ロゴ・バナー" src="images/works/design/business-statistics.webp"/></div>
+<div class="work-meta">
+<p class="work-title">ビジネス統計学（Online Course）</p>
+<p class="work-sub">Concept Work / Logic / Information Design</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_pizzavita" href="#">
+<div class="work-thumb"><img alt="PIZZA VITA プロモーションバナー" src="images/works/design/pizzavita.webp"/></div>
+<div class="work-meta">
+<p class="work-title">PIZZA VITA</p>
+<p class="work-sub">Concept Work / Action / Promotion Design</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_v_couture" href="#">
+<div class="work-thumb"><img alt="V-COUTURE ロゴ・名刺・モックアップ" src="images/works/design/v-couture.webp"/></div>
+<div class="work-meta">
+<p class="work-title">V-COUTURE</p>
+<p class="work-sub">Branding &amp; Identity / Logo・Business Card</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_kamosu" href="#">
+<div class="work-thumb"><img alt="醸す 名刺デザイン" src="images/works/design/kamosu.webp"/></div>
+<div class="work-meta">
+<p class="work-title">醸す（KAMOSU）</p>
+<p class="work-sub">Business Card Design</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_aoi_architects" href="#">
+<div class="work-thumb"><img alt="次世代型サステナブル建築事務所のロゴ・名刺デザインとモックアップ" src="images/works/design/aoi-architects.webp"/></div>
+<div class="work-meta">
+<p class="work-title">AOI Architects</p>
+<p class="work-sub">Logo &amp; Business Card Design / Concept Study</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_loop_cafe" href="#">
+<div class="work-thumb"><img alt="サステナブル志向のカフェを想定したロゴデザインとモックアップ" src="images/works/design/loop-cafe.webp"/></div>
+<div class="work-meta">
+<p class="work-title">LOOP Café</p>
+<p class="work-sub">Logo Design / Concept Study</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_nexus_ai" href="#">
+<div class="work-thumb"><img alt="NEXUS-AI ロゴデザインとモックアップ" src="images/works/design/nexus-ai.webp"/></div>
+<div class="work-meta">
+<p class="work-title">NEXUS AI</p>
+<p class="work-sub">Logo Design / Mockup</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_sora" href="#">
+<div class="work-thumb"><img alt="SORA ロゴデザインとパッケージモックアップ" src="images/works/design/sora.webp"/></div>
+<div class="work-meta">
+<p class="work-title">SORA</p>
+<p class="work-sub">Logo Design / Package Mockup</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_winter_choco" href="#">
+<div class="work-thumb"><img alt="冬限定の一口チョコを宣伝するバナー" src="images/works/design/banner-collection-05.webp"/></div>
+<div class="work-meta">
+<p class="work-title">冬限定 ひとくちチョコ</p>
+<p class="work-sub">Promotion Banner / 季節商品訴求</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_onsen" href="#">
+<div class="work-thumb"><img alt="高級旅館向けに静けさと特別感を演出した貸切露天風呂付き宿泊プランの訴求バナー" src="images/works/design/banner-collection-03.webp"/></div>
+<div class="work-meta">
+<p class="work-title">貸切露天風呂付き宿泊プラン</p>
+<p class="work-sub">Promotion Banner / 2 Variations（販促・ブランディング）</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_kobayasland" href="#">
+<div class="work-thumb"><img alt="遊園地「Kobayasランド」開園記念を宣伝するバナー" src="images/works/design/banner-collection-06.webp"/></div>
+<div class="work-meta">
+<p class="work-title">Kobayasランド 開園記念</p>
+<p class="work-sub">Promotion Banner / イベント告知</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_kobapay" href="#">
+<div class="work-thumb"><img alt="クリスマス商戦を狙い、Koba-Payアプリの利用を促進するバナー" src="images/works/design/banner-collection-01.webp"/></div>
+<div class="work-meta">
+<p class="work-title">Koba-Pay クリスマスキャンペーン</p>
+<p class="work-sub">Promotion Banner / アプリ利用促進</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_kobafitness" href="#">
+<div class="work-thumb"><img alt="新春キャンペーンとしてスポーツKobaフィットネスクラブの入会を促進するバナー" src="images/works/design/banner-collection-04.webp"/></div>
+<div class="work-meta">
+<p class="work-title">スポーツKoba 新春入会キャンペーン</p>
+<p class="work-sub">Promotion Banner / 入会促進</p>
+</div>
+</a>
+<a class="work-card" data-cat="design" data-modal="design_lunch_menu" href="#">
+<div class="work-thumb"><img alt="ランチメニュー 印刷物デザイン" src="images/works/design/lunch-menu.webp"/></div>
+<div class="work-meta">
+<p class="work-title">cafe-with flyer</p>
+<p class="work-sub">Print Design</p>
+</div>
+</a>
+<a class="work-card reveal-block" data-cat="design" data-modal="design_bernes_card" href="#">
+<span aria-hidden="true" class="sentinel"></span>
+<div class="work-thumb">
+<img alt="自分用名刺-わんこモチーフデザイン" src="images/works/design/bernes.webp"/></div>
+<div class="work-meta">
+<p class="work-title">自分用名刺</p>
+<p class="work-sub">Print Design</p>
+</div>
+</a>
+<a class="work-card reveal-block" data-cat="design" data-modal="design_paper_portfolio" href="#">
+<span aria-hidden="true" class="sentinel"></span>
+<div class="work-thumb">
+<img alt="ポートフォリオモックアップ" src="images/works/design/portfolio.webp"/></div>
+<div class="work-meta">
+<p class="work-title">紙ポートフォリオ</p>
+<p class="work-sub">Print Design</p>
+</div>
+</a>
+</div>
+<a aria-label="ページ上部へ" class="page-top" href="#top">
+<span class="page-top__text">PAGE TOP</span>
+</a>
+<div aria-hidden="true" class="cursor"></div>
+<p class="works-footnote">
+※作風の変化に伴い、ポートフォリオには現在の表現に近い作品を掲載しています。<br/>
+過去（2020年以前）の実績については、必要に応じて個別にご共有可能です。<br/><br/>
+    ※ 掲載しているイラストは、依頼主の所有権を尊重し、一部に透かしを入れた状態で掲載しています。</p>
+</div></main>
+<a aria-label="Back to Home" class="back-fab" href="index.html">← Back to Home</a>
+<div aria-hidden="true" class="modal" id="workModal">
+<div class="modal__overlay" data-close="overlay"></div>
+<div aria-labelledby="workModalTitle" aria-modal="true" class="modal__dialog" role="dialog">
+<button aria-label="閉じる" class="modal__close" data-close="button" type="button">×</button>
+<div class="modal__content">
+<h2 class="modal__title" id="workModalTitle">Title</h2>
+<p class="modal__subtitle">Subtitle</p>
+<div class="modal__body" id="workModalBody"></div>
+</div>
+</div>
+</div>
+<script>
+
+
+(function () {
+
+  document.documentElement.classList.add("js");
+
+  const modal = document.getElementById("workModal");
+  const bodyEl = document.getElementById("workModalBody");
+  const titleEl = document.getElementById("workModalTitle");
+  const subtitleEl = modal ? modal.querySelector(".modal__subtitle") : null;
+  const closeBtn = modal ? modal.querySelector('[data-close="button"]') : null;
+  const overlay = modal ? modal.querySelector('[data-close="overlay"]') : null;
+
+  let lastFocus = null;
+
+const modalData = {
+      illust_shiraishiayameheader: {
+        title: "【お仕事絵】白石あやめ様 - ヘッダー",
+        subtitle: "Header / Still illustration / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/shiraishiayameheader.webp" alt="【お仕事絵】白石あやめ様 - ヘッダー">
+        <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2025年 11月 制作</p>
+
+	      <p class="illu-desc">
+          白石あやめ様（ 
+            <a class="illu-handle"
+              href="https://x.com/ayamechan36"
+              target="_blank" rel="noopener noreferrer">
+              @ayamechan36
+            </a>
+            ）よりヘッダー作成のご依頼いただき、描かせていただきました。</p>
+
+        <p class="illu-note">内向的ながら明るさに憧れる人物像をテーマに、<br>
+	       ロリータファッションと花モチーフで心情の対比を表現しました。<br>
+	       スカートの内に忍ばせたアジサイと、周囲に散らしたバラで<br>
+	       秘めた想いと華やかさを象徴しています。
+      </p>
+    </div>
+  `
+},
+
+      illust_koihachi: {
+        title: "【お仕事絵】今、恋がはじまれ。",
+        subtitle: "Illustration / Thumbnail",
+        html: `
+        <div class="mwork mwork--illu">
+
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/koihachi.webp" alt="今、恋がはじまれ。 sample（原寸）"><figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2025年 10月 制作</p>
+
+        <p class="illu-desc">
+          小鳥遊せせり様（ 
+            <a class="illu-handle"
+              href="https://x.com/seseri120"
+              target="_blank" rel="noopener noreferrer">
+              @seseri120
+            </a>
+          ）よりサムネイル作成の依頼をいただき、描かせていただきました。<br>
+          HoneyWorks様の「今、恋がはじまれ」歌ってみた動画用のサムネイルイラストです。<br>
+          本家タイトル作成あり◎
+	      </p>
+
+      <p class="illu-note">楽曲の雰囲気に沿った表情づくりを意識しています。</p>
+
+      <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=GwAjyjjn4bo"
+             target="_blank" rel="noopener noreferrer">
+          実際に使用された動画を見る
+        </a>
+      </p>
+
+    </div>
+  `
+},
+
+      illust_characterdesign: {
+        title: "【お仕事絵】キャラクターデザインまとめ",
+        subtitle: "CharacterDesign / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+
+        <div class="illu-variants" data-carousel>
+        <figure>
+          <img src="images/works/illust/original/01.webp" alt="1">
+          <figcaption>1</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/02.webp" alt="2">
+          <figcaption>2</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/03.webp" alt="3">
+          <figcaption>3</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/04.webp" alt="4">
+          <figcaption>4</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/05.webp" alt="5">
+          <figcaption>5</figcaption>
+        </figure></div>
+
+        <div class="mwork__divider"></div>
+          
+        <p class="illu-date">2024～2025年分制作まとめ</p>
+
+        <p class="illu-desc">
+        中華圏TikTokで活動なされてる方々から<br>
+        Vtuber/キャラクターデザインの依頼をいただき、<br>
+        デザインのみさせていただきました。 
+        </p>
+            <p class="illu-note">
+        個別にデフォルメ差分あり◎ 衣装差分あり◎。</p>
+        </div>
+  `
+},
+
+      illust_otome: {
+        title: "【お仕事絵】乙女解剖 / DECO*27(cover by 花ノ院とあ)",
+        subtitle: "Thumbnail / Still illustration",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <div class="illu-variants" data-carousel>
+        <figure>
+          <img src="images/works/illust/original/otome.webp" alt="サムネイル">
+          <figcaption>サムネイル</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/otome-dop.webp" alt="目開け口開け">
+          <figcaption>目開け口開け</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/otome.eomc.webp" alt="目開け口閉じ">
+          <figcaption>目開け口閉じ</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/otome.ehcmo.webp" alt="目半開き口開け">
+          <figcaption>目半開き口開け</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/otome.ehcmc.webp" alt="目半開き 口閉じ">
+          <figcaption>目半開き 口閉じ</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/otome.ecmo.webp" alt="目閉じ 口全開">
+          <figcaption>目閉じ 口全開</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/otome.ecmc.webp" alt="目閉じ 口閉じ">
+          <figcaption>目閉じ 口閉じ</figcaption>
+        </figure>
+      </div>
+
+      <div class="mwork__divider"></div>
+
+      <p class="illu-date">2024年 3月 制作</p>
+
+      <p class="illu-desc">
+        花ノ院とあ様（
+        <a class="illu-handle"
+           href="https://x.com/hananoin_toa"
+           target="_blank" rel="noopener noreferrer">
+          @hananoin_toa
+        </a>
+        ）よりサムネイル作成の依頼をいただき、描かせていただきました。
+	      DECO*27様の「乙女解剖」歌ってみた動画用のサムネイルイラストです。<br>
+        本家タイトル作成あり◎
+        </p>
+
+      <p class="illu-note">楽曲の雰囲気に沿った表情づくりを意識しています。</p>
+
+      <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=S6r3AWerjI4"
+             target="_blank" rel="noopener noreferrer">
+          実際に使用された動画を見る
+        </a>
+      </p>
+
+    </div>
+  `
+},
+
+      illust_sokkenai: {
+        title: "【お仕事絵】そっけない(cover by Numa)",
+        subtitle: "Still illustration / Portrait painting / Thumbnail",
+        html: `
+          <div class="mwork mwork--illu">
+
+            <figure class="illu-main">
+              <img src="images/works/illust/original/sokkenai.webp"
+                   alt="【お仕事絵】そっけない(cover by Numa)">
+              <figcaption class="illu-cap">sample（原寸）</figcaption>
+            </figure>
+
+        <div class="mwork__divider"></div>
+        
+        <p class="illu-date">2023年 12月 制作</p>
+
+        <p class="illu-desc">
+          Numa様（ 
+            <a class="illu-handle"
+              href="https://x.com/Numa_identity"
+              target="_blank" rel="noopener noreferrer">
+              @Numa_identity
+            </a>
+            ）よりサムネイル作成の依頼をいただき、描かせていただきました。</p>
+        RADWIMPS様の「そっけない」歌ってみた動画用のサムネイルイラストです。
+        <p class="illu-note">雪の降る夜、バス停でひとり過ごす静かな時間を描いています。<br>
+        見る人によって受け取り方が変わる余白を意識しました。
+        </p>
+
+      <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=aXxRNVyMvLI"
+             target="_blank" rel="noopener noreferrer">
+          実際に使用された動画を見る
+        </a>
+      </p>
+
+    </div>
+  `
+},
+
+      illust_rarumucris: {
+        title: "クリスマステーマの一枚絵",
+        subtitle: "Still illustration / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/rarumucris.webp" alt="クリスマステーマの一枚絵 sample（原寸）">
+          <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2023年 12月 制作</p>
+
+	      <p class="illu-desc">
+          灰棘らるむ様（ 
+            <a class="illu-handle"
+              href="https://x.com/LArm_hy"
+              target="_blank" rel="noopener noreferrer">
+              @LArm_hy
+            </a>
+          ）よりイラスト作成の依頼をいただき、描かせていただきました。
+          </p>
+
+      <p class="illu-note">夜空に浮かぶ月とプレゼントに包まれた、幻想的な時間を描いています。<br>
+	    やわらかな光と色の重なりを意識しました。</p>
+    </div>
+  `
+},
+
+      illust_hujii: {
+        title: "配信用兼グッズに使うイラスト",
+        subtitle: "Goods / Still illustration / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+         <figure class="illu-main">
+           <img src="images/works/illust/original/hujii.webp" alt="配信用兼グッズに使うイラスト">
+           <figcaption class="illu-cap">sample（原寸）</figcaption>
+         </figure>
+
+        <div class="mwork__divider"></div>
+      
+      	<p class="illu-date">2023年 10月 制作</p>
+
+        <p class="illu-note">配信用およびグッズ向けイラストとして制作した一枚です。<br>
+      	商用利用ありの案件となります。<br>
+      	掲載元不明のため、配信者名・関連リンクは非掲載としています。</p>
+        </div>
+  `
+},
+
+    illust_sukiccyu: {
+      title: "【お仕事絵】すきっちゅーの！(cover by ちぃ)",
+      subtitle: "Thumbnail / Portrait painting",
+      html: `
+        <div class="mwork mwork--illu">
+
+          <figure class="illu-main">
+            <img src="images/works/illust/original/sukiccyu.webp" alt="【お仕事絵】すきっちゅーの！">
+            <figcaption class="illu-cap">sample（原寸）</figcaption>
+          </figure>
+
+          <div class="mwork__divider"></div>
+
+          <p class="illu-date">2023年 9月 制作</p>
+
+          <p class="illu-desc">
+            ちぃ様（
+            <a class="illu-handle" href="https://x.com/chii1402" target="_blank" rel="noopener noreferrer">
+              @chii1402
+            </a>
+            ）より歌ってみた用サムネイル作成の依頼をいただき、<br>
+            描かせていただきました<br>
+            HoneyWorks様の「すきっちゅーの！」歌ってみた動画用のサムネイルイラストです。<br>
+            背景変更指定・本家タイトル作成ありの案件です。
+          </p>
+
+          <p class="illu-link">
+            ▶ <a href="https://www.youtube.com/watch?v=x396yZY2f2c" target="_blank" rel="noopener noreferrer">
+              実際に使用された動画を見る
+            </a>
+          </p>
+
+        </div>
+      `
+    },
+
+      illust_dokusou: {
+        title: "【お仕事絵】独奏(cover by うみか)",
+        subtitle: "Thumbnail / MV / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/dokusou.webp" alt="【お仕事絵】独奏(cover by うみか)">
+          <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2023年 9月 制作</p>
+
+	      <p class="illu-desc">
+ 	        うみか様（ 
+  	        <a class="illu-handle"
+              href="https://x.com/000umika000"
+              target="_blank" rel="noopener noreferrer">
+              @000umika000 
+            </a>
+        	）より一枚絵およびMV作成の依頼いただき、<br>
+	        描かせていただきました。<br>
+	        YASUHIRO(康寛)様の「独奏」歌ってみた動画用のイラストです。<br>
+	        オリジナルMV・背景変更指定・本家タイトル作成ありの案件です。<br></p>
+
+        <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=zwI8HzYCMGw"
+             target="_blank" rel="noopener noreferrer">
+          実際に使用された動画を見る
+        </a>
+      </p>
+
+    </div>
+  `
+},
+
+      illust_allback: {
+        title: "【お仕事絵】強風オールバック(cover by うみか)",
+        subtitle: "Thumbnail / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/allback.webp" alt="【お仕事絵】強風オールバック(cover by うみか)">
+          <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2023年 7月 制作</p>
+
+	      <p class="illu-desc">
+ 	        うみか様（ 
+  	        <a class="illu-handle"
+              href="https://x.com/000umika000"
+              target="_blank" rel="noopener noreferrer">
+              @000umika000 
+            </a>
+	        ）よりサムネイル画像作成の依頼をいただき、描かせていただきました。<br>
+	        Yukopi様の「強風オールバック」歌ってみた動画用のサムネイルイラストです。<br>
+	        本家タイトル作成ありの案件です。<br> 
+	      </p>
+
+        <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=4znGkEUSlSc"
+            target="_blank" rel="noopener noreferrer">
+          実際に使用された動画を見る
+        </a>
+      </p>
+
+    </div>
+  `
+},
+
+      illust_ramuneko: {
+        title: "アイドルグッズのイラスト依頼",
+        subtitle: "Goods / Still illustration",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/ramuneko.webp" alt="アイドルグッズのイラスト依頼">
+          <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+      	<p class="illu-date">2023年 3月 制作</p>
+
+	      <p class="illu-desc">
+        	アイドルの水海らむね様（ 
+            <a class="illu-handle"
+              href="https://x.com/mizuumiramune"
+              target="_blank" rel="noopener noreferrer">
+              @mizuumiramune 
+            </a>
+	        ）ご本人様より誕生日イベントにて販売される、<br>
+	        プリントTシャツ用にイラストとしてご依頼をいただき、制作しました<br>
+	        グッズ使用を前提とした構成で描き下ろし作品です。<br>
+	      </p>
+    </div>
+  `
+},
+
+      illust_aota: {
+        title: "【お仕事絵】可愛くてごめん",
+        subtitle: "Thumbnail / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/aota.webp" alt="【お仕事絵】可愛くてごめん">
+          <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2023年 3月 制作</p>
+
+	      <p class="illu-desc">
+          歌ってみたのサムネイルイラストとしてご依頼をいただき、制作しました。<br>
+          HoneyWorks様の「可愛くてごめん」歌ってみた動画用のサムネイルイラストです。<br>
+          背景変更指定・本家タイトル作成ありの案件です。</p>
+
+	      <p class="illu-desc">
+	        権利配慮のため、歌い手様名および動画リンクの記載は控えています。</p>
+    </div>
+  `
+},
+
+      illust_bloody: {
+        title: "【お仕事絵】ブラッディメアリー",
+        subtitle: "Thumbnail / Still illustration / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+
+        <div class="illu-variants" data-carousel>
+          <img src="images/works/illust/original/bloody.webp" alt="【お仕事絵】ブラッディメアリー">
+          <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/bloody-eos.webp" alt="目開けスマイル">
+          <figcaption>目開けスマイル</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/bloody-eo.webp" alt="目開け普通">
+          <figcaption>目開け普通</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/bloody-ecs.webp" alt="目閉じスマイル">
+          <figcaption>目閉じスマイル</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/bloody-ec.webp" alt="目閉じ普通">
+          <figcaption>目閉じ普通</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/bloody-back.webp" alt="背景のみ">
+          <figcaption>背景のみ</figcaption>
+        </figure></div>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2023年 3月 制作</p>
+
+	      <p class="illu-desc">
+          歌ってみたMV用1枚絵としてご依頼をいただき、制作しました。<br>
+          黒野京†様の「ブラッディメアリー」歌ってみた動画用のサムネイルイラストです。<br>
+          表情差分ありの案件です。
+	      </p>
+
+        <p class="illu-desc">
+          権利配慮のため、歌い手様名および動画リンクの記載は控えています。</p>
+    </div>
+  `
+},
+
+      illust_nonokawai: {
+        title: "【お仕事絵】可愛くてごめん/高梨のの(cover)",
+        subtitle: "Thumbnail / Portrait painting",
+        html: `
+          <div class="mwork mwork--illu">
+
+        <div class="illu-variants" data-carousel>
+        <figure>
+          <img src="images/works/illust/original/nonokawai.webp"
+            alt="【お仕事絵】可愛くてごめん/高梨のの(cover)">
+            <figcaption class="illu-cap">sample（原寸）</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/nonokawai1.webp" alt="差分１">
+          <figcaption>差分１</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/nonokawai2.webp" alt="差分２">
+          <figcaption>差分２</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/nonokawai3.webp" alt="差分３">
+          <figcaption>差分３</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/nonokawai4.webp" alt="差分４">
+          <figcaption>差分４</figcaption>
+        </figure></div>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2023年 2月 制作</p>
+
+        <p class="illu-desc">
+          高梨のの様（ 
+            <a class="illu-handle"
+              href="https://x.com/TAKANASHInono"
+              target="_blank" rel="noopener noreferrer">
+              @TAKANASHInono 
+            </a>
+          ）よりサムネイル画像作成の依頼をいただき、描かせていただきました。<br>
+          HoneyWorks様の「可愛くてごめん」歌ってみた動画用のサムネイルイラストです。<br>
+          本家タイトル作成・差分作成ありの案件です。<br></p>
+
+      <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=SCSWWhqsmQI"
+             target="_blank" rel="noopener noreferrer">
+          実際に使用された動画を見る
+        </a>
+      </p>
+    </div>
+  `
+},
+
+      illust_chibi: {
+        title: "ちびキャラまとめ",
+        subtitle: "Illustration / Portrait painting",
+        html: `
+          <div class="mwork mwork--illu">
+
+        <div class="illu-variants" data-carousel>
+        <figure>
+          <img src="images/works/illust/original/chibi1.webp" alt="1">
+          <figcaption>自分のキャラ</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/chibi2.webp" alt="2">
+          <figcaption>山崎スイのちびキャラ壁紙</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/chibi3.webp" alt="3">
+          <figcaption>ちびキャラ企画１</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/chibi4.webp" alt="4">
+          <figcaption>ちびキャラ企画２</figcaption>
+        </figure></div>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">今までの制作</p>
+
+        <p class="illu-desc">
+          今までのちびキャラまとめです。<br>
+          たまにちびキャラとか何かしら無料企画やりますので<br>
+          よかったらXをフォローしてたまに覗いて来てください。</p>
+    </div>
+  `
+},
+
+      illust_chiikawaii: {
+        title: "【お仕事絵】可愛くてごめん(cover by ちぃ)",
+        subtitle: "Thumbnail / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/chiikawaii.webp" alt="【お仕事絵】可愛くてごめん(cover by ちぃ)">
+          <figcaption class="illu-cap">sample（40%）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2022年 12月 制作 </p>
+
+        <p class="illu-desc">
+          ちぃ様（ 
+            <a class="illu-handle"
+              href="https://x.com/chii1402"
+              target="_blank" rel="noopener noreferrer">
+              @chii1402 
+            </a>
+        ）よりサムネイル画像作成の依頼をいただき、描かせていただきました。<br>
+        HoneyWorks様の「可愛くてごめん」歌ってみた動画用のサムネイルイラストです。<br>
+        本家タイトル作成ありの案件です。<br></p>
+
+        <p class="illu-link">
+          ▶ <a href="https://www.youtube.com/watch?v=abT7wIAYHxk"
+              target="_blank" rel="noopener noreferrer">
+            実際に使用された動画を見る
+        </a>
+      </p>
+    </div>
+  `
+},
+
+      illust_myselfheader: {
+        title: "自分用のXヘッダーイラスト",
+        subtitle: "Header / Still illustration / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/myselfheader.webp" alt="自分用のXヘッダーイラスト">
+          <figcaption class="illu-cap">原寸</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2022年 1月 制作</p>
+
+        <p class="illu-desc">
+        自分の固定キャラで自分用Xヘッダーとして制作したイラスト。<br>
+        スイーツやピンク自分の大好きを詰め込んでいます。
+        </p>
+      </div>
+  `
+},
+
+      illust_sayu: {
+        title: "オリジナル楽曲イメージイラスト",
+        subtitle: "Thumbnail / MV / Still illustration",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/sayu.webp" alt="オリジナル楽曲イメージイラスト">
+          <figcaption class="illu-cap">sample（40%）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2021年 11月 制作</p>
+
+        <p class="illu-desc">
+        オリジナル楽曲のイメージイラストおよびMV制作のご依頼をいただき、制作しました。<br>
+        表情差分、背景描き込み、PV用特殊演出を含みます。</p>
+
+        <p class="illu-desc">
+        ※ 楽曲非公開のため、楽曲名および関連リンクの掲載は控えています。</p>
+    </div>
+  `
+},
+
+      illust_melon: {
+        title: "オリジナル楽曲イメージイラスト",
+        subtitle: "Thumbnail / Still illustration",
+        html: `
+        <div class="mwork mwork--illu">
+
+	      <div class="illu-variants" data-carousel>
+        <figure>
+          <img src="images/works/illust/original/骸骨ｘ人物ｘ背景.webp" alt="骸骨ｘ人物ｘ背景">
+          <figcaption>骸骨ｘ人物ｘ背景 sample(40%)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/死骸ｘ人物ｘ背景.webp" alt="死骸ｘ人物ｘ背景">
+          <figcaption>死骸ｘ人物ｘ背景 sample(40%)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/骸骨ｘ背景.webp" alt="骸骨ｘ背景">
+          <figcaption>骸骨ｘ背景 sample(40%)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/死骸ｘ背景.webp" alt="死骸ｘ背景">
+          <figcaption>死骸ｘ背景 sample(40%)</figcaption>
+        </figure></div>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2021年 11月 制作</p>
+
+        <p class="illu-desc">
+        オリジナル楽曲のイメージイラストのご依頼をいただき、制作しました。<br>
+        表情差分、背景描き込み、PV用特殊演出を含みます。</p>
+
+        <p class="illu-desc">
+        ※ 楽曲非公開のため、楽曲名および関連リンクの掲載は控えています。</p>
+    </div>
+  `
+},
+
+      illust_rabuka: {
+        title: "【お仕事絵】ラブカ？(cover by 惑星のパンくん)",
+        subtitle: "Thumbnail / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+        <figure class="illu-main">
+          <img src="images/works/illust/original/rabuka.webp" alt="【お仕事絵】ラブカ？(cover by 惑星のパンくん)">
+          <figcaption class="illu-cap">sample（60%）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2021年 4月 制作 </p>
+
+        <p class="illu-desc">
+        惑星のパンくん様（ 
+          <a class="illu-handle"
+            href="https://x.com/chimpanzeevoice"
+            target="_blank" rel="noopener noreferrer">
+            @chimpanzeevoice
+          </a>
+        ）より、サムネイル画像作成の依頼をいただき、描かせていただきました。<br>
+        柊キライ様の「ラブカ？」歌ってみた動画用のサムネイルイラストです。
+        本家タイトル作成ありの案件です。<br> 
+        </p>
+
+        <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=srwVDj8pPdk"
+            target="_blank" rel="noopener noreferrer">
+            実際に使用された動画を見る </a>
+        </p>
+    </div>
+  `
+},
+
+      illust_ready: {
+        title: "【お仕事絵】レディメイド(cover by 惑星のパンくん)",
+        subtitle: "Thumbnail / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <div class="mwork mwork--illu">
+        <figure>
+          <img src="images/works/illust/original/ready.webp" alt="【お仕事絵】レディメイド(cover by 惑星のパンくん)">
+          <figcaption class="illu-cap">sample（60%）</figcaption>
+        </figure></div>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2021年 4月 制作 </p>
+
+        <p class="illu-desc">
+        惑星のパンくん様（ 
+          <a class="illu-handle"
+            href="https://x.com/chimpanzeevoice"
+            target="_blank" rel="noopener noreferrer">
+            @chimpanzeevoice 
+          </a>
+        ）より、サムネイル画像作成の依頼をいただき、描かせていただきました。<br>
+        すりぃ様の「レディメイド」歌ってみた動画用のサムネイルイラストです。
+        本家タイトル作成ありの案件です。<br> 
+        </p>
+
+        <p class="illu-link">
+          ▶ <a href="https://www.youtube.com/watch?v=P52wOB_FQLM"
+              target="_blank" rel="noopener noreferrer">
+            実際に使用された動画を見る
+          </a>
+      </p>
+    </div>
+  `
+},
+
+      illust_ussewa: {
+        title: "【お仕事絵】うっせぇわ(cover by 惑星のパンくん)",
+        subtitle: "Thumbnail / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <div class="mwork mwork--illu">
+        <figure>
+          <img src="images/works/illust/original/ussewa.webp" alt="【お仕事絵】うっせぇわ(cover by 惑星のパンくん)">
+          <figcaption class="illu-cap">sample（60%）</figcaption>
+        </figure>	</div>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2021年 2月 制作 </p>
+
+        <p class="illu-desc">
+        惑星のパンくん様（ 
+          <a class="illu-handle"
+            href="https://x.com/chimpanzeevoice"
+            target="_blank" rel="noopener noreferrer">
+            @chimpanzeevoice 
+          </a>
+        ）より、サムネイル画像作成の依頼をいただき、描かせていただきました。<br>
+        syudou様の「レディメイド」歌ってみた動画用のサムネイルイラストです。
+        本家タイトル作成ありの案件です。<br> 
+        </p>
+
+        <p class="illu-link">
+          ▶ <a href="https://www.youtube.com/watch?v=RFQ8NXTRxiw"
+              target="_blank" rel="noopener noreferrer">
+            実際に使用された動画を見る
+          </a>
+      </p>
+    </div>
+  `
+},
+
+      illust_kaen: {
+        title: "【お仕事絵】火炎(cover by 惑星のパンくん)",
+        subtitle: "Thumbnail / MV / Still illustration",
+        html: `
+        <div class="mwork mwork--illu">
+
+	      <div class="illu-variants" data-carousel>
+        <figure>
+          <img src="images/works/illust/original/kaen-samu.webp" alt="サムネイル">
+          <figcaption>サムネイル sample(原寸大)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/kaen1.webp" alt="表情差分1">
+          <figcaption>表情差分１ sample(30%)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/kaen2.webp" alt="表情差分2">
+          <figcaption>表情差分２ sample(30%)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/kaen3.webp" alt="表情差分3">
+          <figcaption>表情差分３  sample(30%)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="images/works/illust/original/kaen4.webp" alt="表情差分4">
+          <figcaption>表情差分４  sample(30%)</figcaption>
+        </figure></div>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2021年 2月 制作</p>
+
+        <p class="illu-desc">
+          惑星のパンくん様（ 
+            <a class="illu-handle"
+              href="https://x.com/chimpanzeevoice"
+              target="_blank" rel="noopener noreferrer">
+              @chimpanzeevoice
+            </a>
+          ）より依頼をいただき、描かせていただきました。<br>
+          女王蜂様の「火炎(FIRE)」歌ってみたに向けて<br> 
+          オリジナルMV用イラストを制作しました。<br>
+          <br>本作は表情差分4枚構成の一枚で、<br>
+          楽曲の鋭いエネルギーと緊張感を意識して描いています。<br>
+          MV本編の演出も担当し、絵と映像の両面から楽曲の世界観を表現しました。</p>
+
+        <p class="illu-link">
+        ▶ <a href="https://www.youtube.com/watch?v=a6aAIXWVErs"
+            target="_blank" rel="noopener noreferrer">
+            実際に使用された動画を見る </a>
+      </p>
+    </div>
+  `
+},
+
+      illust_yamazaki: {
+        title: "【お仕事絵】Vtuberの一式依頼",
+        subtitle: "Thumbnail / MV / Still illustration",
+        html: `
+        <div class="mwork mwork--illu">
+
+	      <div class="illu-variants" data-carousel>
+         <figure>
+           <img src="images/works/illust/original/sui-三面図.webp" alt="三面図">
+           <figcaption>三面図 sample(60%)</figcaption>
+         </figure>
+
+         <figure>
+           <img src="images/works/illust/original/sui-room-sample.webp" alt="部屋">
+           <figcaption>部屋 sample(60%)</figcaption>
+         </figure>
+
+         <figure>
+           <img src="images/works/illust/original/sui-overlay-sample.webp" alt="オーバーレイ">
+           <figcaption>オーバーレイ sample(60%)</figcaption>
+         </figure></div>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2020年 12月 制作</p>
+
+        <p class="illu-desc">
+        山崎スイ様（ 
+          <a class="illu-handle"
+            href="https://x.com/yamazaki_sui"
+            target="_blank" rel="noopener noreferrer">
+            @yamazaki_sui
+          </a>
+        ）より依頼をいただき、描かせていただきました。<br>
+        VTuberのキャラクターデザインを中心に、<br>
+        ロゴ、配信レイアウト、配信背景、自己紹介動画編集までを一貫して制作しました。<br>
+        <br>
+        キャラクター名の由来である「彗星」から着想を得て、<br>
+        星・宇宙をモチーフにした世界観設計とビジュアル展開を行っています。<br>
+        ※ 自己紹介動画は現在非公開です。
+        </p>
+    </div>
+  `
+},
+
+      illust_meria: {
+        title: "【お仕事絵】オリジナル楽曲イメージイラスト",
+        subtitle: "MV / Still illustration / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+  	    <div class="illu-variants" data-carousel>
+         <figure>
+           <img src="images/works/illust/original/meria1.webp" alt="表情差分1">
+           <figcaption>表情差分１ sample(60%)</figcaption>
+         </figure>
+
+         <figure>
+           <img src="images/works/illust/original/meria2.webp" alt="表情差分2">
+           <figcaption>表情差分２ sample(60%)</figcaption>
+         </figure>
+
+         <figure>
+           <img src="images/works/illust/original/meria3.webp" alt="表情差分3">
+           <figcaption>表情差分３ sample(60%)</figcaption>
+         </figure>
+
+         <figure>
+           <img src="images/works/illust/original/meria4.webp" alt="表情差分4">
+           <figcaption>表情差分４ sample(60%)</figcaption>
+         </figure>
+
+         <figure>
+           <img src="images/works/illust/original/meria5.webp" alt="表情差分5">
+           <figcaption>表情差分５ sample(60%)</figcaption>
+         </figure>
+	      </div>
+
+        <div class="mwork__divider"></div>
+      
+        <p class="illu-date">2020年 8月 制作</p>
+
+        <p class="illu-desc">
+        オリジナル楽曲のイメージイラストおよびMV制作のご依頼をいただき、制作しました。<br>
+        視線や表情の変化によって、感情の揺れや時間の流れを表現しています。<br>
+
+        楽曲の展開に合わせて段階的に感情が変化する構成を意識し、<br>
+        MV内でのカット切り替えや演出に対応できるよう制作しました。</p>
+
+        <p class="illu-desc">
+        ※ 楽曲非公開のため、楽曲名および関連リンクの掲載は控えています。</p>
+    </div>
+  `
+},
+
+design_uru_hada: {
+  title: "潤肌（URU-HADA）導入美容液｜Concept Work",
+  subtitle: "Branding / Advertising Design",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        仕事や生活の忙しさから、肌の変化が気になり始める<br>
+        20代後半〜30代女性を想定した導入美容液ブランドのコンセプトワーク。<br><br>
+        「10年後の肌に、今日のご褒美を。」を軸に、<br>
+        透明感と上質感を大切にしたビジュアル設計を行いました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/uru-hada/1200x628.webp",
+              "alt":"潤肌（URU-HADA）導入美容液｜1200x628（SNS広告用）",
+              "label":"1200x628（SNS広告用）"
+            },
+            {
+              "src":"images/works/design/original/uru-hada/300x250.webp",
+              "alt":"潤肌（URU-HADA）導入美容液｜300x250（Web広告用）",
+              "label":"300x250（Web広告用）"
+            },
+            {
+              "src":"images/works/design/original/uru-hada/logo.webp",
+              "alt":"潤肌（URU-HADA）ロゴ",
+              "label":"ロゴ"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/uru-hada/1200x628.webp"
+            alt="潤肌（URU-HADA）導入美容液｜1200x628（SNS広告用）">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>透明感・清潔感・オーガニック感を軸に、自分のために選びたくなる上質なトーンを設計</li>
+            <li>余白を活かし、視線を「ビジュアル → コピー → ロゴ」へ自然に誘導</li>
+            <li>サイズ違いでも印象が崩れないよう、情報量と配置のバランスを調整</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：ターゲットの生活背景とセルフギフトの訴求軸を整理</li>
+            <li><strong>構成設計</strong>：視線誘導と情報密度を調整し、情緒が伝わる構成に設計</li>
+            <li><strong>ビジュアル設計</strong>：透明感と上質感を両立するトーンを統一</li>
+            <li><strong>仕上げ</strong>：余白・整列・可読性のバランスを最終調整</li>
+          </ol>
+
+          <div class="mwork__note">
+              <dl>
+                <dt>使用ツール</dt>
+                <dd>Illustrator / Photoshop（必要に応じて調整）</dd>
+                <dt>制作範囲</dt>
+                <dd>ロゴ / Web広告バナー（1200x628、300x250）</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <!-- EN -->
+        <div class="mwork__langblock" data-langblock="en" hidden>
+          <div class="mwork__divider mwork__points">
+            <h3>Design Focus</h3>
+            <ul>
+              <li>Established a refined tone centered on clarity, cleanliness, and organic sensibility</li>
+              <li>Used generous spacing to guide attention from visual to copy and logo naturally</li>
+              <li>Balanced information density to maintain a consistent impression across multiple sizes</li>
+            </ul>
+          </div>
+
+          <div class="mwork__process">
+            <h3>Process</h3>
+            <ol>
+              <li><strong>Brief Definition</strong>: Analyzed lifestyle context and self-gifting motivation of the target audience</li>
+              <li><strong>Layout Planning</strong>: Designed visual flow and information density to convey emotional value</li>
+              <li><strong>Visual Design</strong>: Unified tone to balance transparency with a sense of premium quality</li>
+              <li><strong>Refinement</strong>: Adjusted spacing, alignment, and readability for final polish</li>
+            </ol>
+
+            <div class="mwork__note">
+              <dl>
+                <dt>Tools</dt>
+                <dd>Illustrator / Photoshop (as needed)</dd>
+                <dt>Scope</dt>
+                <dd>Logo / Web advertising banners (1200x628, 300x250)</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+  `
+},
+
+design_business_statistics: {
+  title: "ゼロから学ぶ、ビジネス統計学オンライン講座｜Concept Work",
+  subtitle: "Logo / Web Banner（情報設計・販促）",
+html: `
+  <div class="mwork">
+
+    <p class="mwork__lead">
+      統計やデータ分析に苦手意識を持つビジネスパーソン向けに、<br>
+      「難しそう」という心理的ハードルを下げつつ、<br>
+      損なわないトーンで設計したオンライン講座のロゴ・広告デザイン。<br><br>
+      Web広告 / SNS投稿など用途に応じたサイズ展開でも、情報の伝わり方が崩れない構成を意識しました。
+    </p>
+
+    <section class="mwork__media" data-gallery>
+      <figure class="modal__figure"
+        data-set='[
+          {
+            "src":"images/works/design/original/business-statistics/1080x1080.webp",
+            "alt":"ゼロから学ぶ、ビジネス統計学オンライン講座｜1080x1080（SNS広告用）",
+            "label":"1080x1080（SNS広告用）"
+          },
+          {
+            "src":"images/works/design/original/business-statistics/728x90.webp",
+            "alt":"ゼロから学ぶ、ビジネス統計学オンライン講座｜728x90（Web広告 ビッグバナー）",
+            "label":"728x90（Web広告用）"
+          },
+          {
+            "src":"images/works/design/original/business-statistics/logo.webp",
+            "alt":"ゼロから学ぶ、ビジネス統計学オンライン講座｜ロゴ",
+            "label":"ロゴ"
+          }
+        ]'>
+
+        <img class="mwork__img"
+          src="images/works/design/original/business-statistics/1080x1080.webp"
+          alt="ゼロから学ぶ、ビジネス統計学オンライン講座｜1080x1080（SNS広告用）">
+      </figure>
+    </section>
+
+    <div class="mwork__langbar is-pill" data-langbar>
+      <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+      <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+
+    <!-- JP -->
+    <div class="mwork__langblock" data-langblock="jp">
+      <div class="mwork__divider mwork__points">
+        <h3>設計ポイント</h3>
+        <ul>
+          <li>「難しそう」を感じさせないため、要素を整理し<strong>視認性の高い情報設計</strong>に統一</li>
+          <li>堅くなりすぎない余白と図版モチーフで、<strong>親しみやすさと信頼感</strong>のバランスを調整</li>
+          <li>用途別サイズでも破綻しないよう、<strong>見出し・補足・CTAの優先順位</strong>を固定して展開</li>
+        </ul>
+      </div>
+
+      <div class="mwork__process">
+        <h3>制作プロセス</h3>
+        <ol>
+          <li><strong>要件整理</strong>：ターゲットの心理的ハードルと、媒体（Web / SNS）での見え方を整理</li>
+          <li><strong>構成設計</strong>：コピー階層と視線誘導を設計し、短時間で内容が伝わる情報密度に調整</li>
+          <li><strong>ロゴ設計</strong>：講座の信頼性を担保しつつ、硬すぎない印象のシンボル・字組みに整える</li>
+          <li><strong>展開・仕上げ</strong>：728×90 / 1080×1080へ最適化し、整列・余白・可読性を最終調整</li>
+        </ol>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>使用ツール</dt>
+            <dd>Illustrator / Photoshop（必要に応じて調整）</dd>
+            <dt>制作範囲</dt>
+            <dd>ロゴ / Web広告バナー（728x90、1080x1080）</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- EN -->
+    <div class="mwork__langblock" data-langblock="en" hidden>
+      <div class="mwork__divider mwork__points">
+        <h3>Design Focus</h3>
+        <ul>
+          <li>Simplified visual structure to reduce the perceived difficulty of statistics and data analysis</li>
+          <li>Balanced approachability and credibility through controlled spacing and diagram-inspired motifs</li>
+          <li>Fixed hierarchy between headline, supporting text, and call-to-action to ensure consistency across formats</li>
+        </ul>
+      </div>
+
+      <div class="mwork__process">
+        <h3>Process</h3>
+        <ol>
+          <li><strong>Brief Definition</strong>: Identified psychological barriers and platform-specific viewing conditions (Web / SNS)</li>
+          <li><strong>Layout Planning</strong>: Designed copy hierarchy and visual flow for quick comprehension</li>
+          <li><strong>Logo Design</strong>: Developed a symbol and typography that feel trustworthy without appearing overly academic</li>
+          <li><strong>Adaptation & Refinement</strong>: Optimized layouts for 728×90 and 1080×1080, adjusting spacing and readability</li>
+        </ol>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>Tools</dt>
+            <dd>Illustrator / Photoshop (as needed)</dd>
+            <dt>Scope</dt>
+            <dd>Logo / Web advertising banners (728x90, 1080x1080)</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  `
+},
+
+design_pizzavita: {
+  title: "本格窯焼きピザ「PIZZA VITA」",
+  subtitle: "Concept Work / Action・Promotion Design",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        週末の食卓に、少し特別な時間を。<br>
+        本格窯焼きピザのデリバリーサービス「PIZZA VITA」を想定した広告ビジュアル。<br><br>
+        チーズの伸びや湯気といったシズル感を軸に、<br>
+        食欲を喚起する暖色トーンで構成し、<br>
+        視線が自然にCTAへ流れるレイアウトを設計しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/pizzavita/1200x628.webp",
+              "alt":"本格窯焼きピザ「PIZZA VITA」｜1200x628（SNS広告用）",
+              "label":"1200x628（SNS広告用）"
+            },
+            {
+              "src":"images/works/design/original/pizzavita/728x90.webp",
+              "alt":"本格窯焼きピザ「PIZZA VITA」｜728x90（ビッグバナー）",
+              "label":"728x90（ビッグバナー）"
+            },
+            {
+              "src":"images/works/design/original/pizzavita/336x280.webp",
+              "alt":"本格窯焼きピザ「PIZZA VITA」｜336x280（レクタングル）",
+              "label":"336x280（レクタングル）"
+            },
+            {
+              "src":"images/works/design/original/pizzavita/logo.webp",
+              "alt":"本格窯焼きピザ「PIZZA VITA」ロゴ",
+              "label":"ロゴ"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/pizzavita/1200x628.webp"
+            alt="本格窯焼きピザ「PIZZA VITA」｜1200x628（SNS広告用）">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>“焼きたて感”が伝わるよう、チーズの伸び・湯気の流れを主役にして食欲喚起を強化</li>
+            <li>暖色トーンで統一しつつ、文字は高コントラストにして可読性と勢いを両立</li>
+            <li>キャッチ → シズル → CTAの順に視線が落ちるよう、要素サイズと配置のリズムを設計</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>目的整理</strong>：週末の“ちょい特別”を、直感的に伝える訴求軸を設定</li>
+            <li><strong>要素設計</strong>：キャッチ・シズル・CTAの優先順位を決め、最短で伝わる構図に構成</li>
+            <li><strong>トーン調整</strong>：暖色ベースで食欲を刺激し、湯気や光の演出で温度感を付与</li>
+            <li><strong>サイズ展開</strong>：1200x628 / 728x90 / 336x280 で視認性が崩れないよう再配置</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>使用ツール</dt>
+              <dd>Illustrator / Photoshop（必要に応じて調整）</dd>
+              <dt>制作範囲</dt>
+              <dd>ロゴ / Web広告バナー（1200x628、728x90、336x280）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Emphasized a freshly baked feel through stretchy cheese and rising steam to stimulate appetite</li>
+            <li>Unified warm color tones while maintaining high text contrast for clarity and energy</li>
+            <li>Designed visual rhythm to guide attention from headline to sizzle imagery and finally to the call to action</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Concept Definition</strong>: Defined the appeal of a small weekend indulgence as the core message</li>
+            <li><strong>Element Planning</strong>: Prioritized headline, sizzle visuals, and CTA for instant comprehension</li>
+            <li><strong>Tone Adjustment</strong>: Used warm tones and light effects to convey heat and freshness</li>
+            <li><strong>Multi-size Adaptation</strong>: Reorganized layouts to maintain readability across multiple banner formats</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Tools</dt>
+              <dd>Illustrator / Photoshop (as needed)</dd>
+              <dt>Scope</dt>
+              <dd>Logo / Web advertising banners (1200x628, 728x90, 336x280)</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+  `
+},
+
+design_v_couture: {
+  title: "V-COUTURE｜Metaverse Avatar Stylist",
+  subtitle: "Concept Work / Logo・Business Card Design（ブランディング）",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        メタバース空間で活動するアバター・スタイリストを想定し、<br>
+        「デジタルの自分を、もっと自由に」をコンセプトに<br>
+        ロゴおよび名刺デザインを制作しました。<br><br>
+        画面上での見え方も意識し、未来感と上品さのバランスを整えています。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/v-couture/mockup.webp",
+              "alt":"V-COUTURE｜名刺モックアップ",
+              "label":"Mockup"
+            },
+            {
+              "src":"images/works/design/original/v-couture/card-front.webp",
+              "alt":"V-COUTURE｜名刺 表",
+              "label":"Business Card（Front）"
+            },
+            {
+              "src":"images/works/design/original/v-couture/card-back.webp",
+              "alt":"V-COUTURE｜名刺 裏",
+              "label":"Business Card（Back）"
+            },
+            {
+              "src":"images/works/design/original/v-couture/logo.webp",
+              "alt":"V-COUTURE｜ロゴ",
+              "label":"Logo"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/v-couture/mockup.webp"
+            alt="V-COUTURE｜名刺モックアップ">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>頭文字の“V”をVネックのようなシャープなラインで構成し、人物を用いずに「スタイリング」を象徴</li>
+            <li>ミニマルなグリッド表現と手書きロゴタイプを組み合わせ、デジタル×感性の両立を設計</li>
+            <li>SNS導線（X / Discord）とQRを整理し、画面上でも読み取りやすい情報優先順位に調整</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：ターゲット（VTuber / メタバースユーザー）と必須要素（屋号・SNS・QR）を定義</li>
+            <li><strong>ロゴ設計</strong>：“V”の造形を衣服のラインに接続し、職能が伝わるシンボルへ抽象化</li>
+            <li><strong>名刺設計</strong>：グリッドとグラデーションで世界観を構築し、表裏で役割（印象/情報）を分担</li>
+            <li><strong>仕上げ</strong>：画面表示を想定して可読性を検証し、余白・整列・コントラストを最終調整</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作範囲</dt>
+              <dd>ロゴ / 名刺（表・裏）/ モックアップ</dd>
+              <dt>想定要素</dt>
+              <dd>屋号 / 氏名（LUNA）/ X・Discord / ポートフォリオサイト / QR</dd>
+              <dt>使用ツール</dt>
+              <dd>Illustrator / Photoshop（必要に応じて調整）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Abstracted the initial “V” into a sharp, V-neck-inspired form to symbolize styling without using a human figure</li>
+            <li>Combined a minimal grid language with a handwritten logotype to balance digital precision and sensibility</li>
+            <li>Organized social links (X / Discord) and QR for strong on-screen readability and practical use</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Defined target users and required elements (brand, socials, QR, website)</li>
+            <li><strong>Logo Design</strong>: Built the “V” as an abstract clothing silhouette to express the profession of styling</li>
+            <li><strong>Card Design</strong>: Developed a futuristic yet refined mood and split roles across front/back sides</li>
+            <li><strong>Refinement</strong>: Tested on-screen legibility and finalized spacing, alignment, and contrast</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Scope</dt>
+              <dd>Logo / Business card (front & back) / Mockup</dd>
+              <dt>Assumed Elements</dt>
+              <dd>Brand name / Name (LUNA) / X・Discord / Portfolio link / QR</dd>
+              <dt>Tools</dt>
+              <dd>Illustrator / Photoshop (as needed)</dd>
+            </dl>
+          </div>
+        </div>
+    </div>
+  `
+},
+
+design_kamosu: {
+  title: "醸す（KAMOSU）｜Restaurant Branding",
+  subtitle: "Concept Work / Business Card Design（和モダン・ラグジュアリー）",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        予約困難な隠れ家「発酵」モダン・ビストロを想定し、<br>
+        「微生物との対話」をコンセプトに名刺デザインを制作。<br><br>
+        余白・和紙の質感・墨のにじみを軸に、<br>
+        静かで凛とした佇まいと、格式と現代性のバランスを設計しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/kamosu/mockup.webp",
+              "alt":"醸す（KAMOSU）｜名刺モックアップ",
+              "label":"Mockup"
+            },
+            {
+              "src":"images/works/design/original/kamosu/card-front.webp",
+              "alt":"醸す（KAMOSU）｜名刺 表（縦型）",
+              "label":"Business Card（Front）"
+            },
+            {
+              "src":"images/works/design/original/kamosu/card-back.webp",
+              "alt":"醸す（KAMOSU）｜名刺 裏（縦型）",
+              "label":"Business Card（Back）"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/kamosu/mockup.webp"
+            alt="醸す（KAMOSU）｜名刺モックアップ">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>余白を大きく確保し、言葉よりも空気感が先に届く「静かな品格」を設計</li>
+            <li>和紙テクスチャと墨のにじみで、“時間・変化・深み”を象徴するトーンに統一</li>
+            <li>裏面に伝統文様を控えめに配置し、格式と現代性のバランスを調整</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：ターゲット（美食家・富裕層）と必須要素（店名・氏名・連絡先）を定義</li>
+            <li><strong>トーン設計</strong>：和紙・墨・縦組の要素を整理し、和モダン・ラグジュアリーの方向性を確定</li>
+            <li><strong>レイアウト設計</strong>：表裏で役割（印象/情報）を分担し、視線の止まる位置を調整</li>
+            <li><strong>仕上げ</strong>：余白・整列・文字組を最終調整し、静けさと可読性を両立</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作範囲</dt>
+              <dd>名刺（縦型・表／裏）/ モックアップ</dd>
+              <dt>必須要素</dt>
+              <dd>店名 / 氏名（シェフ 佐藤 匠）/ 電話番号 / Instagram</dd>
+              <dt>使用ツール</dt>
+              <dd>Illustrator / Photoshop（必要に応じて調整）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Used generous negative space to communicate quiet prestige before any detailed reading</li>
+            <li>Unified tone with washi-like texture and ink-bleed expression to suggest time, depth, and transformation</li>
+            <li>Placed a subtle traditional pattern on the back side to balance heritage and modern refinement</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Defined target audience and required information for a chef’s business card</li>
+            <li><strong>Tone Setting</strong>: Established a modern-luxury Japanese direction using paper texture and ink nuance</li>
+            <li><strong>Layout Planning</strong>: Split roles across front/back and refined the visual hierarchy</li>
+            <li><strong>Refinement</strong>: Finalized spacing, alignment, and typography for calm readability</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Scope</dt>
+              <dd>Logo / Business card (vertical, front & back) / Mockup</dd>
+              <dt>Required Elements</dt>
+              <dd>Restaurant name / Chef name / Phone / Instagram</dd>
+              <dt>Tools</dt>
+              <dd>Illustrator / Photoshop (as needed)</dd>
+            </dl>
+          </div>
+        </div>
+    </div>
+  `
+},
+
+design_aoi_architects: {
+  title: "AOI Architects（株式会社 碧 設計事務所）",
+  subtitle: "Concept Work / Logo・Business Card Design（サステナブル建築）",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        次世代型サステナブル建築事務所を想定したロゴ・名刺デザイン。<br>
+        「100年後の風景をつくる」という理念を軸に、<br>
+        誠実なトーンを設計しました。<br><br>
+        紙ポートフォリオの全体トーンには採用せずお蔵入りとなった案ですが、<br>
+        Webでは試作の幅として掲載しています。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/aoi-architects/mockup.webp",
+              "alt":"AOI Architects｜名刺モックアップ",
+              "label":"Mockup"
+            },
+            {
+              "src":"images/works/design/original/aoi-architects/card-front.webp",
+              "alt":"AOI Architects｜名刺 表",
+              "label":"Business Card（Front）"
+            },
+            {
+              "src":"images/works/design/original/aoi-architects/card-back.webp",
+              "alt":"AOI Architects｜名刺 裏",
+              "label":"Business Card（Back）"
+            },
+            {
+              "src":"images/works/design/original/aoi-architects/logo.webp",
+              "alt":"AOI Architects｜ロゴ",
+              "label":"Logo"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/aoi-architects/mockup.webp"
+            alt="AOI Architects｜名刺モックアップ">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>屋根や構造線を想起させるミニマルなラインで、建築的な造形を抽象化</li>
+            <li>余白と単色設計を軸に、信頼感・誠実さが先に届く情報トーンに調整</li>
+            <li>紙質を主役にできる前提で、再生紙・バガス紙と相性の良い印象に設計</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：理念（100年後の風景）と、必須要素（肩書き・住所・URL・QR）を定義</li>
+            <li><strong>ロゴ設計</strong>：建築の線・構造感をミニマルな線画に落とし込み、過度に装飾しない方向へ</li>
+            <li><strong>名刺設計</strong>：可読性を最優先に、情報の段組みと余白で“静けさ”を作る</li>
+            <li><strong>仕上げ</strong>：印刷を想定して線幅・コントラスト・整列を調整し、実用性を担保</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作範囲</dt>
+              <dd>ロゴ / 名刺（横型・表／裏）/ モックアップ</dd>
+              <dt>必須要素</dt>
+              <dd>ロゴ / 氏名 / 肩書き（代表取締役）/ 住所 / WebサイトURL / QR</dd>
+              <dt>作業時間</dt>
+              <dd>ロゴ：00:43:57 / 名刺：00:15:14</dd>
+              <dt>使用ツール</dt>
+              <dd>Illustrator / Photoshop（必要に応じて調整）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Abstracted architectural forms using minimal lines reminiscent of roofs and structural frames</li>
+            <li>Built a calm, trustworthy tone through generous spacing and a monochrome information layout</li>
+            <li>Designed with tactile paper stocks in mind (recycled or bagasse paper), letting material quality lead</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Defined the core philosophy and required information (title, address, URL, QR)</li>
+            <li><strong>Logo Design</strong>: Developed a restrained line-based mark inspired by architectural structure</li>
+            <li><strong>Card Layout</strong>: Prioritized readability and calm hierarchy through spacing and alignment</li>
+            <li><strong>Refinement</strong>: Adjusted stroke weight, contrast, and grid alignment with print use in mind</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Scope</dt>
+              <dd>Logo / Business card (horizontal, front & back) / Mockup</dd>
+              <dt>Required Elements</dt>
+              <dd>Logo / Name / Title / Address / Website URL / QR</dd>
+              <dt>Time Spent</dt>
+              <dd>Logo: 00:43:57 / Card: 00:15:14</dd>
+              <dt>Tools</dt>
+              <dd>Illustrator / Photoshop (as needed)</dd>
+            </dl>
+          </div>
+        </div>
+    </div>
+  `
+},
+
+design_loop_cafe: {
+  title: "Loop Cafe（ループ・カフェ）｜Concept Work",
+  subtitle: "Sustainable Branding / Logo & Applications",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        「循環（Loop）」をテーマにした、<br>
+        都市型サステナブルカフェのコンセプトワーク。<br>
+        ミニマルでクリーン、<br>
+        素材感が主役になるトーンを意識してロゴと展開例を制作しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/loop-cafe/logo.webp",
+              "alt":"Loop Cafe｜ロゴ",
+              "label":"ロゴ"
+            },
+            {
+              "src":"images/works/design/original/loop-cafe/mockup.webp",
+              "alt":"Loop Cafe｜展開イメージ（カップ・トート・看板）",
+              "label":"展開イメージ"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/loop-cafe/mockup.webp"
+            alt="Loop Cafe｜展開イメージ（カップ・トート・看板）">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar is-pill" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>“循環”を円の動きで表現し、コーヒーと自然要素をひとつに統合</li>
+            <li>線を絞って、再生紙や布など<strong>素材の質感が主役</strong>になる前提で設計</li>
+            <li>カップ・看板などの小さな面でも崩れない、単純な構造と余白バランス</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：ターゲット（20〜30代）とトーン（クリーン/オーガニック）を定義</li>
+            <li><strong>形の検討</strong>：循環を“記号っぽくしすぎず”カフェらしく落とし込む方向を探る</li>
+            <li><strong>整形</strong>：線幅・余白・文字組を調整し、静かな存在感に寄せる</li>
+            <li><strong>展開確認</strong>：カップ/トート/看板で見え方を確認し、バランスを微調整</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作範囲</dt>
+              <dd>ロゴ / アプリケーション（カップ・トート・看板）</dd>
+              <dt>使用ツール</dt>
+              <dd>Illustrator / Photoshop（必要に応じて調整）</dd>
+              <dt>備考</dt>
+              <dd>自主制作（紙ポートフォリオ案として制作後、Web掲載向けに整理）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Notes</h3>
+          <ul>
+            <li>Built around a looping circle to suggest “circulation,” blended with coffee + organic cues</li>
+            <li>Kept the mark minimal so paper/cloth texture can take the spotlight</li>
+            <li>Designed to stay readable across small surfaces like cups and signage</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief</strong>: defined the audience and tone (clean, modern, organic)</li>
+            <li><strong>Exploration</strong>: searched for a “loop” expression that feels café-like, not overly symbolic</li>
+            <li><strong>Refinement</strong>: adjusted stroke, spacing, and typography for a calm presence</li>
+            <li><strong>Applications</strong>: tested on cup/tote/sign mockups and fine-tuned balance</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Scope</dt>
+              <dd>Logo / Applications (cup, tote bag, signage)</dd>
+              <dt>Tools</dt>
+              <dd>Illustrator / Photoshop (as needed)</dd>
+              <dt>Note</dt>
+              <dd>Personal work (originally for print portfolio, reorganized for web use)</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `
+},
+
+design_nexus_ai: {
+  title: "Nexus AI（ネクサス・エーアイ）",
+  subtitle: "Concept Work / Logo Design（Tech Startup Branding）",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        クリエイターの創造性を拡張するAIツールを提供するテックスタートアップ<br>
+        「Nexus AI」を想定したロゴデザイン。<br><br>
+        「Nexus＝つながり」をテーマに、点と線が有機的に結びつく構造で<br>
+        先進性と信頼感、柔軟さを同時に表現しました。<br><br>
+        アプリアイコンやWebヘッダーなど、<br>
+        デジタル上での視認性と汎用性を重視しています。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/nexus-ai/logo.webp",
+              "alt":"Nexus AI｜ロゴ",
+              "label":"ロゴ"
+            },
+            {
+              "src":"images/works/design/original/nexus-ai/mockup.webp",
+              "alt":"Nexus AI｜展開モックアップ（アプリアイコン / Webヘッダー）",
+              "label":"Mockup"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/nexus-ai/mockup.webp"
+            alt="Nexus AI｜展開モックアップ（アプリアイコン / Webヘッダー）">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar is-pill" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>「つながり」を、<strong>点と線の結節</strong>で抽象化し、AIと人の接点を象徴</li>
+            <li>過度な装飾を避け、<strong>信頼感のあるミニマル設計</strong>でテックらしさを担保</li>
+            <li>小さなアイコンでも形が残るよう、<strong>要素数と線幅</strong>を最適化</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：先進性・信頼感・柔軟性のバランスと、使用場面（アプリ/WEB）を定義</li>
+            <li><strong>形状設計</strong>：接続・交差・結節のパターンを整理し、抽象度と視認性の着地点を検証</li>
+            <li><strong>タイポ設計</strong>：クリーンな字面で統一し、シンボルとの重心・余白バランスを調整</li>
+            <li><strong>展開検証</strong>：アイコン/ヘッダーでの縮小耐性を確認し、線幅・間隔を最終調整</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作時間</dt>
+              <dd>01:13:08</dd>
+              <dt>使用ツール</dt>
+              <dd>Illustrator（必要に応じてPhotoshopで調整）</dd>
+              <dt>制作範囲</dt>
+              <dd>ロゴ / モックアップ（アプリアイコン・Webヘッダー想定）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Key Design Points</h3>
+          <ul>
+            <li>Visualized “Nexus” as <strong>nodes and connections</strong> to represent the touchpoint between AI and people</li>
+            <li>Kept the system <strong>minimal and professional</strong> to maintain trust and a tech-forward tone</li>
+            <li>Optimized <strong>stroke weight and element count</strong> so the symbol stays recognizable at icon size</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief</strong>: Defined the balance of innovation, trust, and flexibility, plus key use cases (app/web)</li>
+            <li><strong>Form Study</strong>: Explored connection/intersection patterns and tested abstraction vs. clarity</li>
+            <li><strong>Typography</strong>: Matched a clean wordmark and refined alignment, spacing, and visual center</li>
+            <li><strong>Validation</strong>: Checked scalability for app icons and headers, then finalized stroke and spacing</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Time</dt>
+              <dd>01:13:08</dd>
+              <dt>Tools</dt>
+              <dd>Illustrator (Photoshop as needed)</dd>
+              <dt>Scope</dt>
+              <dd>Logo / Mockup (App Icon, Web Header)</dd>
+            </dl>
+          </div>
+        </div>
+    </div>
+  `
+},
+
+design_sora: {
+  title: "パーソナライズド・スキンケアブランド「SORA」",
+  subtitle: "Concept Work / Logo・Package・Shopper Design",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        その日の肌状態や天候に応じて成分を調整する、<br>
+        D2C型の高級スキンケアブランド「SORA」を想定したコンセプトワーク。<br><br>
+        「空間」「余白」「広がり」をキーワードに、<br>
+        静謐で上質な透明感を軸としたビジュアルアイデンティティを設計しました。<br>
+        ロゴからパッケージ、ショッパーまでトーンを統一し、<br>
+        白・黒どちらの背景でも成立する汎用性を重視しています。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/sora/logo.webp",
+              "alt":"SORA｜Logo",
+              "label":"ロゴ"
+            },
+            {
+              "src":"images/works/design/original/sora/mockup-white.webp",
+              "alt":"SORA｜Mockup（White ver.）",
+              "label":"モックアップ（White）"
+            },
+            {
+              "src":"images/works/design/original/sora/mockup-black.webp",
+              "alt":"SORA｜Mockup（Black ver.）",
+              "label":"モックアップ（Black）"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/sora/mockup-white.webp"
+            alt="SORA｜Mockup（White ver.）">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>「宙（そら）」「空」を想起させる<strong>余白と静けさ</strong>を軸に、過度な装飾を排したミニマル設計</li>
+            <li>ロゴは<strong>横線＝空・環境 / 縦線＝人・肌</strong>という構造で、ブランド思想を抽象的に可視化</li>
+            <li>白・黒背景のどちらでも成立するよう、コントラストと線の繊細さを調整し<strong>汎用性</strong>を確保</li>
+            <li>ガラスボトルやショッパーなど実装シーンを想定し、<strong>上質な静謐感</strong>が保たれるトーンに統一</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：ターゲット像（丁寧な暮らし・本質志向）と「透明感 / 静謐」を言語化</li>
+            <li><strong>構造設計</strong>：ブランド名と思想を、線の構造（空・環境／人・肌）へ落とし込み</li>
+            <li><strong>ロゴ調整</strong>：余白、線幅、字間を微調整し、主張しすぎない品格を設計</li>
+            <li><strong>展開検証</strong>：白・黒の背景、パッケージ/ショッパー想定で視認性と世界観をチェック</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作範囲</dt>
+              <dd>ロゴ / パッケージ / ショッパー / ビジュアル設計（白・黒展開）</dd>
+              <dt>想定媒体</dt>
+              <dd>D2Cブランド（オンライン中心）/ パッケージ / 店頭・同梱物</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Highlights</h3>
+          <ul>
+            <li>Built around the keywords <strong>space, stillness, and openness</strong>, with a minimal and quiet visual tone.</li>
+            <li>The logo structure is defined as <strong>horizontal line = sky / environment</strong> and <strong>vertical line = person / skin</strong>, expressing the brand concept in an abstract form.</li>
+            <li>Optimized for both <strong>white and black</strong> backgrounds by refining contrast and hairline weight for versatility.</li>
+            <li>Designed with real-world applications in mind (glass bottle, package, shopper) while maintaining a <strong>premium serene</strong> atmosphere.</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief & Positioning</strong>: defined the target audience and key brand keywords (transparency / serenity).</li>
+            <li><strong>Concept Translation</strong>: converted the brand idea into a simple line structure representing sky/environment and person/skin.</li>
+            <li><strong>Logo Refinement</strong>: adjusted spacing, line weight, and typography for a calm premium balance.</li>
+            <li><strong>Application Check</strong>: validated visibility and consistency across mockups and color contexts (white/black).</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Scope</dt>
+              <dd>Logo / Package / Shopper / Visual direction (White & Black versions)</dd>
+              <dt>Intended Use</dt>
+              <dd>D2C brand assets / packaging / printed materials</dd>
+            </dl>
+          </div>
+        </div>
+    </div>
+  `
+},
+
+design_winter_choco: {
+  title: "冬限定一口チョコ",
+  subtitle: "Concept Work / Food・Seasonal Promotion",
+  html: `
+    <div class="mwork">
+      <p class="mwork__lead">
+        冬限定の一口チョコ販促を想定した広告ビジュアル。<br>
+        “溶け”などの情緒表現に寄らず、<br>
+        季節感と素材感を軸に上質さを設計しました。<br><br>
+        百貨店・EC展開を想定し、<br>
+        落ち着いたトーンと余白で冬のご褒美感を演出しています。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/kobayas/winter-choco/300x280.webp",
+              "alt":"冬限定一口チョコ｜300x280",
+              "label":"300x280"
+            }
+          ]'>
+          <img class="mwork__img"
+            src="images/works/design/original/kobayas/winter-choco/300x280.webp"
+            alt="冬限定一口チョコ｜300x280">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>季節感（雪・冷気）と素材感（カカオ）を主役にし、ブランド想起の偏りを回避</li>
+            <li>余白と落ち着いたトーンで“ご褒美感”を強調</li>
+            <li>小サイズでも主題が伝わるよう、要素数を絞って情報を整理</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：課題内容とターゲットを整理し、訴求軸を明確化</li>
+            <li><strong>構成設計</strong>：視線の流れを定義し、情報量と優先順位を調整</li>
+            <li><strong>ビジュアル設計</strong>：トーン・配色・素材感を整理し、世界観を構築</li>
+            <li><strong>仕上げ</strong>：余白・整列・可読性を最終調整</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>課題提供</dt><dd>こばやす様（テーマ提示）</dd>
+            <dt>使用サイズ</dt><dd>300x280</dd>
+            <dt>使用ツール</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Summary</h3>
+          <p class="mwork__en">
+            Promotional banner for a seasonal bite-sized chocolate product.<br>
+            Built around winter atmosphere and material texture rather than overt “melting” emotion,
+            using a calm palette and generous spacing to convey a premium, gift-like feel.
+          </p>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Clarified the brief, target audience, and key message</li>
+            <li><strong>Layout Planning</strong>: Defined visual flow and adjusted information hierarchy</li>
+            <li><strong>Visual Design</strong>: Established tone, color, and material expression</li>
+            <li><strong>Refinement</strong>: Finalized spacing, alignment, and overall readability</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>Brief</dt><dd>Provided by Kobayas (theme prompt)</dd>
+            <dt>Size</dt><dd>300x280</dd>
+            <dt>Tools</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  `
+},
+
+design_onsen: {
+  title: "貸切露天風呂付き宿泊プラン",
+  subtitle: "Promotion Banner / 2 Variations（販促・ブランディング）",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        同一テーマを <strong>短期販促</strong> と <strong>高級旅館向け</strong> の2目的で制作。<br>
+        ターゲットの温度差に合わせて、情報量・余白・視線誘導を切り替えました。
+      </p>
+
+      <div class="mtabs" role="tablist" aria-label="バナーバリエーション">
+        <button class="mtab is-active" type="button" role="tab" aria-selected="true" data-mtab="lux">高級旅館向け</button>
+        <button class="mtab" type="button" role="tab" aria-selected="false" data-mtab="camp">短期販促</button>
+      </div>
+
+      <div class="mpanels">
+        <section class="mpanel is-active" data-mpanel="lux">
+          <figure class="modal__figure">
+            <img src="images/works/design/original/kobayas/onsen/premium.webp"
+              alt="高級旅館向けに静けさと特別感を演出した貸切露天風呂付き宿泊プランの訴求バナー">
+            <figcaption class="modal__caption">
+              <p><strong>高級旅館向け（ブランディング重視）</strong></p>
+              <p>余白・上質感・体験価値を軸に、押しすぎずに惹き込む設計。</p>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="mpanel" data-mpanel="camp">
+          <figure class="modal__figure">
+            <img src="images/works/design/original/kobayas/onsen/hansoku.webp"
+              alt="短期集客を目的に3大特典を強調した貸切露天風呂付き宿泊プランのキャンペーンバナー">
+            <figcaption class="modal__caption">
+              <p><strong>短期販促（キャンペーン訴求）</strong></p>
+              <p>即時行動を促すため、特典とメリットを明確に前面化。</p>
+            </figcaption>
+          </figure>
+        </section>
+      </div>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント（高級旅館向け）</h3>
+          <ul>
+            <li>余白を確保し、「写真→コピー→特典」へ静かに誘導</li>
+            <li>強い訴求語を抑え、トーンの一貫性で信頼感を設計</li>
+            <li>情報密度を絞り、“特別感”の余韻を残す</li>
+          </ul>
+        </div>
+
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント（短期販促）</h3>
+          <ul>
+            <li>特典を先出しし、即理解できる構成に整理</li>
+            <li>数字と強調要素で視線を止め、行動理由を明確化</li>
+            <li>季節イベント文脈を添え、クリックの背中を押す</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：目的（短期販促/ブランディング）とターゲットを分岐し、訴求軸を設定</li>
+            <li><strong>構成設計</strong>：主写真→コピー→特典の流れを固定し、情報密度を目的別に調整</li>
+            <li><strong>タイポ設計</strong>：可読性を担保しつつ、“上質/勢い”のトーン差を文字組で設計</li>
+            <li><strong>仕上げ</strong>：余白・整列・強調バランスを最終調整</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>課題提供</dt><dd>こばやす様（テーマ提示）</dd>
+            <dt>使用サイズ</dt><dd>500×500</dd>
+            <dt>使用ツール</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus (Luxury)</h3>
+          <ul>
+            <li>Used generous spacing to guide attention from imagery to copy and benefits</li>
+            <li>Reduced strong sales language to build trust through consistent tone</li>
+            <li>Intentionally lowered information density to leave a sense of exclusivity</li>
+          </ul>
+        </div>
+
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus (Campaign)</h3>
+          <ul>
+            <li>Placed key benefits upfront for immediate understanding</li>
+            <li>Used numbers and emphasis to stop attention and clarify action value</li>
+            <li>Added seasonal context to encourage timely engagement</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Defined objectives and segmented targets by promotion type</li>
+            <li><strong>Layout Planning</strong>: Fixed visual flow from hero image to copy and benefits</li>
+            <li><strong>Typography Design</strong>: Adjusted typographic tone to balance elegance and impact</li>
+            <li><strong>Refinement</strong>: Finalized spacing, alignment, and emphasis balance</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>Brief</dt><dd>Provided by Kobayasu (theme prompt)</dd>
+            <dt>Banner Size</dt><dd>500×500</dd>
+            <dt>Tools</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  `
+},
+
+design_kobayasland: {
+  title: "Kobayasランド開園記念",
+  subtitle: "Concept Work / Event・Leisure Promotion",
+  html: `
+    <div class="mwork">
+      <p class="mwork__lead">
+        遊園地の開園記念イベントを想定した販促バナー。<br>
+        にぎやかさと情報量を前提にしつつ、<br>
+        視線の流れを整理して判断材料を一画面に集約しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/kobayas/kobayasland/800x200.webp",
+              "alt":"Kobayasランド開園記念｜800x200",
+              "label":"800x200"
+            }
+          ]'>
+          <img class="mwork__img"
+            src="images/works/design/original/kobayas/kobayasland/800x200.webp"
+            alt="Kobayasランド開園記念｜800x200">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>ファミリー層に向け、楽しさが直感で伝わる“にぎやかさ”をベースに設計</li>
+            <li>割引・期間・イベント性を一画面で判断できる情報の集約</li>
+            <li>情報量が多くても迷わないよう、見出しと流れで視線誘導を整理</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：開園記念イベントの目的と、ファミリー層を中心としたターゲットを設定</li>
+            <li><strong>情報設計</strong>：割引・期間・イベント性を洗い出し、一画面で判断できる要素に整理</li>
+            <li><strong>構成設計</strong>：にぎやかさを保ちつつ、視線が自然に流れるレイアウトを設計</li>
+            <li><strong>仕上げ</strong>：情報量と可読性のバランスを調整し、全体の見やすさを最終確認</li>
+          </ol>
+        </div>
+
+
+        <div class="mwork__note">
+          <dl>
+            <dt>課題提供</dt><dd>こばやす様（テーマ提示）</dd>
+            <dt>使用サイズ</dt><dd>800x200</dd>
+            <dt>使用ツール</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Summary</h3>
+          <p class="mwork__en">
+            Launch celebration banner for a theme park event.<br>
+            It embraces a lively, information-rich layout while keeping a clear viewing path,
+            consolidating key decision cues such as discount, period, and event details in one screen.
+          </p>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Defined the opening event objective and family-oriented target audience</li>
+            <li><strong>Information Structuring</strong>: Organized discounts, period, and event details for quick decision-making</li>
+            <li><strong>Layout Planning</strong>: Designed a lively yet readable layout with a clear visual flow</li>
+            <li><strong>Refinement</strong>: Adjusted information density and readability for final balance</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>Brief</dt><dd>Provided by Kobayas (theme prompt)</dd>
+            <dt>Size</dt><dd>800x200</dd>
+            <dt>Tools</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  `
+},
+ 
+design_kobapay: {
+  title: "Koba pay アプリ利用案内",
+  subtitle: "Concept Work / Cashless Payment App Promotion",
+  html: `
+    <div class="mwork">
+      <p class="mwork__lead">
+        地域密着型キャッシュレス決済アプリ「koba-pay」の<br>
+        利用促進キャンペーンを想定した広告ビジュアル。<br>
+        ポイント付与・還元率など即時ベネフィットを主役に、<br>
+        数字→QR→コピーの順で読める構成に設計しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/kobayas/kobapay/350x200.webp",
+              "alt":"koba-pay 利用促進バナー｜350x200",
+              "label":"350x200"
+            }
+          ]'>
+          <img class="mwork__img"
+            src="images/works/design/original/kobayas/kobapay/350x200.webp"
+            alt="koba-pay 利用促進バナー｜350x200">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>クリスマス商戦期の“今得する”訴求を数字で最短伝達</li>
+            <li>QRコードを迷わず読み取れるよう、配置と余白で可読性を確保</li>
+            <li>比較検討中でも理解できるよう、要点を一画面に整理</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：利用促進の目的と、クリスマス商戦期における訴求条件を整理</li>
+            <li><strong>情報設計</strong>：ポイント付与・還元率など即時性の高い要素を優先順位化</li>
+            <li><strong>構成設計</strong>：数字→QR→コピーの順で理解できる視線の流れを設計</li>
+            <li><strong>仕上げ</strong>：可読性と情報密度を調整し、瞬時に内容が伝わる状態に最適化</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>課題提供</dt><dd>こばやす様（テーマ提示）</dd>
+            <dt>使用サイズ</dt><dd>350x200</dd>
+            <dt>使用ツール</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Summary</h3>
+          <p class="mwork__en">
+            Campaign banner for a local cashless payment app, “koba-pay.”<br>
+            It highlights instant benefits such as points and cashback for quick understanding,
+            guiding attention from key numbers to the QR code and supporting copy.
+          </p>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Clarified campaign goals and conditions for the holiday season</li>
+            <li><strong>Information Structuring</strong>: Prioritized instant benefits such as points and cashback</li>
+            <li><strong>Layout Planning</strong>: Designed a clear visual flow from key numbers to QR code and copy</li>
+            <li><strong>Refinement</strong>: Adjusted readability and information density for quick comprehension</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>Brief</dt><dd>Provided by Kobayas (theme prompt)</dd>
+            <dt>Size</dt><dd>350x200</dd>
+            <dt>Tools</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  `
+},
+
+design_kobafitness: {
+  title: "スポーツKoba フィットネスクラブ",
+  subtitle: "Concept Work / Fitness Club Promotion",
+  html: `
+    <div class="mwork">
+      <p class="mwork__lead">
+        フィットネスクラブの新春入会キャンペーンを想定した広告ビジュアル。<br>
+        0円訴求で初期ハードルを下げつつ、「続けられる」メッセージで不安を補完し、<br>
+        数字・コピー・人物ビジュアルの優先順位を整理して設計しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/kobayas/kobafitness/500x500.webp",
+              "alt":"スポーツKoba フィットネスクラブ｜500x500",
+              "label":"500x500"
+            }
+          ]'>
+          <img class="mwork__img"
+            src="images/works/design/original/kobayas/kobafitness/500x500.webp"
+            alt="スポーツKoba フィットネスクラブ｜500x500">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>新年の行動変容タイミングに合わせ、0円訴求を最優先で可視化</li>
+            <li>“忙しくても続けられる”メッセージで継続不安を軽減し、価格訴求に偏らない構成</li>
+            <li>人物→コピー→数字の順に視線が流れるよう、要素サイズと配置を整理</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：新春入会キャンペーンの目的と、社会人層を中心としたターゲットを設定</li>
+            <li><strong>情報設計</strong>：入会金・事務手数料無料など、行動ハードルを下げる要素を優先整理</li>
+            <li><strong>構成設計</strong>：数字→コピー→人物ビジュアルの順で理解できる視線導線を設計</li>
+            <li><strong>仕上げ</strong>：価格訴求と継続イメージのバランスを調整し、安心感のある表現に調整</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>課題提供</dt><dd>こばやす様（テーマ提示）</dd>
+            <dt>使用サイズ</dt><dd>500x500</dd>
+            <dt>使用ツール</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Summary</h3>
+          <p class="mwork__en">
+            New Year membership campaign banner for a fitness club.<br>
+            The layout leads with a “0 yen” offer to reduce entry friction,
+            while supportive copy reassures consistency, keeping a clear hierarchy
+            between price, message, and lifestyle imagery.
+          </p>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Defined campaign goals and targeted working adults during the New Year period</li>
+            <li><strong>Information Structuring</strong>: Prioritized fee waivers to reduce entry barriers</li>
+            <li><strong>Layout Planning</strong>: Designed a visual flow from key numbers to copy and lifestyle imagery</li>
+            <li><strong>Refinement</strong>: Balanced pricing appeal with reassurance for long-term commitment</li>
+          </ol>
+        </div>
+
+        <div class="mwork__note">
+          <dl>
+            <dt>Brief</dt><dd>Provided by Kobayas (theme prompt)</dd>
+            <dt>Size</dt><dd>500x500</dd>
+            <dt>Tools</dt><dd>Illustrator / Photoshop</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  `
+},
+
+design_lunch_menu: {
+  title: "地域カフェ「Café With」A5メニューチラシ",
+  subtitle: "Flyer Design / A5 / In-store & Handout",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        カフェのランチ利用や日常的な来店を想定し、店頭設置・手渡し配布のどちらにも対応できるA5チラシを制作。<br><br>
+        ランチ・ケーキ・ドリンク・クーポンと情報量が多い媒体であることを前提に、<br>
+        <strong>「内容・価格・提供時間」</strong>が一目で把握できる情報設計と、親しみやすい世界観の両立を意識しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/cafe-with/flyer.webp",
+              "alt":"Café With｜A5 Flyer",
+              "label":"チラシ全体"
+            },
+            {
+              "src":"images/works/design/original/cafe-with/mockup.webp",
+              "alt":"Café With｜Mockup",
+              "label":"モックアップ"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/cafe-with/mockup.webp"
+            alt="Café With｜Mockup"
+            loading="lazy">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li><strong>情報の優先順位</strong>を整理し、来店判断に直結する「内容・価格・時間」を最上段で即認識できる構成</li>
+            <li>写真の近くに価格を配置し、<strong>視線移動を最短化</strong>（直感で理解できるレイアウト）</li>
+            <li>ランチ / ケーキ / ドリンク / クーポンを<strong>時間軸＋用途別</strong>に分け、読み疲れを軽減</li>
+            <li>猫モチーフ＋柔らかな配色で、常連だけでなく<strong>初来店にも入りやすいトーン</strong>を設計</li>
+            <li>配布運用を想定し、クーポン条件・問い合わせ導線を<strong>行動に繋がる位置</strong>に集約</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：目的（ランチ集客 / 日常来店）と掲載要素（メニュー＋クーポン）の情報量を整理</li>
+            <li><strong>構造設計</strong>：時間帯別（ランチ / ケーキ）と用途別（ドリンク / クーポン）でブロック化</li>
+            <li><strong>視線誘導</strong>：写真→価格→説明の順で読めるよう、余白と見出しの強弱を調整</li>
+            <li><strong>最終調整</strong>：クーポン条件・QR・店舗情報の可読性と、全体トーン（親しみやすさ）を最適化</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>課題提供</dt><dd>https://webtan.tech/flyer_cafe/</dd>
+              <dt>制作範囲</dt>
+              <dd>A5チラシデザイン（フルカラー）</dd>
+              <dt>想定媒体</dt>
+              <dd>店舗配布用フライヤー / 店頭設置（ラック）/ 手渡し配布</dd>
+              <dt>ツール</dt>
+              <dd>Adobe Illustrator / Adobe Photoshop</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Highlights</h3>
+          <ul>
+            <li>Organized a clear <strong>information hierarchy</strong> so visitors can instantly grasp menu items, pricing, and serving hours.</li>
+            <li>Placed prices close to photos to reduce cognitive load and enable <strong>at-a-glance understanding</strong>.</li>
+            <li>Structured the layout into time- and purpose-based sections (Lunch / Cake / Drinks / Coupons) to improve readability.</li>
+            <li>Used a warm palette and subtle cat motifs to create a <strong>friendly, approachable tone</strong> for first-time customers.</li>
+            <li>Designed for real distribution: coupon rules, QR, and store info are positioned for <strong>quick action</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief & Requirements</strong>: defined the goal (lunch visits / daily walk-ins) and organized high-volume content.</li>
+            <li><strong>Layout Structure</strong>: grouped content by time and usage (Lunch, Cake Set, Drinks, Coupons).</li>
+            <li><strong>Visual Flow</strong>: refined spacing and typographic hierarchy to guide the eye from photo → price → description.</li>
+            <li><strong>Final Optimization</strong>: ensured readability of coupon conditions and QR placement while keeping a warm brand tone.</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Scope</dt>
+              <dd>A5 Flyer Design (Full Color)</dd>
+              <dt>Intended Use</dt>
+              <dd>In-store handouts / Display rack placement</dd>
+              <dt>Tools</dt>
+              <dd>Adobe Illustrator / Adobe Photoshop</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `
+},
+
+design_bernes_card: {
+  title: "大型犬×免許証オマージュ名刺（自主制作）",
+  subtitle: "Personal Work / Business Card Design",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        大型犬が好きすぎて、ついに名刺にも登場してもらいました🐶<br>
+        それと、昔ちょっと「免許証持ってる＝大人である」と<br>
+	謎に憧れてた時期があって…<br>
+        その2つを合体させた、自主制作の“IDカード風名刺”です。<br><br>
+        ちゃんと使える情報整理は守りつつ、堅すぎない雰囲気に寄せています。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/bernes/mockup.webp",
+              "alt":"大型犬×免許証オマージュ名刺｜モックアップ",
+              "label":"モックアップ"
+            },
+            {
+              "src":"images/works/design/original/bernes/front.webp",
+              "alt":"大型犬×免許証オマージュ名刺｜表",
+              "label":"表"
+            },
+            {
+              "src":"images/works/design/original/bernes/back.webp",
+              "alt":"大型犬×免許証オマージュ名刺｜裏",
+              "label":"裏"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/bernes/mockup.webp"
+            alt="大型犬×免許証オマージュ名刺｜モックアップ">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar is-pill" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>免許証っぽいレイアウトで、情報が一瞬で読めるように整理</li>
+            <li>かわいさ全振りにならないよう、色数と余白は控えめに</li>
+            <li>犬イラストは“話しかけやすさ”担当（初対面の空気を和らげる用）</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>方向性メモ</strong>：好き（大型犬）＋憧れ（免許証）を1枚で成立させる方針に</li>
+            <li><strong>情報設計</strong>：肩書き・連絡先・導線（QR）を“迷わない順番”に配置</li>
+            <li><strong>イラスト調整</strong>：主張しすぎないサイズ感にして、邪魔せず効かせる</li>
+            <li><strong>仕上げ</strong>：印刷を想定して線の太さ・余白・可読性を最終調整</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作種別</dt><dd>自主制作</dd>
+              <dt>制作範囲</dt><dd>名刺（表／裏）/ モックアップ</dd>
+              <dt>使用ツール</dt><dd>Illustrator / Photoshop</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Summary</h3>
+          <p class="mwork__en">
+            A self-initiated business card inspired by ID card layouts and my love for large dogs 🐾<br>
+            It keeps information clean and readable, while adding a friendly touch through illustration and soft tones.
+          </p>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Concept note</strong>: Combined “large dogs” + “ID card layout” into a usable design</li>
+            <li><strong>Information layout</strong>: Organized title, contacts, and QR links for quick scanning</li>
+            <li><strong>Illustration balance</strong>: Kept visuals friendly but not overpowering</li>
+            <li><strong>Final polish</strong>: Adjusted spacing, line weight, and readability for print</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Type</dt><dd>Personal project</dd>
+              <dt>Scope</dt><dd>Business card (front/back) / Illustration / Mockup</dd>
+              <dt>Tools</dt><dd>Illustrator / Photoshop</dd>
+            </dl>
+          </div>
+        </div>
+    </div>
+  `
+},
+
+design_paper_portfolio: { 
+  title: "紙ポートフォリオ",
+  subtitle: "Personal Work / Print Design",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        自身の主にデザイナーとしての活動をまとめた紙ポートフォリオ。<br>
+        作品そのものだけでなく、「どう考えて・どう構成しているか」が伝わるよう、<br>
+        余白・グリッド・情報階層を意識したブックデザインを行いました。<br><br>
+        静かでモダンなトーンをベースに、<br>
+        実務資料としても、自己表現の媒体としても成立する構成を目指しています。<br>
+        ※イラストレ作品は別途イラストポートフォリオを制作中でございます。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/design/original/portfolio/mockup.webp",
+              "alt":"紙ポートフォリオ｜モックアップ",
+              "label":"Mockup"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/design/original/portfolio/mockup.webp"
+            alt="紙ポートフォリオ｜モックアップ">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar is-pill" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>グリッドと余白を基準に、視線が自然に流れる誌面構成</li>
+            <li>作品写真・説明文・補足情報の情報階層を明確に整理</li>
+            <li>主張しすぎない配色で、内容そのものに集中できるデザイン</li>
+            <li>紙媒体でもデジタル感覚で読めるリズムを意識</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>構成設計</strong>：全体ページ構成と情報量を整理</li>
+            <li><strong>トーン設計</strong>：モダンで静かな印象を軸に方向性を決定</li>
+            <li><strong>レイアウト</strong>：グリッド・余白・文字組みを調整</li>
+            <li><strong>仕上げ</strong>：印刷時の見え方を想定して最終調整</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>制作種別</dt><dd>自主制作</dd>
+              <dt>制作範囲</dt><dd>構成 / デザイン / レイアウト / モックアップ</dd>
+              <dt>使用ツール</dt><dd>InDesign / Illustrator / Photoshop</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Summary</h3>
+          <p class="mwork__en">
+            A self-designed printed portfolio showcasing my illustration and design work.<br>
+            The book focuses not only on visuals, but also on structure, spacing, and information hierarchy,<br>
+            allowing the reader to understand my design thinking at a glance.<br><br>
+            Designed with a calm, modern tone, it functions both as a professional presentation tool<br>
+            and as a personal expression of my design approach.
+          </p>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Structure planning</strong>: Defined page flow and content balance</li>
+            <li><strong>Visual direction</strong>: Established a calm, modern design tone</li>
+            <li><strong>Layout design</strong>: Refined grid, spacing, and typography</li>
+            <li><strong>Final adjustment</strong>: Optimized readability for print</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Type</dt><dd>Personal project</dd>
+              <dt>Scope</dt><dd>Book design / Layout / Mockup</dd>
+              <dt>Tools</dt><dd>InDesign / Illustrator / Photoshop</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `
+},
+};
+
+function initIlluCarousel(modalEl) {
+  const wrap = modalEl.querySelector('[data-carousel]');
+  if (!wrap) { modalEl.__illuCarouselState = null; return; }
+
+  const figures = Array.from(wrap.querySelectorAll('figure'));
+  if (figures.length <= 1) { modalEl.__illuCarouselState = null; return; }
+
+  wrap.classList.add('is-carousel');
+
+  let nav = modalEl.querySelector('.illu-carousel-nav');
+  if (!nav) {
+    nav = document.createElement('div');
+    nav.className = 'illu-carousel-nav';
+    nav.innerHTML = `
+      <button class="illu-carousel-btn" type="button" data-carousel-prev aria-label="前の画像">＜</button>
+      <div class="illu-carousel-count" data-carousel-count></div>
+      <button class="illu-carousel-btn" type="button" data-carousel-next aria-label="次の画像">＞</button>
+    `;
+    wrap.insertAdjacentElement('afterend', nav);
+  }
+
+  const state = {
+    wrap,
+    figures,
+    nav,
+    btnPrev: nav.querySelector('[data-carousel-prev]'),
+    btnNext: nav.querySelector('[data-carousel-next]'),
+    countEl: nav.querySelector('[data-carousel-count]'),
+    idx: 0
+  };
+
+let dotsWrap = modalEl.querySelector('.illu-carousel-dots');
+if (!dotsWrap) {
+  dotsWrap = document.createElement('div');
+  dotsWrap.className = 'illu-carousel-dots';
+}
+
+let ui = modalEl.querySelector('.illu-carousel-ui');
+if (!ui) {
+  ui = document.createElement('div');
+  ui.className = 'illu-carousel-ui';
+  wrap.insertAdjacentElement('beforebegin', ui);
+}
+
+ui.appendChild(dotsWrap);
+
+dotsWrap.innerHTML = '';
+state.figures.forEach((_, i) => {
+  const dot = document.createElement('span');
+  dot.className = 'illu-carousel-dot';
+  if (i === state.idx) dot.classList.add('is-active');
+  dotsWrap.appendChild(dot);
+});
+state.dots = Array.from(dotsWrap.children);
+
+   state.render = () => {
+    state.figures.forEach((fg, i) =>
+      fg.classList.toggle('is-active', i === state.idx)
+    );
+
+    if (state.countEl) 
+    state.countEl.textContent = `${state.idx + 1} / ${state.figures.length}`;
+
+
+  if (state.dots) {
+    state.dots.forEach((d, i) =>
+      d.classList.toggle('is-active', i === state.idx)
+    );
+  }
+
+  state.btnPrev.disabled = false;
+  state.btnNext.disabled = false;
+
+};
+
+  modalEl.__illuCarouselState = state;
+  state.render();
+
+  if (!modalEl.__illuCarouselBound) {
+
+modalEl.addEventListener('click', (e) => {
+  const s = modalEl.__illuCarouselState;
+  if (!s) return;
+
+  const prev = e.target.closest('[data-carousel-prev]');
+  const next = e.target.closest('[data-carousel-next]');
+  if (!prev && !next) return;
+
+  if (prev) s.idx = (s.idx - 1 + s.figures.length) % s.figures.length;
+  if (next) s.idx = (s.idx + 1) % s.figures.length;
+  s.render();
+});
+
+document.addEventListener('keydown', (e) => {
+
+  if (modalEl.getAttribute("aria-hidden") === "true") return;
+
+  const s = modalEl.__illuCarouselState;
+  if (!s) return; // ←カルーセルがない作品では完全に無効になる
+
+  if (e.key === 'ArrowLeft') {
+    s.idx = (s.idx - 1 + s.figures.length) % s.figures.length;
+    s.render();
+  }
+  if (e.key === 'ArrowRight') {
+    s.idx = (s.idx + 1) % s.figures.length;
+    s.render();
+  }
+});
+
+    modalEl.__illuCarouselBound = true;
+  }
+}
+
+(function () {
+  function safeParseJSON(str) {
+    try { return JSON.parse(str); } catch { return null; }
+  }
+  
+  function initDesignGallery(root) {
+    if (!root) return;
+
+    const figure = root.querySelector('.modal__figure[data-set]');
+    if (!figure) return;
+
+    // 二重初期化防止
+    if (figure.dataset.galleryReady === '1') return;
+
+    const set = safeParseJSON(figure.getAttribute('data-set'));
+    if (!Array.isArray(set) || set.length === 0) return;
+
+    const img = figure.querySelector('img.mwork__img') || figure.querySelector('img');
+    const labelEl = figure.querySelector('.mwork__caption');
+    if (!img) return;
+
+    // UI（＜ ラベル ＞）を用意（rootスコープで1つだけ）
+    let ui = root.querySelector('.mgallery-ui');
+    if (!ui) {
+      ui = document.createElement('div');
+      ui.className = 'mgallery-ui';
+
+      const prev = document.createElement('button');
+      prev.type = 'button';
+      prev.className = 'mgallery-ui__btn';
+      prev.setAttribute('aria-label', '前の画像へ');
+      prev.textContent = '＜';
+
+      const label = document.createElement('div');
+      label.className = 'mgallery-ui__label';
+      label.setAttribute('aria-live', 'polite');
+
+      const next = document.createElement('button');
+      next.type = 'button';
+      next.className = 'mgallery-ui__btn';
+      next.setAttribute('aria-label', '次の画像へ');
+      next.textContent = '＞';
+
+      ui.append(prev, label, next);
+
+      // 画像の直前に挿入（通常フロー）
+      figure.insertAdjacentElement('beforebegin', ui);
+    }
+
+    const prevBtn = ui.querySelector('.mgallery-ui__btn:nth-child(1)');
+    const uiLabel = ui.querySelector('.mgallery-ui__label');
+    const nextBtn = ui.querySelector('.mgallery-ui__btn:nth-child(3)');
+
+    // figureがabsolute ghostを受けられるように（UIには影響しない）
+    if (getComputedStyle(figure).position === 'static') figure.style.position = 'relative';
+
+    let idx = 0;
+
+    const applyClasses = (item, txt) => {
+      const meta = `${txt} ${item.alt || ''}`;
+      img.classList.toggle(
+        'is-banner',
+        /(300[×x\*]25\d|300[×x\*]26\d|300[×x\*]600|160[×x\*]600|728[×x\*]90|970[×x\*]250|468[×x\*]60)/i.test(meta)
+      );
+      img.classList.toggle('is-small', /300×250|300x250/i.test(meta)); // backward compatible
+      img.classList.toggle('is-logo', /ロゴ|logo/i.test(meta));
+    };
+
+    function render(nextIdx) {
+      if (typeof nextIdx === 'number') idx = Math.max(0, Math.min(set.length - 1, nextIdx));
+
+      const item = set[idx];
+      const txt = item.label || `${idx + 1} / ${set.length}`;
+
+      // labels
+      uiLabel.textContent = txt;
+      if (labelEl) labelEl.textContent = txt;
+
+      // old image as ghost (only if we currently have something visible)
+      let ghost = null;
+      if (img.currentSrc || img.src) {
+        ghost = document.createElement('img');
+        ghost.className = 'mgallery-ghost';
+        ghost.alt = img.alt || '';
+        ghost.src = img.currentSrc || img.src;
+        figure.appendChild(ghost);
+      }
+
+      // switch effect (keep your existing CSS)
+      img.classList.add('is-switching');
+
+      // swap image
+      img.alt = item.alt || '';
+
+      // clean previous onload to avoid stacking
+      img.onload = null;
+      img.onerror = null;
+
+      const finish = () => {
+        applyClasses(item, txt);
+        requestAnimationFrame(() => img.classList.remove('is-switching'));
+
+        if (ghost) {
+          // let layout paint once, then fade/blur out
+          requestAnimationFrame(() => ghost.classList.add('is-done'));
+          ghost.addEventListener('transitionend', () => ghost.remove(), { once: true });
+          // fallback (in case transitionend doesn't fire)
+          setTimeout(() => ghost && ghost.remove && ghost.remove(), 1300);
+        }
+      };
+
+      img.onload = () => {
+        finish();
+        img.onload = null;
+        img.onerror = null;
+      };
+
+      img.onerror = () => {
+        // if new image fails, just restore UI state (ghost removed)
+        requestAnimationFrame(() => img.classList.remove('is-switching'));
+        if (ghost) ghost.remove();
+        img.onload = null;
+        img.onerror = null;
+      };
+
+      img.src = item.src;
+
+      // cached images may already be complete
+      if (img.complete) {
+        finish();
+      }
+
+      prevBtn.disabled = (idx === 0);
+      nextBtn.disabled = (idx === set.length - 1);
+    }
+
+    // bind events once
+    if (!ui.dataset.bound) {
+      prevBtn.addEventListener('click', () => render(idx - 1));
+      nextBtn.addEventListener('click', () => render(idx + 1));
+      ui.dataset.bound = '1';
+    }
+
+    // keyboard (← / →)
+  if (document.__designGalleryKeyHandler) {
+    document.removeEventListener('keydown', document.__designGalleryKeyHandler);
+  }
+
+  document.__designGalleryKeyHandler = (e) => {
+    // モーダルが開いてる時だけ
+    const modalOpen =
+      document.documentElement.classList.contains('modal-open') ||
+      document.body.classList.contains('modal-open');
+    if (!modalOpen) return;
+
+    // フォーカスがモーダル外なら無視
+    const active = document.activeElement;
+    if (active && !modal.contains(active)) return;
+
+    // このギャラリー内にフォーカスが絡んでないなら無視（誤爆防止）
+    if (active && !root.contains(active) && !modal.contains(active)) return;
+
+    if (e.key === 'ArrowLeft') { e.preventDefault(); render(idx - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); render(idx + 1); }
+  };
+
+  document.addEventListener('keydown', document.__designGalleryKeyHandler);
+
+    // preload
+    set.forEach((it) => { const p = new Image(); p.src = it.src; });
+
+    figure.dataset.galleryReady = '1';
+    render(0);
+  }
+  
+    function initAll(root = document) {
+    root.querySelectorAll('[data-gallery]').forEach(initDesignGallery);
+  }
+
+// -------------------------
+  // Modal: inside interactions (tabs + JP/EN)
+  // -------------------------
+  function wireModalInside(modalBody, modalRoot) {
+    if (!modalBody || !modalRoot) return;
+
+    // Remove previous handler (prevents stacking on repeated open)
+    if (modalRoot.__onModalClick) {
+      modalBody.removeEventListener("click", modalRoot.__onModalClick);
+    }
+
+    // Normalize initial JP/EN visibility
+    modalBody.querySelectorAll("[data-langbar]").forEach((bar) => {
+      const activeBtn =
+        bar.querySelector(".mwork__langbtn.is-active") ||
+        bar.querySelector('.mwork__langbtn[data-lang="jp"]');
+
+      const lang = (activeBtn && activeBtn.dataset.lang) ? activeBtn.dataset.lang : "jp";
+      const scope = bar.parentElement; // langbar + langblock must share the same parent
+      scope.querySelectorAll("[data-langblock]").forEach((block) => {
+        block.hidden = (block.dataset.langblock !== lang);
+      });
+    });
+
+    modalRoot.__onModalClick = (e) => {
+      // (1) Modal tabs (mtab/mpanel)
+      const mtab = e.target.closest(".mtab[data-mtab]");
+      if (mtab) {
+        const key = mtab.dataset.mtab;
+        const tabs = modalBody.querySelectorAll(".mtab[data-mtab]");
+        const panels = modalBody.querySelectorAll(".mpanel[data-mpanel]");
+
+        tabs.forEach((b) => {
+          const active = (b === mtab);
+          b.classList.toggle("is-active", active);
+          b.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        panels.forEach((p) => {
+          const willActive = (p.dataset.mpanel === key);
+
+          if (willActive) {
+
+            p.classList.remove("is-active");
+            void p.offsetWidth; // ← reflow（これが安定のコツ）
+            p.classList.add("is-active");
+            p.setAttribute("aria-hidden", "false");
+          } else {
+            p.classList.remove("is-active");
+            p.setAttribute("aria-hidden", "true");
+          }
+        });
+
+        return;
+      }
+
+      // (2) JP/EN switch
+      const langBtn = e.target.closest('[data-langbar] .mwork__langbtn');
+      if (langBtn) {
+        const bar = langBtn.closest("[data-langbar]");
+        const scope = bar.parentElement;
+        const lang = langBtn.dataset.lang;
+
+        bar.querySelectorAll(".mwork__langbtn").forEach((b) => {
+          const active = (b === langBtn);
+          b.classList.toggle("is-active", active);
+          b.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        scope.querySelectorAll("[data-langblock]").forEach((block) => {
+          block.hidden = (block.dataset.langblock !== lang);
+        });
+      }
+    };
+
+    modalBody.addEventListener("click", modalRoot.__onModalClick);
+  }
+
+  // -------------------------
+  // Modal open/close
+  // -------------------------
+  function openModal(key) {
+    // allow short keys like "business_statistics" to map to "design_business_statistics"
+    const data = modalData[key] || modalData[`design_${key}`];
+    if (!data || !modal) return;
+
+    lastFocus = document.activeElement;
+
+    titleEl.textContent = data.title || "";
+    if (subtitleEl) subtitleEl.textContent = data.subtitle || "";
+
+    bodyEl.innerHTML = data.html || "";
+
+    if (typeof initAll === "function") {
+      initAll(bodyEl);
+    }
+
+    if (typeof initIlluCarousel === "function") {
+      initIlluCarousel(modal);
+    }
+
+    bodyEl
+      .querySelectorAll("[data-langbar]")
+      .forEach((bar) => bar.classList.add("is-pill"));
+
+    modal.classList.add("modal-open");
+    document.documentElement.classList.add("modal-open");
+    document.body.classList.add("modal-open");
+    modal.setAttribute("aria-hidden", "false");
+
+    wireModalInside(bodyEl, modal);
+
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeModal() {
+    if (!modal) return;
+
+    modal.classList.remove("modal-open");
+    document.documentElement.classList.remove("modal-open");
+    document.body.classList.remove("modal-open");
+
+    modal.setAttribute("aria-hidden", "true");
+
+    bodyEl.innerHTML = "";
+
+    if (lastFocus && typeof lastFocus.focus === "function") {
+      lastFocus.focus();
+    }
+  }
+
+  // Close interactions
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (overlay) overlay.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal && modal.classList.contains("modal-open")) {
+      closeModal();
+    }
+  });
+
+  // Open modal by clicking cards (ignore empty data-modal)
+  document.addEventListener("click", (e) => {
+    const card = e.target.closest(".work-card[data-modal]");
+    if (!card) return;
+
+    e.preventDefault();
+
+    const key = card.dataset.modal;
+    if (!key) return; // prevents "broken" feeling for empty keys
+    openModal(key);
+  });
+
+  // -------------------------
+  // Works list tabs (Illustration / Design)
+  // -------------------------
+  (function initWorksTabs() {
+  const tabs = document.querySelectorAll(".works-tab[data-filter]");
+  const cards = document.querySelectorAll(".work-card[data-cat]");
+  const sortUI = document.querySelector(".works-sort");
+  if (!tabs.length || !cards.length) return;
+
+  function updateSortVisibility(activeCat) {
+    if (!sortUI) return;
+    sortUI.style.display = (activeCat === "illustration") ? "inline-flex" : "none";
+  }
+
+  function apply(filter) {
+    const safe = (filter === "illustration" || filter === "design") ? filter : "design";
+
+    tabs.forEach((t) => {
+      const active = (t.dataset.filter === safe);
+      t.classList.toggle("is-active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+
+    cards.forEach((c) => {
+      const show = (c.dataset.cat === safe);
+      c.classList.toggle("is-hidden", !show);
+    });
+
+    updateSortVisibility(safe);
+  }
+
+  const initialBtn =
+    document.querySelector('.works-tab.is-active[data-filter]') ||
+    document.querySelector('.works-tab[data-filter="design"]') ||
+    tabs[0];
+
+  apply(initialBtn?.dataset.filter || "design");
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".works-tab[data-filter]");
+    if (!btn) return;
+    apply(btn.dataset.filter);
+  });
+})();
+  
+  // -------------------------
+  // Works sort (Illustration)
+  // -------------------------
+  (function initWorksSort() {
+    const grid = document.querySelector(".works-grid");
+    const sortBtns = document.querySelectorAll(".sort-btn[data-sort]");
+    const cards = () => Array.from(document.querySelectorAll(".work-card[data-cat]"));
+    if (!grid || !sortBtns.length) return;
+
+    let mode = "new"; // default
+
+    function parseDate(s) {
+      const t = (s || "").trim();
+      return t; // YYYY-MM or YYYY-MM-DD lexicographically sortable
+    }
+
+    function applySort(nextMode) {
+      mode = (nextMode === "old") ? "old" : "new";
+      sortBtns.forEach(b => b.classList.toggle("is-active", b.dataset.sort === mode));
+
+      const all = cards();
+      const illus = all.filter(c => c.dataset.cat === "illustration");
+      const design = all.filter(c => c.dataset.cat === "design");
+
+      const dir = (mode === "old") ? -1 : 1; // old: asc, new: desc
+
+      illus.sort((a,b) => {
+        const da = parseDate(a.dataset.date);
+        const db = parseDate(b.dataset.date);
+        if (!da && !db) return 0;
+        if (!da) return 1;
+        if (!db) return -1;
+        if (da === db) return 0;
+        return (da < db) ? dir : -dir;
+      });
+
+      // Rebuild DOM: illus first then design (design order preserved)
+      const frag = document.createDocumentFragment();
+      illus.forEach(n => frag.appendChild(n));
+      design.forEach(n => frag.appendChild(n));
+      grid.appendChild(frag);
+    }
+
+    // initial
+    applySort("new");
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".sort-btn[data-sort]");
+      if (!btn) return;
+      applySort(btn.dataset.sort);
+    });
+  })();
+
+// -------------------------
+  // Design galleries on page (if any)
+(() => {
+  // JSが生きてる時だけCSSで隠す
+  document.documentElement.classList.add("js", "js-reveal");
+
+  const observed = new WeakSet();
+  const leaveTimers = new WeakMap(); // チラつき防止（任意）
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+
+      if (entry.isIntersecting) {
+        const t = leaveTimers.get(el);
+        if (t) clearTimeout(t);
+        el.classList.add("is-inview");
+        return;
+      }
+
+      // 画面外に出たら少し待って外す（チラつき防止）
+      const timer = setTimeout(() => {
+        el.classList.remove("is-inview");
+        leaveTimers.delete(el);
+      }, 120);
+
+      leaveTimers.set(el, timer);
+    });
+  }, {
+    root: null,
+    rootMargin: "0px 0px -10% 0px",
+    threshold: 0.1
+  });
+
+  const sync = () => {
+    document.querySelectorAll(".work-card[data-cat]").forEach(el => {
+      el.classList.add("reveal");
+
+      // タブ切替で非表示になったカードは監視を外す（display:none対策）
+      if (el.classList.contains("is-hidden")) {
+        el.classList.remove("is-inview");
+        if (observed.has(el)) {
+          io.unobserve(el);
+          observed.delete?.(el); // WeakSetはdeleteできない環境もあるので保険
+        }
+        return;
+      }
+
+      // 表示中のカードは監視
+      if (!observed.has(el)) {
+        observed.add(el);
+        io.observe(el);
+      } else {
+        // 既に監視中でも、一応observeしても害はない（再表示対策）
+        try { io.observe(el); } catch {}
+      }
+    });
+  };
+
+  sync();
+
+  // DOM並べ替えやタブ切替で更新されるので追従
+  const mo = new MutationObserver(() => sync());
+  mo.observe(document.querySelector(".works-grid") || document.body, { childList: true, subtree: true });
+
+  (() => {
+  // タブ/ソート押下直後も追従
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".works-tab, .sort-btn")) {
+      requestAnimationFrame(sync);
+    }
+  });
+})();
+
+})(); // close reveal IIFE
+})(); // close design helpers IIFE
+})(); // close main IIFE
+</script>
+
+<script>
+/* ===== Cursor + PageTop (non-blocking) ===== */
+(function(){
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const cursor = document.querySelector('.cursor');
+  if (cursor && canHover && !prefersReduced) {
+    const root = document.documentElement;
+
+const syncCursorMode = () => {
+  const isModalOpen =
+    root.classList.contains('modal-open') ||
+    document.body.classList.contains('modal-open');
+
+  const shouldCursorOn = true;
+  const hasCursorOn = root.classList.contains('cursor-on');
+
+  if (shouldCursorOn !== hasCursorOn) {
+    root.classList.toggle('cursor-on', shouldCursorOn);
+  }
+
+  if (!shouldCursorOn) {
+    cursor.style.opacity = '0';
+  }
+};
+
+const mo = new MutationObserver(() => {
+
+  requestAnimationFrame(syncCursorMode);
+});
+mo.observe(root, { attributes: true, attributeFilter: ['class'] });
+mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+syncCursorMode();
+
+    let x = 0, y = 0, raf = null;
+    const move = (e) => {
+      x = e.clientX; y = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        cursor.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+        cursor.style.opacity = '1';
+        raf = null;
+      });
+    };
+    window.addEventListener('mousemove', move, {passive:true});
+    window.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; }, {passive:true});
+
+    const hoverSel = 'a, button, [role="button"], .work-card, .nav-link, .page-top, .back-fab';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(hoverSel)) cursor.classList.add('is-hover');
+    }, true);
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(hoverSel)) cursor.classList.remove('is-hover');
+    }, true);
+  }
+
+  // PageTop
+  const pageTop = document.querySelector('.page-top');
+  if (pageTop) {
+    const toggle = () => {
+      const show = window.scrollY > 520;
+      pageTop.classList.toggle('is-visible', show);
+    };
+    toggle();
+    window.addEventListener('scroll', toggle, {passive:true});
+  }
+})();
+</script>
+
+</body>
+</html>
