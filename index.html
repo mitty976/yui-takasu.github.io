@@ -1604,6 +1604,101 @@ html.js-reveal .reveal.is-inview {
   }
 }
 
+/* =========================
+   Mobile fix: About + Contact
+========================= */
+*{ box-sizing: border-box; }
+img{ max-width: 100%; height: auto; }
+
+html, body{ overflow-x: hidden; } /* 横スクロール止血 */
+
+/* ===== About: 2カラム→1カラム & nowrap解除 ===== */
+@media (max-width: 900px){
+  .about__inner{
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .about__media{
+    justify-self: center;
+  }
+
+  .about__media img{
+    width: min(240px, 70vw); /* 80%固定より安全 */
+    margin: 0 auto;
+  }
+
+  .about__name{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0;
+    row-gap: 10px;
+    justify-items: center;
+    width: 100%;
+  }
+
+  .name-line{
+    white-space: normal;      /* ← これがデカい */
+    justify-content: center;
+    text-align: center;
+  }
+
+  .name-line--design,
+  .name-line--illu{
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .about__role{
+    text-align: center;
+  }
+
+  .about__text{
+    max-width: 62ch;
+    margin: 0 auto;
+  }
+}
+
+/* ===== Contact: アコーディオン等の“横押し出し”対策 ===== */
+@media (max-width: 900px){
+  .contact__inner{
+    width: min(760px, 92vw);
+  }
+
+  /* summary が横に押し出しやすいので折り返し許可 */
+  .accordion__summary{
+    gap: 12px;
+  }
+  .accordion__summary > *{
+    min-width: 0;
+  }
+  .accordion__summary{
+    flex-wrap: wrap;
+  }
+
+  /* URLや長文が来ても横に出ないように */
+  .accordion__content,
+  .contact__lead,
+  .contact-block__sub{
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+/* さらに小さいスマホ */
+@media (max-width: 520px){
+  section{ padding-left: 16px; padding-right: 16px; }
+
+  .contact-icons{
+    gap: 10px;
+  }
+  .contact-icon img{
+    width: 52px;
+    height: 52px;
+  }
+}
+
+   
 </style>
 </head>
 
