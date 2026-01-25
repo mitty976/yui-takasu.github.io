@@ -2439,14 +2439,41 @@ if(pageTop){
 
   const swap = (imgEl, src, alt) => {
     if (!imgEl) return;
+
+    // src が空なら消す（空表示にしたいケース用）
     if (!src) { imgEl.removeAttribute("src"); return; }
+
+    // 404/非対応のときに拡張子だけ差し替えて救済（.webp → .jpg → .png）
+    const candidates = (() => {
+      const s = String(src);
+      if (s.match(/\.webp$/i)) return [s, s.replace(/\.webp$/i, ".jpg"), s.replace(/\.webp$/i, ".png")];
+      if (s.match(/\.png$/i))  return [s, s.replace(/\.png$/i, ".webp"), s.replace(/\.png$/i, ".jpg")];
+      if (s.match(/\.jpe?g$/i)) return [s, s.replace(/\.jpe?g$/i, ".webp"), s.replace(/\.jpe?g$/i, ".png")];
+      return [s];
+    })();
+
+    let i = 0;
+    const setCandidate = () => {
+      const nextSrc = candidates[i++];
+      if (!nextSrc) return;
+      imgEl.src = nextSrc;
+    };
+
+    // 前回の onerror が残ると連鎖するので毎回上書き
+    imgEl.onerror = () => {
+      // 次候補があれば差し替え。なければそのまま（壊れたアイコンは残る）
+      setCandidate();
+    };
 
     imgEl.style.opacity = "0";
     imgEl.style.transform = "scale(1.01)";
 
     setTimeout(() => {
-      imgEl.src = src;
       if (alt != null) imgEl.alt = alt;
+
+      // まず 1 つ目をセット
+      i = 0;
+      setCandidate();
 
       imgEl.decode?.().catch(() => {}).finally(() => {
         imgEl.style.opacity = "1";
@@ -2521,7 +2548,70 @@ if(pageTop){
     img.style.opacity = "1";
   });
 
-  // ✅ タブ切替と同期する更新関数（applyWorks() から呼ぶ）
+  
+  /* ===== Swipe (Mobile helper) =====
+     既存の prev/next を click() で叩く方式。新ロジックは作らない。 */
+  (() => {
+    const rcRoot  = root; // 3つとも同じ要素に付ける
+    const prevBtn = root.querySelector('[data-prev]');
+    const nextBtn = root.querySelector('[data-next]');
+    if (!rcRoot || !prevBtn || !nextBtn) return;
+
+    const SWIPE_MIN_PX = 42; // 意思あるスワイプ
+    const SWIPE_MAX_Y  = 70; // 縦が強いならスクロール優先
+
+    let tracking = false;
+    let startX = 0, startY = 0;
+    let dx = 0, dy = 0;
+
+    const ignoreStart = (target) => {
+      if (!target) return false;
+      return !!target.closest('input, button, a');
+    };
+
+    rcRoot.addEventListener('touchstart', (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      if (ignoreStart(e.target)) return;
+
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      dx = dy = 0;
+      tracking = true;
+    }, { passive: true });
+
+    rcRoot.addEventListener('touchmove', (e) => {
+      if (!tracking) return;
+      const t = e.touches[0];
+      dx = t.clientX - startX;
+      dy = t.clientY - startY;
+
+      // 縦スクロール優先
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > SWIPE_MAX_Y) {
+        tracking = false;
+        return;
+      }
+
+      // 横スワイプが勝ってきたらページスクロールを抑える（iOS対策）
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    rcRoot.addEventListener('touchend', () => {
+      if (!tracking) return;
+      tracking = false;
+
+      if (Math.abs(dx) < SWIPE_MIN_PX) return;
+      if (Math.abs(dy) > SWIPE_MAX_Y) return;
+
+      // ✅ iPhone基準: 左フリック＝戻る / 右フリック＝次
+      if (dx < 0) prevBtn.click();
+      else nextBtn.click();
+    }, { passive: true });
+  })();
+
+// ✅ タブ切替と同期する更新関数（applyWorks() から呼ぶ）
   window.__updateRcPreview = () => {
     const cat = (typeof currentCat === "string") ? currentCat : "design";
     items = (itemsByCat[cat] || []).filter(x => x?.src);
