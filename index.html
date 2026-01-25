@@ -2656,7 +2656,7 @@ if(pageTop){
     }
   }, { passive: true });
 
-stage.addEventListener('touchend', () => {
+rcRoot.addEventListener('touchend', () => {
   if (!tracking) return;
   tracking = false;
 
