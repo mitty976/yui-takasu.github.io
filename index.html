@@ -1669,11 +1669,12 @@ html.js-reveal .reveal.is-inview {
   .works-caption__center{
     justify-self: center;
     text-align: center;
+    width: 100%;
   }
 
   .works-more-wrap{
     grid-column: 1;
-    justify-self: end;
+    justify-self: end !important;
     margin-top: 6px;
   }
 }
@@ -1764,8 +1765,15 @@ html.js-reveal .reveal.is-inview {
   }
 
   .contact-mail{
-    max-width: 520px !important;
     margin-inline: auto !important;
+    text-align: center !important;
+  }
+
+  .contact-mail a,
+  .contact-mail button,
+  .contact-mail .contact-icon{
+    margin-inline: auto !important;
+    display: block;
   }
 }
    
