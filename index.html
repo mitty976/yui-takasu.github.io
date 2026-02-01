@@ -2700,22 +2700,20 @@ if(pageTop){
 
   targets.forEach(el => io.observe(el));
 })();
+   
 document.addEventListener('DOMContentLoaded', () => {
+  // ✅ ページ内の画像すべてに no-save を付ける
+  document.querySelectorAll('img').forEach(img => img.classList.add('no-save'));
 
-  // preview内の画像に no-save を付与
-  document
-    .querySelectorAll('.works-preview img, #workModal img')
-    .forEach(img => img.classList.add('no-save'));
-
-  // 右クリック抑止（preview + モーダル）
+  // ✅ no-save の画像上で右クリック禁止
   document.addEventListener('contextmenu', (e) => {
-    if (e.target.closest('.works-preview, #workModal')) {
+    if (e.target.closest('img.no-save')) {
       e.preventDefault();
       e.stopPropagation();
     }
   }, true);
 
-  // ドラッグ抑止
+  // ✅ no-save の画像ドラッグ禁止
   document.addEventListener('dragstart', (e) => {
     if (e.target.closest('img.no-save')) {
       e.preventDefault();
