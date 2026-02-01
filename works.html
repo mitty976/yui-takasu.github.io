@@ -786,6 +786,13 @@
     .mwork__note dt{ font-weight: 500; color: #555; }
     .mwork__note dd{ margin: 0; }
 
+    .mwork__related{
+      margin-top 12px;
+      font-size .9em;
+      line-height 1.8;
+      opacity .85;
+    }
+
     /* ===== Illustration Modal ===== */
     .mwork--illu{
       max-width: 760px;
@@ -1517,6 +1524,45 @@
 </div>
 </a>
 <!-- Design -->
+<a class="work-card" data-cat="design" data-modal="design_lumiere_lp" href="#">
+  <div class="work-thumb">
+    <img alt="LUMIÈRE 敏感肌向けスキンケア LP デザイン" src="images/works/design/lumiere.webp"/>
+  </div>
+  <div class="work-meta">
+    <p class="work-title">LUMIÈRE｜スキンケア LP</p>
+    <p class="work-sub">Web Design / UI Design / Concept Work</p>
+  </div>
+</a>
+
+<a class="work-card" data-cat="design" data-modal="design_still_air" href="#">
+  <div class="work-thumb">
+    <img alt="STILL AIR お香ブランド LP コンセプトデザイン" src="images/works/design/still-air.webp"/>
+  </div>
+  <div class="work-meta">
+    <p class="work-title">STILL AIR｜お香ブランド LP</p>
+    <p class="work-sub">Web Design / UI Design / Concept Work</p>
+  </div>
+</a>
+
+<a class="work-card" data-cat="design" data-modal="design_yori_salon_lp" href="#">
+  <div class="work-thumb">
+    <img alt="Yori プライベートサロン LP デザイン" src="images/works/design/yori-salon.webp"/>
+  </div>
+  <div class="work-meta">
+    <p class="work-title">Yori｜Private Salon LP</p>
+    <p class="work-sub">Web Design / UI Design / Concept Work</p>
+  </div>
+</a>
+
+<a class="work-card" data-cat="design" data-modal="design_yori_reservation_ui" href="#">
+  <div class="work-thumb">
+    <img alt="Yori 予約フォーム UI設計（PC/SP）" src="images/works/design/yori-reservation-ui.webp"/>
+  </div>
+  <div class="work-meta">
+    <p class="work-title">Yori｜予約フォーム UI設計</p>
+    <p class="work-sub">UI Design / UX / Flow Design（PC・SP）</p>
+  </div>
+</a>
 <a class="work-card" data-cat="design" data-modal="design_uru_hada" href="#">
 <div class="work-thumb"><img alt="URU-HADA 潤肌 美容液 ブランドデザイン" src="images/works/design/uru-hada.webp"/></div>
 <div class="work-meta">
@@ -2671,6 +2717,497 @@ const modalData = {
 
         <p class="illu-desc">
         ※ 楽曲非公開のため、楽曲名および関連リンクの掲載は控えています。</p>
+    </div>
+  `
+},
+
+design_lumiere_lp: {
+  title: "LUMIÈRE｜Sensitive Skincare LP Concept",
+  subtitle: "Web Design / UI Design / Concept Work",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        敏感肌・乾燥肌の方に向けた、低刺激スキンケアブランド「LUMIÈRE」のコンセプトLP制作。<br><br>
+
+        「静かに、続くケア。」を軸に、<br>
+        肌へのやさしさと上質感が両立する世界観を設計しました。<br>
+        情報を詰め込みすぎず、余白・トーン・階層設計によって安心感を伝えることを重視しています。<br><br>
+
+        本作品はデザイン設計段階のアウトプットとして、<br>
+        レスポンシブ実装を想定したレイアウトと情報密度の調整までを行いました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/web/original/lumiere/overview.webp",
+              "alt":"LUMIÈRE LP｜全体構成",
+              "label":"全体構成"
+            },
+            {
+              "src":"images/works/web/original/lumiere/mock_pc.webp",
+              "alt":"LUMIÈRE LP｜PC表示",
+              "label":"PC"
+            },
+            {
+              "src":"images/works/web/original/lumiere/mock_tablet_SP.webp",
+              "alt":"LUMIÈRE LP｜Tablet&SP表示",
+              "label":"Tablet & SP"
+            },
+            {
+              "src":"images/works/web/original/lumiere/extract.webp",
+              "alt":"LUMIÈRE LP｜一部抜粋",
+              "label":"抜粋"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/web/original/lumiere/mock_pc.webp"
+            alt="LUMIÈRE LP｜PC表示">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>敏感肌向けに必要な「安心感」を、余白設計・トーン統一・コピーの抑制で表現</li>
+            <li>清潔感と上質感の両立を目的に、明度の高い配色と柔らかな質感（布・光）を採用</li>
+            <li>情報は「思想 → 根拠（成分/約束） → 悩み別提案 → ラインナップ」の順で段階的に提示</li>
+            <li>レスポンシブ実装を前提に、SPでは要素の優先順位と情報密度が破綻しないよう調整</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：敏感肌層が重視する不安要素（刺激・継続性・信頼）を整理</li>
+            <li><strong>構成設計</strong>：コンセプトで共感を作り、次に根拠提示で安心感を補強</li>
+            <li><strong>UI設計</strong>：余白・整列・文字サイズの抑制で、やさしい読後感を設計</li>
+            <li><strong>実装想定</strong>：レスポンシブ時の崩れやすいブロック（図解/カード/表）を想定して配置調整</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>使用ツール</dt>
+              <dd>Figma / Photoshop</dd>
+              <dt>制作範囲</dt>
+              <dd>LP構成 / UIデザイン / レスポンシブ設計（デザイン）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Expressed trust and gentleness through spacing, restrained copy, and consistent tone</li>
+            <li>Balanced cleanliness and premium feel using high-key colors and soft textures (light, fabric)</li>
+            <li>Structured content progressively: concept → proof (ingredients/promises) → concerns → lineup</li>
+            <li>Planned layouts with responsive behavior in mind, especially for information density on mobile</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Identified key anxieties for sensitive-skin users (irritation, continuity, trust)</li>
+            <li><strong>Structure Planning</strong>: Built empathy with concept, then reinforced reassurance with evidence</li>
+            <li><strong>UI Design</strong>: Designed a gentle reading experience through spacing, alignment, and typography</li>
+            <li><strong>Implementation Planning</strong>: Adjusted layout considering responsive risks (cards, diagrams, tables)</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Tools</dt>
+              <dd>Figma / Photoshop</dd>
+              <dt>Scope</dt>
+              <dd>LP structure / UI design / Responsive layout planning</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `
+},
+
+
+design_still_air: {
+  title: "STILL AIR｜Incense Brand LP Concept",
+  subtitle: "Web Design / UI Design / Concept Work",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        思考や作業に集中する時間を大切にする人に向けた、<br>
+        お香ブランド「STILL AIR」のコンセプトLP制作。<br><br>
+
+        香りを“気分を高める演出”ではなく、<br>
+        空間と思考を静かに整えるための環境要素として再定義し、<br>
+        実装を想定した情報設計と余白設計を軸に世界観を構築しました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/web/original/still-air/overview.webp",
+              "alt":"STILL AIR LP｜全体構成",
+              "label":"全体構成"
+            },
+            {
+              "src":"images/works/web/original/still-air/mock_pc.webp",
+              "alt":"STILL AIR LP｜PC表示",
+              "label":"PC"
+            },
+            {
+              "src":"images/works/web/original/still-air/mock_tablet_SP.webp",
+              "alt":"STILL AIR LP｜Tablet&SP表示",
+              "label":"Tablet & SP"
+            },
+            {
+              "src":"images/works/web/original/still-air/extract.webp",
+              "alt":"STILL AIR LP｜一部抜粋",
+              "label":"抜粋"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/web/original/still-air/mock_pc.webp"
+            alt="STILL AIR LP｜PC表示">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>余白・行間・色数を抑え、思考を妨げない静かなトーンを設計</li>
+            <li>FVでは購買訴求を行わず、世界観への没入を最優先</li>
+            <li>縦書きコピーと煙のモチーフで「時間の流れ」を視覚化</li>
+            <li>レスポンシブ実装を前提に、画面幅ごとに情報密度を調整</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>コンセプト設計</strong>：香りの役割を「集中を整える環境要素」として再定義</li>
+            <li><strong>構成設計</strong>：FV→思想提示→シーン提案→クロージングの時間軸構成</li>
+            <li><strong>UI設計</strong>：スクロール体験と情報開示順を意識したレイアウト設計</li>
+            <li><strong>実装想定</strong>：レスポンシブ対応・演出の実現性を考慮してデザインを調整</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>使用ツール</dt>
+              <dd>Figma / Photoshop</dd>
+              <dt>制作範囲</dt>
+              <dd>LP構成 / UIデザイン / レスポンシブ設計（デザイン）</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Designed a calm visual tone using generous spacing and restrained color palette</li>
+            <li>Prioritized immersion into the brand world by avoiding direct sales messaging in the hero section</li>
+            <li>Visualized the passage of time through vertical typography and smoke motifs</li>
+            <li>Planned layouts with responsiveness and implementation feasibility in mind</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Concept Definition</strong>: Redefined incense as an environmental element for mental focus</li>
+            <li><strong>Structure Planning</strong>: Designed a time-based flow from concept to usage scenes</li>
+            <li><strong>UI Design</strong>: Planned layouts focusing on scroll experience and information hierarchy</li>
+            <li><strong>Implementation Planning</strong>: Considered responsive behavior and motion feasibility</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Tools</dt>
+              <dd>Figma / Photoshop</dd>
+              <dt>Scope</dt>
+              <dd>LP structure / UI design / Responsive layout planning</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `
+},
+
+design_yori_salon_lp: {
+  title: "Yori｜Private Salon LP Concept",
+  subtitle: "Web Design / UI Design / Concept Work",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        住宅街にあるプライベートサロン「Yori」を想定したコンセプトLP制作。<br><br>
+
+        「静かに、整える時間。」をキーワードに、<br>
+        通いやすさ・安心感・やわらかな上質感が伝わる世界観を設計しました。<br>
+        過度な装飾や強い訴求を避け、余白と情報階層で落ち着いた体験をつくることを重視しています。<br><br>
+
+        本作品はデザイン設計段階のアウトプットとして、<br>
+        レスポンシブ実装を想定したレイアウトと情報密度の調整までを行いました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/web/original/yori-salon/overview.webp",
+              "alt":"Yori LP｜全体構成",
+              "label":"全体構成"
+            },
+            {
+              "src":"images/works/web/original/yori-salon/mock_pc.webp",
+              "alt":"Yori LP｜PC表示",
+              "label":"PC"
+            },
+            {
+              "src":"images/works/web/original/yori-salon/mock_tablet_SP.webp",
+              "alt":"Yori LP｜Tablet&SP表示",
+              "label":"Tablet & SP"
+            },
+            {
+              "src":"images/works/web/original/yori-salon/extract.webp",
+              "alt":"Yori LP｜一部抜粋",
+              "label":"抜粋"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/web/original/yori-salon/mock_pc.webp"
+            alt="Yori LP｜PC表示">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>“通う場所”としての安心感を、やわらかな配色・余白・文字密度で設計</li>
+            <li>ナビゲーションは必要最小限に整理し、迷わず目的情報へ到達できる導線に</li>
+            <li>About → Menu → 施術の流れ → News → Access の順で、不安を解消する情報設計</li>
+            <li>レスポンシブ実装を前提に、FVの装飾要素や文字サイズが崩れないよう調整</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：サロン利用時の不安（料金・施術内容・場所・流れ）を洗い出し</li>
+            <li><strong>構成設計</strong>：世界観提示→安心材料→予約判断のための情報提示へ段階設計</li>
+            <li><strong>UI設計</strong>：余白・整列・写真トーンを揃え、落ち着いた読後感を構築</li>
+            <li><strong>実装想定</strong>：SPでの可読性、表（Menu）や地図（Access）の崩れを想定して設計</li>
+          </ol>
+
+	<div class="mwork__note">
+	  <dl>
+	    <dt>使用ツール</dt>
+	    <dd>Figma / Photoshop</dd>
+	    <dt>制作範囲</dt>
+	    <dd>LP構成 / UIデザイン / レスポンシブ設計（デザイン）</dd>
+	  </dl>
+	</div>
+
+	<p class="mwork__related">
+	  ※本サロンを想定し、LPの世界観を継承した予約フォームUIを別作品として設計しています（予約フロー・状態設計まで想定）。
+	</p>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Designed a warm and calming tone through soft colors, spacing, and restrained typography</li>
+            <li>Kept navigation minimal so users can reach key information without hesitation</li>
+            <li>Structured content to reduce anxiety: About → Menu → Flow → News → Access</li>
+            <li>Planned layouts with responsiveness and feasibility in mind, especially for decorative hero elements</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Brief Definition</strong>: Identified common concerns (pricing, service details, location, procedure)</li>
+            <li><strong>Structure Planning</strong>: Designed a gradual flow from atmosphere to reassurance and decision-making</li>
+            <li><strong>UI Design</strong>: Unified spacing, alignment, and photo tone for a calm reading experience</li>
+            <li><strong>Implementation Planning</strong>: Considered responsive risks for tables (menu) and map blocks (access)</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Tools</dt>
+              <dd>Figma / Photoshop</dd>
+              <dt>Scope</dt>
+              <dd>LP structure / UI design / Responsive layout planning</dd>
+            </dl>
+          </div>
+	<p class="mwork__related">
+	  A reservation form UI was also designed as a separate work, inheriting the visual tone of this LP (including reservation flow and UI state design).
+	</p>
+        </div>
+      </div>
+
+    </div>
+  `
+},
+
+design_yori_reservation_ui: {
+  title: "Yori｜Reservation Form UI",
+  subtitle: "UI Design / UX / Flow Design",
+  html: `
+    <div class="mwork">
+
+      <p class="mwork__lead">
+        プライベートサロン「Yori」を想定し、LPと同一トーンで予約フォームUIを設計しました。<br><br>
+        メニュー選択 → 日時選択 → お客様情報入力 → 内容確認・送信の4ステップで構成し、<br>
+        “迷いにくさ”と“落ち着いた体験”の両立を重視しています。<br><br>
+        実装を想定し、ボタンの活性/非活性、選択状態、確認画面の情報整理まで状態設計を行いました。
+      </p>
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"images/works/web/original/yori-reservation/overview.webp",
+              "alt":"Yori 予約フォームUI｜モックアップ（PC/SP）",
+              "label":"Overview"
+            },
+            {
+              "src":"images/works/web/original/yori-reservation/pc_step1.webp",
+              "alt":"Yori 予約フォームUI｜PC（Step1：メニュー選択）",
+              "label":"PC Step1"
+            },
+            {
+              "src":"images/works/web/original/yori-reservation/pc_step2.webp",
+              "alt":"Yori 予約フォームUI｜PC（Step2：日時選択）",
+              "label":"PC Step2"
+            },
+            {
+              "src":"images/works/web/original/yori-reservation/pc_step3.webp",
+              "alt":"Yori 予約フォームUI｜PC（Step3：お客様情報入力）",
+              "label":"PC Step3"
+            },
+            {
+              "src":"images/works/web/original/yori-reservation/sp_all.webp",
+              "alt":"Yori 予約フォームUI｜SP（4画面一覧）",
+              "label":"SP All"
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="images/works/web/original/yori-reservation/overview.webp"
+            alt="Yori 予約フォームUI｜モックアップ（PC/SP）">
+        </figure>
+      </section>
+
+      <div class="mwork__langbar" data-langbar>
+        <button type="button" class="mwork__langbtn is-active" data-lang="jp" aria-pressed="true">JP</button>
+        <button type="button" class="mwork__langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>ステップを分割し、選択の負荷を小さく（メニュー→日時→情報入力→確認）</li>
+            <li>「次へ」ボタンは条件を満たすまで非活性にし、誤操作を抑制</li>
+            <li>選択状態（ラジオ/チェック/選択中）を一貫したトーンで表現</li>
+            <li>確認画面は“変更箇所に戻れる”導線を用意し、送信前の不安を軽減</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>要件整理</strong>：予約時の迷い（料金、所要時間、空き状況、入力負荷）を整理</li>
+            <li><strong>フロー設計</strong>：4ステップに分割し、判断→入力→確認の順で負担を分散</li>
+            <li><strong>UI設計</strong>：LPと同トーンの配色/余白/角丸/文字密度に統一</li>
+            <li><strong>状態設計</strong>：活性/非活性、選択中、エラー想定（注意文）を考慮</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>使用ツール</dt>
+              <dd>Figma / Photoshop</dd>
+              <dt>制作範囲</dt>
+              <dd>予約フロー設計 / UIデザイン（PC・SP）/ 状態設計</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Reduced cognitive load by splitting the flow into 4 clear steps</li>
+            <li>Used disabled/active states for the “Next” button to prevent errors</li>
+            <li>Kept selection states consistent across radio/checkbox components</li>
+            <li>Designed the review screen with easy “edit” routes to reduce anxiety before submission</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Requirements</strong>: Organized user concerns (pricing, duration, availability, input effort)</li>
+            <li><strong>Flow Design</strong>: Structured into 4 steps to distribute decisions and input</li>
+            <li><strong>UI Design</strong>: Matched the LP’s calm tone via spacing, palette, and typography</li>
+            <li><strong>State Planning</strong>: Considered active/disabled, selected, and validation messaging</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Tools</dt>
+              <dd>Figma / Photoshop</dd>
+              <dt>Scope</dt>
+              <dd>Reservation flow / UI design (PC & SP) / State planning</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
     </div>
   `
 },
