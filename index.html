@@ -2700,22 +2700,22 @@ if(pageTop){
 
   targets.forEach(el => io.observe(el));
 })();
-
 document.addEventListener('DOMContentLoaded', () => {
-  // 対象の画像に no-save を付与
+
+  // preview内の画像に no-save を付与
   document
-    .querySelectorAll('.work-thumb img, .modal__content img')
+    .querySelectorAll('.works-preview img, #workModal img')
     .forEach(img => img.classList.add('no-save'));
 
-  // 右クリックメニュー抑止（キャプチャで先取り）
+  // 右クリック抑止（preview + モーダル）
   document.addEventListener('contextmenu', (e) => {
-    if (e.target.closest('.work-thumb, .modal__content')) {
+    if (e.target.closest('.works-preview, #workModal')) {
       e.preventDefault();
       e.stopPropagation();
     }
   }, true);
 
-  // ドラッグ保存抑止
+  // ドラッグ抑止
   document.addEventListener('dragstart', (e) => {
     if (e.target.closest('img.no-save')) {
       e.preventDefault();
@@ -2723,7 +2723,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, true);
 });
-   
+
 </script>
 </body>
 </html>
