@@ -5750,27 +5750,32 @@ syncCursorMode();
     window.addEventListener('scroll', toggle, {passive:true});
   }
 })();
-
+	
+function applyNoSaveInModal(){
+  document.querySelectorAll('#workModal img').forEach(img => img.classList.add('no-save'));
+}
+applyNoSaveInModal();
+	
 document.addEventListener('DOMContentLoaded', () => {
-  // 対象に no-save を付与
+  // 作品サムネ＆モーダル内画像に no-save を付与
   document
     .querySelectorAll('.work-thumb img, .modal__content img')
     .forEach(img => img.classList.add('no-save'));
 
-  // 右クリックメニューを止める
+  // 右クリック抑止：サムネ領域 or モーダル領域
   document.addEventListener('contextmenu', (e) => {
-    const img = e.target.closest && e.target.closest('img.no-save');
-    if (!img) return;
-    e.preventDefault();
-    e.stopPropagation();
+    if (e.target.closest('.work-thumb, #workModal')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }, true);
 
-  // ドラッグ開始を止める
+  // ドラッグ抑止：no-save 画像
   document.addEventListener('dragstart', (e) => {
-    const img = e.target.closest && e.target.closest('img.no-save');
-    if (!img) return;
-    e.preventDefault();
-    e.stopPropagation();
+    if (e.target.closest('img.no-save')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }, true);
 });
 </script>
