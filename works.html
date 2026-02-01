@@ -5754,9 +5754,20 @@ syncCursorMode();
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  // no-save を付ける
   document
     .querySelectorAll('.work-thumb img, .modal__content img')
     .forEach(img => img.classList.add('no-save'));
+
+  // 右クリックメニューを止める（追加）
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.closest('img.no-save')) e.preventDefault();
+  });
+
+  // ドラッグ開始を止める（追加）
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.closest('img.no-save')) e.preventDefault();
+  });
 });
 </script>
 	
