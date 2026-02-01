@@ -5478,6 +5478,12 @@ document.addEventListener('keydown', (e) => {
 
     bodyEl.innerHTML = "";
 
+　function applyNoSaveInModal(){
+  　document.querySelectorAll('#workModal img').forEach(img => img.classList.add('no-save'));
+}
+
+	applyNoSaveInModal();
+
     if (lastFocus && typeof lastFocus.focus === "function") {
       lastFocus.focus();
     }
@@ -5750,11 +5756,6 @@ syncCursorMode();
     window.addEventListener('scroll', toggle, {passive:true});
   }
 })();
-	
-function applyNoSaveInModal(){
-  document.querySelectorAll('#workModal img').forEach(img => img.classList.add('no-save'));
-}
-applyNoSaveInModal();
 	
 document.addEventListener('DOMContentLoaded', () => {
   // 作品サムネ＆モーダル内画像に no-save を付与
