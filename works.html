@@ -1227,7 +1227,13 @@
   .work-title{ font-size: 14px; }
   .work-sub{ font-size: 12px; }
 }
-
+	
+.no-save{
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}
+	
 </style>
 
 </head>
@@ -5746,5 +5752,13 @@ syncCursorMode();
 })();
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document
+    .querySelectorAll('.work-thumb img, .modal__content img')
+    .forEach(img => img.classList.add('no-save'));
+});
+</script>
+	
 </body>
 </html>
