@@ -5754,20 +5754,26 @@ syncCursorMode();
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // no-save を付ける
+  // 対象に no-save を付与
   document
     .querySelectorAll('.work-thumb img, .modal__content img')
     .forEach(img => img.classList.add('no-save'));
 
-  // 右クリックメニューを止める（追加）
+  // 右クリックメニューを止める
   document.addEventListener('contextmenu', (e) => {
-    if (e.target.closest('img.no-save')) e.preventDefault();
-  });
+    const img = e.target.closest && e.target.closest('img.no-save');
+    if (!img) return;
+    e.preventDefault();
+    e.stopPropagation();
+  }, true);
 
-  // ドラッグ開始を止める（追加）
+  // ドラッグ開始を止める
   document.addEventListener('dragstart', (e) => {
-    if (e.target.closest('img.no-save')) e.preventDefault();
-  });
+    const img = e.target.closest && e.target.closest('img.no-save');
+    if (!img) return;
+    e.preventDefault();
+    e.stopPropagation();
+  }, true);
 });
 </script>
 	
