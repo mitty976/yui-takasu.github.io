@@ -4643,6 +4643,25 @@ syncCursorMode();
     window.addEventListener('scroll', toggle, {passive:true});
   }
 })();
+	
+document.addEventListener('DOMContentLoaded', () => {
+  document
+    .querySelectorAll('.work-thumb img, .modal__content img')
+    .forEach(img => img.classList.add('no-save'));
+
+  // ✅ 右クリックは基本禁止。ただしリンクは許可
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.closest('a')) return;  // ←ここが肝
+    e.preventDefault();
+  }, true);
+
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.closest('img.no-save')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+});
 </script>
 
 </body>
