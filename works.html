@@ -1268,6 +1268,18 @@
 </div>
 <div class="works-grid">
 <!-- Illustration -->
+<a class="work-card" data-cat="illustration" data-date="2026-01" data-modal="illust_yuuuuto" href="#">
+<div class="work-thumb"><img alt="【お仕事絵】ゆーと様‐アイコン等" 
+src="images/works/illust/yuuuutoicon.jpg"/></div>
+<div class="work-meta">
+<p class="work-title">【お仕事絵】ゆーと様‐アイコン等</p>
+<div class="work-tags">
+<span class="work-tag">Icon</span>
+<span class="work-tag">Still illustration</span>
+<span class="work-tag">Portrait painting</span>
+</div>
+</div>
+</a>
 <a class="work-card" data-cat="illustration" data-date="2025-11" data-modal="illust_shiraishiayameheader" href="#">
 <div class="work-thumb"><img alt="【お仕事絵】白石あやめ様‐ヘッダー" src="images/works/illust/shiraishiayameheader.jpg"/></div>
 <div class="work-meta">
@@ -1729,6 +1741,50 @@
   const overlay = modal ? modal.querySelector('[data-close="overlay"]') : null;
 
   let lastFocus = null;
+
+const modalData = {
+      illust_yuuuuto: {
+        title: "【お仕事絵】ゆーと様‐アイコン等",
+        subtitle: "Header / Still illustration / Portrait painting",
+        html: `
+        <div class="mwork mwork--illu">
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/yuuuutoicon.webp" alt="【お仕事絵】ゆーと様‐アイコン">
+        <figcaption class="illu-cap">sample（50%）</figcaption>
+        </figure>
+
+        <figure class="illu-main">
+          <img src="images/works/illust/original/yuuuuto.webp" alt="【お仕事絵】ゆーと様‐半身">
+        <figcaption class="illu-cap">sample（50%）</figcaption>
+        </figure>
+
+        <div class="mwork__divider"></div>
+      
+	      <p class="illu-date">2025年 11月 制作</p>
+
+	      <p class="illu-desc">
+          ゆーと様（ 
+            <a class="illu-handle"
+              href="https://x.com/ayamechan36"
+              target="_blank" rel="noopener noreferrer">
+              @yuuuuto0404
+            </a>
+            ）より淡くやわらかい印象のアイコンと、<br>
+              動画編集で使える背景透過の半身イラストをご依頼いただきました。</p>
+
+        <p class="illu-note">。
+              テロップや画面と干渉しないよう色の主張を抑えつつ、<br>
+              小さく表示しても感情が伝わる表情に調整しています。<br><br>
+
+              猫との接触を視線の起点にした構図にし、<br>
+              半身イラストは合成時になじむよう輪郭と彩度を整理しました。<br><br>
+
+              長時間使っても疲れない見え方を意識して設計しています。
+      </p>
+    </div>
+  `
+},
 
 const modalData = {
       illust_shiraishiayameheader: {
@@ -5758,20 +5814,16 @@ syncCursorMode();
 })();
 	
 document.addEventListener('DOMContentLoaded', () => {
-  // 作品サムネ＆モーダル内画像に no-save を付与
   document
     .querySelectorAll('.work-thumb img, .modal__content img')
     .forEach(img => img.classList.add('no-save'));
 
-  // 右クリック抑止：サムネ領域 or モーダル領域
+  //右クリックは基本禁止。ただしリンクは許可
   document.addEventListener('contextmenu', (e) => {
-    if (e.target.closest('.work-thumb, #workModal')) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    if (e.target.closest('a')) return;  // ←ここが肝
+    e.preventDefault();
   }, true);
 
-  // ドラッグ抑止：no-save 画像
   document.addEventListener('dragstart', (e) => {
     if (e.target.closest('img.no-save')) {
       e.preventDefault();
@@ -5779,6 +5831,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, true);
 });
+
 </script>
 	
 </body>
