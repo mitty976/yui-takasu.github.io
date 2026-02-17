@@ -2702,18 +2702,16 @@ if(pageTop){
 })();
    
 document.addEventListener('DOMContentLoaded', () => {
-  // ✅ ページ内の画像すべてに no-save を付ける
-  document.querySelectorAll('img').forEach(img => img.classList.add('no-save'));
+  document
+    .querySelectorAll('.work-thumb img, .modal__content img')
+    .forEach(img => img.classList.add('no-save'));
 
-  // ✅ no-save の画像上で右クリック禁止
+  // ✅ 右クリックは基本禁止。ただしリンクは許可
   document.addEventListener('contextmenu', (e) => {
-    if (e.target.closest('img.no-save')) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    if (e.target.closest('a')) return;  // ←ここが肝
+    e.preventDefault();
   }, true);
 
-  // ✅ no-save の画像ドラッグ禁止
   document.addEventListener('dragstart', (e) => {
     if (e.target.closest('img.no-save')) {
       e.preventDefault();
