@@ -1196,6 +1196,11 @@
   }
 }
 
+@media (max-width: 680px) {
+  .works-footnote {
+    font-size: 9px;
+  }
+	
 @media (max-width: 520px){
   main{ padding-left: 0; padding-right: 0; }
   .works-container{ padding-left: 0; padding-right: 0; max-width: 100%; }
@@ -1208,5 +1213,4 @@
 
   .work-title{ font-size: 14px; }
   .work-sub{ font-size: 12px; }
-  .works-footnote: font-size: 10px;
 }
