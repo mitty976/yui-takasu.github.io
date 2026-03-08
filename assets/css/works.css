@@ -358,6 +358,7 @@
 
     @media (max-width: 520px){
       .back-fab{ bottom: 16px; left: 16px; }
+	  .works-footnote: font-size: 13px;
     }
 
     /* ===== Modal ===== */
