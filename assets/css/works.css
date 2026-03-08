@@ -1198,7 +1198,7 @@
 
 @media (max-width: 680px) {
   .works-footnote {
-    font-size: 9px;
+    font-size: 9px; !important;
   }
 	
 @media (max-width: 520px){
