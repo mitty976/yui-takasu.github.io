@@ -1198,8 +1198,9 @@
 
 @media (max-width: 680px) {
   .works-footnote {
-    font-size: 9px; !important;
+    font-size: 9px !important;
   }
+}
 	
 @media (max-width: 520px){
   main{ padding-left: 0; padding-right: 0; }
