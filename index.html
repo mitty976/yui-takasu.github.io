@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yui Takasu | Web Design & Illustration</title>
+  <meta name="description" content="Webデザイナー・イラストレーター Yui Takasu のポートフォリオ。Webデザイン・イラスト・Live2Dなど幅広い制作実績を掲載しています。">
+
+  <!-- OGP -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://www.yui-takasu.com/">
+  <meta property="og:title"       content="Yui Takasu | Web Design & Illustration">
+  <meta property="og:description" content="Webデザイナー・イラストレーター Yui Takasu のポートフォリオ。Webデザイン・イラスト・Live2Dなど幅広い制作実績を掲載しています。">
+  <meta property="og:image"       content="https://www.yui-takasu.com/assets/img/ogp.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale"      content="ja_JP">
+  <meta property="og:site_name"   content="Yui Takasu Portfolio">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:site"        content="@mitty976">
+  <meta name="twitter:title"       content="Yui Takasu | Web Design & Illustration">
+  <meta name="twitter:description" content="Webデザイナー・イラストレーター Yui Takasu のポートフォリオ。Webデザイン・イラスト・Live2Dなど幅広い制作実績を掲載しています。">
+  <meta name="twitter:image"       content="https://www.yui-takasu.com/assets/img/ogp.png">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.yui-takasu.com/">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Georgia', 'Noto Serif JP', serif;
+    }
+
+    body { cursor: none; }
+    *, a, button, input, label { cursor: none !important; }
+
+    /* === カーソル（●/○） === */
+    .cursor {
+      width: 10px;
+      height: 10px;
+      background: var(--color-cursor, rgba(46, 46, 46, 0.6));
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    }
+    .cursor--hover {
+      width: 22px;
+      height: 22px;
+      background: transparent;
+      border: 1.5px solid var(--color-cursor, rgba(46, 46, 46, 0.5));
+    }
+
+    /* === スプリットスクリーン === */
+    .split-screen {
+      display: flex;
+      height: 100vh;
+      position: relative;
+    }
+
+    .split {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      transition: flex 0.9s cubic-bezier(0.4, 0, 0.2, 1), background-color 1.2s ease;
+      cursor: none;
+    }
+    .split:hover { flex: 1.7; }
+
+    .split--design { background-color: var(--color-design, #B5E0EA); }
+    .split--illust { background-color: var(--color-illust, #F5C8C8); }
+
+    /* サムネイルオーバーレイ */
+    .split__thumb {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    /* ラベル */
+    .split__label {
+      position: absolute;
+      bottom: 26%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      text-decoration: none;
+      color: #2e2e2e;
+      cursor: none;
+      white-space: nowrap;
+    }
+
+    /* ドット */
+    .label-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .label-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #2e2e2e;
+    }
+
+    /* ホバー時のみドットカラーアニメーション */
+    .split:hover .label-dot {
+      animation: dotColorCycle 2.8s ease-in-out infinite;
+    }
+    .split:hover .label-dot:nth-child(1) { animation-delay: 0s; }
+    .split:hover .label-dot:nth-child(2) { animation-delay: 0.22s; }
+    .split:hover .label-dot:nth-child(3) { animation-delay: 0.44s; }
+    .split:hover .label-dot:nth-child(4) { animation-delay: 0.66s; }
+    .split:hover .label-dot:nth-child(5) { animation-delay: 0.88s; }
+
+    @keyframes dotColorCycle {
+      0%, 30%  { background: #2e2e2e; }
+      60%, 80% { background: var(--color-cursor, #92AF76); }
+      100%     { background: #2e2e2e; }
+    }
+
+    /* ラベルテキスト */
+    .split__label-text--ja {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      font-family: 'Noto Sans JP', system-ui, sans-serif;
+      font-weight: 400;
+      color: rgba(46, 46, 46, 0.72);
+      text-shadow: 0 0 12px rgba(255,255,255,0.95), 0 1px 6px rgba(255,255,255,0.8);
+    }
+    .split__label-text--en {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-weight: 500;
+      color: rgba(46, 46, 46, 0.72);
+      text-shadow: 0 0 12px rgba(255,255,255,0.95), 0 1px 6px rgba(255,255,255,0.8);
+    }
+
+    /* 季節カラーバー（ホバーヒント） */
+    .label-season-bar {
+      display: inline-block;
+      margin-top: 14px;
+      height: 20px;
+      line-height: 20px;
+      padding: 0 12px;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: #ffffff;
+      background: var(--color-cursor);
+      max-width: 110px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+    }
+    .split:hover .label-season-bar {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    /* デザイン側専用の緑・青系季節カラー */
+    .split--design .label-season-bar {
+      background: var(--color-cursor-design, #6A9870);
+    }
+    /* イラスト側専用のピンク系季節カラー */
+    .split--illust .label-season-bar {
+      background: var(--color-cursor-illust, #d4879a);
+    }
+
+    /* === 中央ロゴカード === */
+    .center-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: none;
+    }
+    .center-logo--right {
+      transform: translate(calc(-50% + 31vw), calc(-50% - 140px));
+    }
+    .center-logo--left {
+      transform: translate(calc(-50% - 31vw), -50%);
+    }
+
+    .logo-card {
+      position: relative;
+      background: var(--color-logo-bg, #ffffff);
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 48px rgba(0, 0, 0, 0.07);
+      transition: background-color 0.7s ease, box-shadow 0.7s ease;
+      text-decoration: none;
+      cursor: none;
+    }
+
+    .logo-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: opacity 0.6s ease;
+      padding: 32px;
+    }
+
+    #logo-yui  { opacity: 1; }
+    #logo-guru { opacity: 0; }
+
+    .logo-card__name {
+      font-size: 20px;
+      letter-spacing: 0.18em;
+      font-family: 'Georgia', serif;
+      font-weight: 400;
+      color: #2e2e2e;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .logo-card__name--guru {
+      font-size: 26px;
+      letter-spacing: 0.08em;
+      font-family: 'Noto Serif JP', 'Georgia', serif;
+      text-transform: none;
+    }
+    .logo-card__divider {
+      width: 24px;
+      height: 1px;
+      background: rgba(46, 46, 46, 0.2);
+    }
+    .logo-card__sub {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: rgba(46, 46, 46, 0.4);
+      font-family: system-ui, sans-serif;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .logo-card--warm {
+      box-shadow: 0 8px 48px rgba(200, 80, 40, 0.18), 0 0 80px rgba(255, 160, 80, 0.12);
+    }
+
+    /* ホバー時：split側全体を::beforeで白くフェードイン（サイズ変形なし） */
+    .split::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      z-index: 15;
+      pointer-events: none;
+    }
+    /* DESIGN hover → イラスト側が幕（しっかり白） */
+    .split--illust.is-covered::before {
+      background: rgba(255, 255, 255, 0.95);
+      opacity: 1;
+    }
+    /* ILLUST hover → デザイン側が幕（ほんのり白） */
+    .split--design.is-covered::before {
+      background: rgba(255, 255, 255, 0.75);
+      opacity: 1;
+    }
+
+    /* ILLUST hover時（.guru-activeクラスがつく）：ロゴカードを透明に */
+    .center-logo.guru-active .logo-card {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    /* ぐるにゃ画像 */
+    /* ぐるにゃ内部レイアウト */
+    #logo-guru {
+      gap: 8px;
+      padding: 18px 22px;
+    }
+    .guru-logo {
+      width: 350px;
+      height: auto;
+      object-fit: contain;
+      transition: filter 0.7s ease;
+    }
+    .guru-credit {
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      color: rgba(46, 46, 46, 0.45);
+      font-family: system-ui, sans-serif;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .guru-sign {
+      width: 80px;
+      height: auto;
+      object-fit: contain;
+      opacity: 0.85;
+      transition: filter 0.7s ease;
+    }
+
+    /* ILLUST hover時：ぐるにゃPNGにピンク系の影 */
+    .center-logo.guru-active .guru-logo {
+      filter: drop-shadow(0 6px 20px rgba(230, 100, 140, 0.45));
+    }
+    .center-logo.guru-active .guru-sign {
+      filter: drop-shadow(0 5px 16px rgba(230, 100, 140, 0.38));
+    }
+
+
+    /* === 名刺（ロゴ左移動後に表示） === */
+    .biz-card-wrap {
+      position: absolute;
+      top: calc(100% + 60px);
+      left: 50%;
+      transform: translateX(-50%) translateY(70px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+    }
+    .biz-card-wrap img {
+      width: 240px;
+      height: auto;
+      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12));
+    }
+    .center-logo--right .biz-card-wrap {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      transition-delay: 0.65s;
+    }
+
+    /* === キャラクターステージ（イラストホバー時） === */
+    .chara-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 16;
+      pointer-events: none;
+    }
+
+    .chara-wrap {
+      position: absolute;
+      opacity: 0;
+      /* ホバー終了時：0.25sでフェードアウトしてから瞬時に元位置へ */
+      transition: opacity 0.25s ease, transform 0s 0.25s;
+    }
+
+    /* 各キャラの最終位置・初期オフセット */
+    .chara-wrap--guru {
+      top: 5%;
+      left: 70%;
+      transform: translateX(-50%) translateY(-220%); /* 上から */
+    }
+    .chara-wrap--ruchi {
+      bottom: 5%;
+      left: 5%;
+      transform: translateY(220%); /* 下から */
+    }
+    .chara-wrap--usa {
+      bottom: 4%;
+      right: 4%;
+      transform: translateY(220%); /* 下から・ゆっくり */
+    }
+
+    .chara-wrap--guru  img { width: 260px; height: auto; }
+    .chara-wrap--ruchi img { width: 240px; height: auto; }
+    .chara-wrap--usa   img { width: 169px; height: auto; }
+
+    /* イラスト側ホバー時（デザイン側がカバーされた状態）でキャラ登場 */
+    .split--design.is-covered .chara-wrap--guru {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      transition: transform 1.0s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity  0.4s ease;
+    }
+    .split--design.is-covered .chara-wrap--ruchi {
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 1.0s cubic-bezier(0.22, 1, 0.36, 1) 0.25s,
+                  opacity  0.4s ease 0.25s;
+    }
+    .split--design.is-covered .chara-wrap--usa {
+      opacity: 1;
+      transform: translateY(0);
+      /* ゆっくりふわんと上がってくる */
+      transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s,
+                  opacity  0.6s ease 0.4s;
+    }
+
+    /* うさーのふわんふわん浮遊（スライドイン完了後に開始） */
+    /* 各キャラのふわんふわん（スライドイン完了後に開始・タイミングをずらして自然に） */
+    .split--design.is-covered .chara-wrap--guru img {
+      animation: floatA 4.0s ease-in-out 1.1s infinite;
+    }
+    .split--design.is-covered .chara-wrap--ruchi img {
+      animation: floatB 3.8s ease-in-out 1.4s infinite;
+    }
+    .split--design.is-covered .chara--usa {
+      animation: floatA 3.5s ease-in-out 2.6s infinite;
+    }
+
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    /* ホバーヒント */
+    .hover-hint {
+      position: fixed;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: system-ui, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: rgba(46, 46, 46, 0.45);
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      white-space: nowrap;
+    }
+    .hover-hint.is-visible { opacity: 1; }
+
+    /* ラベルのフェードアウト */
+    .split--design .split__label,
+    .split--illust .split__label {
+      transition: opacity 0.5s ease;
+    }
+    .design-label-hide .split--design .split__label {
+      opacity: 0;
+    }
+    .illust-label-hide .split--illust .split__label {
+      opacity: 0;
+    }
+
+    /* === ページロードアニメーション === */
+    .split--design { animation: blurFadeLeft  1.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .split--illust { animation: blurFadeRight 1.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .center-logo   { animation: fadeUp        0.8s  cubic-bezier(0.22, 1, 0.36, 1) 1.2s both; }
+
+    /* 画面外からブラーをかけながらじわっと溶け込んでくる */
+    @keyframes blurFadeLeft {
+      from { opacity: 0; filter: blur(20px); transform: translateX(-100%); }
+      60%  { filter: blur(4px); }
+      to   { opacity: 1; filter: blur(0px);  transform: translateX(0); }
+    }
+    @keyframes blurFadeRight {
+      from { opacity: 0; filter: blur(20px); transform: translateX(100%); }
+      60%  { filter: blur(4px); }
+      to   { opacity: 1; filter: blur(0px);  transform: translateX(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translate(-50%, calc(-50% + 24px)); }
+      to   { opacity: 1; transform: translate(-50%, -50%); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <div class="split-screen" id="split-screen" >
+
+
+    <!-- DESIGN 側 -->
+    <div class="split split--design" data-side="design">
+      <div class="split__thumb"></div>
+      <!-- イラストホバー時に登場するキャラ -->
+      <div class="chara-stage" aria-hidden="true">
+        <div class="chara-wrap chara-wrap--guru">
+          <img src="assets/img/chara-guru.png" class="chara" alt="">
+        </div>
+        <div class="chara-wrap chara-wrap--ruchi">
+          <img src="assets/img/chara-ruchi.png" class="chara" alt="">
+        </div>
+        <div class="chara-wrap chara-wrap--usa">
+          <img src="assets/img/chara-usa.png" class="chara chara--usa" alt="">
+        </div>
+      </div>
+      <a class="split__label" href="design/index.html">
+        <div class="label-dots">
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+        </div>
+        <span class="split__label-text--ja">デザイン</span>
+        <span class="split__label-text--en">DESIGN</span>
+        <span class="label-season-bar">VIEW WORKS</span>
+      </a>
+    </div>
+
+    <!-- 中央ロゴ（クリックでAbout.htmlへ） -->
+    <div class="center-logo" id="center-logo">
+      <a class="logo-card" id="logo-card" href="about.html">
+        <div class="logo-inner" id="logo-yui">
+          <span class="logo-card__name">Yui-Takasu</span>
+          <span class="logo-card__divider"></span>
+          <span class="logo-card__sub">Design & Illustration</span>
+        </div>
+        <!-- ぐるにゃロゴ＋サイン -->
+        <div class="logo-inner" id="logo-guru">
+          <img src="assets/img/guru-logo.png" alt="ぐるにゃ" class="guru-logo">
+          <span class="guru-credit">Illustration by ぐるにゃ (@mitty976)</span>
+          <img src="assets/img/guru-sign.png" alt="サイン" class="guru-sign">
+        </div>
+      </a>
+      <!-- ロゴ左移動後に下からスライドアップする名刺 -->
+      <div class="biz-card-wrap" aria-hidden="true">
+        <img src="assets/img/BusinessCard.png" class="biz-card" alt="">
+      </div>
+    </div>
+
+    <!-- ILLUSTRATION 側 -->
+    <div class="split split--illust" data-side="illust">
+      <div class="split__thumb"></div>
+      <a class="split__label" href="illust/index.html">
+        <div class="label-dots">
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+          <span class="label-dot"></span>
+        </div>
+        <span class="split__label-text--ja">イラスト</span>
+        <span class="split__label-text--en">ILLUSTRATION</span>
+        <span class="label-season-bar">VIEW WORKS</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- ホバーヒント -->
+  <div class="hover-hint" id="hover-hint">HOVER TO EXPLORE</div>
+
+
+  <script src="assets/js/sakura.js"></script>
+  <script>
+    /* ==================================================
+       季節テーマ定義
+    ================================================== */
+    const SEASONS = {
+      spring: {
+        months:        [3, 4, 5],
+        design:        '#C8DAD6',
+        illust:        '#EFC8C8',
+        cursor:        '#7A9A68',
+        cursorDesign:  '#6A9870',
+        cursorIllust:  '#d4879a',
+        cursorImg:     'assets/img/cursor/cursor-spring.png',
+        logoBg:        '#ffffff',
+        effect:        'sakura',
+        sakuraColors:  ['#FAE6E6', '#F5C8C8', '#F7B8C8', '#F9D0D8', '#F0A0B8'],
+      },
+      summer: {
+        months:       [6, 7, 8],
+        design:       '#B0C8DC',
+        illust:       '#A8DCDC',
+        cursor:       '#C89E22',
+        cursorDesign: '#3A8888',
+        cursorIllust: '#4A9090',
+        cursorImg:    'assets/img/cursor/cursor-summer.png',
+        logoBg:       '#ffffff',
+        effect:       'summer',
+      },
+      autumn: {
+        months:       [9, 10, 11],
+        design:       '#C0AA90',
+        illust:       '#A09888',
+        cursor:       '#A05418',
+        cursorDesign: '#7A6028',
+        cursorIllust: '#8C5048',
+        cursorImg:    'assets/img/cursor/cursor-autumn.png',
+        logoBg:       '#ffffff',
+        effect:       'autumn',
+      },
+      winter: {
+        months:       [12, 1, 2],
+        design:       '#8C1E3C',
+        illust:       '#A83430',
+        cursor:       '#4A6878',
+        cursorDesign: '#2A5868',
+        cursorIllust: '#7A3048',
+        cursorImg:    'assets/img/cursor/cursor-winter.png',
+        logoBg:       '#FFF5EE',
+        effect:       'snow',
+        logoWarm:     true,
+      },
+    };
+
+    const month  = new Date().getMonth() + 1;
+    const season = Object.values(SEASONS).find(s => s.months.includes(month)) || SEASONS.spring;
+
+    const root = document.documentElement;
+    root.style.setProperty('--color-design',  season.design);
+    root.style.setProperty('--color-illust',  season.illust);
+    root.style.setProperty('--color-cursor',         season.cursor);
+    root.style.setProperty('--color-cursor-design',  season.cursorDesign);
+    root.style.setProperty('--color-cursor-illust',  season.cursorIllust);
+    root.style.setProperty('--color-logo-bg', season.logoBg);
+
+    const logoCard = document.getElementById('logo-card');
+    if (season.logoWarm) logoCard.classList.add('logo-card--warm');
+
+    /* カーソル画像はdesign/ illust/ 各ページで季節に合わせて設定 */
+
+    /* 季節エフェクト */
+    if (season.effect === 'sakura') {
+      Sakura.init({ count: 14, colors: season.sakuraColors, minSize: 4, maxSize: 10, zIndex: '30' });
+
+      /* タブ非表示時にアニメーションを止めてCPU節約 */
+      document.addEventListener('visibilitychange', () => {
+        if (!Sakura.canvas) return;
+        if (document.hidden) {
+          Sakura.running = false;
+          cancelAnimationFrame(Sakura.raf);
+        } else {
+          Sakura.running = true;
+          Sakura._loop();
+        }
+      });
+    }
+
+    /* ==================================================
+       カスタムカーソル（●/○）
+       ※ドット絵カーソルはdesign/ illust/ 各ページで設定
+    ================================================== */
+    const cursor = document.getElementById('cursor');
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('cursor--hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('cursor--hover'));
+    });
+
+    /* ==================================================
+       中央ロゴ切り替え＋スライド
+       デザイン側ホバー → Yui-Takasu が右へ
+       イラスト側ホバー → ぐるにゃ が左へ
+       中央ロゴクリック → About.htmlへ
+    ================================================== */
+    const logoYui    = document.getElementById('logo-yui');
+    const logoGuru   = document.getElementById('logo-guru');
+    const centerLogo = document.getElementById('center-logo');
+    const splitScreen = document.getElementById('split-screen');
+
+    /* fadeUpアニメーション終了後にanimationを解放してtransformを自由にする */
+    centerLogo.addEventListener('animationend', () => {
+      centerLogo.style.animation = 'none';
+      centerLogo.style.transform = ''; /* インラインをクリア → CSSクラスで制御できるようになる */
+    }, { once: true });
+
+    const splitDesign = document.querySelector('.split--design');
+    const splitIllust = document.querySelector('.split--illust');
+
+    splitDesign.addEventListener('mouseenter', () => {
+      logoYui.style.opacity  = '1';
+      logoGuru.style.opacity = '0';
+      centerLogo.classList.add('center-logo--right');
+      centerLogo.classList.remove('center-logo--left');
+      centerLogo.classList.remove('guru-active');
+      splitScreen.classList.add('illust-label-hide');
+      splitScreen.classList.remove('design-label-hide');
+      splitIllust.classList.add('is-covered');
+      splitDesign.classList.remove('is-covered');
+    });
+    splitDesign.addEventListener('mouseleave', (e) => {
+      if (e.relatedTarget?.closest('.split--illust')) return;
+      centerLogo.classList.remove('center-logo--right');
+      splitScreen.classList.remove('illust-label-hide');
+      splitIllust.classList.remove('is-covered');
+    });
+
+    splitIllust.addEventListener('mouseenter', () => {
+      logoYui.style.opacity  = '0';
+      logoGuru.style.opacity = '1';
+      centerLogo.classList.add('center-logo--left');
+      centerLogo.classList.remove('center-logo--right');
+      centerLogo.classList.add('guru-active');
+      splitScreen.classList.add('design-label-hide');
+      splitScreen.classList.remove('illust-label-hide');
+      splitDesign.classList.add('is-covered');
+      splitIllust.classList.remove('is-covered');
+    });
+    splitIllust.addEventListener('mouseleave', (e) => {
+      if (e.relatedTarget?.closest('.split--design')) return;
+      logoYui.style.opacity  = '1';
+      logoGuru.style.opacity = '0';
+      centerLogo.classList.remove('center-logo--left');
+      centerLogo.classList.remove('guru-active');
+      splitScreen.classList.remove('design-label-hide');
+      splitDesign.classList.remove('is-covered');
+    });
+
+    /* ==================================================
+       ホバーサムネイル
+    ================================================== */
+    const images = {
+      design: [
+        'images/works/preview/design/01.webp',
+        'images/works/preview/design/02.webp',
+        'images/works/preview/design/03.webp',
+        'images/works/preview/design/04.webp',
+        'images/works/preview/design/05.webp',
+        'images/works/preview/design/06.webp',
+        'images/works/preview/design/lumiere.webp',
+        'images/works/preview/design/still-air.webp',
+        'images/works/preview/design/yori-lp.webp',
+        'images/works/preview/design/yori-ui.webp',
+      ],
+      illust: [
+        'images/works/preview/illustration/01.webp',
+        'images/works/preview/illustration/02.webp',
+        'images/works/preview/illustration/03.webp',
+        'images/works/preview/illustration/04.webp',
+        'images/works/preview/illustration/05.webp',
+        'images/works/preview/illustration/06.webp',
+      ],
+    };
+
+    /* ホバーヒント：ロード完了後2sで表示 → 2.5s後に自動消去 or 初回ホバーで即消去 */
+    const hoverHint = document.getElementById('hover-hint');
+    let hintDismissed = false;
+
+    function dismissHint() {
+      if (hintDismissed) return;
+      hintDismissed = true;
+      hoverHint.classList.remove('is-visible');
+    }
+
+    setTimeout(() => {
+      hoverHint.classList.add('is-visible');
+      setTimeout(dismissHint, 2500);
+    }, 2000);
+
+    document.querySelectorAll('.split').forEach(side => {
+      const key   = side.dataset.side;
+      const thumb = side.querySelector('.split__thumb');
+      const label = side.querySelector('.split__label');
+
+      side.addEventListener('mouseenter', () => {
+        dismissHint();
+        const list    = images[key];
+        /* 初回ホバーは0番（代表作）固定、以降はランダム */
+        const idx  = side.dataset.visited ? Math.floor(Math.random() * list.length) : 0;
+        side.dataset.visited = '1';
+        const img  = list[idx];
+        thumb.style.transition      = 'none';
+        thumb.style.backgroundImage = `url(${img})`;
+        thumb.style.opacity         = '0.05';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            thumb.style.transition = 'opacity 1.5s ease';
+            thumb.style.opacity    = '0.5';
+          });
+        });
+      });
+
+      side.addEventListener('mouseleave', () => {
+        thumb.style.transition = 'opacity 0.8s ease';
+        thumb.style.opacity    = '0';
+      });
+
+      label.addEventListener('mouseenter', e => {
+        e.stopPropagation();
+        thumb.style.transition = 'opacity 0.4s ease';
+        thumb.style.opacity    = '0.1';
+      });
+      label.addEventListener('mouseleave', () => {
+        thumb.style.transition = 'opacity 1.5s ease';
+        thumb.style.opacity    = '0.5';
+      });
+    });
+
+    // 右クリック禁止（外部リンク・mailtoのみ許可、href="#"は禁止）
+    document.addEventListener('contextmenu', (e) => {
+      const link = e.target.closest('a');
+      if (link) {
+        const href = link.getAttribute('href') || '';
+        if (href && href !== '#' && !href.startsWith('javascript')) return;
+      }
+      e.preventDefault();
+    }, true);
+
+    // ドラッグ保存禁止（全画像・動画）
+    document.addEventListener('dragstart', (e) => {
+      if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    // 動画のループを強制ON
+    document.querySelectorAll('video').forEach(v => { v.loop = true; });
+  </script>
+</body>
+</html>

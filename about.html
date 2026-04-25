@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About | Yui Portfolio</title>
+
+<style>
+/* ===== Base (indexと同トーン) ===== */
+:root{
+  --nav-h:64px;
+  --bg:#f7f7f5;
+  --text: rgba(30,30,30,.75);
+  --muted: rgba(30,30,30,.55);
+  --line: rgba(0,0,0,.08);
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+  color:#2e2e2e;
+  background:var(--bg);
+}
+
+section{
+  padding:96px 16px;
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+
+.section--off{
+  padding-top: 0px;
+  padding-bottom: 48px;
+}
+
+.section--off .off-divider{
+  margin-top: 0;
+}
+
+h1{
+  margin:0 0 18px;
+  font-family:"Times New Roman", serif;
+  font-size: clamp(34px, 4.8vw, 54px);
+  letter-spacing: .02em;
+  line-height: 1.1;
+}
+
+h2{
+  margin: 0 0 18px;
+  font-size: 16px;
+  letter-spacing: .12em;
+  color: rgba(30,30,30,1);
+}
+
+p{
+  margin: 0 0 14px;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+a{ color: inherit; }
+
+/* ===== Nav ===== */
+.site-nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  height:var(--nav-h);
+  backdrop-filter: blur(8px);
+  background: rgba(247,247,245,.88);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  color: rgba(30,30,30,.85);
+}
+
+.site-nav__inner{
+  width:min(1100px,92vw);
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap: 14px;
+}
+
+.site-nav__brand{
+  font-size:14px;
+  letter-spacing:.08em;
+  text-decoration:none;
+  color:rgba(30,30,30,.85);
+  white-space:nowrap;
+}
+
+.nav-spacer{ flex: 1; }
+
+.pill{
+  display:inline-block;
+  padding: 10px 18px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: transparent;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: rgba(30,30,30,.75);
+  text-decoration:none;
+  transition: border-color .2s ease, color .2s ease, transform .2s ease;
+}
+.pill:hover{
+  border-color: rgba(0,0,0,.20);
+  color: rgba(30,30,30,.95);
+  transform: translateX(2px);
+}
+
+/* ===== Layout ===== */
+.wrap{
+  width: min(760px, 92vw);
+  margin: 0 auto;
+  min-width: 0; /* 横はみ出し保険 */
+}
+
+.kicker{
+  margin-top: 8px;
+  font-size: 13px;
+  letter-spacing: .14em;
+  color: var(--muted);
+}
+
+.hr{
+  margin: 48px 0;
+  height: 1px;
+  background: rgba(0,0,0,.08);
+  border: 0;
+}
+
+.list{
+  margin: 10px 0 0;
+  padding-left: 1.1em;
+  color: rgba(30,30,30,.75);
+}
+.list li{ margin: 8px 0; }
+
+.en{
+  margin-top: 14px;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: rgba(30,30,30,.45);
+}
+
+.about-divider,
+.section-divider,
+.off-divider{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 80px 0 32px;
+}
+
+/* ===== Off hours ===== */
+.off-card{
+  width: min(760px, 75vw);
+  margin: 0 auto;
+  background: rgba(255,255,255,.85);
+  border-radius: 22px;
+  padding: 56px 52px;
+  box-sizing: border-box;
+}
+
+.off-divider::before,
+.off-divider::after{
+  content: "";
+  height: 1px;
+  width: 64px;
+  background: rgba(30,30,30,.25);
+}
+
+.off-divider span{
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(30,30,30,.5);
+}
+
+.off-header{
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.off-header .off-intro{
+  margin: 0 auto 8px;
+  max-width: 520px;
+}
+
+.off-header .en{
+  margin-top: 4px;
+}
+
+.off-intro{
+  margin: 0 0 32px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(30,30,30,.65);
+}
+
+.offhours{
+  margin-top: 0px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.oh-card{
+  border: none;
+  border-radius: 14px;
+  background: rgba(247,247,245,.75);
+  overflow: hidden;
+}
+
+.oh-thumb{
+  position: relative;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.oh-thumb img{
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+.oh-overlay{
+  position: absolute;
+  inset: 0;
+  padding: 16px;
+  background: rgba(247,247,245,.90);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .28s ease, transform .32s ease;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.oh-card:hover .oh-overlay{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.oh-overlay .jp{
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: rgba(30,30,30,.78);
+}
+
+.oh-overlay .en{
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: rgba(30,30,30,.46); /* FIX */
+}
+
+.oh-meta{
+  padding: 14px 16px 16px;
+}
+
+.oh-card h3{
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: rgba(30,30,30,.65); /* FIX */
+}
+
+.oh-mini{
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(30,30,30,.68); /* FIX */
+}
+
+.note{
+  margin-top: 28px;
+  font-size: 12px;
+  color: rgba(30,30,30,.45); /* FIX */
+  letter-spacing: .06em;
+}
+
+@media (max-width: 768px){
+  .off-card{
+    padding: 40px 16px;
+    border-radius: 20px;
+  }
+}
+
+/* ===== Strength ===== */
+.section-header{
+  text-align: center;
+  margin: 0 0 44px;
+}
+
+.section-header .lead{
+  margin: 0 auto;
+  max-width: 560px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(30,30,30,.65);
+}
+
+.section-header .en{
+  margin-top: 6px;
+  color: rgba(30,30,30,.42);
+}
+
+.section-divider::before,
+.section-divider::after{
+  content:"";
+  height:1px;
+  width:64px;
+  background: rgba(30,30,30,.25);
+}
+
+.section-divider span{
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background: rgba(30,30,30,.5);
+}
+
+.strength-layout{
+  display:grid;
+  grid-template-columns: 220px 1fr;
+  gap: 44px;
+  align-items:start;
+}
+
+.strength-media img{
+  width: 100%;
+  aspect-ratio: 1 / 2.5;
+  object-fit: cover;
+  display:block;
+  border-radius: 14px;
+  padding-top: 0;
+}
+
+.strength-media,
+.strength-items{
+  display:flex;
+  flex-direction:column;
+  gap: 34px;
+  padding-top: 0px;
+}
+
+.strength-item h3{
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: rgba(30,30,30,.70);
+}
+
+.strength-item .jp{
+  margin: 0 0 8px;
+  line-height: 1.9;
+  color: rgba(30,30,30,.75);
+}
+
+.strength-item .en{
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: rgba(30,30,30,.45);
+}
+
+@media (max-width: 820px){
+  .strength-layout{
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .strength-media img{
+    width: 180px;
+    margin: 0 auto;
+  }
+}
+
+/* ===== Trio (01/02/03) ===== */
+.trio{
+  padding-top: 24px;
+}
+
+.section-header .lead.en,
+.section-header--approach .lead.en{
+  margin-bottom:80px;
+}
+
+.trio-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.trio-item{ min-width: 0; }
+
+.trio-top{
+  position: relative;
+  height: 46px;
+  margin-bottom: 10px;
+}
+
+.trio-no{
+  position: absolute;
+  left: 0;
+  top: -2px;
+  font-family: "Times New Roman", serif;
+  font-size: 26px;
+  letter-spacing: .08em;
+  color: rgba(30,30,30,.85);
+  display: inline-block;
+  transform: translateX(15px);
+}
+
+.trio-mark{
+  position: relative;
+  width: 120px;
+  height: 74px;
+}
+
+.trio-mark::before{
+  content:"";
+  position:absolute;
+  left: 12px;
+  top: 82px;
+  width: 100px;
+  height: 1px;
+  background: rgba(30,30,30,1);
+  transform: rotate(-42deg);
+  transform-origin: left center;
+  clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+}
+
+.trio-mark::after{
+  content:"";
+  position:absolute;
+  left: 15px;
+  top: 20px;
+  width: 65px;
+  height: 65px;
+  box-sizing: border-box;
+  border: 1px solid rgba(30,30,30,.35);
+  border-radius: 50%;
+  clip-path: inset(10px 0 0 9px);
+}
+
+.trio-title{
+  margin: 0 0 10px;
+  font-size: 16px;
+  letter-spacing: .08em;
+  color: rgba(30,30,30,.85);
+}
+
+.trio-jp{
+  margin: 0 0 10px;
+  line-height: 1.95;
+  color: rgba(30,30,30,.72);
+}
+
+.trio-en{
+  margin: 0;
+  color: rgba(30,30,30,.42);
+  font-size: 12.5px;
+  line-height: 1.85;
+}
+
+.trio-item h3{ margin-top: 68px; }
+
+@media (max-width: 900px){
+  .trio-grid{ grid-template-columns: 1fr; gap: 28px; }
+  .trio-top{ height: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .oh-overlay{ transition: none; }
+  .pill{ transition: none; }
+}
+
+@media (max-width: 768px){
+  .offhours{ grid-template-columns: 1fr; }
+  .oh-overlay{
+    position: static;
+    opacity: 1;
+    transform: none;
+    background: none;
+    padding: 14px 16px 0;
+  }
+  .oh-meta{ padding-top: 8px; }
+}
+
+/* =========================
+  Scroll Reveal (from Works style)
+========================= */
+html.js-reveal .reveal{
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+  transition-delay: .05s;
+}
+html.js-reveal .reveal.is-inview{
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce){
+  html.js-reveal .reveal{
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================
+  Custom Cursor (from Works style)
+========================= */
+html.cursor-on, html.cursor-on * { cursor: none; }
+.cursor{
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+
+  background: rgba(30,30,30,.65);
+  border: none;
+
+  pointer-events: none;
+  z-index: 9999;
+
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity .2s ease, transform .12s ease, width .15s ease, height .15s ease;
+}
+.cursor.is-hover{
+  width: 16px;
+  height: 16px;
+}
+@media (prefers-reduced-motion: reduce){
+  html.cursor-on, html.cursor-on * { cursor: auto; }
+  .cursor{ display: none; }
+}
+
+/* =========================
+  Page Top (from Works style)
+========================= */
+.page-top{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 1200;
+
+  width: 44px;
+  height: 80px;
+
+  display: block;
+  text-decoration: none;
+  color: rgba(30,30,30,.55);
+
+  --line-h: 110px;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity .25s ease, transform .25s ease, color .2s ease;
+}
+.page-top.is-visible{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.page-top::before{
+  content:"";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  height: var(--line-h);
+  background: rgba(30,30,30,.35);
+}
+.page-top::after{
+  content:"";
+  position: absolute;
+  right: -5px;
+  bottom: calc(var(--line-h) - 13px);
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid rgba(30,30,30,.55);
+  border-bottom:0;
+  transform: rotate(45deg);
+}
+.page-top__text{
+  position: absolute;
+  right: 17px;
+  bottom: 0;
+  font-size: 12px;
+  letter-spacing: .12em;
+  white-space: nowrap;
+  transform-origin: right bottom;
+  transform: rotate(90deg);
+}
+.page-top:hover{ color: rgba(30,30,30,.9); }
+.page-top:hover::after{ border-color: rgba(30,30,30,.9); }
+
+@media (max-width: 720px){
+  .page-top{
+    right: 14px;
+    bottom: 14px;
+    height: 120px;
+    --line-h: 92px;
+  }
+}
+
+/* ===== About page modifiers ===== */
+.is-subpage .nav-left,
+.is-subpage .nav-brand,
+.is-subpage .nav-title,
+.is-subpage .site-title{
+  display: none !important;
+}
+
+.is-about .about,
+.is-about .about__inner,
+.is-about .strength,
+.is-about .section-inner{
+  width: min(400px, 86vw);
+  margin-inline: auto;
+}
+
+@media (max-width: 768px){
+  .is-about .about,
+  .is-about .about__inner,
+  .is-about .strength,
+  .is-about .section-inner{
+    width: 88vw;
+  }
+  .site-nav__brand{
+    display: none !important;
+  }
+}
+  
+/* ===== About page modifiers ===== */
+.is-subpage .nav-left,
+.is-subpage .nav-brand,
+.is-subpage .nav-title,
+.is-subpage .site-title{
+  display: none !important;
+}
+
+/* スマホだけ Strength の画像を非表示 */
+@media (max-width: 768px){
+  .is-about .strength-media{
+    display: none !important;
+  }
+}
+
+/* “文章の左右余白” をスマホで整える（閉じカッコも修正） */
+@media (max-width: 520px){
+  .is-about section{ padding-left: 40px; padding-right: 40px; }
+  .is-about .wrap{ width: 100%; }
+}
+  
+</style>
+</head>
+
+<body class="is-subpage is-about">
+
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="index.html#top">Yui Takasu Portfolio</a>
+    <div class="nav-spacer"></div>
+    <a class="pill" href="index.html#about">Back to Home</a>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h1>About</h1>
+    <div class="kicker">Design yui Takasu / Illustration ぐるにゃ</div>
+    <p class="about-note">※作風変遷の都合により、2020年以前の実績は一部非公開です。</p>
+
+<div class="section-divider about-divider" aria-hidden="true">
+  <span></span>
+</div>
+
+<!-- ===== Strength ===== -->
+<div class="section-header">
+  <h2>Strength</h2>
+  <p class="lead">考え方と作り方を、短く整理しています。</p>
+  <p class="lead en">A brief summary of how I think and work.</p>
+</div>
+
+<div class="strength-layout">
+
+  <!-- Left: vertical visual -->
+  <div class="strength-media" aria-hidden="true">
+    <img src="assets/img/Strength.jpeg" alt="">
+  </div>
+
+  <!-- Right: texts -->
+  <div class="strength-items">
+
+    <article class="strength-item">
+      <h3>Self-driven execution</h3>
+      <p class="jp">
+        目標から逆算し、必要な工程を整理して一人で走り切る力があります。未知の分野でも自律的に課題を分解し、形にしてきました。
+      </p>
+      <p class="en">
+        I break goals into clear steps and execute them independently, turning challenges into tangible outcomes.
+      </p>
+    </article>
+
+    <article class="strength-item">
+      <h3>What drives me</h3>
+      <p class="jp">
+        原動力は、人の役に立てない状態に甘んじたくないという気持ちです。負けず嫌いな性格ですが、その矛先は他人ではなく、期待に応えられない自分自身に向いています。
+      </p>
+      <p class="en">
+        My motivation comes from not wanting to remain unhelpful. I turn competitiveness inward, focusing on meeting my own expectations.
+      </p>
+    </article>
+
+    <article class="strength-item">
+      <h3>End-to-end production</h3>
+      <p class="jp">
+        企画から素材制作、演出までを一貫して担い、目的に応じて必要な工程を組み立てます。制作の質と効率を両立させながら、長く使える形になるよう設計しています。
+      </p>
+      <p class="en">
+        I handle production end to end, from planning and asset creation to direction, balancing quality, efficiency, and longevity with downstream use in mind.
+      </p>
+    </article>
+
+  </div>
+</div>
+
+<!-- ===== Trio block (01/02/03) ===== -->
+<div class="trio">
+ <div class="section-divider strength-divider" aria-hidden="true">
+  <span></span></div>
+
+ <div class="section-header section-header--approach">
+  <h2>Approach</h2>
+  <p class="lead">仕事に向き合う視点を、三つの軸で整理しています。</p>
+  <p class="lead en">How I approach my work in three perspectives.</p>
+ </div>
+
+ <div class="trio-grid">
+
+    <article class="trio-item">
+      <div class="trio-top" aria-hidden="true">
+        <div class="trio-mark">
+          <div class="trio-no">01</div>
+        </div>
+      </div>
+
+      <h3 class="trio-title">How I work</h3>
+      <p class="trio-jp">
+        目的・ターゲット・制約を整理し、優先順位を決めます。使用シーンや後工程を前提に、必要な工程を組み替えて品質を出します。
+      </p>
+      <p class="en trio-en">
+        I clarify goals and constraints, design with real usage in mind, and build flexible workflows to deliver quality efficiently.
+      </p>
+    </article>
+
+    <article class="trio-item">
+      <div class="trio-top" aria-hidden="true">
+        <div class="trio-mark">
+          <div class="trio-no">02</div>
+        </div>
+      </div>
+
+      <h3 class="trio-title">What I value</h3>
+      <p class="trio-jp">
+        見た目より先に、意図が届くこと。合意形成と納期を守る誠実な進行。その場限りにしない、積み上がる設計を大切にします。
+      </p>
+      <p class="en trio-en">
+        I prioritize clarity, reliable process, and designs that stay usable beyond a single moment.
+      </p>
+    </article>
+
+    <article class="trio-item">
+      <div class="trio-top" aria-hidden="true">
+        <div class="trio-mark">
+          <div class="trio-no">03</div>
+        </div>
+      </div>
+
+      <h3 class="trio-title">What I handle</h3>
+      <p class="trio-jp">
+        広告・販促／バナー／印刷物、ブランド表現・世界観設計、情報整理・構成・トーン設計。イラスト制作、短尺の映像編集、Live2Dモデリングまで対応します。
+      </p>
+      <p class="en trio-en">
+        Ads and promotional design, brand/worldbuilding direction, structure and tone. Also illustration, short-form video editing, and Live2D modeling.
+      </p>
+    </article>
+  </div>
+</div>
+
+<!-- /.wrap -->
+</section>
+
+<section class="section--off">
+  <div class="wrap">
+
+    <div class="off-card">
+      <div class="off-divider" aria-hidden="true">
+        <span></span>
+      </div>
+
+    <div class="off-header">
+      <h2>Off hours</h2>
+      <p class="off-intro">
+        仕事以外の時間に触れているものも、思考や設計の一部です。
+      </p>
+      <p class="off-intro en">
+        What I engage with off hours also shapes how I think and design.
+      </p>
+    </div>
+
+    <div class="offhours">
+
+      <!-- Observation / Botanical -->
+      <article class="oh-card">
+        <div class="oh-thumb">
+          <img src="assets/img/offhours/garden.jpg" alt="Botanical observation">
+          <div class="oh-overlay">
+            <p class="jp">散歩しながら、植物園のような空間で形や光の変化を観察します。</p>
+            <p class="en">I observe shifts in form and light, often in botanical-garden-like spaces.</p>
+          </div>
+        </div>
+        <div class="oh-meta">
+          <h3>Observation</h3>
+          <p class="oh-mini">形と光の記憶</p>
+        </div>
+      </article>
+
+      <!-- Worldbuilding -->
+      <article class="oh-card">
+        <div class="oh-thumb">
+          <img src="assets/img/offhours/worldbuilding.jpg" alt="Worldbuilding">
+          <div class="oh-overlay">
+            <p class="jp">空間や小物、配置や背景から“空気感”を読み取り、言語化します。</p>
+            <p class="en">I collect references and translate atmosphere from spaces, objects, and layouts.</p>
+          </div>
+        </div>
+        <div class="oh-meta">
+          <h3>Worldbuilding</h3>
+          <p class="oh-mini">空気感を言葉に</p>
+        </div>
+      </article>
+
+      <!-- Music -->
+      <article class="oh-card">
+        <div class="oh-thumb">
+          <img src="assets/img/offhours/music.jpg" alt="Music and singing">
+          <div class="oh-overlay">
+            <p class="jp">歌うのも好き。リズムや間の取り方を体に覚えさせています。</p>
+            <p class="en">I also enjoy singing, training rhythm and timing as embodied sensitivity.</p>
+          </div>
+        </div>
+        <div class="oh-meta">
+          <h3>Music</h3>
+          <p class="oh-mini">歌とリズム</p>
+        </div>
+      </article>
+
+
+      <!-- Sketching -->
+      <article class="oh-card">
+        <div class="oh-thumb">
+          <img src="assets/img/offhours/sketching.jpg" alt="Sketching">
+          <div class="oh-overlay">
+            <p class="jp">落書きで思考をほぐします。形の引き出しを増やす時間。</p>
+            <p class="en">Sketching loosens my thinking and expands my visual library.</p>
+          </div>
+        </div>
+        <div class="oh-meta">
+          <h3>Sketching</h3>
+          <p class="oh-mini">形の引き出し</p>
+        </div>
+      </article>
+
+      <!-- Cooking / Sweets -->
+      <article class="oh-card">
+        <div class="oh-thumb">
+          <img src="assets/img/offhours/sweets.jpg" alt="Cooking and sweets">
+          <div class="oh-overlay">
+            <p class="jp">お菓子づくり。工程や分量のバランスを整えて仕上げる感覚が好きです。</p>
+            <p class="en">Baking trains my sense of process, balance, and finishing quality.</p>
+          </div>
+        </div>
+        <div class="oh-meta">
+          <h3>Making sweets</h3>
+          <p class="oh-mini">お菓子作りが好き</p>
+        </div>
+      </article>
+
+      <!-- Animals / Bernese -->
+      <article class="oh-card">
+        <div class="oh-thumb">
+          <img src="assets/img/offhours/dog.jpg" alt="Bernese Mountain Dog">
+          <div class="oh-overlay">
+            <p class="jp">バーニーズ・マウンテン・ドッグのような大型犬を通して、
+                          落ち着きや信頼感、距離感の取り方を感じ取っています。</p>
+            <p class="en">Through large dogs such as Bernese Mountain Dogs,
+                          I reflect on calmness, trust, and a sense of distance.</p>
+          </div>
+        </div>
+        <div class="oh-meta">
+          <h3>Animals</h3>
+          <p class="oh-mini">大型犬が好き</p>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="note">※生活圏が特定される情報は掲載していません。</p>
+
+  </div>
+</section>
+
+
+<script>
+(() => {
+  const root = document.documentElement;
+
+  // -------------------------
+  // Scroll Reveal
+  // -------------------------
+  root.classList.add('js-reveal');
+
+  const revealTargets = [
+    '.section-header',
+    '.strength-media',
+    '.strength-item',
+    '.trio-top',
+    '.trio-item',
+    '.off-header',
+    '.off-card',
+    '.oh-card',
+    '.section-divider'
+  ];
+
+  const els = new Set();
+  revealTargets.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => els.add(el));
+  });
+
+  els.forEach(el => el.classList.add('reveal'));
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(ent => {
+        ent.target.classList.toggle('is-inview', ent.isIntersecting);
+      });
+    }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+
+    els.forEach(el => io.observe(el));
+  } else {
+    // fallback: no IO
+    els.forEach(el => el.classList.add('is-inview'));
+  }
+
+  // -------------------------
+  // Page Top (show/hide)
+  // -------------------------
+  const pageTop = document.querySelector('.page-top');
+  const toggleTop = () => {
+    if (!pageTop) return;
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    pageTop.classList.toggle('is-visible', y > 240);
+  };
+  window.addEventListener('scroll', toggleTop, { passive: true });
+  toggleTop();
+
+  // -------------------------
+  // Custom Cursor (pointer fine + hover capable + not reduced motion)
+  // -------------------------
+  const cursor = document.querySelector('.cursor');
+  const canCursor =
+    cursor &&
+    window.matchMedia &&
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    !(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  if (!canCursor) return;
+
+  root.classList.add('cursor-on');
+
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  const speed = 0.18;
+
+  const onMove = (e) => {
+    tx = e.clientX;
+    ty = e.clientY;
+    cursor.style.opacity = '1';
+  };
+
+  window.addEventListener('mousemove', onMove, { passive: true });
+
+  const raf = () => {
+    cx += (tx - cx) * speed;
+    cy += (ty - cy) * speed;
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+    requestAnimationFrame(raf);
+  };
+  requestAnimationFrame(raf);
+
+  const hoverOn = () => cursor.classList.add('is-hover');
+  const hoverOff = () => cursor.classList.remove('is-hover');
+
+  const bindHover = (el) => {
+    el.addEventListener('mouseenter', hoverOn);
+    el.addEventListener('mouseleave', hoverOff);
+  };
+
+  document.querySelectorAll('a, button, .pill, [role="button"], input, textarea, select, summary').forEach(bindHover);
+})();
+</script>
+
+
+<a class="page-top" href="#top" aria-label="Back to top">
+  <span class="page-top__text">Page Up</span>
+</a>
+<div class="cursor" aria-hidden="true"></div>
+
+
+<!-- Custom Cursor -->
+<div class="cursor" aria-hidden="true"></div>
+
+<!-- Page Top -->
+<a href="#top" class="page-top" aria-label="Back to top">
+  <span class="page-top__text">PAGE TOP</span>
+</a>
+
+<script>
+(() => {
+  // enable custom cursor (PC only)
+  if (window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
+    document.documentElement.classList.add("cursor-on");
+    const cursor = document.querySelector(".cursor");
+    let hovering = false;
+
+    window.addEventListener("mousemove", (e) => {
+      cursor.style.opacity = "1";
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+
+    document.addEventListener("mouseover", (e) => {
+      hovering = !!e.target.closest("a, button");
+      cursor.classList.toggle("is-hover", hovering);
+    });
+  }
+
+  // Page top visibility
+  const pageTop = document.querySelector(".page-top");
+  if (pageTop) {
+    window.addEventListener("scroll", () => {
+      pageTop.classList.toggle("is-visible", window.scrollY > 240);
+    });
+  }
+})();
+
+  // 右クリック禁止（外部リンク・mailtoのみ許可、href="#"は禁止）
+  document.addEventListener('contextmenu', (e) => {
+    const link = e.target.closest('a');
+    if (link) {
+      const href = link.getAttribute('href') || '';
+      if (href && href !== '#' && !href.startsWith('javascript')) return;
+    }
+    e.preventDefault();
+  }, true);
+
+  // ドラッグ保存禁止（全画像・動画）
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  // 動画のループを強制ON
+  document.querySelectorAll('video').forEach(v => { v.loop = true; });
+</script>
+
+</body>
+</html>

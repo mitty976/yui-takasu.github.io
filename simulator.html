@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>料金シミュレーター | ぐるにゃ</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <style>
+    /* =============================
+       シミュレーター専用スタイル
+    ============================= */
+
+    .sim-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 16px 160px;
+    }
+
+    .sim-page h1 {
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+    }
+
+    .sim-desc {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(46,46,46,.55);
+      margin-bottom: 40px;
+    }
+
+    /* --- タブ（works.htmlと同スタイル） --- */
+    .sim-tabs {
+      position: sticky;
+      top: calc(var(--nav-h) + 8px);
+      z-index: 900;
+      width: min(400px, 92vw);
+      margin: 0 auto 40px;
+      background: #E8E8E6;
+      padding: 10px 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.04);
+      border-radius: 999px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .sim-tab {
+      border: 0;
+      background: transparent;
+      border-radius: 999px;
+      padding: 11px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      letter-spacing: .06em;
+      color: rgba(30,30,30,.6);
+      transition: background .15s, color .15s, box-shadow .15s;
+    }
+
+    .sim-tab.is-active {
+      background: #fff;
+      color: rgba(30,30,30,.9);
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    }
+
+    /* --- セクション表示切り替え --- */
+    .sim-section {
+      display: none;
+    }
+
+    .sim-section.is-active {
+      display: block;
+    }
+
+    /* --- カード --- */
+    .sim-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+
+    .sim-card h2 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      margin: 0 0 16px;
+      text-align: left;
+      color: rgba(46,46,46,.55);
+      text-transform: uppercase;
+    }
+
+    /* --- 選択肢 --- */
+    .sim-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sim-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(0,0,0,.08);
+      transition: border-color .15s, background .15s;
+    }
+
+    .sim-option:hover {
+      border-color: rgba(0,0,0,.2);
+      background: rgba(0,0,0,.02);
+    }
+
+    .sim-option:has(input:checked) {
+      border-color: #b8977e;
+      background: #fdf6f2;
+    }
+
+    .sim-option input {
+      accent-color: #b8977e;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .sim-option-label {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sim-option-name {
+      font-size: 14px;
+    }
+
+    .sim-option-price {
+      font-size: 13px;
+      color: rgba(46,46,46,.5);
+      white-space: nowrap;
+    }
+
+    /* --- カウンター --- */
+    .sim-counter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(0,0,0,.08);
+      font-size: 14px;
+    }
+
+    .sim-counter + .sim-counter {
+      margin-top: 10px;
+    }
+
+    .sim-counter-label { flex: 1; }
+
+    .sim-counter-price {
+      font-size: 13px;
+      color: rgba(46,46,46,.5);
+      margin-right: 16px;
+    }
+
+    .sim-counter-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sim-counter-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,.15);
+      background: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+    }
+
+    .sim-counter-btn:hover {
+      background: #f0e8e2;
+      border-color: #b8977e;
+    }
+
+    .sim-counter-num {
+      min-width: 24px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    /* --- 注意書き --- */
+    .sim-note {
+      font-size: 12px;
+      color: rgba(46,46,46,.45);
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    /* --- 区切り線 --- */
+    .sim-divider {
+      height: 1px;
+      background: rgba(0,0,0,.06);
+      margin: 14px 0;
+    }
+
+    /* --- タグ --- */
+    .sim-tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .sim-tag--discount  { background: #eaf5ea; color: #3a7a3a; }
+    .sim-tag--surcharge { background: #fdf0f0; color: #9a3a3a; }
+    .sim-tag--info      { background: #eef3fd; color: #3a5a9a; }
+
+    /* --- 合計バー（固定） --- */
+    .sim-total-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0,0,0,.08);
+      padding: 14px 24px;
+      z-index: 100;
+    }
+
+    .sim-total-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sim-total-label {
+      font-size: 13px;
+      color: rgba(46,46,46,.55);
+      letter-spacing: .06em;
+    }
+
+    .sim-total-amount {
+      font-size: 26px;
+      font-weight: 700;
+      color: #2e2e2e;
+    }
+
+    .sim-total-amount span {
+      font-size: 14px;
+      font-weight: 400;
+      margin-left: 4px;
+      color: rgba(46,46,46,.55);
+    }
+
+    .sim-total-note {
+      font-size: 11px;
+      color: rgba(46,46,46,.4);
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .sim-card { padding: 18px 16px; }
+      .sim-total-amount { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="index.html">Yui Takasu Portfolio</a>
+    <ul class="site-nav__menu">
+      <li><a class="nav-link" href="index.html">Top</a></li>
+      <li><a class="nav-link" href="works.html">Works</a></li>
+      <li><a class="nav-link" href="index.html#about">About</a></li>
+      <li><a class="nav-link nav-link--cta" href="mailto:yui.sanki.takasu@gmail.com">Mail</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="sim-page">
+  <h1>料金シミュレーター</h1>
+  <p class="sim-desc">オプションを選ぶと合計金額が自動で計算されます。あくまでも目安です。</p>
+
+  <!-- タブ切り替え -->
+  <div class="sim-tabs">
+    <button class="sim-tab is-active" data-target="illust">Illustration</button>
+    <button class="sim-tab" data-target="design">Design</button>
+  </div>
+
+
+  <!-- ========================
+       イラストセクション
+  ========================= -->
+  <div class="sim-section is-active" id="sim-illust">
+
+    <!-- ① ベース -->
+    <div class="sim-card">
+      <h2>① ベースイラスト</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="i_base" value="8000" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">腰上</span>
+            <span class="sim-option-price">¥8,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_base" value="18000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">全身</span>
+            <span class="sim-option-price">¥18,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_base" value="7000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SDキャラ（デフォルメ）</span>
+            <span class="sim-option-price">¥7,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_base" value="8000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SNSヘッダー用イラスト</span>
+            <span class="sim-option-price">¥8,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_base" value="8000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">YouTubeサムネイル用イラスト</span>
+            <span class="sim-option-price">¥8,000</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="sim-divider"></div>
+
+      <div class="sim-counter">
+        <span class="sim-counter-label">追加キャラクター人数</span>
+        <span class="sim-counter-price">+¥6,500 / 人</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_extraPerson', -1)">−</button>
+          <span class="sim-counter-num" id="i_extraPersonNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_extraPerson', 1)">＋</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② キャラデザイン -->
+    <div class="sim-card">
+      <h2>② キャラクターデザイン</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="i_design" value="0" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">デザイン済み（参考画像あり）</span>
+            <span class="sim-option-price">＋¥0</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_design" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">デザインなし（キャラデザインから依頼）</span>
+            <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ③ 背景 -->
+    <div class="sim-card">
+      <h2>③ 背景</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="i_bg" value="0" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">なし / 単色・透過</span>
+            <span class="sim-option-price">＋¥0</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_bg" value="1500">
+          <span class="sim-option-label">
+            <span class="sim-option-name">簡易背景（グラデ・模様など）</span>
+            <span class="sim-option-price">＋¥1,500</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_bg" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">描き込みあり背景</span>
+            <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ④ 差分 -->
+    <div class="sim-card">
+      <h2>④ 差分</h2>
+      <div class="sim-counter">
+        <span class="sim-counter-label">表情差分</span>
+        <span class="sim-counter-price">+¥1,000 / 個</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_expression', -1)">−</button>
+          <span class="sim-counter-num" id="i_expressionNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_expression', 1)">＋</button>
+        </div>
+      </div>
+      <div class="sim-counter">
+        <span class="sim-counter-label">衣装差分</span>
+        <span class="sim-counter-price">+¥4,000 / セット</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_costume', -1)">−</button>
+          <span class="sim-counter-num" id="i_costumeNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_costume', 1)">＋</button>
+        </div>
+      </div>
+      <div class="sim-counter">
+        <span class="sim-counter-label">髪型差分</span>
+        <span class="sim-counter-price">+¥2,000 / 種</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_hairstyle', -1)">−</button>
+          <span class="sim-counter-num" id="i_hairstyleNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_hairstyle', 1)">＋</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ 使用用途（任意） -->
+    <div class="sim-card">
+      <h2>⑤ 使用用途（任意・複数選択可）</h2>
+      <p class="sim-note" style="margin-top:0; margin-bottom:12px;">用途に合わせた構図・解像度で仕上げます。料金が変わるものは金額を表示しています。</p>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="checkbox" class="i_usage" data-note="正方形構図・顔が中心に来るよう仕上げます">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SNSアイコン</span>
+            <span class="sim-option-price">構図調整のみ</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" class="i_usage" data-note="両脇・頭上が切れない横長構図で仕上げます">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SNSヘッダー</span>
+            <span class="sim-option-price">構図調整のみ</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" class="i_usage" data-note="文字を置くスペースを考慮した構図にします">
+          <span class="sim-option-label">
+            <span class="sim-option-name">YouTubeサムネイル</span>
+            <span class="sim-option-price">構図調整のみ</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" id="i_highres" value="3000" data-note="拡大編集に耐える高解像度データで納品します">
+          <span class="sim-option-label">
+            <span class="sim-option-name">動画素材・切り抜き配信</span>
+            <span class="sim-option-price">＋¥3,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" id="i_print" value="3000" data-note="350dpi対応の印刷用高解像度データで納品します">
+          <span class="sim-option-label">
+            <span class="sim-option-name">印刷物・グッズ</span>
+            <span class="sim-option-price">＋¥3,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" id="i_live2d_layer" value="22000" data-note="パーツ分けを考慮した構図で描き起こし、レイヤー分け済みPSDデータで納品します。モデリング作業は含みません。">
+          <span class="sim-option-label">
+            <span class="sim-option-name">Live2D用（レイヤー分けPSD納品）</span>
+            <span class="sim-option-price">＋¥22,000</span>
+          </span>
+        </label>
+      </div>
+      <!-- 用途ごとの補足メモ表示エリア -->
+      <div id="i_usageNotes" style="margin-top:12px; display:none;">
+        <div style="background:#f7f7f5; border-radius:8px; padding:12px 14px; font-size:12px; color:rgba(46,46,46,.65); line-height:1.8;" id="i_usageNoteText"></div>
+      </div>
+    </div>
+
+    <!-- ⑥ Live2D（動くイラスト） -->
+    <div class="sim-card">
+      <h2>⑥ Live2D・動くイラスト</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="i_live2d" value="0" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">なし</span>
+            <span class="sim-option-price">＋¥0</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_live2d" value="15000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">等身・基本（まばたき・口・呼吸）</span>
+            <span class="sim-option-price">＋¥15,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_live2d" value="35000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">等身・ポーズ切り替えあり</span>
+            <span class="sim-option-price">＋¥35,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_live2d" value="10000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SDキャラ・基本</span>
+            <span class="sim-option-price">＋¥10,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_live2d" value="20000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SDキャラ・ポーズ切り替えあり</span>
+            <span class="sim-option-price">＋¥20,000</span>
+          </span>
+        </label>
+      </div>
+      <p class="sim-note">※ Live2D選択時はAfter Effectsエフェクト仕上げが込みになります</p>
+    </div>
+
+    <!-- ⑥ オプション -->
+    <div class="sim-card">
+      <h2>⑦ オプション</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="checkbox" id="i_commercial" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">商業利用ライセンス</span>
+            <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" id="i_nosns" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SNS・サンプル掲載不可</span>
+            <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ⑦ 納期 -->
+    <div class="sim-card">
+      <h2>⑧ 納期</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="i_rush" value="1" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">通常納期</span>
+            <span class="sim-option-price">×1.0</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_rush" value="1.5">
+          <span class="sim-option-label">
+            <span class="sim-option-name">短縮納期 <span class="sim-tag sim-tag--surcharge">×1.5</span></span>
+            <span class="sim-option-price">合計×1.5倍</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_rush" value="2">
+          <span class="sim-option-label">
+            <span class="sim-option-name">最短納期 <span class="sim-tag sim-tag--surcharge">×2.0</span></span>
+            <span class="sim-option-price">合計×2倍</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ⑧ リピーター -->
+    <div class="sim-card">
+      <h2>⑨ リピーター割引</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="checkbox" id="i_repeat">
+          <span class="sim-option-label">
+            <span class="sim-option-name">リピーター割引 <span class="sim-tag sim-tag--discount">−20%</span></span>
+            <span class="sim-option-price">2回目以降のご依頼</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ⑨ 追加修正 -->
+    <div class="sim-card">
+      <h2>⑩ 追加修正</h2>
+      <p class="sim-note" style="margin-top:0; margin-bottom:12px;">無料修正は3回まで。4回目以降は追加料金が発生します。<br>線画後の構図・ポーズなど大きな変更は別案件となります。</p>
+      <div class="sim-counter">
+        <span class="sim-counter-label">追加修正回数（4回目以降）</span>
+        <span class="sim-counter-price">+¥1,500 / 回</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_revision', -1)">−</button>
+          <span class="sim-counter-num" id="i_revisionNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_revision', 1)">＋</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sim-illust -->
+
+
+  <!-- ========================
+       デザインセクション
+  ========================= -->
+  <div class="sim-section" id="sim-design">
+
+    <p class="sim-note" style="text-align:center; margin-bottom:24px;">
+      ※ デザイン料金はCoconaラ市場相場をもとにした目安です。詳細はお見積もりにてご確認ください。
+    </p>
+
+    <!-- ① サービス種別 -->
+    <div class="sim-card">
+      <h2>① サービス種別</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="d_base" value="5000" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">バナー・広告（静止画）</span>
+            <span class="sim-option-price">¥5,000〜</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="d_base" value="10000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">バナー・広告（GIFアニメ）</span>
+            <span class="sim-option-price">¥10,000〜</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="d_base" value="8000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">チラシ・フライヤー（片面）</span>
+            <span class="sim-option-price">¥8,000〜</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="d_base" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">名刺・ショップカード</span>
+            <span class="sim-option-price">¥5,000〜</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="d_base" value="15000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">ロゴデザイン</span>
+            <span class="sim-option-price">¥15,000〜</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="d_base" value="30000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">LPデザイン（コーディングなし）</span>
+            <span class="sim-option-price">¥30,000〜</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ② 制作点数 -->
+    <div class="sim-card">
+      <h2>② 制作点数</h2>
+      <p class="sim-note" style="margin-top:0; margin-bottom:12px;">2点目以降は1点ごとに基本料金の50%を加算します。</p>
+      <div class="sim-counter">
+        <span class="sim-counter-label">追加制作点数</span>
+        <span class="sim-counter-price">基本料金×50% / 点</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('d_extra', -1)">−</button>
+          <span class="sim-counter-num" id="d_extraNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('d_extra', 1)">＋</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ オプション -->
+    <div class="sim-card">
+      <h2>③ オプション</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="checkbox" id="d_rawdata" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">元データ納品（.ai / .psd）</span>
+            <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" id="d_print" value="3000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">印刷用高解像度データ（350dpi）</span>
+            <span class="sim-option-price">＋¥3,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" id="d_commercial" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">商業利用ライセンス</span>
+            <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="checkbox" id="d_nosns" value="5000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SNS・サンプル掲載不可</span>
+            <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ④ 納期 -->
+    <div class="sim-card">
+      <h2>④ 納期</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="d_rush" value="1" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">通常納期</span>
+            <span class="sim-option-price">×1.0</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="d_rush" value="1.5">
+          <span class="sim-option-label">
+            <span class="sim-option-name">短縮納期 <span class="sim-tag sim-tag--surcharge">×1.5</span></span>
+            <span class="sim-option-price">合計×1.5倍</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="d_rush" value="2">
+          <span class="sim-option-label">
+            <span class="sim-option-name">最短納期 <span class="sim-tag sim-tag--surcharge">×2.0</span></span>
+            <span class="sim-option-price">合計×2倍</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ⑤ リピーター -->
+    <div class="sim-card">
+      <h2>⑤ リピーター割引</h2>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="checkbox" id="d_repeat">
+          <span class="sim-option-label">
+            <span class="sim-option-name">リピーター割引 <span class="sim-tag sim-tag--discount">−20%</span></span>
+            <span class="sim-option-price">2回目以降のご依頼</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
+  </div><!-- /sim-design -->
+
+</main>
+
+<!-- 合計バー -->
+<div class="sim-total-bar">
+  <div class="sim-total-inner">
+    <span class="sim-total-label">お見積もり合計（目安）</span>
+    <span class="sim-total-amount" id="totalAmount">¥8,000<span>〜</span></span>
+    <p class="sim-total-note">※ 実際の金額はご相談にて確定します。CoconaラまたはMailからお気軽にどうぞ。</p>
+  </div>
+</div>
+
+<script>
+  // =============================
+  // カウンターの状態管理
+  // =============================
+  const counts = {
+    i_extraPerson: 0,
+    i_expression:  0,
+    i_costume:     0,
+    i_hairstyle:   0,
+    i_revision:    0,
+    d_extra:       0
+  };
+
+  // 各カウンターの単価
+  const countPrices = {
+    i_extraPerson: 6500,
+    i_expression:  1000,
+    i_costume:     4000,
+    i_hairstyle:   2000,
+    i_revision:    1500,
+    d_extra:       0   // デザインの追加点数は基本料金×50%なので動的計算
+  };
+
+  // カウンター増減
+  function changeCount(key, delta) {
+    counts[key] = Math.max(0, counts[key] + delta);
+    document.getElementById(key + 'Num').textContent = counts[key];
+    calcTotal();
+  }
+
+  // =============================
+  // タブ切り替え
+  // =============================
+  let currentTab = 'illust'; // 現在表示中のタブ
+
+  document.querySelectorAll('.sim-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // タブのアクティブ状態を切り替え
+      document.querySelectorAll('.sim-tab').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      // セクションの表示を切り替え
+      currentTab = btn.dataset.target;
+      document.querySelectorAll('.sim-section').forEach(s => s.classList.remove('is-active'));
+      document.getElementById('sim-' + currentTab).classList.add('is-active');
+
+      calcTotal(); // タブ切り替えで合計を再計算
+    });
+  });
+
+  // =============================
+  // 合計金額の計算
+  // =============================
+  function calcTotal() {
+    let total = 0;
+
+    if (currentTab === 'illust') {
+      // --- イラストの計算 ---
+
+      // ① ベース
+      const base = document.querySelector('input[name="i_base"]:checked');
+      if (base) total += parseInt(base.value);
+
+      // 追加キャラクター
+      total += counts.i_extraPerson * countPrices.i_extraPerson;
+
+      // ② キャラデザイン
+      const design = document.querySelector('input[name="i_design"]:checked');
+      if (design) total += parseInt(design.value);
+
+      // ③ 背景
+      const bg = document.querySelector('input[name="i_bg"]:checked');
+      if (bg) total += parseInt(bg.value);
+
+      // ④ 差分
+      total += counts.i_expression * countPrices.i_expression;
+      total += counts.i_costume    * countPrices.i_costume;
+      total += counts.i_hairstyle  * countPrices.i_hairstyle;
+
+      // ⑤ Live2D
+      const live2d = document.querySelector('input[name="i_live2d"]:checked');
+      if (live2d) total += parseInt(live2d.value);
+
+      // ⑤ 使用用途（料金が発生するもの）
+      ['i_highres', 'i_print', 'i_live2d_layer'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.checked) total += parseInt(el.value);
+      });
+
+      // 用途メモの表示更新
+      updateUsageNotes();
+
+      // ⑦ オプション
+      ['i_commercial', 'i_nosns'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.checked) total += parseInt(el.value);
+      });
+
+      // ⑨ 追加修正
+      total += counts.i_revision * countPrices.i_revision;
+
+      // ⑦ 納期倍率
+      const rush = document.querySelector('input[name="i_rush"]:checked');
+      if (rush) total = Math.round(total * parseFloat(rush.value));
+
+      // ⑧ リピーター割引
+      if (document.getElementById('i_repeat').checked) total = Math.round(total * 0.8);
+
+    } else {
+      // --- デザインの計算 ---
+
+      // ① ベース
+      const base = document.querySelector('input[name="d_base"]:checked');
+      const baseVal = base ? parseInt(base.value) : 0;
+      total += baseVal;
+
+      // ② 追加制作点数（基本料金×50%/点）
+      total += counts.d_extra * Math.round(baseVal * 0.5);
+
+      // ③ オプション
+      ['d_rawdata', 'd_print', 'd_commercial', 'd_nosns'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.checked) total += parseInt(el.value);
+      });
+
+      // ④ 納期倍率
+      const rush = document.querySelector('input[name="d_rush"]:checked');
+      if (rush) total = Math.round(total * parseFloat(rush.value));
+
+      // ⑤ リピーター割引
+      if (document.getElementById('d_repeat').checked) total = Math.round(total * 0.8);
+    }
+
+    // 表示更新（3桁区切り）
+    document.getElementById('totalAmount').innerHTML =
+      '¥' + total.toLocaleString('ja-JP') + '<span>〜</span>';
+  }
+
+  // =============================
+  // 使用用途の補足メモ表示
+  // =============================
+  function updateUsageNotes() {
+    const notes = [];
+    // data-note属性を持つチェックボックスが選択されているものを収集
+    document.querySelectorAll('.i_usage:checked, #i_highres:checked, #i_print:checked, #i_live2d_layer:checked')
+      .forEach(el => {
+        const note = el.dataset.note;
+        if (note) notes.push('・' + note);
+      });
+
+    const area  = document.getElementById('i_usageNotes');
+    const text  = document.getElementById('i_usageNoteText');
+    if (notes.length > 0) {
+      text.textContent = notes.join('\n');
+      area.style.display = 'block';
+    } else {
+      area.style.display = 'none';
+    }
+  }
+
+  // 入力変化時に再計算
+  document.querySelectorAll('input[type="radio"], input[type="checkbox"]')
+    .forEach(el => el.addEventListener('change', calcTotal));
+
+  // 初期表示
+  calcTotal();
+
+  // 右クリック禁止（外部リンク・mailtoのみ許可、href="#"は禁止）
+  document.addEventListener('contextmenu', (e) => {
+    const link = e.target.closest('a');
+    if (link) {
+      const href = link.getAttribute('href') || '';
+      if (href && href !== '#' && !href.startsWith('javascript')) return;
+    }
+    e.preventDefault();
+  }, true);
+
+  // ドラッグ保存禁止（全画像・動画）
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  // 動画のループを強制ON
+  document.querySelectorAll('video').forEach(v => { v.loop = true; });
+</script>
+</body>
+</html>
