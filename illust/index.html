@@ -770,6 +770,8 @@
 
     /* === レスポンシブ（768px以下） === */
     @media (max-width: 768px) {
+      *, *::before, *::after { cursor: auto !important; }
+      #custom-cursor { display: none !important; }
       html, body {
         height: auto;
         overflow-y: auto;
