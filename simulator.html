@@ -1,102 +1,229 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" id="html-root">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>料金シミュレーター | ぐるにゃ</title>
-  <link rel="stylesheet" href="assets/css/common.css">
-  <style>
-    /* =============================
-       シミュレーター専用スタイル
-    ============================= */
 
+  <style>
+    @font-face {
+      font-family: '新レトロ丸ゴシック';
+      src: url('assets/fonts/ShinRetroMaruGothic-Bold.ttf') format('truetype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'LINE Seed JP';
+      src: url('assets/fonts/LINESeedJP_A_OTF_Eb.otf') format('opentype');
+      font-weight: 800;
+    }
+    @font-face {
+      font-family: '07にくまるフォント';
+      src: url('assets/fonts/07にくまるフォント.otf') format('opentype');
+    }
+    @font-face {
+      font-family: 'ふんわりラウンド';
+      src: url('assets/fonts/funwari-round.otf') format('opentype');
+    }
+  </style>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font-title:   '新レトロ丸ゴシック', 'Hiragino Maru Gothic Pro', sans-serif;
+      --font-en:      'LINE Seed JP', system-ui, sans-serif;
+      --font-niku:    '07にくまるフォント', 'Hiragino Maru Gothic Pro', sans-serif;
+      --font-funwari: 'ふんわりラウンド', 'Hiragino Maru Gothic Pro', sans-serif;
+
+      --color-bg:      #FFFAFF;
+      --color-works:   #FFEEF4;
+      --color-sidebar: #F8D8E8;
+      --color-border:  #EAB5C5;
+      --color-accent:  #D4879A;
+      --color-btn:     #D4879A;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Hiragino Maru Gothic Pro', 'BIZ UDPGothic', sans-serif;
+      background: var(--color-bg);
+      color: #4a2a3a;
+    }
+
+    body {
+      opacity: 0;
+      filter: blur(10px);
+      transition: opacity 0.6s ease, filter 0.6s ease;
+    }
+    body.is-loaded { opacity: 1; filter: none; }
+
+    /* === カスタムカーソル === */
+    *, *::before, *::after { cursor: none !important; }
+    #custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 20px;
+      pointer-events: none;
+      z-index: 99999;
+      transition: width 0.18s ease;
+      will-change: left, top;
+    }
+    #custom-cursor img { width: 100%; height: auto; display: block; }
+    #custom-cursor.is-large { width: 30px; }
+
+    /* === ヘッダー === */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .main-title {
+      font-family: var(--font-funwari);
+      font-size: 32px;
+      color: var(--color-accent);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* 戻るリンク群 */
+    .back-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-niku);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--color-accent);
+      text-decoration: none;
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 5px 14px;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s, border-color 0.6s ease;
+    }
+    .back-link:hover { background: var(--color-accent); color: #fff; }
+
+    /* 右側アイコン群 */
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-icon-img {
+      width: 30px; height: 30px;
+      object-fit: contain;
+      display: block;
+      opacity: 0.75;
+    }
+    .header-icon-img:hover { opacity: 1; }
+
+    .header-icon-svg {
+      width: 30px; height: 30px;
+      display: block;
+      opacity: 0.75;
+      color: var(--color-accent);
+    }
+    .header-icon-svg:hover { opacity: 1; }
+
+    /* === メインコンテンツ === */
     .sim-page {
       max-width: 760px;
       margin: 0 auto;
-      padding: 80px 16px 160px;
-    }
-
-    .sim-page h1 {
-      text-align: center;
-      font-size: 22px;
-      letter-spacing: .08em;
-      margin-bottom: 8px;
+      padding: 20px 16px 180px;
     }
 
     .sim-desc {
       text-align: center;
       font-size: 13px;
-      color: rgba(46,46,46,.55);
-      margin-bottom: 40px;
+      color: rgba(74,42,58,0.5);
+      margin-bottom: 32px;
+      font-family: var(--font-niku);
+      letter-spacing: 0.04em;
     }
 
-    /* --- タブ（works.htmlと同スタイル） --- */
+    /* === タブ === */
     .sim-tabs {
       position: sticky;
-      top: calc(var(--nav-h) + 8px);
-      z-index: 900;
+      top: 8px;
+      z-index: 200;
       width: min(400px, 92vw);
-      margin: 0 auto 40px;
-      background: #E8E8E6;
-      padding: 10px 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.04);
+      margin: 0 auto 32px;
+      background: var(--color-sidebar);
+      padding: 8px 12px;
+      box-shadow: 0 4px 12px rgba(74,42,58,0.08);
       border-radius: 999px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 6px;
+      transition: background 0.6s ease;
     }
 
     .sim-tab {
       border: 0;
       background: transparent;
       border-radius: 999px;
-      padding: 11px 10px;
+      padding: 10px;
       cursor: pointer;
-      font-size: 14px;
-      letter-spacing: .06em;
-      color: rgba(30,30,30,.6);
-      transition: background .15s, color .15s, box-shadow .15s;
+      font-family: var(--font-title);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: rgba(74,42,58,0.55);
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
     }
-
     .sim-tab.is-active {
       background: #fff;
-      color: rgba(30,30,30,.9);
-      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+      color: var(--color-accent);
+      box-shadow: 0 4px 14px rgba(74,42,58,0.12);
     }
 
-    /* --- セクション表示切り替え --- */
-    .sim-section {
-      display: none;
-    }
+    /* === セクション切り替え === */
+    .sim-section { display: none; }
+    .sim-section.is-active { display: block; }
 
-    .sim-section.is-active {
-      display: block;
-    }
-
-    /* --- カード --- */
+    /* === カード === */
     .sim-card {
       background: #fff;
-      border-radius: 12px;
-      padding: 24px 28px;
-      margin-bottom: 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 12px rgba(74,42,58,0.06);
+      border: 1px solid rgba(234,181,197,0.3);
     }
 
     .sim-card h2 {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .06em;
+      font-family: var(--font-title);
+      font-size: 12px;
+      letter-spacing: 0.1em;
       margin: 0 0 16px;
-      text-align: left;
-      color: rgba(46,46,46,.55);
-      text-transform: uppercase;
+      color: rgba(74,42,58,0.45);
     }
 
-    /* --- 選択肢 --- */
+    /* === 選択肢 === */
     .sim-options {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .sim-option {
@@ -105,25 +232,21 @@
       gap: 10px;
       cursor: pointer;
       padding: 10px 14px;
-      border-radius: 8px;
-      border: 1.5px solid rgba(0,0,0,.08);
-      transition: border-color .15s, background .15s;
+      border-radius: 10px;
+      border: 1.5px solid var(--color-border);
+      transition: border-color 0.15s, background 0.15s;
     }
-
     .sim-option:hover {
-      border-color: rgba(0,0,0,.2);
-      background: rgba(0,0,0,.02);
+      border-color: var(--color-accent);
+      background: var(--color-works);
     }
-
     .sim-option:has(input:checked) {
-      border-color: #b8977e;
-      background: #fdf6f2;
+      border-color: var(--color-accent);
+      background: var(--color-works);
     }
-
     .sim-option input {
-      accent-color: #b8977e;
-      width: 16px;
-      height: 16px;
+      accent-color: var(--color-accent);
+      width: 16px; height: 16px;
       flex-shrink: 0;
     }
 
@@ -134,65 +257,51 @@
       align-items: center;
       gap: 8px;
     }
-
-    .sim-option-name {
-      font-size: 14px;
-    }
-
+    .sim-option-name { font-size: 13.5px; }
     .sim-option-price {
-      font-size: 13px;
-      color: rgba(46,46,46,.5);
+      font-size: 12px;
+      color: rgba(74,42,58,0.5);
       white-space: nowrap;
     }
 
-    /* --- カウンター --- */
+    /* === カウンター === */
     .sim-counter {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px 14px;
-      border-radius: 8px;
-      border: 1.5px solid rgba(0,0,0,.08);
-      font-size: 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--color-border);
+      font-size: 13.5px;
     }
-
-    .sim-counter + .sim-counter {
-      margin-top: 10px;
-    }
-
+    .sim-counter + .sim-counter { margin-top: 8px; }
     .sim-counter-label { flex: 1; }
-
     .sim-counter-price {
-      font-size: 13px;
-      color: rgba(46,46,46,.5);
-      margin-right: 16px;
+      font-size: 12px;
+      color: rgba(74,42,58,0.5);
+      margin-right: 14px;
     }
-
     .sim-counter-controls {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
-
     .sim-counter-btn {
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       border-radius: 50%;
-      border: 1.5px solid rgba(0,0,0,.15);
+      border: 1.5px solid var(--color-border);
       background: #fff;
       font-size: 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background .15s;
+      transition: background 0.15s, border-color 0.15s;
     }
-
     .sim-counter-btn:hover {
-      background: #f0e8e2;
-      border-color: #b8977e;
+      background: var(--color-works);
+      border-color: var(--color-accent);
     }
-
     .sim-counter-num {
       min-width: 24px;
       text-align: center;
@@ -200,46 +309,47 @@
       font-weight: 600;
     }
 
-    /* --- 注意書き --- */
+    /* === 注意書き === */
     .sim-note {
-      font-size: 12px;
-      color: rgba(46,46,46,.45);
+      font-size: 11.5px;
+      color: rgba(74,42,58,0.45);
       margin-top: 10px;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    /* --- 区切り線 --- */
+    /* === 区切り線 === */
     .sim-divider {
       height: 1px;
-      background: rgba(0,0,0,.06);
+      background: var(--color-border);
+      opacity: 0.3;
       margin: 14px 0;
     }
 
-    /* --- タグ --- */
+    /* === タグ === */
     .sim-tag {
       display: inline-block;
-      font-size: 11px;
+      font-size: 10px;
       padding: 2px 8px;
       border-radius: 4px;
       margin-left: 6px;
       vertical-align: middle;
     }
-
     .sim-tag--discount  { background: #eaf5ea; color: #3a7a3a; }
     .sim-tag--surcharge { background: #fdf0f0; color: #9a3a3a; }
     .sim-tag--info      { background: #eef3fd; color: #3a5a9a; }
 
-    /* --- 合計バー（固定） --- */
+    /* === 合計バー（固定） === */
     .sim-total-bar {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: rgba(255,255,255,.95);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(0,0,0,.08);
-      padding: 14px 24px;
-      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--color-border);
+      padding: 14px 24px calc(14px + env(safe-area-inset-bottom, 0px));
+      z-index: 300;
+      transition: border-color 0.6s ease;
     }
-
     .sim-total-inner {
       max-width: 760px;
       margin: 0 auto;
@@ -247,57 +357,102 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
-
     .sim-total-label {
-      font-size: 13px;
-      color: rgba(46,46,46,.55);
-      letter-spacing: .06em;
+      font-family: var(--font-title);
+      font-size: 12px;
+      color: rgba(74,42,58,0.5);
+      letter-spacing: 0.08em;
     }
-
     .sim-total-amount {
       font-size: 26px;
       font-weight: 700;
-      color: #2e2e2e;
+      color: var(--color-accent);
+      transition: color 0.6s ease;
     }
-
     .sim-total-amount span {
       font-size: 14px;
       font-weight: 400;
-      margin-left: 4px;
-      color: rgba(46,46,46,.55);
+      margin-left: 3px;
+      color: rgba(74,42,58,0.45);
+    }
+    .sim-total-note {
+      font-size: 10.5px;
+      color: rgba(74,42,58,0.4);
+      width: 100%;
+      font-family: var(--font-niku);
     }
 
-    .sim-total-note {
-      font-size: 11px;
-      color: rgba(46,46,46,.4);
-      width: 100%;
+    /* === レスポンシブ === */
+    @media (max-width: 768px) {
+      *, *::before, *::after { cursor: auto !important; }
+      #custom-cursor { display: none !important; }
+
+      .site-header {
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-left { gap: 10px; }
+      .main-title { font-size: 26px; }
+      .header-nav {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 14px;
+        padding-top: 4px;
+        border-top: 1px solid var(--color-border);
+        order: -1; /* アイコンを上に */
+      }
+      .back-nav { gap: 6px; }
+      .back-link { font-size: 12px; padding: 4px 10px; }
     }
 
     @media (max-width: 480px) {
-      .sim-card { padding: 18px 16px; }
+      .sim-card { padding: 16px; }
       .sim-total-amount { font-size: 22px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ナビゲーション -->
-<header class="site-nav">
-  <div class="site-nav__inner">
-    <a class="site-nav__brand" href="index.html">Yui Takasu Portfolio</a>
-    <ul class="site-nav__menu">
-      <li><a class="nav-link" href="index.html">Top</a></li>
-      <li><a class="nav-link" href="works.html">Works</a></li>
-      <li><a class="nav-link" href="index.html#about">About</a></li>
-      <li><a class="nav-link nav-link--cta" href="mailto:yui.sanki.takasu@gmail.com">Mail</a></li>
-    </ul>
+<!-- カスタムカーソル -->
+<div id="custom-cursor" aria-hidden="true">
+  <img id="custom-cursor-img" src="" alt="">
+</div>
+
+<!-- ヘッダー -->
+<header class="site-header">
+  <div class="header-left">
+    <h1 class="main-title">Simulator</h1>
+    <nav class="back-nav">
+      <a href="index.html" class="back-link">Home ←</a>
+      <a href="illust/index.html" class="back-link">Illust ←</a>
+      <a href="design/index.html" class="back-link">Design ←</a>
+    </nav>
   </div>
+  <nav class="header-nav">
+    <a href="https://twitter.com/mitty976" target="_blank" rel="noopener" aria-label="X（Twitter）">
+      <svg class="header-icon-svg" style="width:24px;height:24px;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill="currentColor" d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/>
+      </svg>
+    </a>
+    <a href="https://coconala.com/users/1524205" target="_blank" rel="noopener" aria-label="Coconala">
+      <img src="assets/img/images/coconala.png" class="header-icon-img" alt="Coconala">
+    </a>
+    <a href="https://skeb.jp/@mitty976" target="_blank" rel="noopener" aria-label="Skeb">
+      <img src="assets/img/images/Skeb.png" class="header-icon-img" alt="Skeb">
+    </a>
+    <a href="mailto:mayuyu9766@gmail.com" aria-label="Mail">
+      <svg class="header-icon-svg" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill="currentColor" d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/>
+      </svg>
+    </a>
+  </nav>
 </header>
 
+<!-- メインコンテンツ -->
 <main class="sim-page">
-  <h1>料金シミュレーター</h1>
   <p class="sim-desc">オプションを選ぶと合計金額が自動で計算されます。あくまでも目安です。</p>
 
   <!-- タブ切り替え -->
@@ -305,7 +460,6 @@
     <button class="sim-tab is-active" data-target="illust">Illustration</button>
     <button class="sim-tab" data-target="design">Design</button>
   </div>
-
 
   <!-- ========================
        イラストセクション
@@ -334,7 +488,7 @@
           <input type="radio" name="i_base" value="7000">
           <span class="sim-option-label">
             <span class="sim-option-name">SDキャラ（デフォルメ）</span>
-            <span class="sim-option-price">¥7,000</span>
+            <span class="sim-option-price">¥6,000</span>
           </span>
         </label>
         <label class="sim-option">
@@ -447,7 +601,7 @@
       </div>
     </div>
 
-    <!-- ⑤ 使用用途（任意） -->
+    <!-- ⑤ 使用用途 -->
     <div class="sim-card">
       <h2>⑤ 使用用途（任意・複数選択可）</h2>
       <p class="sim-note" style="margin-top:0; margin-bottom:12px;">用途に合わせた構図・解像度で仕上げます。料金が変わるものは金額を表示しています。</p>
@@ -495,13 +649,12 @@
           </span>
         </label>
       </div>
-      <!-- 用途ごとの補足メモ表示エリア -->
       <div id="i_usageNotes" style="margin-top:12px; display:none;">
-        <div style="background:#f7f7f5; border-radius:8px; padding:12px 14px; font-size:12px; color:rgba(46,46,46,.65); line-height:1.8;" id="i_usageNoteText"></div>
+        <div style="background:var(--color-works); border-radius:8px; padding:12px 14px; font-size:11.5px; color:rgba(74,42,58,.65); line-height:1.8;" id="i_usageNoteText"></div>
       </div>
     </div>
 
-    <!-- ⑥ Live2D（動くイラスト） -->
+    <!-- ⑥ Live2D -->
     <div class="sim-card">
       <h2>⑥ Live2D・動くイラスト</h2>
       <div class="sim-options">
@@ -544,7 +697,7 @@
       <p class="sim-note">※ Live2D選択時はAfter Effectsエフェクト仕上げが込みになります</p>
     </div>
 
-    <!-- ⑥ オプション -->
+    <!-- ⑦ オプション -->
     <div class="sim-card">
       <h2>⑦ オプション</h2>
       <div class="sim-options">
@@ -565,7 +718,7 @@
       </div>
     </div>
 
-    <!-- ⑦ 納期 -->
+    <!-- ⑧ 納期 -->
     <div class="sim-card">
       <h2>⑧ 納期</h2>
       <div class="sim-options">
@@ -593,7 +746,7 @@
       </div>
     </div>
 
-    <!-- ⑧ リピーター -->
+    <!-- ⑨ リピーター -->
     <div class="sim-card">
       <h2>⑨ リピーター割引</h2>
       <div class="sim-options">
@@ -607,7 +760,7 @@
       </div>
     </div>
 
-    <!-- ⑨ 追加修正 -->
+    <!-- ⑩ 追加修正 -->
     <div class="sim-card">
       <h2>⑩ 追加修正</h2>
       <p class="sim-note" style="margin-top:0; margin-bottom:12px;">無料修正は3回まで。4回目以降は追加料金が発生します。<br>線画後の構図・ポーズなど大きな変更は別案件となります。</p>
@@ -623,7 +776,6 @@
     </div>
 
   </div><!-- /sim-illust -->
-
 
   <!-- ========================
        デザインセクション
@@ -789,9 +941,37 @@
 </div>
 
 <script>
-  // =============================
-  // カウンターの状態管理
-  // =============================
+  /* === 季節カラー（illust準拠） === */
+  const SEASONS = {
+    spring: { months: [3,4,5],   bg:'#FFFAFF', works:'#FFEEF4', sidebar:'#F8D8E8', border:'#EAB5C5', accent:'#D4879A', btn:'#D4879A', cursor:'assets/img/cursor/cursor-spring.png' },
+    summer: { months: [6,7,8],   bg:'#F5FFFF', works:'#E8F8F8', sidebar:'#C8E8E8', border:'#88C0C0', accent:'#4A9090', btn:'#4A9090', cursor:'assets/img/cursor/cursor-summer.png' },
+    autumn: { months: [9,10,11], bg:'#FFFCF8', works:'#FFF0E4', sidebar:'#EED8C8', border:'#C8A090', accent:'#8C5048', btn:'#8C5048', cursor:'assets/img/cursor/cursor-autumn.png' },
+    winter: { months: [12,1,2],  bg:'#FFF8FC', works:'#FFE8F0', sidebar:'#E8C8D8', border:'#C898B8', accent:'#7A3048', btn:'#7A3048', cursor:'assets/img/cursor/cursor-winter.png' },
+  };
+  const month  = new Date().getMonth() + 1;
+  const season = Object.values(SEASONS).find(s => s.months.includes(month)) || SEASONS.spring;
+  const root   = document.documentElement;
+  root.style.setProperty('--color-bg',      season.bg);
+  root.style.setProperty('--color-works',   season.works);
+  root.style.setProperty('--color-sidebar', season.sidebar);
+  root.style.setProperty('--color-border',  season.border);
+  root.style.setProperty('--color-accent',  season.accent);
+  root.style.setProperty('--color-btn',     season.btn);
+
+  /* === カスタムカーソル === */
+  const cursorEl  = document.getElementById('custom-cursor');
+  const cursorImg = document.getElementById('custom-cursor-img');
+  cursorImg.src = season.cursor;
+  document.addEventListener('mousemove', e => {
+    cursorEl.style.left = e.clientX + 'px';
+    cursorEl.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, input, label, [role="button"]').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorEl.classList.add('is-large'));
+    el.addEventListener('mouseleave', () => cursorEl.classList.remove('is-large'));
+  });
+
+  /* === カウンターの状態管理 === */
   const counts = {
     i_extraPerson: 0,
     i_expression:  0,
@@ -800,146 +980,87 @@
     i_revision:    0,
     d_extra:       0
   };
-
-  // 各カウンターの単価
   const countPrices = {
     i_extraPerson: 6500,
     i_expression:  1000,
     i_costume:     4000,
     i_hairstyle:   2000,
     i_revision:    1500,
-    d_extra:       0   // デザインの追加点数は基本料金×50%なので動的計算
+    d_extra:       0
   };
 
-  // カウンター増減
   function changeCount(key, delta) {
     counts[key] = Math.max(0, counts[key] + delta);
     document.getElementById(key + 'Num').textContent = counts[key];
     calcTotal();
   }
 
-  // =============================
-  // タブ切り替え
-  // =============================
-  let currentTab = 'illust'; // 現在表示中のタブ
-
+  /* === タブ切り替え === */
+  let currentTab = 'illust';
   document.querySelectorAll('.sim-tab').forEach(btn => {
     btn.addEventListener('click', () => {
-      // タブのアクティブ状態を切り替え
       document.querySelectorAll('.sim-tab').forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
-
-      // セクションの表示を切り替え
       currentTab = btn.dataset.target;
       document.querySelectorAll('.sim-section').forEach(s => s.classList.remove('is-active'));
       document.getElementById('sim-' + currentTab).classList.add('is-active');
-
-      calcTotal(); // タブ切り替えで合計を再計算
+      calcTotal();
     });
   });
 
-  // =============================
-  // 合計金額の計算
-  // =============================
+  /* === 合計金額の計算 === */
   function calcTotal() {
     let total = 0;
-
     if (currentTab === 'illust') {
-      // --- イラストの計算 ---
-
-      // ① ベース
       const base = document.querySelector('input[name="i_base"]:checked');
       if (base) total += parseInt(base.value);
-
-      // 追加キャラクター
       total += counts.i_extraPerson * countPrices.i_extraPerson;
-
-      // ② キャラデザイン
       const design = document.querySelector('input[name="i_design"]:checked');
       if (design) total += parseInt(design.value);
-
-      // ③ 背景
       const bg = document.querySelector('input[name="i_bg"]:checked');
       if (bg) total += parseInt(bg.value);
-
-      // ④ 差分
       total += counts.i_expression * countPrices.i_expression;
       total += counts.i_costume    * countPrices.i_costume;
       total += counts.i_hairstyle  * countPrices.i_hairstyle;
-
-      // ⑤ Live2D
       const live2d = document.querySelector('input[name="i_live2d"]:checked');
       if (live2d) total += parseInt(live2d.value);
-
-      // ⑤ 使用用途（料金が発生するもの）
       ['i_highres', 'i_print', 'i_live2d_layer'].forEach(id => {
         const el = document.getElementById(id);
         if (el && el.checked) total += parseInt(el.value);
       });
-
-      // 用途メモの表示更新
       updateUsageNotes();
-
-      // ⑦ オプション
       ['i_commercial', 'i_nosns'].forEach(id => {
         const el = document.getElementById(id);
         if (el && el.checked) total += parseInt(el.value);
       });
-
-      // ⑨ 追加修正
       total += counts.i_revision * countPrices.i_revision;
-
-      // ⑦ 納期倍率
       const rush = document.querySelector('input[name="i_rush"]:checked');
       if (rush) total = Math.round(total * parseFloat(rush.value));
-
-      // ⑧ リピーター割引
       if (document.getElementById('i_repeat').checked) total = Math.round(total * 0.8);
-
     } else {
-      // --- デザインの計算 ---
-
-      // ① ベース
       const base = document.querySelector('input[name="d_base"]:checked');
       const baseVal = base ? parseInt(base.value) : 0;
       total += baseVal;
-
-      // ② 追加制作点数（基本料金×50%/点）
       total += counts.d_extra * Math.round(baseVal * 0.5);
-
-      // ③ オプション
       ['d_rawdata', 'd_print', 'd_commercial', 'd_nosns'].forEach(id => {
         const el = document.getElementById(id);
         if (el && el.checked) total += parseInt(el.value);
       });
-
-      // ④ 納期倍率
       const rush = document.querySelector('input[name="d_rush"]:checked');
       if (rush) total = Math.round(total * parseFloat(rush.value));
-
-      // ⑤ リピーター割引
       if (document.getElementById('d_repeat').checked) total = Math.round(total * 0.8);
     }
-
-    // 表示更新（3桁区切り）
     document.getElementById('totalAmount').innerHTML =
       '¥' + total.toLocaleString('ja-JP') + '<span>〜</span>';
   }
 
-  // =============================
-  // 使用用途の補足メモ表示
-  // =============================
+  /* === 使用用途の補足メモ === */
   function updateUsageNotes() {
     const notes = [];
-    // data-note属性を持つチェックボックスが選択されているものを収集
     document.querySelectorAll('.i_usage:checked, #i_highres:checked, #i_print:checked, #i_live2d_layer:checked')
-      .forEach(el => {
-        const note = el.dataset.note;
-        if (note) notes.push('・' + note);
-      });
-
-    const area  = document.getElementById('i_usageNotes');
-    const text  = document.getElementById('i_usageNoteText');
+      .forEach(el => { if (el.dataset.note) notes.push('・' + el.dataset.note); });
+    const area = document.getElementById('i_usageNotes');
+    const text = document.getElementById('i_usageNoteText');
     if (notes.length > 0) {
       text.textContent = notes.join('\n');
       area.style.display = 'block';
@@ -948,15 +1069,12 @@
     }
   }
 
-  // 入力変化時に再計算
   document.querySelectorAll('input[type="radio"], input[type="checkbox"]')
     .forEach(el => el.addEventListener('change', calcTotal));
-
-  // 初期表示
   calcTotal();
 
-  // 右クリック禁止（外部リンク・mailtoのみ許可、href="#"は禁止）
-  document.addEventListener('contextmenu', (e) => {
+  /* === 右クリック・ドラッグ禁止 === */
+  document.addEventListener('contextmenu', e => {
     const link = e.target.closest('a');
     if (link) {
       const href = link.getAttribute('href') || '';
@@ -964,17 +1082,16 @@
     }
     e.preventDefault();
   }, true);
-
-  // ドラッグ保存禁止（全画像・動画）
-  document.addEventListener('dragstart', (e) => {
+  document.addEventListener('dragstart', e => {
     if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
     }
   }, true);
 
-  // 動画のループを強制ON
-  document.querySelectorAll('video').forEach(v => { v.loop = true; });
+  /* === ページロードフェードイン === */
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.body.classList.add('is-loaded');
+  }));
 </script>
 </body>
 </html>
