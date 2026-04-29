@@ -68,6 +68,7 @@
       width: 100vw;
       height: 100vh;
       z-index: -1;
+      pointer-events: none;
     }
 
     body {
@@ -87,12 +88,18 @@
       height: 18px;
       border: 1.5px solid var(--color-accent);
       border-radius: 50%;
+      background: var(--color-accent);
       pointer-events: none;
       z-index: 99999;
       transform: translate(-50%, -50%);
-      transition: width 0.18s ease, height 0.18s ease, border-color 0.6s ease;
+      transition: width 0.18s ease, height 0.18s ease,
+                  background 0.18s ease, border-color 0.6s ease;
     }
-    #custom-cursor.is-large { width: 30px; height: 30px; }
+    #custom-cursor.is-large {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+    }
 
     /* === ページ全体レイアウト === */
     .page-wrapper {
@@ -103,14 +110,14 @@
 
     /* === メインカラム（左：作品グリッド） === */
     .main-column {
-      flex: 6.5;
+      flex: 7;
       min-width: 0;
       min-height: 0;
       display: flex;
       flex-direction: column;
       position: relative;
       perspective: 400px;
-      padding-right: 24px;
+      padding-right: 0;
       padding-bottom: 0;
       padding-top: 50px;
     }
@@ -224,12 +231,12 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      background-color: #e7f3e7;
+      background-color: #F3FAF4;
       border-radius: 0 28px 0 0;
       overflow: hidden;
-      border-top: 5px solid var(--color-accent);
-      border-right: 5px solid var(--color-accent);
-      transition: border-color 0.6s ease;
+      border-top: 4px solid rgba(45,110,62,0.75);
+      box-shadow: inset -6px 0 10px rgba(45,110,62,0.12);
+      transition: border-color 0.6s ease, box-shadow 0.6s ease;
     }
 
     /* 二重線より内側でスクロール → ::before/::after が固定になる */
@@ -560,16 +567,15 @@
 
     /* === サイドバー（右） === */
     .sidebar {
-      flex: 3.5;
+      flex: 4.5;
       min-width: 0;
-      background: var(--color-bg);
+      background: transparent;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
       transition: background 0.6s ease, border-color 0.6s ease;
     }
-
     .brand-title {
       font-family: var(--font-display);
       font-size: 60px;
@@ -629,6 +635,22 @@
       flex: none;
       background: var(--color-border);
       transition: background 0.6s ease;
+    }
+
+    @keyframes hint-pulse {
+      0%, 100% { opacity: 0.1; }
+      50%       { opacity: 0.5; }
+    }
+    .sidebar-hint {
+      font-size: 12px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+      margin-top: -20px;
+      margin-right: -90px;
+      text-align: center;
+      animation: hint-pulse 3s ease-in-out infinite;
     }
 
     /* === サイドバー固定フッター === */
@@ -1091,19 +1113,39 @@
       color: #fff;
     }
 
+    /* === ローダー === */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: var(--color-loader-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.9s ease;
+    }
+    #loader.is-out  { opacity: 0; pointer-events: none; }
+    #loader.is-gone { display: none; }
+    .loader-logo {
+      width: clamp(200px, 32vw, 340px);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: loader-logo-in 0.8s ease 0.3s forwards;
+      transition: filter 0s;
+    }
+    @keyframes loader-logo-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
   </style>
 </head>
-  <canvas id="bg"></canvas>
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const script = document.createElement("script");
-      script.src = "./assets/js/spring-bg.js";
-      document.body.appendChild(script);
-    });
-  </script>
-
 <body>
 
+<div id="loader" aria-hidden="true">
+  <img class="loader-logo" src="../assets/img/yui-logo.png" alt="Yui-Takasu">
+</div>
+
+<canvas id="bg"></canvas>
 <div id="custom-cursor" aria-hidden="true"></div>
 
 <div class="page-wrapper">
@@ -1504,6 +1546,7 @@
       <p class="brand-catch" data-i18n="catch">Exceeding client expectations<br>with user-centric,<br>decision-focused design.</p>
 
       <div class="sidebar-divider"><span style="position:relative; top:-3px">•</span></div>
+      <p class="sidebar-hint" data-i18n="hint">カードにカーソルを当てると作品を確認できます</p>
     </div>
 
     <!-- ホバー時：作品詳細パネル -->
@@ -1556,22 +1599,29 @@
 </div>
 
 
-<script src="../assets/js/sakura.js"></script>
 <script>
   /* === 季節カラー（Designページ専用） === */
   const SEASONS = {
     spring: { months: [3,4,5],   bg:'#FFFFFF', works:'#FFFFFF', sidebar:'#C2E0CA', border:'#A8CCAF', accent:'#2D6E3E', btn:'#2D6E3E',
-              cursor:'../assets/img/cursor/cursor-spring.png', effect:'sakura',
-              colors:['#C2E0CA','#A8D4B4','#84B890','#B8DCCC','#D0EDD8'] },
+              cursor:'../assets/img/cursor/cursor-spring.png', effect:'sakura', bgJs:'../assets/js/spring-bg.js',
+              colors:['#C2E0CA','#A8D4B4','#84B890','#B8DCCC','#D0EDD8'],
+              logoFilter:'invert(32%) sepia(50%) saturate(500%) hue-rotate(100deg) brightness(0.82)',
+              loaderBg:'#ECF7F0' },
     summer: { months: [6,7,8],   bg:'#F4F9FF', works:'#FFFFFF', sidebar:'#B8D4F0', border:'#6A9ED0', accent:'#1A5FA0', btn:'#1A5FA0',
               cursor:'../assets/img/cursor/cursor-summer.png', effect:'summer',
-              colors:['#B8D4F0','#78B0E0','#A0C8F0','#5090C8','#D0E8FC'] },
+              colors:['#B8D4F0','#78B0E0','#A0C8F0','#5090C8','#D0E8FC'],
+              logoFilter:'invert(25%) sepia(60%) saturate(600%) hue-rotate(185deg) brightness(0.80)',
+              loaderBg:'#D8EAF8' },
     autumn: { months: [9,10,11], bg:'#FBF7F2', works:'#FFFFFF', sidebar:'#D8B898', border:'#B08060', accent:'#7A4830', btn:'#7A4830',
               cursor:'../assets/img/cursor/cursor-autumn.png', effect:'autumn',
-              colors:['#C87828','#D49048','#B06028','#E8A058','#A84820'] },
+              colors:['#C87828','#D49048','#B06028','#E8A058','#A84820'],
+              logoFilter:'invert(28%) sepia(40%) saturate(500%) hue-rotate(10deg) brightness(0.78)',
+              loaderBg:'#ECDCC8' },
     winter: { months: [12,1,2],  bg:'#F8F8FC', works:'#FFFFFF', sidebar:'#CECEE0', border:'#9898B8', accent:'#3A3A6A', btn:'#3A3A6A',
               cursor:'../assets/img/cursor/cursor-winter.png', effect:'snow',
-              colors:['#ffffff','#DCDCF0','#E8E8F8','#F4F4FC'] },
+              colors:['#ffffff','#DCDCF0','#E8E8F8','#F4F4FC'],
+              logoFilter:'invert(20%) sepia(30%) saturate(400%) hue-rotate(210deg) brightness(0.75)',
+              loaderBg:'#DCDCE8' },
   };
 
   const month  = new Date().getMonth() + 1;
@@ -1583,6 +1633,23 @@
   root.style.setProperty('--color-border',  season.border);
   root.style.setProperty('--color-accent',  season.accent);
   root.style.setProperty('--color-btn',     season.btn);
+  root.style.setProperty('--color-loader-bg', season.loaderBg);
+
+  /* === ローダー === */
+  const loader = document.getElementById('loader');
+  const loaderLogo = document.querySelector('.loader-logo');
+  if (loaderLogo && season.logoFilter) loaderLogo.style.filter = season.logoFilter;
+  setTimeout(() => {
+    loader.classList.add('is-out');
+    loader.addEventListener('transitionend', () => loader.classList.add('is-gone'), { once: true });
+  }, 1900);
+
+  /* === 背景JS読み込み === */
+  if (season.bgJs) {
+    const s = document.createElement('script');
+    s.src = season.bgJs;
+    document.body.appendChild(s);
+  }
 
   /* === カスタムカーソル（丸） === */
   const cursorEl = document.getElementById('custom-cursor');
@@ -1636,14 +1703,7 @@
     }
   };
 
-  if (season.effect === 'sakura') {
-    Sakura.init({ count: 14, colors: season.colors, minSize: 4, maxSize: 10, zIndex: '30' });
-    document.addEventListener('visibilitychange', () => {
-      if (!Sakura.canvas) return;
-      if (document.hidden) { Sakura.running = false; cancelAnimationFrame(Sakura.raf); }
-      else { Sakura.running = true; Sakura._loop(); }
-    });
-  } else if (season.effect === 'summer') {
+  if (season.effect === 'summer') {
     Particle.init({ count: 18, colors: season.colors, min: 2, max: 6,
       draw(ctx, p) {
         ctx.beginPath(); ctx.arc(0, 0, p.size, 0, Math.PI * 2);
@@ -1675,8 +1735,8 @@
   let currentLang = 'ja';
 
   const I18N = {
-    ja: { title: 'Works', contactLabel: 'ご依頼・ご相談はお気軽にどうぞ', catch: 'ユーザー視点と意思決定を軸に、<br>期待を超えるデザインを。' },
-    en: { title: 'Works', contactLabel: 'Feel free to reach out for any project.', catch: 'Exceeding client expectations<br>with user-centric,<br>decision-focused design.' },
+    ja: { title: 'Works', contactLabel: 'ご依頼・ご相談はお気軽にどうぞ', catch: 'ユーザー視点と意思決定を軸に、<br>期待を超えるデザインを。', hint: 'カードにカーソルを当てると作品を確認できます' },
+    en: { title: 'Works', contactLabel: 'Feel free to reach out for any project.', catch: 'Exceeding client expectations<br>with user-centric,<br>decision-focused design.', hint: 'hover a card to preview' },
   };
 
   function applyLang(lang) {
