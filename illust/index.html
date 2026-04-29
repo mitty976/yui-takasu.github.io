@@ -824,9 +824,40 @@
       }
       .main-title { font-size: 32px; }
     }
+
+    /* === ローダー === */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: var(--color-works);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.9s ease;
+    }
+    #loader.is-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #loader.is-gone { display: none; }
+    .loader-logo {
+      width: 30%;
+      height: auto;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: loader-logo-in 0.8s ease 0.3s forwards;
+    }
+    @keyframes loader-logo-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
+
+<div id="loader" aria-hidden="true">
+  <img class="loader-logo" src="../assets/img/guru-logo.png" alt="ぐるにゃ">
+</div>
 
 <!-- ページ全体ラッパー（サイドバー | メインカラム） -->
 <div class="page-wrapper">
@@ -1344,6 +1375,19 @@
   const pageTopFlood = document.getElementById('page-top-flood');
   if (pageTopFlood) pageTopFlood.setAttribute('flood-color', season.btn);
 
+  /* === ローダー === */
+  const loader = document.getElementById('loader');
+
+  /* ロゴイン(300ms遅延+800ms) + 停止800ms = 1900ms後にフェードアウト */
+  setTimeout(() => {
+    if (Sakura.canvas) {
+      Sakura.canvas.style.zIndex = '30';
+      document.body.appendChild(Sakura.canvas);
+    }
+    loader.classList.add('is-out');
+    loader.addEventListener('transitionend', () => loader.classList.add('is-gone'), { once: true });
+  }, 1900);
+
   /* === カスタムカーソル === */
   const cursorEl  = document.getElementById('custom-cursor');
   const cursorImg = document.getElementById('custom-cursor-img');
@@ -1403,6 +1447,11 @@
 
   if (season.effect === 'sakura') {
     Sakura.init({ count: 14, colors: season.colors, minSize: 4, maxSize: 10, zIndex: '30' });
+    /* init直後にcanvasをloaderへ移動 → ローダー中に桜が降る */
+    if (loader && Sakura.canvas) {
+      Sakura.canvas.style.zIndex = '1';
+      loader.appendChild(Sakura.canvas);
+    }
     document.addEventListener('visibilitychange', () => {
       if (!Sakura.canvas) return;
       if (document.hidden) { Sakura.running = false; cancelAnimationFrame(Sakura.raf); }
