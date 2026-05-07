@@ -8,7 +8,7 @@
   <style>
     @font-face {
       font-family: '新レトロ丸ゴシック';
-      src: url('assets/fonts/ShinRetroMaruGothic-Bold.ttf') fMaormat('truetype');
+      src: url('assets/fonts/ShinRetroMaruGothic-Bold.ttf') format('truetype');
       font-weight: 700;
     }
     @font-face {
@@ -90,8 +90,8 @@
     }
 
     .main-title {
-      font-family: var(--font-funwari);
-      font-size: 46px;
+      font-family: var(--font-title);
+      font-size: 32px;
       color: var(--color-accent);
       letter-spacing: 0.02em;
       line-height: 1;
@@ -110,7 +110,7 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      font-family: var(--font-title);
+      font-family: var(--font-niku);
       font-size: 13px;
       letter-spacing: 0.06em;
       color: var(--color-accent);
@@ -155,10 +155,10 @@
 
     .sim-desc {
       text-align: center;
-      font-size: 15px;
+      font-size: 13px;
       color: rgba(74,42,58,0.5);
       margin-bottom: 32px;
-      font-family: var(--font-title);
+      font-family: var(--font-niku);
       letter-spacing: 0.04em;
     }
 
@@ -229,12 +229,33 @@
     .sim-option {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 10px;
       cursor: pointer;
       padding: 10px 14px;
       border-radius: 10px;
       border: 1.5px solid var(--color-border);
       transition: border-color 0.15s, background 0.15s;
+    }
+
+    .sim-option-inline-note {
+      display: none;
+      width: 100%;
+      font-size: 11px;
+      color: rgba(74,42,58,0.55);
+      line-height: 1.7;
+      padding-top: 2px;
+    }
+    .sim-option-inline-note--warning {
+      color: #9a3a3a;
+      background: #fdf0f0;
+      border-radius: 6px;
+      padding: 6px 8px;
+      margin-top: 2px;
+    }
+    .sim-option:hover .sim-option-inline-note,
+    .sim-option:has(input:checked) .sim-option-inline-note {
+      display: block;
     }
     .sim-option:hover {
       border-color: var(--color-accent);
@@ -311,11 +332,10 @@
 
     /* === 注意書き === */
     .sim-note {
-      font-size: 9px;
-      color: var(--color-border);
+      font-size: 11.5px;
+      color: rgba(74,42,58,0.45);
       margin-top: 10px;
       line-height: 1.7;
-      font-family: var(--font-title);
     }
 
     /* === 区切り線 === */
@@ -378,11 +398,75 @@
       margin-left: 3px;
       color: rgba(74,42,58,0.45);
     }
-    .sim-total-note {
-      font-size: 10.5px;
-      color: rgba(74,42,58,0.4);
+    .sim-total-selected {
       width: 100%;
-      font-family: var(--font-title);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 4px;
+    }
+    .sim-total-selected:empty { display: none; }
+    .sim-total-selected-tag {
+      font-size: 13px;
+      background: var(--color-works);
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      padding: 4px 14px;
+      color: var(--color-accent);
+      white-space: nowrap;
+    }
+    .sim-total-note-box {
+      width: 100%;
+      background: var(--color-works);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 11.5px;
+      color: rgba(74,42,58,0.65);
+      line-height: 1.9;
+      transition: background 0.6s ease;
+    }
+
+    /* === 言語・通貨コントロール === */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: rgba(74,42,58,0.4);
+    }
+    .lang-sep { font-size: 10px; }
+    .lang-btn {
+      border: 1px solid var(--color-border);
+      background: transparent;
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(74,42,58,0.5);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .lang-btn.is-active {
+      background: var(--color-accent);
+      color: #fff;
+      border-color: var(--color-accent);
+    }
+    .currency-select {
+      border: 1px solid var(--color-border);
+      background: #fff;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      color: rgba(74,42,58,0.7);
+      cursor: pointer;
+      outline: none;
     }
 
     /* === レスポンシブ === */
@@ -425,12 +509,23 @@
 <!-- ヘッダー -->
 <header class="site-header">
   <div class="header-left">
-    <h1 class="main-title">Simulator</h1>
+    <h1 class="main-title" id="page-title">料金シミュレーター</h1>
     <nav class="back-nav">
       <a href="index.html" class="back-link">Home ←</a>
       <a href="illust/index.html" class="back-link">Illust ←</a>
       <a href="design/index.html" class="back-link">Design ←</a>
     </nav>
+  </div>
+  <div class="header-controls">
+    <div class="lang-switch">
+      <button class="lang-btn is-active" data-lang="jp" onclick="switchLang('jp')">JP</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="en" onclick="switchLang('en')">EN</button>
+    </div>
+    <select class="currency-select" id="currencySelect" onchange="switchCurrency(this.value)">
+      <option value="JPY">¥ JPY</option>
+      <option value="USD">$ USD</option>
+    </select>
   </div>
   <nav class="header-nav">
     <a href="https://twitter.com/mitty976" target="_blank" rel="noopener" aria-label="X（Twitter）">
@@ -454,7 +549,7 @@
 
 <!-- メインコンテンツ -->
 <main class="sim-page">
-  <p class="sim-desc">オプションを選ぶと合計金額が自動で計算されます。あくまでも目安です。</p>
+  <p class="sim-desc" data-i18n="page_desc">オプションを選ぶと合計金額が自動で計算されます。あくまでも目安です。</p>
 
   <!-- タブ切り替え -->
   <div class="sim-tabs">
@@ -472,10 +567,24 @@
       <h2>① ベースイラスト</h2>
       <div class="sim-options">
         <label class="sim-option">
-          <input type="radio" name="i_base" value="8000" checked>
+          <input type="radio" name="i_base" value="10000" checked>
+          <span class="sim-option-label">
+            <span class="sim-option-name">胸上（バストアップ）</span>
+            <span class="sim-option-price">¥10,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_base" value="13000">
           <span class="sim-option-label">
             <span class="sim-option-name">腰上</span>
-            <span class="sim-option-price">¥8,000</span>
+            <span class="sim-option-price">¥13,000</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="i_base" value="15000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">太ももまで</span>
+            <span class="sim-option-price">¥15,000</span>
           </span>
         </label>
         <label class="sim-option">
@@ -489,21 +598,7 @@
           <input type="radio" name="i_base" value="7000">
           <span class="sim-option-label">
             <span class="sim-option-name">SDキャラ（デフォルメ）</span>
-            <span class="sim-option-price">¥6,000</span>
-          </span>
-        </label>
-        <label class="sim-option">
-          <input type="radio" name="i_base" value="8000">
-          <span class="sim-option-label">
-            <span class="sim-option-name">SNSヘッダー用イラスト</span>
-            <span class="sim-option-price">¥8,000</span>
-          </span>
-        </label>
-        <label class="sim-option">
-          <input type="radio" name="i_base" value="8000">
-          <span class="sim-option-label">
-            <span class="sim-option-name">YouTubeサムネイル用イラスト</span>
-            <span class="sim-option-price">¥8,000</span>
+            <span class="sim-option-price">¥7,000</span>
           </span>
         </label>
       </div>
@@ -584,7 +679,7 @@
       </div>
       <div class="sim-counter">
         <span class="sim-counter-label">衣装差分</span>
-        <span class="sim-counter-price">+¥4,000 / セット</span>
+        <span class="sim-counter-price">+¥3,000 / セット</span>
         <div class="sim-counter-controls">
           <button class="sim-counter-btn" onclick="changeCount('i_costume', -1)">−</button>
           <span class="sim-counter-num" id="i_costumeNum">0</span>
@@ -605,7 +700,7 @@
     <!-- ⑤ 使用用途 -->
     <div class="sim-card">
       <h2>⑤ 使用用途（任意・複数選択可）</h2>
-      <p class="sim-note" style="margin-top:0; margin-bottom:12px;">用途に合わせた構図・解像度で仕上げます。料金が変わるものは金額を表示しています。</p>
+      <p class="sim-note" data-i18n="usage_hint" style="margin-top:0; margin-bottom:12px;">用途に合わせた構図・解像度で仕上げます。料金が変わるものは金額を表示しています。</p>
       <div class="sim-options">
         <label class="sim-option">
           <input type="checkbox" class="i_usage" data-note="正方形構図・顔が中心に来るよう仕上げます">
@@ -629,29 +724,33 @@
           </span>
         </label>
         <label class="sim-option">
-          <input type="checkbox" id="i_highres" value="3000" data-note="拡大編集に耐える高解像度データで納品します">
+          <input type="checkbox" id="i_highres" value="3500" data-note="キャンバスサイズ6500px以上・高解像度データで納品します">
           <span class="sim-option-label">
             <span class="sim-option-name">動画素材・切り抜き配信</span>
-            <span class="sim-option-price">＋¥3,000</span>
+            <span class="sim-option-price">＋¥3,500</span>
           </span>
+          <span class="sim-option-inline-note">キャンバスサイズ6,500px以上の高解像度データでお渡しします。切り抜き配信・拡大編集・動画素材への利用に適しています。</span>
         </label>
         <label class="sim-option">
-          <input type="checkbox" id="i_print" value="3000" data-note="350dpi対応の印刷用高解像度データで納品します">
+          <input type="checkbox" id="i_print" value="3500" data-note="A4サイズ・350dpi対応の高解像度データで納品します">
           <span class="sim-option-label">
-            <span class="sim-option-name">印刷物・グッズ</span>
-            <span class="sim-option-price">＋¥3,000</span>
+            <span class="sim-option-name">印刷物・グッズ制作</span>
+            <span class="sim-option-price">＋¥3,500</span>
           </span>
+          <span class="sim-option-inline-note">A4サイズ・350dpi対応の高解像度データでお渡しします。グッズ制作・印刷物への利用に適しています。</span>
         </label>
+        <p class="sim-note" data-i18n="highres_both" style="margin-top:6px;">※ 両方選択時も高解像度オプションは¥3,500の一回分のみ加算されます</p>
         <label class="sim-option">
-          <input type="checkbox" id="i_live2d_layer" value="22000" data-note="パーツ分けを考慮した構図で描き起こし、レイヤー分け済みPSDデータで納品します。モデリング作業は含みません。">
+          <input type="checkbox" id="i_live2d_layer" value="30000" data-note="パーツ分けを考慮した構図で描き起こし、レイヤー分け済みPSDデータで納品します。モデリング作業は含みません。">
           <span class="sim-option-label">
             <span class="sim-option-name">Live2D用（レイヤー分けPSD納品）</span>
-            <span class="sim-option-price">＋¥22,000</span>
+            <span class="sim-option-price">＋¥30,000</span>
           </span>
+          <span class="sim-option-inline-note sim-option-inline-note--warning">⚠ 動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。</span>
         </label>
       </div>
       <div id="i_usageNotes" style="margin-top:12px; display:none;">
-        <div style="background:var(--color-works); border-radius:8px; padding:12px 14px; font-size:11.5px; color:rgba(74,42,58,.65); line-height:1.8;" id="i_usageNoteText"></div>
+        <div style="background:var(--color-works); border-radius:8px; padding:12px 14px; font-size:13px; color:rgba(74,42,58,.65); line-height:2; white-space:pre-line;" id="i_usageNoteText"></div>
       </div>
     </div>
 
@@ -695,7 +794,7 @@
           </span>
         </label>
       </div>
-      <p class="sim-note">※ Live2D選択時はAfter Effectsエフェクト仕上げが込みになります</p>
+      <p class="sim-note" data-i18n="note_live2d">※ Live2D選択時はAfter Effectsエフェクト仕上げが込みになります</p>
     </div>
 
     <!-- ⑦ オプション -->
@@ -708,6 +807,7 @@
             <span class="sim-option-name">商業利用ライセンス</span>
             <span class="sim-option-price">＋¥5,000</span>
           </span>
+          <span class="sim-option-inline-note">グッズ販売・商業案件の場合に必要です。個人の配信活動（YouTube・IRIAM等）には不要です。</span>
         </label>
         <label class="sim-option">
           <input type="checkbox" id="i_nosns" value="5000">
@@ -764,7 +864,7 @@
     <!-- ⑩ 追加修正 -->
     <div class="sim-card">
       <h2>⑩ 追加修正</h2>
-      <p class="sim-note" style="margin-top:0; margin-bottom:12px;">無料修正は3回まで。4回目以降は追加料金が発生します。<br>線画後の構図・ポーズなど大きな変更は別案件となります。</p>
+      <p class="sim-note" data-i18n="revision_note" style="margin-top:0; margin-bottom:12px;">無料修正は3回まで。4回目以降は追加料金が発生します。<br>線画後の構図・ポーズなど大きな変更は別案件となります。</p>
       <div class="sim-counter">
         <span class="sim-counter-label">追加修正回数（4回目以降）</span>
         <span class="sim-counter-price">+¥1,500 / 回</span>
@@ -783,8 +883,8 @@
   ========================= -->
   <div class="sim-section" id="sim-design">
 
-    <p class="sim-note" style="text-align:center; margin-bottom:24px;">
-      ※ デザイン料金はココナラ市場相場をもとにした目安です。詳細はお見積もりにてご確認ください。
+    <p class="sim-note" data-i18n="design_top" style="text-align:center; margin-bottom:24px;">
+      ※ デザイン料金はCoconaラ市場相場をもとにした目安です。詳細はお見積もりにてご確認ください。
     </p>
 
     <!-- ① サービス種別 -->
@@ -839,7 +939,7 @@
     <!-- ② 制作点数 -->
     <div class="sim-card">
       <h2>② 制作点数</h2>
-      <p class="sim-note" style="margin-top:0; margin-bottom:12px;">2点目以降は1点ごとに基本料金の50%を加算します。</p>
+      <p class="sim-note" data-i18n="design_qty" style="margin-top:0; margin-bottom:12px;">2点目以降は1点ごとに基本料金の50%を加算します。</p>
       <div class="sim-counter">
         <span class="sim-counter-label">追加制作点数</span>
         <span class="sim-counter-price">基本料金×50% / 点</span>
@@ -935,9 +1035,14 @@
 <!-- 合計バー -->
 <div class="sim-total-bar">
   <div class="sim-total-inner">
+    <div class="sim-total-selected" id="sim-selected-list"></div>
     <span class="sim-total-label">お見積もり合計（目安）</span>
-    <span class="sim-total-amount" id="totalAmount">¥8,000<span>〜</span></span>
-    <p class="sim-total-note">※ 実際の金額はご相談にて確定します。ココナラまたはXのDMからお気軽にどうぞ。</p>
+    <span class="sim-total-amount" id="totalAmount">¥10,000<span>〜</span></span>
+    <div class="sim-total-note-box" data-i18n="total_note">
+      ※ 実際の金額はご相談にて確定します。<br>
+      ご予算のご相談も大歓迎です。理想のイメージとご予算をお聞かせいただければ、できる限り柔軟にご対応いたします。<br>
+      Coconalaまたは X（Twitter）のDMにてお気軽にご相談ください。
+    </div>
   </div>
 </div>
 
@@ -984,7 +1089,7 @@
   const countPrices = {
     i_extraPerson: 6500,
     i_expression:  1000,
-    i_costume:     4000,
+    i_costume:     3000,
     i_hairstyle:   2000,
     i_revision:    1500,
     d_extra:       0
@@ -1011,55 +1116,92 @@
 
   /* === 合計金額の計算 === */
   function calcTotal() {
-    let total = 0;
+    let totalJPY = 0, totalUSD = 0;
+    function addY(yen) {
+      totalJPY += yen;
+      totalUSD += USD_AMOUNT[yen] !== undefined ? USD_AMOUNT[yen] : Math.round(yen / 150);
+    }
+    function addC(n, key) {
+      const p = countPrices[key];
+      totalJPY += n * p;
+      totalUSD += n * (USD_AMOUNT[p] !== undefined ? USD_AMOUNT[p] : Math.round(p / 150));
+    }
     if (currentTab === 'illust') {
       const base = document.querySelector('input[name="i_base"]:checked');
-      if (base) total += parseInt(base.value);
-      total += counts.i_extraPerson * countPrices.i_extraPerson;
+      if (base) addY(parseInt(base.value));
+      addC(counts.i_extraPerson, 'i_extraPerson');
       const design = document.querySelector('input[name="i_design"]:checked');
-      if (design) total += parseInt(design.value);
+      if (design) addY(parseInt(design.value));
       const bg = document.querySelector('input[name="i_bg"]:checked');
-      if (bg) total += parseInt(bg.value);
-      total += counts.i_expression * countPrices.i_expression;
-      total += counts.i_costume    * countPrices.i_costume;
-      total += counts.i_hairstyle  * countPrices.i_hairstyle;
+      if (bg) addY(parseInt(bg.value));
+      addC(counts.i_expression, 'i_expression');
+      addC(counts.i_costume,    'i_costume');
+      addC(counts.i_hairstyle,  'i_hairstyle');
       const live2d = document.querySelector('input[name="i_live2d"]:checked');
-      if (live2d) total += parseInt(live2d.value);
-      ['i_highres', 'i_print', 'i_live2d_layer'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el && el.checked) total += parseInt(el.value);
-      });
+      if (live2d) addY(parseInt(live2d.value));
+      /* 動画素材・印刷物は両方選択でも一回分のみ */
+      if (document.getElementById('i_highres').checked || document.getElementById('i_print').checked) addY(3500);
+      const live2dLayerEl = document.getElementById('i_live2d_layer');
+      if (live2dLayerEl && live2dLayerEl.checked) addY(parseInt(live2dLayerEl.value));
       updateUsageNotes();
       ['i_commercial', 'i_nosns'].forEach(id => {
         const el = document.getElementById(id);
-        if (el && el.checked) total += parseInt(el.value);
+        if (el && el.checked) addY(parseInt(el.value));
       });
-      total += counts.i_revision * countPrices.i_revision;
+      addC(counts.i_revision, 'i_revision');
       const rush = document.querySelector('input[name="i_rush"]:checked');
-      if (rush) total = Math.round(total * parseFloat(rush.value));
-      if (document.getElementById('i_repeat').checked) total = Math.round(total * 0.8);
+      if (rush) {
+        const r = parseFloat(rush.value);
+        totalJPY = Math.round(totalJPY * r);
+        totalUSD = Math.round(totalUSD * r);
+      }
+      if (document.getElementById('i_repeat').checked) {
+        totalJPY = Math.round(totalJPY * 0.8);
+        totalUSD = Math.round(totalUSD * 0.8);
+      }
     } else {
       const base = document.querySelector('input[name="d_base"]:checked');
-      const baseVal = base ? parseInt(base.value) : 0;
-      total += baseVal;
-      total += counts.d_extra * Math.round(baseVal * 0.5);
+      const baseJPY = base ? parseInt(base.value) : 0;
+      const baseUSD = USD_AMOUNT[baseJPY] !== undefined ? USD_AMOUNT[baseJPY] : Math.round(baseJPY / 150);
+      totalJPY += baseJPY;
+      totalUSD += baseUSD;
+      totalJPY += counts.d_extra * Math.round(baseJPY * 0.5);
+      totalUSD += counts.d_extra * Math.round(baseUSD * 0.5);
       ['d_rawdata', 'd_print', 'd_commercial', 'd_nosns'].forEach(id => {
         const el = document.getElementById(id);
-        if (el && el.checked) total += parseInt(el.value);
+        if (el && el.checked) addY(parseInt(el.value));
       });
       const rush = document.querySelector('input[name="d_rush"]:checked');
-      if (rush) total = Math.round(total * parseFloat(rush.value));
-      if (document.getElementById('d_repeat').checked) total = Math.round(total * 0.8);
+      if (rush) {
+        const r = parseFloat(rush.value);
+        totalJPY = Math.round(totalJPY * r);
+        totalUSD = Math.round(totalUSD * r);
+      }
+      if (document.getElementById('d_repeat').checked) {
+        totalJPY = Math.round(totalJPY * 0.8);
+        totalUSD = Math.round(totalUSD * 0.8);
+      }
     }
     document.getElementById('totalAmount').innerHTML =
-      '¥' + total.toLocaleString('ja-JP') + '<span>〜</span>';
+      (currentCurrency === 'USD'
+        ? '$' + totalUSD.toLocaleString('en-US')
+        : '¥' + totalJPY.toLocaleString('ja-JP'))
+      + '<span>〜</span>';
+    updateSelectedItems();
   }
 
   /* === 使用用途の補足メモ === */
   function updateUsageNotes() {
     const notes = [];
-    document.querySelectorAll('.i_usage:checked, #i_highres:checked, #i_print:checked, #i_live2d_layer:checked')
+    document.querySelectorAll('.i_usage:checked')
       .forEach(el => { if (el.dataset.note) notes.push('・' + el.dataset.note); });
+    if (document.getElementById('i_highres').checked || document.getElementById('i_print').checked) {
+      notes.push('・長辺6,500px以上の高解像度データで納品します（縦・横いずれかが6,500px以上）。');
+      notes.push('・A4サイズ・350dpi対応の高解像度データで納品します。');
+      notes.push('・二次利用する場合は追加料金いただきませんが、事前にお知らせしてくださいますと幸いです。（任意）');
+    }
+    const live2dEl = document.getElementById('i_live2d_layer');
+    if (live2dEl && live2dEl.checked) notes.push('・' + live2dEl.dataset.note);
     const area = document.getElementById('i_usageNotes');
     const text = document.getElementById('i_usageNoteText');
     if (notes.length > 0) {
@@ -1070,8 +1212,210 @@
     }
   }
 
+  /* === 選択中項目の可視化 === */
+  function updateSelectedItems() {
+    const items = [];
+    if (currentTab === 'illust') {
+      const base = document.querySelector('input[name="i_base"]:checked');
+      if (base) items.push(base.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      if (counts.i_extraPerson > 0) items.push('追加キャラ ×' + counts.i_extraPerson);
+      const design = document.querySelector('input[name="i_design"]:checked');
+      if (design && parseInt(design.value) > 0) items.push('キャラデザイン');
+      const bg = document.querySelector('input[name="i_bg"]:checked');
+      if (bg && parseInt(bg.value) > 0) items.push(bg.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      if (counts.i_expression > 0) items.push('表情差分 ×' + counts.i_expression);
+      if (counts.i_costume > 0)    items.push('衣装差分 ×' + counts.i_costume);
+      if (counts.i_hairstyle > 0)  items.push('髪型差分 ×' + counts.i_hairstyle);
+      document.querySelectorAll('.i_usage:checked').forEach(el => {
+        items.push(el.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      });
+      if (document.getElementById('i_highres').checked && document.getElementById('i_print').checked) items.push('高解像度（動画＋印刷）');
+      else if (document.getElementById('i_highres').checked) items.push('高解像度（動画素材）');
+      else if (document.getElementById('i_print').checked)   items.push('高解像度（印刷物）');
+      const live2d = document.querySelector('input[name="i_live2d"]:checked');
+      if (live2d && parseInt(live2d.value) > 0) items.push(live2d.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      if (document.getElementById('i_live2d_layer').checked) items.push('Live2Dパーツ分け');
+      if (document.getElementById('i_commercial').checked)   items.push('商業利用ライセンス');
+      if (document.getElementById('i_nosns').checked)        items.push('SNS掲載不可');
+      if (counts.i_revision > 0) items.push('追加修正 ×' + counts.i_revision);
+      const rush = document.querySelector('input[name="i_rush"]:checked');
+      if (rush && parseFloat(rush.value) > 1) items.push(rush.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      if (document.getElementById('i_repeat').checked) items.push('リピーター割引 −20%');
+    } else {
+      const base = document.querySelector('input[name="d_base"]:checked');
+      if (base) items.push(base.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      if (counts.d_extra > 0) items.push('追加 ' + counts.d_extra + '点');
+      ['d_rawdata', 'd_print', 'd_commercial', 'd_nosns'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.checked) items.push(el.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      });
+      const rush = document.querySelector('input[name="d_rush"]:checked');
+      if (rush && parseFloat(rush.value) > 1) items.push(rush.closest('.sim-option').querySelector('.sim-option-name').textContent);
+      if (document.getElementById('d_repeat').checked) items.push('リピーター割引 −20%');
+    }
+    document.getElementById('sim-selected-list').innerHTML =
+      items.map(t => `<span class="sim-total-selected-tag">${t}</span>`).join('');
+  }
+
+  /* === 通貨・言語 === */
+  let currentCurrency = 'JPY';
+  let currentLang = 'jp';
+  const USD_RATE = 150;
+
+  function formatAmt(yen) {
+    if (currentCurrency === 'USD') return '$' + Math.round(yen / USD_RATE).toLocaleString('en-US');
+    return '¥' + yen.toLocaleString('ja-JP');
+  }
+
+  function initPriceEls() {
+    document.querySelectorAll('.sim-option-price, .sim-counter-price').forEach(el => {
+      const m = el.textContent.match(/(＋|\+)?¥([\d,]+)(.*)/);
+      if (m) {
+        el.dataset.yen = parseInt(m[2].replace(/,/g, ''));
+        el.dataset.pre  = m[1] || '';
+        el.dataset.suf  = m[3] || '';
+      }
+    });
+  }
+
+  function updatePriceEls() {
+    document.querySelectorAll('[data-yen]').forEach(el => {
+      el.textContent = el.dataset.pre + formatAmt(parseInt(el.dataset.yen)) + el.dataset.suf;
+    });
+  }
+
+  function switchCurrency(cur) {
+    currentCurrency = cur;
+    updatePriceEls();
+    calcTotal();
+  }
+
+  const TRANS_EN = {
+    title: 'Price Simulator',
+    'お見積もり合計（目安）': 'Estimated Total (approx.)',
+    /* section headers */
+    '① ベースイラスト': '① Base Illustration',
+    '② キャラクターデザイン': '② Character Design',
+    '③ 背景': '③ Background',
+    '④ 差分': '④ Variations',
+    '⑤ 使用用途（任意・複数選択可）': '⑤ Usage (Optional)',
+    '⑥ Live2D・動くイラスト': '⑥ Live2D / Animation',
+    '⑦ オプション': '⑦ Options',
+    '⑧ 納期': '⑧ Delivery',
+    '⑨ リピーター割引': '⑨ Repeat Discount',
+    '⑩ 追加修正': '⑩ Extra Revisions',
+    '① サービス種別': '① Service Type',
+    '② 制作点数': '② Quantity',
+    '③ オプション': '③ Options',
+    '④ 納期': '④ Delivery',
+    '⑤ リピーター割引': '⑤ Repeat Discount',
+    /* base options */
+    '胸上（バストアップ）': 'Bust Up',
+    '腰上': 'Waist Up',
+    '太ももまで': 'Thigh Length',
+    '全身': 'Full Body',
+    'SDキャラ（デフォルメ）': 'SD / Chibi',
+    '追加キャラクター人数': 'Additional Characters',
+    'デザイン済み（参考画像あり）': 'Already Designed (with ref)',
+    'デザインなし（キャラデザインから依頼）': 'No Design (from scratch)',
+    'なし / 単色・透過': 'None / Solid / Transparent',
+    '簡易背景（グラデ・模様など）': 'Simple Background',
+    '描き込みあり背景': 'Detailed Background',
+    '表情差分': 'Expression Variations',
+    '衣装差分': 'Costume Variations',
+    '髪型差分': 'Hairstyle Variations',
+    'SNSアイコン': 'SNS Icon',
+    'SNSヘッダー': 'SNS Header',
+    'YouTubeサムネイル': 'YouTube Thumbnail',
+    '動画素材・切り抜き配信': 'Video / Streaming Assets',
+    '印刷物・グッズ制作': 'Print / Merchandise',
+    'Live2D用（レイヤー分けPSD納品）': 'Live2D (Layered PSD)',
+    'なし': 'None',
+    '等身・基本（まばたき・口・呼吸）': 'Standard · Basic (blink, mouth, breath)',
+    '等身・ポーズ切り替えあり': 'Standard · With Pose Switch',
+    'SDキャラ・基本': 'Chibi · Basic',
+    'SDキャラ・ポーズ切り替えあり': 'Chibi · With Pose Switch',
+    '商業利用ライセンス': 'Commercial License',
+    'SNS・サンプル掲載不可': 'No SNS / Portfolio Posting',
+    '通常納期': 'Standard Delivery',
+    '短縮納期': 'Rush Delivery',
+    '最短納期': 'Express Delivery',
+    'リピーター割引': 'Repeat Customer Discount',
+    '追加修正回数（4回目以降）': 'Extra Revisions (4th+)',
+    'バナー・広告（静止画）': 'Banner / Ad (Static)',
+    'バナー・広告（GIFアニメ）': 'Banner / Ad (GIF)',
+    'チラシ・フライヤー（片面）': 'Flyer (Single-sided)',
+    '名刺・ショップカード': 'Business Card / Shop Card',
+    'ロゴデザイン': 'Logo Design',
+    'LPデザイン（コーディングなし）': 'LP Design (No Coding)',
+    '追加制作点数': 'Additional Quantity',
+    '元データ納品（.ai / .psd）': 'Raw File (.ai / .psd)',
+    '印刷用高解像度データ（350dpi）': 'Print High-res (350dpi)',
+    /* inline notes */
+    'キャンバスサイズ6,500px以上の高解像度データでお渡しします。切り抜き配信・拡大編集・動画素材への利用に適しています。':
+      'Delivered at 6,500px or more on the long side. Suitable for stream overlays, video editing, and motion assets.',
+    'A4サイズ・350dpi対応の高解像度データでお渡しします。グッズ制作・印刷物への利用に適しています。':
+      'Delivered at A4 size / 350dpi. Suitable for merchandise and print production.',
+    '⚠ 動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。':
+      '⚠ If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
+    'グッズ販売・商業案件の場合に必要です。個人の配信活動（YouTube・IRIAM等）には不要です。':
+      'Required for merchandise sales or commercial projects. Not needed for personal streaming (YouTube, IRIAM, etc.).',
+  };
+
+  /* テキストノード取得（sim-tagが入れ子の場合は最初のテキストノードのみ） */
+  function getJpText(el) {
+    if (el.querySelector('.sim-tag')) {
+      return el.firstChild?.textContent?.trim() || el.textContent.trim();
+    }
+    return el.textContent.trim();
+  }
+
+  function switchLang(lang) {
+    currentLang = lang;
+    const titleEl = document.getElementById('page-title');
+    const totalLabelEl = document.querySelector('.sim-total-label');
+    if (lang === 'en') {
+      titleEl.textContent = TRANS_EN.title;
+      if (totalLabelEl) totalLabelEl.textContent = TRANS_EN['お見積もり合計（目安）'];
+      /* option names / section headers / counter labels */
+      document.querySelectorAll('.sim-card h2, .sim-option-name, .sim-counter-label').forEach(el => {
+        const jp = el.dataset.jp || getJpText(el);
+        if (!el.dataset.jp) el.dataset.jp = jp;
+        const en = TRANS_EN[jp];
+        if (!en) return;
+        if (el.querySelector('.sim-tag') && el.firstChild?.nodeType === 3) {
+          el.dataset.jpNode = el.firstChild.textContent;
+          el.firstChild.textContent = en + ' ';
+        } else {
+          el.textContent = en;
+        }
+      });
+      /* inline notes */
+      document.querySelectorAll('.sim-option-inline-note').forEach(el => {
+        const jp = el.dataset.jp || el.textContent.trim();
+        if (!el.dataset.jp) el.dataset.jp = jp;
+        const en = TRANS_EN[jp];
+        if (en) el.textContent = en;
+      });
+    } else {
+      titleEl.textContent = '料金シミュレーター';
+      if (totalLabelEl) totalLabelEl.textContent = 'お見積もり合計（目安）';
+      document.querySelectorAll('[data-jp]').forEach(el => {
+        if (el.dataset.jpNode && el.firstChild?.nodeType === 3) {
+          el.firstChild.textContent = el.dataset.jpNode;
+        } else {
+          el.textContent = el.dataset.jp;
+        }
+      });
+    }
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.lang === lang);
+    });
+  }
+
   document.querySelectorAll('input[type="radio"], input[type="checkbox"]')
     .forEach(el => el.addEventListener('change', calcTotal));
+  initPriceEls();
   calcTotal();
 
   /* === 右クリック・ドラッグ禁止 === */
