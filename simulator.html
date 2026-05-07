@@ -1260,10 +1260,19 @@
   /* === 通貨・言語 === */
   let currentCurrency = 'JPY';
   let currentLang = 'jp';
-  const USD_RATE = 150;
+
+  /* Fiverrの相場に合わせたUSD金額テーブル（¥÷150の自動換算ではない） */
+  const USD_AMOUNT = {
+    0:0, 1000:7, 1500:10, 2000:14, 3000:20, 3500:25,
+    5000:35, 6500:45, 7000:50, 8000:55, 10000:70,
+    13000:90, 15000:100, 18000:125, 20000:140, 30000:200, 35000:240
+  };
 
   function formatAmt(yen) {
-    if (currentCurrency === 'USD') return '$' + Math.round(yen / USD_RATE).toLocaleString('en-US');
+    if (currentCurrency === 'USD') {
+      const usd = USD_AMOUNT[yen];
+      return '$' + (usd !== undefined ? usd : Math.round(yen / 150)).toLocaleString('en-US');
+    }
     return '¥' + yen.toLocaleString('ja-JP');
   }
 
@@ -1360,6 +1369,22 @@
       '⚠ If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
     'グッズ販売・商業案件の場合に必要です。個人の配信活動（YouTube・IRIAM等）には不要です。':
       'Required for merchandise sales or commercial projects. Not needed for personal streaming (YouTube, IRIAM, etc.).',
+    /* テキストのみの価格スパン */
+    '構図調整のみ': 'Composition only',
+    '×1.0': '×1.0',
+    '合計×1.5倍': '×1.5 total',
+    '合計×2倍': '×2.0 total',
+    '2回目以降のご依頼': '2nd order & beyond',
+    '基本料金×50% / 点': 'Base ×50% / pc',
+    /* data-i18n キー（innerHTML差し替え用） */
+    page_desc:     'Select options to calculate your estimated total. Prices are for reference only.',
+    usage_hint:    'Composition and resolution are adjusted to fit your use case. Options with extra fees are labeled.',
+    highres_both:  '※ High-res fee (¥3,500 / $25) is charged once even if both options are selected.',
+    revision_note: 'Up to 3 free revisions included. A fee applies from the 4th revision.<br>Major changes to composition or pose after lineart will be treated as a new order.',
+    note_live2d:   '※ After Effects finishing is included with all Live2D orders.',
+    design_top:    '※ Design prices are market-rate estimates. Final pricing confirmed upon consultation.',
+    design_qty:    '50% of the base price is added for each additional piece.',
+    total_note:    '※ Final pricing is confirmed through consultation.<br>Budget concerns are always welcome — share your vision and budget, and I\'ll do my best to accommodate you.<br>Feel free to reach out via Coconala or X (Twitter) DM.',
   };
 
   /* テキストノード取得（sim-tagが入れ子の場合は最初のテキストノードのみ） */
@@ -1377,7 +1402,7 @@
     if (lang === 'en') {
       titleEl.textContent = TRANS_EN.title;
       if (totalLabelEl) totalLabelEl.textContent = TRANS_EN['お見積もり合計（目安）'];
-      /* option names / section headers / counter labels */
+      /* セクション見出し・選択肢名・カウンターラベル */
       document.querySelectorAll('.sim-card h2, .sim-option-name, .sim-counter-label').forEach(el => {
         const jp = el.dataset.jp || getJpText(el);
         if (!el.dataset.jp) el.dataset.jp = jp;
@@ -1390,22 +1415,40 @@
           el.textContent = en;
         }
       });
-      /* inline notes */
+      /* インラインノート */
       document.querySelectorAll('.sim-option-inline-note').forEach(el => {
         const jp = el.dataset.jp || el.textContent.trim();
         if (!el.dataset.jp) el.dataset.jp = jp;
         const en = TRANS_EN[jp];
         if (en) el.textContent = en;
       });
+      /* ¥なしのテキストのみ価格スパン */
+      document.querySelectorAll('.sim-option-price:not([data-yen])').forEach(el => {
+        if (!el.dataset.jp) el.dataset.jp = el.textContent.trim();
+        const en = TRANS_EN[el.dataset.jp];
+        if (en !== undefined) el.textContent = en;
+      });
+      /* data-i18n要素（innerHTML差し替え） */
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (!el.dataset.jpHtml) el.dataset.jpHtml = el.innerHTML;
+        const en = TRANS_EN[key];
+        if (en !== undefined) el.innerHTML = en;
+      });
     } else {
       titleEl.textContent = '料金シミュレーター';
       if (totalLabelEl) totalLabelEl.textContent = 'お見積もり合計（目安）';
+      /* data-jpで元テキスト復元 */
       document.querySelectorAll('[data-jp]').forEach(el => {
         if (el.dataset.jpNode && el.firstChild?.nodeType === 3) {
           el.firstChild.textContent = el.dataset.jpNode;
         } else {
           el.textContent = el.dataset.jp;
         }
+      });
+      /* data-i18n要素をHTMLごと復元 */
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        if (el.dataset.jpHtml) el.innerHTML = el.dataset.jpHtml;
       });
     }
     document.querySelectorAll('.lang-btn').forEach(btn => {
