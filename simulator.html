@@ -74,35 +74,35 @@
       <h2>① ベースイラスト</h2>
       <div class="sim-options">
         <label class="sim-option">
-          <input type="radio" name="i_base" value="10000" checked>
+          <input type="radio" name="i_base" value="10000" data-type="normal" checked>
           <span class="sim-option-label">
             <span class="sim-option-name">胸上（バストアップ）</span>
             <span class="sim-option-price">¥10,000</span>
           </span>
         </label>
         <label class="sim-option">
-          <input type="radio" name="i_base" value="13000">
+          <input type="radio" name="i_base" value="13000" data-type="normal">
           <span class="sim-option-label">
             <span class="sim-option-name">腰上</span>
             <span class="sim-option-price">¥13,000</span>
           </span>
         </label>
         <label class="sim-option">
-          <input type="radio" name="i_base" value="15000">
+          <input type="radio" name="i_base" value="15000" data-type="normal">
           <span class="sim-option-label">
             <span class="sim-option-name">太ももまで</span>
             <span class="sim-option-price">¥15,000</span>
           </span>
         </label>
         <label class="sim-option">
-          <input type="radio" name="i_base" value="18000">
+          <input type="radio" name="i_base" value="18000" data-type="normal">
           <span class="sim-option-label">
             <span class="sim-option-name">全身</span>
             <span class="sim-option-price">¥18,000</span>
           </span>
         </label>
         <label class="sim-option">
-          <input type="radio" name="i_base" value="7000">
+          <input type="radio" name="i_base" value="7000" data-type="sd">
           <span class="sim-option-label">
             <span class="sim-option-name">SDキャラ（デフォルメ）</span>
             <span class="sim-option-price">¥7,000</span>
@@ -114,7 +114,7 @@
 
       <div class="sim-counter">
         <span class="sim-counter-label">追加キャラクター人数</span>
-        <span class="sim-counter-price">+¥6,500 / 人</span>
+        <span class="sim-counter-price" id="extraPersonPrice">+¥6,500 / 人</span>
         <div class="sim-counter-controls">
           <button class="sim-counter-btn" onclick="changeCount('i_extraPerson', -1)">−</button>
           <span class="sim-counter-num" id="i_extraPersonNum">0</span>
@@ -162,11 +162,18 @@
             <span class="sim-option-price">＋¥1,500</span>
           </span>
         </label>
-        <label class="sim-option">
+        <label class="sim-option" data-show="normal">
           <input type="radio" name="i_bg" value="5000">
           <span class="sim-option-label">
             <span class="sim-option-name">描き込みあり背景</span>
             <span class="sim-option-price">＋¥5,000</span>
+          </span>
+        </label>
+        <label class="sim-option" data-show="sd">
+          <input type="radio" name="i_bg" value="3000">
+          <span class="sim-option-label">
+            <span class="sim-option-name">SDキャラ用描き込み背景</span>
+            <span class="sim-option-price">＋¥3,000</span>
           </span>
         </label>
       </div>
@@ -175,31 +182,58 @@
     <!-- ④ 差分 -->
     <div class="sim-card">
       <h2>④ 差分</h2>
-      <div class="sim-counter">
-        <span class="sim-counter-label">表情差分</span>
-        <span class="sim-counter-price">+¥1,000 / 個</span>
+      <div class="sim-counter" data-show="normal">
+        <span class="sim-counter-label">表情差分（等身キャラ）</span>
+        <span class="sim-counter-price">+¥1,500 / 個</span>
         <div class="sim-counter-controls">
           <button class="sim-counter-btn" onclick="changeCount('i_expression', -1)">−</button>
           <span class="sim-counter-num" id="i_expressionNum">0</span>
           <button class="sim-counter-btn" onclick="changeCount('i_expression', 1)">＋</button>
         </div>
       </div>
-      <div class="sim-counter">
-        <span class="sim-counter-label">衣装差分</span>
-        <span class="sim-counter-price">+¥3,000 / セット</span>
+      <div class="sim-counter" data-show="sd">
+        <span class="sim-counter-label">表情差分（SDキャラ）</span>
+        <span class="sim-counter-price">+¥1,000 / 個</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_expression_sd', -1)">−</button>
+          <span class="sim-counter-num" id="i_expression_sdNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_expression_sd', 1)">＋</button>
+        </div>
+      </div>
+      <div class="sim-counter" data-show="normal">
+        <span class="sim-counter-label">衣装差分（等身キャラ）</span>
+        <span class="sim-counter-price">+¥4,000 / セット</span>
         <div class="sim-counter-controls">
           <button class="sim-counter-btn" onclick="changeCount('i_costume', -1)">−</button>
           <span class="sim-counter-num" id="i_costumeNum">0</span>
           <button class="sim-counter-btn" onclick="changeCount('i_costume', 1)">＋</button>
         </div>
       </div>
-      <div class="sim-counter">
-        <span class="sim-counter-label">髪型差分</span>
-        <span class="sim-counter-price">+¥2,000 / 種</span>
+      <div class="sim-counter" data-show="sd">
+        <span class="sim-counter-label">衣装差分（SDキャラ）</span>
+        <span class="sim-counter-price">+¥2,000 / セット</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_costume_sd', -1)">−</button>
+          <span class="sim-counter-num" id="i_costume_sdNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_costume_sd', 1)">＋</button>
+        </div>
+      </div>
+      <div class="sim-counter" data-show="normal">
+        <span class="sim-counter-label">髪型差分（等身キャラ）</span>
+        <span class="sim-counter-price">+¥4,000 / 種</span>
         <div class="sim-counter-controls">
           <button class="sim-counter-btn" onclick="changeCount('i_hairstyle', -1)">−</button>
           <span class="sim-counter-num" id="i_hairstyleNum">0</span>
           <button class="sim-counter-btn" onclick="changeCount('i_hairstyle', 1)">＋</button>
+        </div>
+      </div>
+      <div class="sim-counter" data-show="sd">
+        <span class="sim-counter-label">髪型差分（SDキャラ）</span>
+        <span class="sim-counter-price">+¥2,000 / 種</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('i_hairstyle_sd', -1)">−</button>
+          <span class="sim-counter-num" id="i_hairstyle_sdNum">0</span>
+          <button class="sim-counter-btn" onclick="changeCount('i_hairstyle_sd', 1)">＋</button>
         </div>
       </div>
     </div>
@@ -272,28 +306,28 @@
             <span class="sim-option-price">＋¥0</span>
           </span>
         </label>
-        <label class="sim-option">
+        <label class="sim-option" data-show="normal">
           <input type="radio" name="i_live2d" value="15000">
           <span class="sim-option-label">
             <span class="sim-option-name">等身・基本（まばたき・口・呼吸）</span>
             <span class="sim-option-price">＋¥15,000</span>
           </span>
         </label>
-        <label class="sim-option">
+        <label class="sim-option" data-show="normal">
           <input type="radio" name="i_live2d" value="35000">
           <span class="sim-option-label">
             <span class="sim-option-name">等身・ポーズ切り替えあり</span>
             <span class="sim-option-price">＋¥35,000</span>
           </span>
         </label>
-        <label class="sim-option">
+        <label class="sim-option" data-show="sd">
           <input type="radio" name="i_live2d" value="10000">
           <span class="sim-option-label">
             <span class="sim-option-name">SDキャラ・基本</span>
             <span class="sim-option-price">＋¥10,000</span>
           </span>
         </label>
-        <label class="sim-option">
+        <label class="sim-option" data-show="sd">
           <input type="radio" name="i_live2d" value="20000">
           <span class="sim-option-label">
             <span class="sim-option-name">SDキャラ・ポーズ切り替えあり</span>
@@ -314,7 +348,7 @@
             <span class="sim-option-name">商業利用ライセンス</span>
             <span class="sim-option-price">＋¥5,000</span>
           </span>
-          <span class="sim-option-inline-note">グッズ販売・商業案件の場合に必要です。個人の配信活動（YouTube・IRIAM等）には不要です。</span>
+          <span class="sim-option-inline-note">グッズ販売・商業案件の場合に必要です。</span>
         </label>
         <label class="sim-option">
           <input type="checkbox" id="i_nosns" value="5000">
