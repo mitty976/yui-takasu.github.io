@@ -34,20 +34,26 @@ document.querySelectorAll('a, button, input, label, [role="button"]').forEach(el
 
 /* === カウンターの状態管理 === */
 const counts = {
-  i_extraPerson: 0,
-  i_expression:  0,
-  i_costume:     0,
-  i_hairstyle:   0,
-  i_revision:    0,
-  d_extra:       0
+  i_extraPerson:   0,
+  i_expression:    0,
+  i_expression_sd: 0,
+  i_costume:       0,
+  i_costume_sd:    0,
+  i_hairstyle:     0,
+  i_hairstyle_sd:  0,
+  i_revision:      0,
+  d_extra:         0
 };
 const countPrices = {
-  i_extraPerson: 6500,
-  i_expression:  1000,
-  i_costume:     3000,
-  i_hairstyle:   2000,
-  i_revision:    1500,
-  d_extra:       0
+  i_extraPerson:   6500,
+  i_expression:    1500,
+  i_expression_sd: 1000,
+  i_costume:       4000,
+  i_costume_sd:    2000,
+  i_hairstyle:     4000,
+  i_hairstyle_sd:  2000,
+  i_revision:      1500,
+  d_extra:         0
 };
 
 function changeCount(key, delta) {
@@ -69,8 +75,62 @@ document.querySelectorAll('.sim-tab').forEach(btn => {
   });
 });
 
+/* === SD/等身フィルター === */
+function updateFilter() {
+  const baseEl = document.querySelector('input[name="i_base"]:checked');
+  const isSD = baseEl ? baseEl.dataset.type === 'sd' : false;
+
+  /* 追加キャラ料金切り替え */
+  const newExtraPrice = isSD ? 5000 : 6500;
+  countPrices.i_extraPerson = newExtraPrice;
+  const extraPriceEl = document.getElementById('extraPersonPrice');
+  if (extraPriceEl) {
+    extraPriceEl.dataset.yen = String(newExtraPrice);
+    const suf = currentLang === 'en' ? extraPriceEl.dataset.sufEn : extraPriceEl.dataset.suf;
+    extraPriceEl.textContent = extraPriceEl.dataset.pre + formatAmt(newExtraPrice) + (suf || '');
+  }
+
+  /* data-show フィルター：表示/非表示の切り替え */
+  document.querySelectorAll('#sim-illust [data-show]').forEach(el => {
+    const visible = isSD ? el.dataset.show === 'sd' : el.dataset.show === 'normal';
+    el.style.display = visible ? '' : 'none';
+
+    if (!visible) {
+      /* 非表示になったラジオボタンのリセット */
+      el.querySelectorAll('input[type="radio"]').forEach(input => {
+        if (input.checked) input.checked = false;
+      });
+      /* 非表示になったチェックボックスのリセット */
+      el.querySelectorAll('input[type="checkbox"]').forEach(input => {
+        input.checked = false;
+      });
+      /* 非表示になったカウンターのリセット */
+      if (el.classList.contains('sim-counter')) {
+        const numEl = el.querySelector('.sim-counter-num');
+        if (numEl) {
+          const key = numEl.id.replace('Num', '');
+          if (counts[key] !== undefined) {
+            counts[key] = 0;
+            numEl.textContent = '0';
+          }
+        }
+      }
+    }
+  });
+
+  /* 背景が未選択になった場合は「なし」に戻す */
+  if (!document.querySelector('input[name="i_bg"]:checked')) {
+    document.querySelector('input[name="i_bg"][value="0"]').checked = true;
+  }
+  /* Live2Dが未選択になった場合は「なし」に戻す */
+  if (!document.querySelector('input[name="i_live2d"]:checked')) {
+    document.querySelector('input[name="i_live2d"][value="0"]').checked = true;
+  }
+}
+
 /* === 合計金額の計算 === */
 function calcTotal() {
+  updateFilter();
   let totalJPY = 0, totalUSD = 0;
   function addY(yen) {
     totalJPY += yen;
@@ -89,9 +149,12 @@ function calcTotal() {
     if (design) addY(parseInt(design.value));
     const bg = document.querySelector('input[name="i_bg"]:checked');
     if (bg) addY(parseInt(bg.value));
-    addC(counts.i_expression, 'i_expression');
-    addC(counts.i_costume,    'i_costume');
-    addC(counts.i_hairstyle,  'i_hairstyle');
+    addC(counts.i_expression,    'i_expression');
+    addC(counts.i_expression_sd, 'i_expression_sd');
+    addC(counts.i_costume,       'i_costume');
+    addC(counts.i_costume_sd,    'i_costume_sd');
+    addC(counts.i_hairstyle,     'i_hairstyle');
+    addC(counts.i_hairstyle_sd,  'i_hairstyle_sd');
     const live2d = document.querySelector('input[name="i_live2d"]:checked');
     if (live2d) addY(parseInt(live2d.value));
     /* 動画素材・印刷物は両方選択でも一回分のみ */
@@ -178,9 +241,12 @@ function updateSelectedItems() {
     if (design && parseInt(design.value) > 0) items.push('キャラデザイン');
     const bg = document.querySelector('input[name="i_bg"]:checked');
     if (bg && parseInt(bg.value) > 0) items.push(bg.closest('.sim-option').querySelector('.sim-option-name').textContent);
-    if (counts.i_expression > 0) items.push('表情差分 ×' + counts.i_expression);
-    if (counts.i_costume > 0)    items.push('衣装差分 ×' + counts.i_costume);
-    if (counts.i_hairstyle > 0)  items.push('髪型差分 ×' + counts.i_hairstyle);
+    if (counts.i_expression    > 0) items.push('表情差分（等身） ×' + counts.i_expression);
+    if (counts.i_expression_sd > 0) items.push('表情差分（SD） ×'   + counts.i_expression_sd);
+    if (counts.i_costume    > 0) items.push('衣装差分（等身） ×' + counts.i_costume);
+    if (counts.i_costume_sd > 0) items.push('衣装差分（SD） ×'   + counts.i_costume_sd);
+    if (counts.i_hairstyle    > 0) items.push('髪型差分（等身） ×' + counts.i_hairstyle);
+    if (counts.i_hairstyle_sd > 0) items.push('髪型差分（SD） ×'   + counts.i_hairstyle_sd);
     document.querySelectorAll('.i_usage:checked').forEach(el => {
       items.push(el.closest('.sim-option').querySelector('.sim-option-name').textContent);
     });
@@ -292,9 +358,16 @@ const TRANS_EN = {
   'なし / 単色・透過': 'None / Solid / Transparent',
   '簡易背景（グラデ・模様など）': 'Simple Background',
   '描き込みあり背景': 'Detailed Background',
+  'SDキャラ用描き込み背景': 'SD Chibi Detailed Background',
   '表情差分': 'Expression Variations',
+  '表情差分（等身キャラ）': 'Expression Variations (Standard)',
+  '表情差分（SDキャラ）': 'Expression Variations (SD / Chibi)',
   '衣装差分': 'Costume Variations',
+  '衣装差分（等身キャラ）': 'Costume Variations (Standard)',
+  '衣装差分（SDキャラ）': 'Costume Variations (SD / Chibi)',
   '髪型差分': 'Hairstyle Variations',
+  '髪型差分（等身キャラ）': 'Hairstyle Variations (Standard)',
+  '髪型差分（SDキャラ）': 'Hairstyle Variations (SD / Chibi)',
   'SNSアイコン': 'SNS Icon',
   'SNSヘッダー': 'SNS Header',
   'YouTubeサムネイル': 'YouTube Thumbnail',
@@ -329,8 +402,8 @@ const TRANS_EN = {
     'Delivered at A4 size / 350dpi. Suitable for merchandise and print production.',
   '⚠ 動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。':
     '⚠ If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
-  'グッズ販売・商業案件の場合に必要です。個人の配信活動（YouTube・IRIAM等）には不要です。':
-    'Required for merchandise sales or commercial projects. Not needed for personal streaming (YouTube, IRIAM, etc.).',
+  'グッズ販売・商業案件の場合に必要です。':
+    'Required for merchandise sales or commercial projects.',
   /* テキストのみの価格スパン */
   '構図調整のみ': 'Composition only',
   '×1.0': '×1.0',
