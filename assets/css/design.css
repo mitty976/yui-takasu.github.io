@@ -83,7 +83,7 @@
 
     /* === メインカラム（左：作品グリッド） === */
     .main-column {
-      flex: 8;
+      flex: 7;
       min-width: 0;
       min-height: 0;
       display: flex;
@@ -1076,7 +1076,7 @@
     #ring-spine-img {
       position: fixed;
       top: 50%;
-      left: calc(66.7% - 30px);
+      left: calc(63.6% - 30px);
       transform: translateY(-50%);
       width: 60px;
       height: auto;
