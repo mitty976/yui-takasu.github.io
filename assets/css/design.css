@@ -244,15 +244,12 @@
       overflow-y: auto;
       overflow-x: hidden;
       padding: 24px 20px 60px 40px;
-      margin-right: 0;
-      direction: rtl;
+      margin-right: 50px;
       scrollbar-width: thin;
       scrollbar-color: var(--color-border) transparent;
     }
     .left-bg-scroll::-webkit-scrollbar { width: 4px; }
     .left-bg-scroll::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
-    /* スクロールバーを左に移動したので、中身は ltr に戻す */
-    .left-bg-scroll > * { direction: ltr; }
 
     /* 二重ボーダー装飾（左辺なし） */
     .left-bg::before,
