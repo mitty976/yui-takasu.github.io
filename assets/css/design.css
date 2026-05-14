@@ -39,7 +39,7 @@
     #bg-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(255,255,255,0.50);
+      background: rgba(255,255,255,0.30);
       z-index: -1;
       pointer-events: none;
     }
@@ -83,7 +83,7 @@
 
     /* === メインカラム（左：作品グリッド） === */
     .main-column {
-      flex: 7;
+      flex: 8;
       min-width: 0;
       min-height: 0;
       display: flex;
@@ -561,7 +561,7 @@
 
     /* === サイドバー（右） === */
     .sidebar {
-      flex: 4.5;
+      flex: 4;
       min-width: 0;
       background: transparent;
       display: flex;
@@ -1076,7 +1076,7 @@
     #ring-spine-img {
       position: fixed;
       top: 50%;
-      left: calc(60.9% - 30px);
+      left: calc(66.7% - 30px);
       transform: translateY(-50%);
       width: 60px;
       height: auto;
