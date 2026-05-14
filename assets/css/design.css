@@ -1076,7 +1076,7 @@
     #ring-spine-img {
       position: fixed;
       top: 50%;
-      left: calc(63.6% - 30px);
+      left: calc(63.6% - 30px); /* JSが動的に上書き */
       transform: translateY(-50%);
       width: 60px;
       height: auto;
