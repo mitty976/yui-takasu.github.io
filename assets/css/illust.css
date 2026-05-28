@@ -1205,14 +1205,14 @@ body.is-loaded {
     padding-bottom: 18px;
   }
   .works-sort {
-    margin: 0;
-    padding: 48px 4px 12px;
+    margin: 0 -42px;
+    padding: 48px 46px 12px;
   }
   .works-grid {
     grid-template-columns: repeat(2, 1fr);
     flex: none;
-    margin: 0;
-    padding: 12px 4px 8px;
+    margin: 0 -42px;
+    padding: 12px 46px 8px;
   }
   .bgm-ctrl,
   .bgm-credit { display: none !important; }
