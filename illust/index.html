@@ -32,7 +32,7 @@
 <body>
 
 <div id="loader" aria-hidden="true">
-  <img class="loader-logo" src="../assets/img/guru-logo.png" alt="ぐるにゃ">
+  <canvas id="loader-canvas"></canvas>
 </div>
 
 <!-- ページ全体ラッパー（サイドバー | メインカラム） -->
@@ -80,6 +80,12 @@
           <button class="lang-btn is-active" data-lang="ja">JP</button>
           <button class="lang-btn" data-lang="en">EN</button>
         </div>
+        <div class="season-switch" aria-label="季節テーマ切り替え">
+          <button class="season-btn" data-season="spring" title="春テーマ">🌸</button>
+          <button class="season-btn" data-season="summer" title="夏テーマ">🌊</button>
+          <button class="season-btn" data-season="autumn" title="秋テーマ">🍂</button>
+          <button class="season-btn" data-season="winter" title="冬テーマ">❄️</button>
+        </div>
       </div>
       <nav class="header-nav">
         <a href="../index.html" aria-label="ホームへ戻る" class="home-link">
@@ -110,6 +116,20 @@
   <!-- メインエリア -->
   <main class="works-main">
     <div class="works-scroll-area">
+      <!-- 受注状況バナー -->
+      <div class="status-bar">
+        <span class="status-bar__badge">📋 受注状況</span>
+        <span class="status-bar__item">着手可能：<strong>6月〜</strong></span>
+        <span class="status-bar__sep">｜</span>
+        <span class="status-bar__item">通常納期：<strong>7〜10日</strong></span>
+      </div>
+
+      <div class="works-tab">
+        <span class="tab-slider"></span>
+        <button class="tab-btn is-active" data-tab="illust" data-i18n="tabIllust">イラスト</button>
+        <button class="tab-btn" data-tab="logo" data-i18n="tabLogo">ロゴ</button>
+      </div>
+
       <div class="works-sort">
         <button class="sort-btn is-active" data-sort="new" data-i18n="sortNew">新しい順</button>
         <button class="sort-btn" data-sort="old" data-i18n="sortOld">古い順</button>
@@ -117,324 +137,426 @@
 
       <div class="works-grid" id="works-grid">
 
-        <a class="work-card" data-date="2026-04"
+        <a class="work-card" data-category="illust" data-date="2026-05"
+           data-title-ja="【お仕事絵】白旗かい様‐SDミニキャラ＋表情差分"
+           data-title-en="[Commission] Hakki Kai — SD Chibi &amp; Expression Variants"
+           data-modal="illust_kaikunchibi" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/illust/kaikunchibi-normal-sample.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">SD chibi</span>
+              <span class="work-tag">Expression variants</span>
+            </div>
+          </div>
+          <p class="work-title">【お仕事絵】白旗かい様‐SDミニキャラ＋表情差分</p>
+        </a>
+
+        <a class="work-card" data-category="illust" data-date="2026-04"
+           data-title-ja="【お仕事絵】○○様よりご依頼されたイラスト"
+           data-title-en="[Commission] ─── — Illustration"
+           data-real-title-ja="【お仕事絵】5×10様‐お祝いイラスト"
+           data-real-title-en="[Commission] 5×10 — Celebration Illustration"
+           data-modal="illust_510camera"
+           data-unlock="2026-07-17" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/illust/510camera.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">Still illustration</span>
+              <span class="work-tag">Event</span>
+            </div>
+          </div>
+          <p class="work-title">○○様よりご依頼されたイラスト</p>
+        </a>
+
+        <a class="work-card" data-category="illust" data-date="2026-04"
            data-title-ja="【お仕事絵】白旗かい様‐配信ED用ループアニメーション"
            data-title-en="[Commission] Hakki Kai - Stream ED Loop Animation" data-modal="illust_hakkikai" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/hakkikai.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】白旗かい様‐配信ED用ループアニメーション</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/hakkikai.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Loop animation</span>
               <span class="work-tag">Background</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】白旗かい様‐配信ED用ループアニメーション</p>
         </a>
 
-        <a class="work-card" data-date="2026-01"
+        <a class="work-card" data-category="illust" data-date="2026-01"
            data-title-ja="【お仕事絵】ゆーと様‐アイコン等"
            data-title-en="[Commission] Yuuto - Icons etc." data-modal="illust_yuuuuto" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/yuuuutoicon.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】ゆーと様‐アイコン等</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/yuuuutoicon.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Icon</span>
               <span class="work-tag">Still illustration</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】ゆーと様‐アイコン等</p>
         </a>
 
-        <a class="work-card" data-date="2025-11"
+        <a class="work-card" data-category="illust" data-date="2025-11"
            data-title-ja="【お仕事絵】白石あやめ様‐ヘッダー"
            data-title-en="[Commission] Shiraishi Ayame - Header" data-modal="illust_shiraishiayameheader" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/shiraishiayameheader.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】白石あやめ様‐ヘッダー</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/shiraishiayameheader.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Header</span>
               <span class="work-tag">Still illustration</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】白石あやめ様‐ヘッダー</p>
         </a>
 
-        <a class="work-card" data-date="2025-10"
+        <a class="work-card" data-category="illust" data-date="2025-10"
            data-title-ja="【お仕事絵】今、恋がはじまれ。(cover by 小鳥遊せせり)"
            data-title-en="[Commission] Koihajimere (cover by Kotodori Seseri)" data-modal="illust_koihachi" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/koihachi.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】今、恋がはじまれ。(cover by 小鳥遊せせり)</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/koihachi.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Illustration</span>
               <span class="work-tag">Thumbnail</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】今、恋がはじまれ。(cover by 小鳥遊せせり)</p>
         </a>
 
-        <a class="work-card" data-date="2025-01"
+        <a class="work-card" data-category="illust" data-date="2025-01"
            data-title-ja="【仕事絵】キャラデザサンプルまとめ"
            data-title-en="[Commission] Character Design Samples" data-modal="illust_characterdesign" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/characterdesign.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【仕事絵】キャラデザサンプルまとめ</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/characterdesign.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">CharacterDesign</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【仕事絵】キャラデザサンプルまとめ</p>
         </a>
 
-        <a class="work-card" data-date="2024-03"
+        <a class="work-card" data-category="illust" data-date="2024-03"
            data-title-ja="【お仕事絵】乙女解剖 (cover by 花ノ院とあ)"
            data-title-en="[Commission] Otome Kaibou (cover by Hananoin Toa)" data-modal="illust_otome" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/otome.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】乙女解剖 / DECO*27(cover by 花ノ院とあ)</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/otome.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Still illustration</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】乙女解剖 / DECO*27(cover by 花ノ院とあ)</p>
         </a>
 
-        <a class="work-card" data-date="2023-12"
+        <a class="work-card" data-category="illust" data-date="2023-12"
            data-title-ja="【お仕事絵】そっけない(cover by Numa)"
            data-title-en="[Commission] Sokkenaï (cover by Numa)" data-modal="illust_sokkenai" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/sokkenai.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】そっけない(cover by Numa)</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/sokkenai.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Still illustration</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】そっけない(cover by Numa)</p>
         </a>
 
-        <a class="work-card" data-date="2023-12"
+        <a class="work-card" data-category="illust" data-date="2023-12"
            data-title-ja="【お仕事絵】クリスマステーマの一枚絵"
            data-title-en="[Commission] Christmas Illustration" data-modal="illust_rarumucris" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/rarumucris.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】クリスマステーマの一枚絵</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/rarumucris.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Still illustration</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】クリスマステーマの一枚絵</p>
         </a>
 
-        <a class="work-card" data-date="2023-10"
+        <a class="work-card" data-category="illust" data-date="2023-10"
            data-title-ja="【お仕事絵】配信用兼グッズに使うイラスト作成の依頼"
            data-title-en="[Commission] Stream &amp; Goods Illustration" data-modal="illust_hujii" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/hujii.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】配信用兼グッズに使うイラスト作成の依頼</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/hujii.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Goods</span>
               <span class="work-tag">Still illustration</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】配信用兼グッズに使うイラスト作成の依頼</p>
         </a>
 
-        <a class="work-card" data-date="2023-09"
+        <a class="work-card" data-category="illust" data-date="2023-09"
            data-title-ja="【お仕事絵】すきっちゅーの！"
            data-title-en="[Commission] Sukicchu no!" data-modal="illust_sukiccyu" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/sukiccyu.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】すきっちゅーの！</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/sukiccyu.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】すきっちゅーの！</p>
         </a>
 
-        <a class="work-card" data-date="2023-09"
+        <a class="work-card" data-category="illust" data-date="2023-09"
            data-title-ja="【お仕事絵】独奏(cover by うみか)"
            data-title-en="[Commission] Dokusou (cover by Umika)" data-modal="illust_dokusou" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/dokusou.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】独奏(cover by うみか)</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/dokusou.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">MV</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】独奏(cover by うみか)</p>
         </a>
 
-        <a class="work-card" data-date="2023-07"
+        <a class="work-card" data-category="illust" data-date="2023-07"
            data-title-ja="【お仕事絵】強風オールバック(cover by うみか)"
            data-title-en="[Commission] Kyoufu All Back (cover by Umika)" data-modal="illust_allback" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/allback.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】強風オールバック(cover by うみか)</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/allback.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】強風オールバック(cover by うみか)</p>
         </a>
 
-        <a class="work-card" data-date="2023-03"
+        <a class="work-card" data-category="illust" data-date="2023-03"
            data-title-ja="【お仕事絵】アイドルグッズのイラスト依頼"
            data-title-en="[Commission] Idol Goods Illustration" data-modal="illust_ramuneko" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/ramuneko.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】アイドルグッズのイラスト依頼</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/ramuneko.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Goods</span>
               <span class="work-tag">Still illustration</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】アイドルグッズのイラスト依頼</p>
         </a>
 
-        <a class="work-card" data-date="2023-03"
+        <a class="work-card" data-category="illust" data-date="2023-03"
            data-title-ja="【お仕事絵】可愛くてごめん"
            data-title-en="[Commission] Kawaikute Gomen" data-modal="illust_aota" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/aota.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】可愛くてごめん</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/aota.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】可愛くてごめん</p>
         </a>
 
-        <a class="work-card" data-date="2023-03"
+        <a class="work-card" data-category="illust" data-date="2023-03"
            data-title-ja="【お仕事絵】ブラッディメアリー"
            data-title-en="[Commission] Bloody Mary" data-modal="illust_bloody" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/bloody.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】ブラッディメアリー</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/bloody.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Still illustration</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】ブラッディメアリー</p>
         </a>
 
-        <a class="work-card" data-date="2023-02"
+        <a class="work-card" data-category="illust" data-date="2023-02"
            data-title-ja="【お仕事絵】可愛くてごめん/高梨のの(cover)"
            data-title-en="[Commission] Kawaikute Gomen / Takanashi Nono (cover)" data-modal="illust_nonokawai" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/nonokawai.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】可愛くてごめん/高梨のの(cover)</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/nonokawai.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】可愛くてごめん/高梨のの(cover)</p>
         </a>
 
-        <a class="work-card" data-date="2023-01"
+        <a class="work-card" data-category="illust" data-date="2023-01"
            data-title-ja="ちびキャラまとめ"
            data-title-en="Chibi Character Collection" data-modal="illust_chibi" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/chibi.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">ちびキャラまとめ</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/chibi.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Chibi</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">ちびキャラまとめ</p>
         </a>
 
-        <a class="work-card" data-date="2022-12"
+        <a class="work-card" data-category="illust" data-date="2022-12"
            data-title-ja="【お仕事絵】可愛くてごめん‐サムネイル"
            data-title-en="[Commission] Kawaikute Gomen - Thumbnail" data-modal="illust_chiikawaii" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/chiikawaii.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】可愛くてごめん‐サムネイル</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/chiikawaii.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】可愛くてごめん‐サムネイル</p>
         </a>
 
-        <a class="work-card" data-date="2022-01"
+        <a class="work-card" data-category="illust" data-date="2022-01"
            data-title-ja="自分用のXヘッダーイラスト"
            data-title-en="Personal X Header Illustration" data-modal="illust_myselfheader" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/myselfheader.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">自分用のXヘッダーイラスト</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/myselfheader.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Header</span>
               <span class="work-tag">Still illustration</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">自分用のXヘッダーイラスト</p>
         </a>
 
-        <a class="work-card" data-date="2021-11"
+        <a class="work-card" data-category="illust" data-date="2021-11"
            data-title-ja="【お仕事絵】オリジナル楽曲イメージイラスト"
            data-title-en="[Commission] Original Song Image Illustration" data-modal="illust_sayu" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/sayu.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】オリジナル楽曲イメージイラスト</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/sayu.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">MV</span>
               <span class="work-tag">Still illustration</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】オリジナル楽曲イメージイラスト</p>
         </a>
 
-        <a class="work-card" data-date="2021-05"
+        <a class="work-card" data-category="illust" data-date="2021-05"
            data-title-ja="【お仕事絵】オリジナル楽曲イメージイラスト"
            data-title-en="[Commission] Original Song Image Illustration" data-modal="illust_melon" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/melon.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】オリジナル楽曲イメージイラスト</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/melon.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Still illustration</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】オリジナル楽曲イメージイラスト</p>
         </a>
 
-        <a class="work-card" data-date="2021-04"
+        <a class="work-card" data-category="illust" data-date="2021-04"
            data-title-ja="【お仕事絵】ラブカ？‐サムネイル"
            data-title-en="[Commission] Rabuka? - Thumbnail" data-modal="illust_rabuka" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/rabuka.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】ラブカ？‐サムネイル</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/rabuka.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】ラブカ？‐サムネイル</p>
         </a>
 
-        <a class="work-card" data-date="2021-03"
+        <a class="work-card" data-category="illust" data-date="2021-03"
            data-title-ja="【お仕事絵】レディメイド‐サムネイル"
            data-title-en="[Commission] Ready Made - Thumbnail" data-modal="illust_ready" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/ready.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】レディメイド‐サムネイル</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/ready.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】レディメイド‐サムネイル</p>
         </a>
 
-        <a class="work-card" data-date="2021-02"
+        <a class="work-card" data-category="illust" data-date="2021-02"
            data-title-ja="【お仕事絵】うっせぇわ‐サムネイル"
            data-title-en="[Commission] Usseewa - Thumbnail" data-modal="illust_ussewa" href="#">
-          <div class="work-thumb"><img src="../images/works/illust/ussewa.jpg" alt="" loading="lazy"></div>
-          <div class="work-meta">
-            <p class="work-title">【お仕事絵】うっせぇわ‐サムネイル</p>
+          <div class="work-thumb">
+            <img src="../images/works/illust/ussewa.jpg" alt="" loading="lazy">
             <div class="work-tags">
               <span class="work-tag">Thumbnail</span>
               <span class="work-tag">Portrait painting</span>
             </div>
           </div>
+          <p class="work-title">【お仕事絵】うっせぇわ‐サムネイル</p>
+        </a>
+
+        <!-- ロゴタブ -->
+        <a class="work-card" data-category="logo" data-date="2026-05-23"
+           data-title-ja="【ご依頼もの】おこた様‐デコロゴ"
+           data-title-en="[Commission] Okota — Deco Logo"
+           data-modal="logo_okota" style="display:none" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/logo/おこた様ー枠あり（影付き）.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">Logo design</span>
+              <span class="work-tag">Deco</span>
+            </div>
+          </div>
+          <p class="work-title">【ご依頼もの】おこた様‐デコロゴ</p>
+        </a>
+
+        <a class="work-card" data-category="logo" data-date="2026-05-22"
+           data-title-ja="【ご依頼もの】はたえじきる様‐デコロゴ"
+           data-title-en="[Commission] Hatae Zikiru — Deco Logo"
+           data-modal="logo_hatae" style="display:none" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/logo/はたえじきる様ー枠あり（影付き.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">Logo design</span>
+              <span class="work-tag">Deco</span>
+            </div>
+          </div>
+          <p class="work-title">【ご依頼もの】はたえじきる様‐デコロゴ</p>
+        </a>
+
+        <a class="work-card" data-category="logo" data-date="2026-05-21"
+           data-title-ja="【ご依頼もの】招来ほまれ様‐デコロゴ"
+           data-title-en="[Commission] Maneki Homare — Deco Logo"
+           data-modal="logo_homare" style="display:none" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/logo/招来ほまれ様ー枠あり（影付きサブ文字なし）.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">Logo design</span>
+              <span class="work-tag">Deco</span>
+            </div>
+          </div>
+          <p class="work-title">【ご依頼もの】招来ほまれ様‐デコロゴ</p>
+        </a>
+
+        <a class="work-card" data-category="logo" data-date="2026-05-20"
+           data-title-ja="【ご依頼もの】佐城玲様‐デコロゴ"
+           data-title-en="[Commission] Sasiro Rei — Deco Logo"
+           data-modal="logo_sasiro" style="display:none" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/logo/佐城玲様ー枠あり（影付き）.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">Logo design</span>
+              <span class="work-tag">Deco</span>
+            </div>
+          </div>
+          <p class="work-title">【ご依頼もの】佐城玲様‐デコロゴ</p>
+        </a>
+
+        <a class="work-card" data-category="logo" data-date="2026-05-19"
+           data-title-ja="【ご依頼もの】叶守ユメ様‐デコロゴ"
+           data-title-en="[Commission] Kanmamori Yume — Deco Logo"
+           data-modal="logo_yume" style="display:none" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/logo/叶守ユメ様ー枠あり（影付き）.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">Logo design</span>
+              <span class="work-tag">Deco</span>
+            </div>
+          </div>
+          <p class="work-title">【ご依頼もの】叶守ユメ様‐デコロゴ</p>
         </a>
 
       </div><!-- /works-grid -->

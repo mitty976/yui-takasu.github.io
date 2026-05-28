@@ -3087,3 +3087,17 @@
       }, 2000);
     }
   }
+
+  /* === リング位置をmain-columnの右端に合わせる === */
+  const ringEl  = document.getElementById('ring-spine-img');
+  const mainCol = document.querySelector('.main-column');
+
+  function alignRing() {
+    if (!ringEl || !mainCol || window.innerWidth <= 768) return;
+    const rect = mainCol.getBoundingClientRect();
+    if (rect.right > 0) ringEl.style.left = (rect.right - 30) + 'px';
+  }
+
+  window.addEventListener('load', alignRing);
+  window.addEventListener('resize', alignRing, { passive: true });
+  window.addEventListener('resize', alignRing, { passive: true });
