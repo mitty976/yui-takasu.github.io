@@ -393,32 +393,32 @@ body.is-loaded { opacity: 1; filter: none; }
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid var(--color-border);
   padding: 14px 24px calc(14px + env(safe-area-inset-bottom, 0px));
   z-index: 300;
   transition: border-color 0.6s ease;
+  overflow: hidden;
 }
 
-/* オーロラライン */
-.sim-total-bar::before {
-  content: '';
+/* オーロラライン（::beforeではなく実要素） */
+.sim-aurora-line {
   position: absolute;
-  top: -1px; left: 0; right: 0;
-  height: 3px;
+  top: 0; left: 0; right: 0;
+  height: 4px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--color-sidebar) 15%,
-    var(--color-accent) 40%,
-    var(--color-border) 60%,
-    var(--color-accent) 80%,
+    var(--color-sidebar) 10%,
+    var(--color-accent) 35%,
+    var(--color-sidebar) 55%,
+    var(--color-accent) 78%,
     transparent 100%
   );
   background-size: 200% 100%;
-  animation: auroraFlow 6s ease-in-out infinite;
-  opacity: 0.45;
-  transition: opacity 0.25s, height 0.2s;
-  border-radius: 2px;
+  animation: auroraFlow 4s ease-in-out infinite;
+  opacity: 0.85;
+  transition: height 0.2s ease, opacity 0.2s ease;
+  border-radius: 0 0 2px 2px;
+  pointer-events: none;
 }
 
 @keyframes auroraFlow {
@@ -428,9 +428,10 @@ body.is-loaded { opacity: 1; filter: none; }
 }
 
 /* 価格変化で閃光 */
-.sim-total-bar.is-aurora-flash::before {
+.sim-total-bar.is-aurora-flash .sim-aurora-line {
+  height: 7px;
   opacity: 1;
-  height: 5px;
+  filter: brightness(1.15);
 }
 
 /* バーストパーティクル */
