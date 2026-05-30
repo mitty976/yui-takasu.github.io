@@ -235,6 +235,7 @@ function calcTotal() {
   totalEl.classList.remove('is-updated');
   void totalEl.offsetWidth;
   totalEl.classList.add('is-updated');
+  triggerAuroraFlash(totalJPY);
   updateSelectedItems();
 }
 
@@ -544,6 +545,53 @@ function switchLang(lang) {
     btn.classList.toggle('is-active', btn.dataset.lang === lang);
   });
   updateSelectedItems();
+}
+
+/* === オーロラフラッシュ＆バーストパーティクル === */
+let prevTotalJPY = -1;
+
+function triggerAuroraFlash(newTotal) {
+  const bar = document.querySelector('.sim-total-bar');
+  bar.classList.remove('is-aurora-flash');
+  void bar.offsetWidth;
+  bar.classList.add('is-aurora-flash');
+  setTimeout(() => bar.classList.remove('is-aurora-flash'), 600);
+
+  /* ¥8,000以上上昇したときにパーティクルバースト */
+  if (prevTotalJPY !== -1 && newTotal - prevTotalJPY >= 8000) {
+    createPriceBurst();
+  }
+  prevTotalJPY = newTotal;
+}
+
+function createPriceBurst() {
+  const el = document.getElementById('totalAmount');
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const style = getComputedStyle(document.documentElement);
+  const colors = [
+    style.getPropertyValue('--color-accent').trim(),
+    style.getPropertyValue('--color-sidebar').trim(),
+    style.getPropertyValue('--color-border').trim(),
+  ];
+
+  for (let i = 0; i < 12; i++) {
+    const angle  = (i / 12) * Math.PI * 2;
+    const dist   = 35 + Math.random() * 35;
+    const size   = 4 + Math.random() * 5;
+    const color  = colors[Math.floor(Math.random() * colors.length)];
+    const p = document.createElement('span');
+    p.className = 'price-particle';
+    p.style.cssText = `left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;background:${color};transform:translate(-50%,-50%);opacity:1;`;
+    document.body.appendChild(p);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      p.style.transition = 'transform 0.55s cubic-bezier(0,0,0.2,1), opacity 0.55s ease';
+      p.style.transform  = `translate(calc(-50% + ${Math.cos(angle) * dist}px), calc(-50% + ${Math.sin(angle) * dist}px))`;
+      p.style.opacity    = '0';
+    }));
+    setTimeout(() => p.remove(), 700);
+  }
 }
 
 /* === イベント登録・初期化 === */
