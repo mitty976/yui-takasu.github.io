@@ -593,22 +593,24 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-note-accordion-icon::before { content: '＋'; }
 
 .sim-note-accordion-body {
-  display: block;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: none;
   font-size: 11px;
   color: rgba(74,42,58,0.65);
   line-height: 1.8;
-  padding: 0 12px;
+  padding: 4px 12px 10px;
+}
+
+@keyframes accordionSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* 選択中に展開 */
 .sim-option:has(input:checked) .sim-note-accordion { border-bottom-width: 1.5px; }
 .sim-option:has(input:checked) .sim-note-accordion-icon::before { content: '−'; }
 .sim-option:has(input:checked) .sim-note-accordion-body {
-  max-height: 300px;
-  padding: 4px 12px 10px;
+  display: block;
+  animation: accordionSlideDown 0.3s ease both;
 }
 
 /* 警告スタイル */
