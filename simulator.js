@@ -70,7 +70,15 @@ document.querySelectorAll('.sim-tab').forEach(btn => {
     btn.classList.add('is-active');
     currentTab = btn.dataset.target;
     document.querySelectorAll('.sim-section').forEach(s => s.classList.remove('is-active'));
-    document.getElementById('sim-' + currentTab).classList.add('is-active');
+    const newSection = document.getElementById('sim-' + currentTab);
+    newSection.classList.add('is-active');
+    /* カードをスタガーで登場させる */
+    newSection.querySelectorAll('.sim-card').forEach((card, i) => {
+      card.classList.remove('card-enter');
+      void card.offsetWidth;
+      card.style.animationDelay = (i * 0.05) + 's';
+      card.classList.add('card-enter');
+    });
     calcTotal();
   });
 });
@@ -200,11 +208,16 @@ function calcTotal() {
       totalUSD = Math.round(totalUSD * 0.9);
     }
   }
-  document.getElementById('totalAmount').innerHTML =
+  const totalEl = document.getElementById('totalAmount');
+  totalEl.innerHTML =
     (currentCurrency === 'USD'
       ? '$' + totalUSD.toLocaleString('en-US')
       : '¥' + totalJPY.toLocaleString('ja-JP'))
     + '<span>〜</span>';
+  /* 金額更新のパルスアニメーション */
+  totalEl.classList.remove('is-updated');
+  void totalEl.offsetWidth;
+  totalEl.classList.add('is-updated');
   updateSelectedItems();
 }
 
