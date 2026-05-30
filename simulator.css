@@ -261,6 +261,43 @@ body.is-loaded { opacity: 1; filter: none; }
   transform: scale(0.97);
   transition: transform 0.06s ease;
 }
+
+/* 注意書きあり選択肢：取っ手付きシャッター */
+.sim-option:has(.sim-note-accordion) {
+  position: relative;
+}
+
+/* 取っ手（::after） */
+.sim-option:has(.sim-note-accordion)::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 7px;
+  background: var(--color-border);
+  border-radius: 999px;
+  transition: background 0.2s, opacity 0.2s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1;
+}
+
+/* 未選択：下枠線を太く */
+.sim-option:has(.sim-note-accordion):not(:has(input:checked)) {
+  border-bottom: 3px solid var(--color-border);
+}
+
+/* 未選択ホバー：取っ手がアクセントカラーに膨らむ */
+.sim-option:has(.sim-note-accordion):not(:has(input:checked)):hover::after {
+  background: var(--color-accent);
+  transform: translateX(-50%) scaleX(1.2) scaleY(1.15);
+}
+
+/* 選択済み：取っ手を消す */
+.sim-option:has(.sim-note-accordion):has(input:checked)::after {
+  opacity: 0;
+  pointer-events: none;
+}
 .sim-option:has(input:checked) {
   border-color: var(--color-accent);
   background: var(--color-works);
@@ -590,9 +627,18 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-note-accordion-body {
   display: block;
   padding: 10px 14px;
-  font-size: 11px;
-  color: rgba(74,42,58,0.65);
+  font-size: 13px;
+  color: rgba(74,42,58,0.7);
   line-height: 1.8;
+}
+
+/* strong強調 */
+.sim-note-accordion-body strong {
+  font-weight: 700;
+  color: rgba(74,42,58,0.9);
+}
+.sim-note-accordion--warning .sim-note-accordion-body strong {
+  color: #5a1a1a;
 }
 
 /* 警告スタイル */

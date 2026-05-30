@@ -286,7 +286,7 @@ function updateSelectedItems() {
     const live2d = document.querySelector('input[name="i_live2d"]:checked');
     if (live2d && parseInt(live2d.value) > 0) items.push(live2d.closest('.sim-option').querySelector('.sim-option-name').textContent);
     if (document.getElementById('i_live2d_layer').checked) items.push('Live2Dパーツ分け');
-    if (document.getElementById('i_commercial').checked)   items.push('商業利用ライセンス');
+    if (document.getElementById('i_commercial').checked)   items.push('商用利用ライセンス');
     if (document.getElementById('i_nosns').checked)        items.push('SNS掲載不可');
     if (counts.i_revision > 0) items.push('追加修正 ×' + counts.i_revision);
     const rush = document.querySelector('input[name="i_rush"]:checked');
@@ -409,7 +409,7 @@ const TRANS_EN = {
   '等身・ポーズ切り替えあり': 'Standard · With Pose Switch',
   'SDキャラ・基本': 'Chibi · Basic',
   'SDキャラ・ポーズ切り替えあり': 'Chibi · With Pose Switch',
-  '商業利用ライセンス': 'Commercial License',
+  '商用利用ライセンス': 'Commercial Use License',
   'SNS・サンプル掲載不可': 'No SNS / Portfolio Posting',
   '通常納期': 'Standard Delivery',
   '短縮納期': 'Rush Delivery',
@@ -445,8 +445,8 @@ const TRANS_EN = {
     'Delivered at A4 size / 350dpi. Suitable for merchandise and print production.',
   '⚠ 動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。':
     '⚠ If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
-  'グッズ販売・商業案件の場合に必要です。':
-    'Required for merchandise sales or commercial projects.',
+  'グッズ販売・企業広告・有料コンテンツへの使用・収益化チャンネルでの継続使用など、金銭的利益を伴う利用に必要です。現在未収益化でも、収益化を目標とされている配信者・VTuberの方にもお選びいただけますようお願いいたします。個人のSNS投稿・非営利目的には不要です。著作権はぐるにゃに帰属し、このライセンスに著作権の譲渡は含まれません。':
+    'Required for any use involving financial gain — merchandise sales, commercial advertising, paid content, monetized channels, etc. We also kindly ask streamers and VTubers who are currently non-monetized but working towards monetization to select this option. Not required for personal SNS or non-commercial use. Copyright remains with ぐるにゃ and is not transferred by this license.',
   /* アコーディオンタイトル */
   '詳細': 'Details',
   '⚠ 注意': '⚠ Note',
@@ -499,12 +499,13 @@ function switchLang(lang) {
         el.textContent = en;
       }
     });
-    /* 補足ノートカードの本文 */
+    /* 補足ノートカードの本文（innerHTML保存でstrong等を維持） */
     document.querySelectorAll('.sim-note-accordion-body').forEach(el => {
       const jp = el.dataset.jp || el.textContent.trim();
       if (!el.dataset.jp) el.dataset.jp = jp;
+      if (!el.dataset.jpHtml) el.dataset.jpHtml = el.innerHTML;
       const en = TRANS_EN[jp];
-      if (en) el.textContent = en;
+      if (en) el.innerHTML = en;
     });
     /* ¥なしのテキストのみ価格スパン */
     document.querySelectorAll('.sim-option-price:not([data-yen])').forEach(el => {
@@ -525,7 +526,9 @@ function switchLang(lang) {
     if (totalLabelEl) totalLabelEl.textContent = 'お見積もり合計（目安）';
     /* data-jpで元テキスト復元 */
     document.querySelectorAll('[data-jp]').forEach(el => {
-      if (el.dataset.jpNode && el.firstChild?.nodeType === 3) {
+      if (el.classList.contains('sim-note-accordion-body') && el.dataset.jpHtml) {
+        el.innerHTML = el.dataset.jpHtml; /* strongなどHTMLごと復元 */
+      } else if (el.dataset.jpNode && el.firstChild?.nodeType === 3) {
         el.firstChild.textContent = el.dataset.jpNode;
       } else {
         el.textContent = el.dataset.jp;
