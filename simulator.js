@@ -235,7 +235,9 @@ function calcTotal() {
   totalEl.classList.remove('is-updated');
   void totalEl.offsetWidth;
   totalEl.classList.add('is-updated');
-  triggerAuroraFlash(totalJPY);
+  /* ¥8,000以上の上昇でバースト */
+  if (prevTotalJPY !== -1 && totalJPY - prevTotalJPY >= 8000) createPriceBurst();
+  prevTotalJPY = totalJPY;
   updateSelectedItems();
 }
 
@@ -547,22 +549,8 @@ function switchLang(lang) {
   updateSelectedItems();
 }
 
-/* === オーロラフラッシュ＆バーストパーティクル === */
+/* === バーストパーティクル === */
 let prevTotalJPY = -1;
-
-function triggerAuroraFlash(newTotal) {
-  const bar = document.querySelector('.sim-total-bar');
-  bar.classList.remove('is-aurora-flash');
-  void bar.offsetWidth;
-  bar.classList.add('is-aurora-flash');
-  setTimeout(() => bar.classList.remove('is-aurora-flash'), 600);
-
-  /* ¥8,000以上上昇したときにパーティクルバースト */
-  if (prevTotalJPY !== -1 && newTotal - prevTotalJPY >= 8000) {
-    createPriceBurst();
-  }
-  prevTotalJPY = newTotal;
-}
 
 function createPriceBurst() {
   const el = document.getElementById('totalAmount');
@@ -631,6 +619,23 @@ document.querySelectorAll('img').forEach(img => {
   img.style.userSelect = 'none';
   img.style.webkitUserSelect = 'none';
   img.style.pointerEvents = 'none';
+});
+
+/* === 3D カードチルト === */
+document.querySelectorAll('.sim-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r  = card.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2);
+    const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
+    card.style.transition = 'box-shadow 0.1s ease';
+    card.style.transform  = `perspective(900px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) translateZ(6px)`;
+    card.style.boxShadow  = `${-dx * 8}px ${-dy * 8}px 28px rgba(74,42,58,0.1)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transition = 'transform 0.45s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.45s ease';
+    card.style.transform  = '';
+    card.style.boxShadow  = '';
+  });
 });
 
 /* === ページロードフェードイン === */
