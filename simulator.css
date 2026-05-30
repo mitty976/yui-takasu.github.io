@@ -231,7 +231,7 @@ body.is-loaded { opacity: 1; filter: none; }
   padding: 10px 14px;
   border-radius: 10px;
   border: 1.5px solid var(--color-border);
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.15s, background 0.15s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .sim-option-inline-note {
@@ -256,6 +256,10 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-option:hover {
   border-color: var(--color-accent);
   background: var(--color-works);
+}
+.sim-option:active {
+  transform: scale(0.97);
+  transition: transform 0.06s ease;
 }
 .sim-option:has(input:checked) {
   border-color: var(--color-accent);
@@ -560,7 +564,7 @@ body.is-loaded { opacity: 1; filter: none; }
   animation: tagPop 0.18s ease both;
 }
 
-/* === 補足ノートカード === */
+/* === 補足ノートカード（シャッター展開） === */
 .sim-note-accordion {
   display: none;
   width: 100%;
@@ -568,16 +572,19 @@ body.is-loaded { opacity: 1; filter: none; }
   border-radius: 8px;
   border: 1.5px solid var(--color-border);
   background: var(--color-works);
+  overflow: hidden;
 }
 
-@keyframes noteCardIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* シャッター展開：上端を軸にscaleYで弾んで開く */
+@keyframes shutterOpen {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
 }
 
 .sim-option:has(input:checked) .sim-note-accordion {
   display: block;
-  animation: noteCardIn 0.25s ease both;
+  transform-origin: top center;
+  animation: shutterOpen 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .sim-note-accordion-body {

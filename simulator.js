@@ -64,13 +64,17 @@ function changeCount(key, delta) {
   const numEl = document.getElementById(key + 'Num');
   numEl.textContent = counts[key];
 
-  /* 数字スプリングアニメーション */
-  numEl.classList.remove('anim-up', 'anim-down');
-  void numEl.offsetWidth;
-  numEl.classList.add(delta > 0 ? 'anim-up' : 'anim-down');
+  const controls = numEl.closest('.sim-counter-controls');
+  controls.classList.toggle('is-zero', counts[key] === 0);
 
-  /* − ボタンの出し入れ */
-  numEl.closest('.sim-counter-controls').classList.toggle('is-zero', counts[key] === 0);
+  /* ゼロになるときはアニメーション不要（is-zeroのCSSトランジションで消える） */
+  if (counts[key] > 0) {
+    numEl.classList.remove('anim-up', 'anim-down');
+    void numEl.offsetWidth;
+    numEl.classList.add(delta > 0 ? 'anim-up' : 'anim-down');
+  } else {
+    numEl.classList.remove('anim-up', 'anim-down');
+  }
 
   calcTotal();
 }
