@@ -560,65 +560,37 @@ body.is-loaded { opacity: 1; filter: none; }
   animation: tagPop 0.18s ease both;
 }
 
-/* === アコーディオンノート === */
+/* === 補足ノートカード === */
 .sim-note-accordion {
-  display: block;
+  display: none;
   width: 100%;
   margin-top: 8px;
   border-radius: 8px;
   border: 1.5px solid var(--color-border);
-  border-bottom: 3px solid var(--color-border);
-  overflow: hidden;
-  transition: border-color 0.3s ease, border-bottom-color 0.3s ease;
+  background: var(--color-works);
 }
 
-.sim-note-accordion-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 7px 12px;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: rgba(74,42,58,0.45);
-  letter-spacing: 0.04em;
-}
-
-.sim-note-accordion-icon {
-  font-size: 15px;
-  line-height: 1;
-  color: var(--color-accent);
-  font-weight: 400;
-  flex-shrink: 0;
-}
-.sim-note-accordion-icon::before { content: '＋'; }
-
-.sim-note-accordion-body {
-  display: none;
-  font-size: 11px;
-  color: rgba(74,42,58,0.65);
-  line-height: 1.8;
-  padding: 4px 12px 10px;
-}
-
-@keyframes accordionSlideDown {
+@keyframes noteCardIn {
   from { opacity: 0; transform: translateY(-6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* 選択中に展開 */
-.sim-option:has(input:checked) .sim-note-accordion { border-bottom-width: 1.5px; }
-.sim-option:has(input:checked) .sim-note-accordion-icon::before { content: '−'; }
-.sim-option:has(input:checked) .sim-note-accordion-body {
+.sim-option:has(input:checked) .sim-note-accordion {
   display: block;
-  animation: accordionSlideDown 0.3s ease both;
+  animation: noteCardIn 0.25s ease both;
+}
+
+.sim-note-accordion-body {
+  display: block;
+  padding: 10px 14px;
+  font-size: 11px;
+  color: rgba(74,42,58,0.65);
+  line-height: 1.8;
 }
 
 /* 警告スタイル */
 .sim-note-accordion--warning {
   border-color: #e8c0c0;
-  border-bottom-color: #d09090;
-  background: #fdf8f8;
+  background: #fdf0f0;
 }
-.sim-note-accordion--warning .sim-note-accordion-head { color: #9a3a3a; }
-.sim-note-accordion--warning .sim-note-accordion-icon { color: #9a3a3a; }
 .sim-note-accordion--warning .sim-note-accordion-body { color: #7a3030; }

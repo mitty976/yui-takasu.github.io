@@ -495,8 +495,8 @@ function switchLang(lang) {
         el.textContent = en;
       }
     });
-    /* アコーディオンのタイトル・本文 */
-    document.querySelectorAll('.sim-note-accordion-title, .sim-note-accordion-body').forEach(el => {
+    /* 補足ノートカードの本文 */
+    document.querySelectorAll('.sim-note-accordion-body').forEach(el => {
       const jp = el.dataset.jp || el.textContent.trim();
       if (!el.dataset.jp) el.dataset.jp = jp;
       const en = TRANS_EN[jp];
