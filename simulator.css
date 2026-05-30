@@ -263,40 +263,30 @@ body.is-loaded { opacity: 1; filter: none; }
 }
 
 /* 注意書きあり選択肢：取っ手付きシャッター */
-.sim-option:has(.sim-note-accordion) {
+.sim-option:has(.sim-note-accordion):not(:has(input:checked)) {
   position: relative;
+  border-bottom: 3px solid var(--color-border);
+  z-index: 1; /* 次の選択肢より手前に */
 }
 
-/* 取っ手（::after） */
-.sim-option:has(.sim-note-accordion)::after {
+/* 取っ手（::after）：底辺中央に重ねる */
+.sim-option:has(.sim-note-accordion):not(:has(input:checked))::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -4px;
   left: 50%;
   transform: translateX(-50%);
   width: 36px;
   height: 7px;
   background: var(--color-border);
   border-radius: 999px;
-  transition: background 0.2s, opacity 0.2s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 1;
-}
-
-/* 未選択：下枠線を太く */
-.sim-option:has(.sim-note-accordion):not(:has(input:checked)) {
-  border-bottom: 3px solid var(--color-border);
+  transition: background 0.2s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* 未選択ホバー：取っ手がアクセントカラーに膨らむ */
 .sim-option:has(.sim-note-accordion):not(:has(input:checked)):hover::after {
   background: var(--color-accent);
   transform: translateX(-50%) scaleX(1.2) scaleY(1.15);
-}
-
-/* 選択済み：取っ手を消す */
-.sim-option:has(.sim-note-accordion):has(input:checked)::after {
-  opacity: 0;
-  pointer-events: none;
 }
 .sim-option:has(input:checked) {
   border-color: var(--color-accent);
@@ -605,10 +595,6 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-note-accordion {
   display: none;
   width: 100%;
-  margin-top: 8px;
-  border-radius: 8px;
-  border: 1.5px solid var(--color-border);
-  background: var(--color-works);
   overflow: hidden;
 }
 
@@ -622,13 +608,16 @@ body.is-loaded { opacity: 1; filter: none; }
   display: block;
   transform-origin: top center;
   animation: shutterOpen 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  border-top: 1px solid var(--color-border);
+  margin-top: 6px;
+  padding-top: 2px;
 }
 
 .sim-note-accordion-body {
   display: block;
-  padding: 10px 14px;
+  padding: 8px 4px;
   font-size: 13px;
-  color: rgba(74,42,58,0.7);
+  color: rgba(74,42,58,0.75);
   line-height: 1.8;
 }
 
@@ -642,8 +631,7 @@ body.is-loaded { opacity: 1; filter: none; }
 }
 
 /* 警告スタイル */
-.sim-note-accordion--warning {
-  border-color: #e8c0c0;
-  background: #fdf0f0;
+.sim-note-accordion--warning.sim-option:has(input:checked) .sim-note-accordion {
+  border-top-color: #e8c0c0;
 }
 .sim-note-accordion--warning .sim-note-accordion-body { color: #7a3030; }
