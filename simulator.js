@@ -57,8 +57,21 @@ const countPrices = {
 };
 
 function changeCount(key, delta) {
-  counts[key] = Math.max(0, counts[key] + delta);
-  document.getElementById(key + 'Num').textContent = counts[key];
+  const next = Math.max(0, counts[key] + delta);
+  if (next === counts[key]) return;
+  counts[key] = next;
+
+  const numEl = document.getElementById(key + 'Num');
+  numEl.textContent = counts[key];
+
+  /* 数字スプリングアニメーション */
+  numEl.classList.remove('anim-up', 'anim-down');
+  void numEl.offsetWidth;
+  numEl.classList.add(delta > 0 ? 'anim-up' : 'anim-down');
+
+  /* − ボタンの出し入れ */
+  numEl.closest('.sim-counter-controls').classList.toggle('is-zero', counts[key] === 0);
+
   calcTotal();
 }
 
@@ -397,6 +410,19 @@ const TRANS_EN = {
   '通常納期': 'Standard Delivery',
   '短縮納期': 'Rush Delivery',
   '最短納期': 'Express Delivery',
+  /* 納期の日数タグ */
+  days_standard: '10–14 days',
+  days_rush:     'within 7 days',
+  days_express:  'within 5 days',
+  /* 納期の補足メモ */
+  '腰上・背景なし基準で10〜14日が目安です。作業量や確認のお返事速度によって前後します。':
+    'Est. 10–14 days for waist-up with no background. May vary based on workload and response speed.',
+  'ご依頼から7日以内に納品します。確認のご返答は当日〜翌日中にいただける場合に限ります。':
+    'Delivered within 7 days. Requires same-day or next-day responses to confirmation requests.',
+  'ご依頼から5日以内に納品します。確認のご返答は当日中にいただける場合に限ります。':
+    'Delivered within 5 days. Requires same-day responses to all confirmation requests.',
+  delivery_flow_note: '※ Work cannot proceed until each review step is approved — delivery may extend if responses are delayed.',
+  delivery_start_note: '※ Delivery time is counted from the start of work. A waiting period may apply depending on current workload.',
   'リピーター割引': 'Repeat Customer Discount',
   '追加修正回数（4回目以降）': 'Extra Revisions (4th+)',
   'バナー・広告（静止画）': 'Banner / Ad (Static)',
@@ -417,6 +443,12 @@ const TRANS_EN = {
     '⚠ If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
   'グッズ販売・商業案件の場合に必要です。':
     'Required for merchandise sales or commercial projects.',
+  /* アコーディオンタイトル */
+  '詳細': 'Details',
+  '⚠ 注意': '⚠ Note',
+  /* Live2Dノート（⚠なし版） */
+  '動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。':
+    'If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
   /* テキストのみの価格スパン */
   '構図調整のみ': 'Composition only',
   '×1.0': '×1.0',
@@ -463,8 +495,8 @@ function switchLang(lang) {
         el.textContent = en;
       }
     });
-    /* インラインノート */
-    document.querySelectorAll('.sim-option-inline-note').forEach(el => {
+    /* アコーディオンのタイトル・本文 */
+    document.querySelectorAll('.sim-note-accordion-title, .sim-note-accordion-body').forEach(el => {
       const jp = el.dataset.jp || el.textContent.trim();
       if (!el.dataset.jp) el.dataset.jp = jp;
       const en = TRANS_EN[jp];
@@ -512,6 +544,14 @@ document.querySelectorAll('input[type="radio"], input[type="checkbox"]')
   .forEach(el => el.addEventListener('change', calcTotal));
 initPriceEls();
 calcTotal();
+
+/* カウンター初期化：− ボタンの識別とゼロ状態の適用 */
+document.querySelectorAll('.sim-counter-btn').forEach(btn => {
+  if (btn.textContent.trim() === '−') btn.classList.add('sim-counter-btn--minus');
+});
+document.querySelectorAll('.sim-counter-controls').forEach(controls => {
+  controls.classList.add('is-zero');
+});
 
 /* === 右クリック・ドラッグ保存禁止 === */
 document.addEventListener('contextmenu', e => {

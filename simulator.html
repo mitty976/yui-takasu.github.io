@@ -271,7 +271,13 @@
             <span class="sim-option-name">動画素材・切り抜き配信</span>
             <span class="sim-option-price">＋¥3,500</span>
           </span>
-          <span class="sim-option-inline-note">キャンバスサイズ6,500px以上の高解像度データでお渡しします。切り抜き配信・拡大編集・動画素材への利用に適しています。</span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-head">
+              <span class="sim-note-accordion-title">詳細</span>
+              <span class="sim-note-accordion-icon"></span>
+            </span>
+            <span class="sim-note-accordion-body">キャンバスサイズ6,500px以上の高解像度データでお渡しします。切り抜き配信・拡大編集・動画素材への利用に適しています。</span>
+          </span>
         </label>
         <label class="sim-option">
           <input type="checkbox" id="i_print" value="3500" data-note="A4サイズ・350dpi対応の高解像度データで納品します">
@@ -279,7 +285,13 @@
             <span class="sim-option-name">印刷物・グッズ制作</span>
             <span class="sim-option-price">＋¥3,500</span>
           </span>
-          <span class="sim-option-inline-note">A4サイズ・350dpi対応の高解像度データでお渡しします。グッズ制作・印刷物への利用に適しています。</span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-head">
+              <span class="sim-note-accordion-title">詳細</span>
+              <span class="sim-note-accordion-icon"></span>
+            </span>
+            <span class="sim-note-accordion-body">A4サイズ・350dpi対応の高解像度データでお渡しします。グッズ制作・印刷物への利用に適しています。</span>
+          </span>
         </label>
         <p class="sim-note" data-i18n="highres_both" style="margin-top:6px;">※ 両方選択時も高解像度オプションは¥3,500の一回分のみ加算されます</p>
         <label class="sim-option">
@@ -288,7 +300,13 @@
             <span class="sim-option-name">Live2D用（レイヤー分けPSD納品）</span>
             <span class="sim-option-price">＋¥30,000</span>
           </span>
-          <span class="sim-option-inline-note sim-option-inline-note--warning">⚠ 動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。</span>
+          <span class="sim-note-accordion sim-note-accordion--warning">
+            <span class="sim-note-accordion-head">
+              <span class="sim-note-accordion-title">⚠ 注意</span>
+              <span class="sim-note-accordion-icon"></span>
+            </span>
+            <span class="sim-note-accordion-body">動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。</span>
+          </span>
         </label>
       </div>
       <div id="i_usageNotes" style="margin-top:12px; display:none;">
@@ -349,7 +367,13 @@
             <span class="sim-option-name">商業利用ライセンス</span>
             <span class="sim-option-price">＋¥5,000</span>
           </span>
-          <span class="sim-option-inline-note">グッズ販売・商業案件の場合に必要です。</span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-head">
+              <span class="sim-note-accordion-title">詳細</span>
+              <span class="sim-note-accordion-icon"></span>
+            </span>
+            <span class="sim-note-accordion-body">グッズ販売・商業案件の場合に必要です。</span>
+          </span>
         </label>
         <label class="sim-option">
           <input type="checkbox" id="i_nosns" value="5000">
@@ -368,25 +392,48 @@
         <label class="sim-option">
           <input type="radio" name="i_rush" value="1" checked>
           <span class="sim-option-label">
-            <span class="sim-option-name">通常納期</span>
+            <span class="sim-option-name">通常納期 <span class="sim-tag sim-tag--info" data-i18n="days_standard">10〜14日</span></span>
             <span class="sim-option-price">×1.0</span>
+          </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-head">
+              <span class="sim-note-accordion-title">詳細</span>
+              <span class="sim-note-accordion-icon"></span>
+            </span>
+            <span class="sim-note-accordion-body">腰上・背景なし基準で10〜14日が目安です。作業量や確認のお返事速度によって前後します。</span>
           </span>
         </label>
         <label class="sim-option">
           <input type="radio" name="i_rush" value="1.5">
           <span class="sim-option-label">
-            <span class="sim-option-name">短縮納期 <span class="sim-tag sim-tag--surcharge">×1.5</span></span>
+            <span class="sim-option-name">短縮納期 <span class="sim-tag sim-tag--surcharge">×1.5</span><span class="sim-tag sim-tag--info" data-i18n="days_rush">7日以内</span></span>
             <span class="sim-option-price">合計×1.5倍</span>
+          </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-head">
+              <span class="sim-note-accordion-title">詳細</span>
+              <span class="sim-note-accordion-icon"></span>
+            </span>
+            <span class="sim-note-accordion-body">ご依頼から7日以内に納品します。確認のご返答は当日〜翌日中にいただける場合に限ります。</span>
           </span>
         </label>
         <label class="sim-option">
           <input type="radio" name="i_rush" value="2">
           <span class="sim-option-label">
-            <span class="sim-option-name">最短納期 <span class="sim-tag sim-tag--surcharge">×2.0</span></span>
+            <span class="sim-option-name">最短納期 <span class="sim-tag sim-tag--surcharge">×2.0</span><span class="sim-tag sim-tag--info" data-i18n="days_express">5日以内</span></span>
             <span class="sim-option-price">合計×2倍</span>
+          </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-head">
+              <span class="sim-note-accordion-title">詳細</span>
+              <span class="sim-note-accordion-icon"></span>
+            </span>
+            <span class="sim-note-accordion-body">ご依頼から5日以内に納品します。確認のご返答は当日中にいただける場合に限ります。</span>
           </span>
         </label>
       </div>
+      <p class="sim-note" data-i18n="delivery_flow_note" style="margin-top:12px;">※ 確認が完了するまで次の工程に進めないため、お返事の速度によっては納期が延びる場合があります。</p>
+      <p class="sim-note" data-i18n="delivery_start_note" style="margin-top:6px;">※ 納期は着手後の目安です。ご依頼時の混み具合によってはお待ちいただく場合があります。</p>
     </div>
 
     <!-- ⑨ リピーター -->
