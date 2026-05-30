@@ -628,8 +628,8 @@ document.querySelectorAll('.sim-card').forEach(card => {
     const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2);
     const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
     card.style.transition = 'box-shadow 0.1s ease';
-    card.style.transform  = `perspective(900px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) translateZ(6px)`;
-    card.style.boxShadow  = `${-dx * 8}px ${-dy * 8}px 28px rgba(74,42,58,0.1)`;
+    card.style.transform  = `perspective(1200px) rotateY(${dx * 1.8}deg) rotateX(${-dy * 1.8}deg) translateZ(2px)`;
+    card.style.boxShadow  = `${-dx * 4}px ${-dy * 4}px 20px rgba(74,42,58,0.08)`;
   });
   card.addEventListener('mouseleave', () => {
     card.style.transition = 'transform 0.45s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.45s ease';
