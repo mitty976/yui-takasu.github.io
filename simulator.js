@@ -621,22 +621,6 @@ document.querySelectorAll('img').forEach(img => {
   img.style.pointerEvents = 'none';
 });
 
-/* === 3D カードチルト === */
-document.querySelectorAll('.sim-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r  = card.getBoundingClientRect();
-    const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2);
-    const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
-    card.style.transition = 'box-shadow 0.1s ease';
-    card.style.transform  = `perspective(1200px) rotateY(${dx * 1.8}deg) rotateX(${-dy * 1.8}deg) translateZ(2px)`;
-    card.style.boxShadow  = `${-dx * 4}px ${-dy * 4}px 20px rgba(74,42,58,0.08)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transition = 'transform 0.45s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.45s ease';
-    card.style.transform  = '';
-    card.style.boxShadow  = '';
-  });
-});
 
 /* === ページロードフェードイン === */
 requestAnimationFrame(() => requestAnimationFrame(() => {
