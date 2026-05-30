@@ -257,6 +257,8 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-option:hover {
   border-color: var(--color-accent);
   background: var(--color-works);
+}
+.sim-option:not(:has(input:checked)):hover {
   transform: scale(1.02);
   box-shadow: 0 4px 18px rgba(74,42,58,0.1);
 }
