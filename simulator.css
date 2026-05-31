@@ -6,7 +6,6 @@
 @font-face {
   font-family: '新レトロ丸ゴシック';
   src: url('assets/fonts/ShinRetroMaruGothic-Bold.ttf') format('truetype');
-  font-weight: 700;
 }
 @font-face {
   font-family: 'LINE Seed JP';
@@ -41,7 +40,7 @@
 
 html, body {
   min-height: 100%;
-  font-family: 'Hiragino Maru Gothic Pro', 'BIZ UDPGothic', sans-serif;
+  font-family: var(--font-title);
   background: var(--color-bg);
   color: #4a2a3a;
 }
@@ -154,7 +153,7 @@ body.is-loaded { opacity: 1; filter: none; }
   font-size: 13px;
   color: rgba(74,42,58,0.5);
   margin-bottom: 32px;
-  font-family: var(--font-niku);
+  font-family: var(--font-title);
   letter-spacing: 0.04em;
 }
 
@@ -311,14 +310,30 @@ body.is-loaded { opacity: 1; filter: none; }
   border-color: var(--color-accent);
   background: var(--color-works);
 }
-/* 選択チェック */
-.sim-pose-card:has(input:checked)::after {
-  content: '✓';
+/* 選択チェック：丸枠 */
+.sim-pose-card:has(input:checked)::before {
+  content: '';
   position: absolute;
   top: 5px; right: 6px;
-  font-size: 10px;
-  color: var(--color-accent);
-  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(74,42,58,0.15);
+  animation: checkPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+/* 選択チェック：チェックマーク */
+.sim-pose-card:has(input:checked)::after {
+  content: '';
+  position: absolute;
+  top: 10px; right: 11px;
+  width: 6px;
+  height: 4px;
+  border-left: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  transform: rotate(-45deg);
+  animation: checkDraw 0.3s 0.25s both;
 }
 .sim-pose-svg {
   width: 38px;
@@ -334,6 +349,18 @@ body.is-loaded { opacity: 1; filter: none; }
   font-size: 10px;
   color: rgba(74,42,58,0.7);
   line-height: 1.35;
+}
+
+/* SD頭身の説明文 */
+.sim-pose-desc {
+  font-size: 9.5px;
+  color: rgba(74,42,58,0.5);
+  line-height: 1.5;
+  text-align: center;
+  display: none;
+}
+.sim-pose-card:has(input:checked) .sim-pose-desc {
+  display: block;
 }
 .sim-pose-price {
   font-size: 11px;
@@ -470,21 +497,30 @@ body.is-loaded { opacity: 1; filter: none; }
   background: var(--color-works);
   box-shadow: 0 4px 14px rgba(74,42,58,0.1);
 }
-.sim-option:has(input:checked)::after {
-  content: '✓';
+/* 選択チェック：丸枠 */
+.sim-option:has(input:checked)::before {
+  content: '';
   position: absolute;
   top: 6px; right: 6px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  border: 2px solid var(--color-accent);
   background: #fff;
-  font-family: var(--font-niku);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--color-accent);
-  line-height: 20px;
-  text-align: center;
   box-shadow: 0 1px 4px rgba(74,42,58,0.15);
+  animation: checkPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+/* 選択チェック：チェックマーク */
+.sim-option:has(input:checked)::after {
+  content: '';
+  position: absolute;
+  top: 13px; right: 12px;
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  transform: rotate(-45deg);
+  animation: checkDraw 0.3s 0.25s both;
 }
 
 /* 応相談マーク */
@@ -595,6 +631,122 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-tag--surcharge { background: #fdf0f0; color: #9a3a3a; }
 .sim-tag--info      { background: #eef3fd; color: #3a5a9a; }
 
+/* === 上部合計エリア === */
+.sim-total-top-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(74,42,58,0.06);
+  border: 1px solid rgba(234,181,197,0.3);
+  position: relative;
+  transition: background 0.6s ease, border-color 0.6s ease,
+              margin-bottom 0s 0.4s, box-shadow 0s 0.4s;
+}
+.sim-total-top-card:has(+ .sim-breakdown-panel.is-open) {
+  margin-bottom: -8px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: none;
+  transition: background 0.6s ease, border-color 0.6s ease,
+              margin-bottom 0s, box-shadow 0s, border-radius 0s;
+}
+.sim-total-top-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sim-total-top-label {
+  font-family: var(--font-title);
+  font-size: 11px;
+  color: rgba(74,42,58,0.5);
+  letter-spacing: 0.08em;
+}
+.sim-total-top-amount {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-accent);
+  transition: color 0.6s ease;
+}
+.sim-total-top-amount span {
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 3px;
+  color: rgba(74,42,58,0.45);
+}
+.sim-breakdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: var(--font-title);
+  font-size: 12px;
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.sim-breakdown-toggle:hover {
+  background: var(--color-works);
+}
+.breakdown-arrow {
+  width: 18px; height: 18px;
+  transition: transform 0.2s ease;
+}
+.sim-breakdown-toggle[aria-expanded="true"] .breakdown-arrow {
+  transform: rotate(180deg);
+}
+/* レジからウィーンと出てくるアニメーション */
+.sim-breakdown-panel {
+  overflow: hidden;
+  border-radius: 14px 14px 0 0;
+  max-height: 0;
+  margin-bottom: 0;
+  /* 閉じるとき：clip-pathが終わり切ってからmax-heightを回収 */
+  transition: max-height 0s 0.4s, margin-bottom 0.4s ease;
+}
+.sim-breakdown-panel.is-open {
+  max-height: 1200px;
+  margin-bottom: 20px;
+  /* 開くとき：高さをすぐ確保して、clip-pathが主役 */
+  transition: max-height 0s, margin-bottom 0.4s ease;
+}
+
+/* clip-pathで上端固定・下端が伸びる ＝ プリンターから出てくる紙 */
+.receipt-wrapper {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.sim-breakdown-panel.is-open .receipt-wrapper {
+  clip-path: inset(0 0 0% 0);
+}
+
+/* バーはカードに揃える */
+.receipt-bar {
+  height: 12px;
+  background: var(--color-accent);
+  border-radius: 14px 14px 0 0;
+  margin: 0 80px;
+  transition: background 0.6s ease;
+}
+
+/* バーの後にカードが追いかける（C案） */
+.receipt-body {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.sim-breakdown-panel.is-open .receipt-body {
+  opacity: 1;
+  transition: opacity 0.3s ease 0.25s;
+}
+
 /* === 合計バー（固定） === */
 .sim-total-bar {
   position: fixed;
@@ -623,15 +775,6 @@ body.is-loaded { opacity: 1; filter: none; }
   z-index: 9999;
   will-change: transform, opacity;
 }
-.sim-total-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 6px;
-}
 .sim-total-label {
   font-family: var(--font-title);
   font-size: 12px;
@@ -655,11 +798,19 @@ body.is-loaded { opacity: 1; filter: none; }
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
   border-bottom: 1px solid var(--color-border);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .sim-total-selected:empty { display: none; }
+
+/* 下部バーのタグリストはデフォルト非表示、ボタンで展開 */
+.sim-total-bar .sim-total-selected {
+  display: none;
+}
+.sim-total-bar .sim-total-selected.is-open {
+  display: flex;
+}
 .sim-total-selected-tag {
   font-size: 13px;
   background: var(--color-works);
@@ -669,6 +820,127 @@ body.is-loaded { opacity: 1; filter: none; }
   color: var(--color-accent);
   white-space: nowrap;
 }
+/* === 合計バー下部レイアウト === */
+.sim-total-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sim-total-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sim-total-amount-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.sim-total-note-box {
+  max-width: 65%;
+}
+
+/* === 相談するボタン === */
+.sim-consult {
+  position: relative;
+}
+.sim-consult-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(74,42,58,0.22);
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s, background 0.6s ease;
+}
+.sim-consult-btn svg {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+}
+.sim-consult-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(74,42,58,0.3);
+}
+.sim-consult-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: 0 6px 24px rgba(74,42,58,0.14);
+  min-width: 160px;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 400;
+}
+.sim-consult-popup.is-open {
+  display: flex;
+}
+.sim-consult-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgba(74,42,58,0.8);
+  font-size: 13px;
+  font-family: var(--font-niku);
+  transition: background 0.15s;
+}
+.sim-consult-item:hover {
+  background: var(--color-works);
+  color: var(--color-accent);
+}
+.sim-consult-icon-svg {
+  width: 22px; height: 22px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+.sim-consult-icon-img {
+  width: 22px; height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* === page top + マスコットエリア === */
+#mascot-area {
+  position: fixed;
+  right: 20px;
+  bottom: 185px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 310;
+  pointer-events: none;
+}
+#mascot-wrap {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: none;
+}
+/* マスコットのリンク（ページトップ） */
+#mascot-wrap a {
+  pointer-events: auto;
+  display: block;
+}
+
 .sim-total-note-box {
   width: 100%;
   background: var(--color-works);
@@ -728,14 +1000,10 @@ body.is-loaded { opacity: 1; filter: none; }
 }
 
 #mascot-wrap {
-  position: fixed;
-  right: 20px;
-  bottom: 185px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
-  z-index: 250;
   pointer-events: none;
 }
 
@@ -745,7 +1013,7 @@ body.is-loaded { opacity: 1; filter: none; }
   border: 1.5px solid var(--color-border);
   border-radius: 12px 12px 4px 12px;
   padding: 10px 13px;
-  width: 280px;
+  width: 240px;
   font-family: var(--font-title);
   font-size: 11.5px;
   color: rgba(74,42,58,0.7);
@@ -753,6 +1021,9 @@ body.is-loaded { opacity: 1; filter: none; }
   box-shadow: 0 3px 14px rgba(74,42,58,0.09);
   pointer-events: auto;
   transition: border-color 0.6s ease;
+}
+#mascot-bubble-text {
+  white-space: pre-line;
 }
 /* 吹き出しのしっぽ（下向き：ボーダー） */
 #mascot-bubble::before {
@@ -783,9 +1054,19 @@ body.is-loaded { opacity: 1; filter: none; }
   animation: mascotFloat 3.2s ease-in-out infinite;
 }
 
+/* 吹き出しメッセージ切り替えのポップアニメーション */
+@keyframes bubblePop {
+  from { transform: scale(0.9); opacity: 0.6; }
+  65%  { transform: scale(1.05); }
+  to   { transform: scale(1);   opacity: 1; }
+}
+#mascot-bubble.bubble-pop {
+  animation: bubblePop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
 /* スマホでは非表示 */
 @media (max-width: 768px) {
-  #mascot-wrap { display: none; }
+  #mascot-area { display: none; }
 }
 
 /* === キャラクター・メッセージエリア（将来用予約） === */
@@ -948,6 +1229,34 @@ body.is-loaded { opacity: 1; filter: none; }
 }
 .sim-note-accordion--warning .sim-note-accordion-body { color: #7a3030; }
 
+/* === 選択不可オプション（Live2D時の短縮・最短納期など） === */
+.sim-option.is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(0.4);
+}
+
+/* === Live2D用：全幅独立カード === */
+.sim-option--live2d {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* === 使用用途アイコン === */
+.usage-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--color-accent);
+  opacity: 0.6;
+  display: block;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+.sim-option:hover .usage-icon,
+.sim-option:has(input:checked) .usage-icon {
+  opacity: 1;
+}
+
 /* === タイプ未選択ヒント（浮遊アニメーション） === */
 @keyframes hintFloat {
   0%, 100% { transform: translateY(0);   opacity: 0.45; }
@@ -955,8 +1264,9 @@ body.is-loaded { opacity: 1; filter: none; }
 }
 .base-type-hint {
   text-align: center;
-  font-family: var(--font-niku);
+  font-family: var(--font-title);
   font-size: 12.5px;
+  font-weight: 500;
   color: rgba(74,42,58,0.55);
   letter-spacing: 0.1em;
   padding: 10px 0 2px;
@@ -1015,6 +1325,118 @@ body.is-loaded { opacity: 1; filter: none; }
 }
 .sim-base-type-badge.badge-enter {
   animation: badgeIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* === レシート内訳パネル === */
+
+/* 下ギザギザ（レシートの切り取り線） */
+.receipt-zigzag-bottom {
+  height: 12px;
+  margin: 0 80px;
+  background-image:
+    linear-gradient( 45deg, var(--color-bg) 33%, transparent 33%),
+    linear-gradient(-45deg, var(--color-bg) 33%, transparent 33%);
+  background-size: 12px 12px;
+  background-repeat: repeat-x;
+  background-color: var(--color-border);
+  background-position: 0 bottom;
+  transition: background-color 0.6s ease;
+}
+
+.receipt-card {
+  font-family: var(--font-title);
+  background: #fff;
+  padding: 8px 24px 12px;
+  margin: 0 80px;
+  border: 2px solid var(--color-border);
+  font-size: 13px;
+  line-height: 1.5;
+  transition: border-color 0.6s ease;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 5px 0;
+}
+/* 隣り合う行の間だけ区切り線 */
+.receipt-item + .receipt-item {
+  border-top: 1px dashed var(--color-border);
+  transition: border-color 0.6s ease;
+}
+
+.receipt-item-name {
+  flex: 1;
+  color: rgba(74,42,58,0.8);
+  font-family: var(--font-title);
+  font-size: 13px;
+  padding-right: 8px;
+}
+.receipt-item-price {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(74,42,58,0.75);
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+.receipt-item--free .receipt-item-name { color: rgba(74,42,58,0.45); }
+.receipt-item--free .receipt-item-price {
+  font-weight: 400;
+  color: rgba(74,42,58,0.35);
+  font-size: 11px;
+}
+.receipt-item--surcharge .receipt-item-name  { color: #9a3030; }
+.receipt-item--surcharge .receipt-item-price { color: #9a3030; font-weight: 700; }
+.receipt-item--discount  .receipt-item-name  { color: #2a6a3a; }
+.receipt-item--discount  .receipt-item-price { color: #2a6a3a; font-weight: 700; }
+
+/* 点線区切り（合計手前） */
+.receipt-divider {
+  border: none;
+  border-top: 2px dashed var(--color-border);
+  transition: border-color 0.6s ease;
+  margin: 4px 0 4px;
+}
+
+/* 合計行 */
+.receipt-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0;
+}
+.receipt-total-label {
+  font-family: var(--font-title);
+  font-size: 11px;
+  color: rgba(74,42,58,0.45);
+  letter-spacing: 0.1em;
+}
+.receipt-total-price {
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.01em;
+  transition: color 0.6s ease;
+}
+.receipt-total-price span {
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 2px;
+  color: rgba(74,42,58,0.4);
+}
+
+
+/* チェックマークアニメーション */
+@keyframes checkPop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes checkDraw {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* === 等身/SDカードのスプリング登場アニメーション === */

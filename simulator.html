@@ -65,6 +65,27 @@
     <button class="sim-tab" data-target="design">Design</button>
   </div>
 
+  <!-- 上部合計エリア -->
+  <div class="sim-total-top-card">
+    <div class="sim-total-top-left">
+      <span class="sim-total-top-label" data-i18n="total_label_top">お見積もり合計（目安）</span>
+      <span class="sim-total-top-amount" id="totalAmountTop">¥10,000<span>〜</span></span>
+    </div>
+    <button class="sim-breakdown-toggle" id="breakdownToggle" aria-expanded="false">
+      <span id="breakdownToggleText" data-i18n="breakdown_toggle">内訳を確認</span>
+      <svg class="breakdown-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+    </button>
+  </div>
+  <div class="sim-breakdown-panel" id="breakdownPanel">
+    <div class="receipt-wrapper">
+      <div class="receipt-bar"></div>
+      <div class="receipt-body">
+        <div class="receipt-card" id="breakdownList"></div>
+        <div class="receipt-zigzag-bottom"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ========================
        イラストセクション
   ========================= -->
@@ -91,13 +112,13 @@
         </button>
       </div>
       <!-- 未選択時のヒント -->
-      <p class="base-type-hint" id="base-type-hint">キャラクタータイプを選んでください</p>
+      <p class="base-type-hint" id="base-type-hint" data-i18n="base_type_hint">キャラクタータイプを選んでください</p>
 
       <!-- B案用バッジ：simulator.js の UX_MODE を 'B' にすると表示される -->
       <div class="sim-base-type-badge" id="base-type-badge" style="display:none">
         <img class="base-badge-thumb" id="base-badge-thumb" src="" alt="" aria-hidden="true">
         <span class="base-badge-label" id="base-badge-label"></span>
-        <span class="base-badge-change">タイプを変更</span>
+        <span class="base-badge-change" data-i18n="badge_change">タイプを変更</span>
       </div>
 
       <!-- 等身グリッド（胸上・腰上・太もも・全身） -->
@@ -150,6 +171,7 @@
             <img src="assets/img/figure/1.5頭身.png" alt="1.5頭身">
           </div>
           <span class="sim-option-name">1.5頭身</span>
+          <span class="sim-pose-desc">もっちもちで一番ゆるかわいいバランス。手足もシンプルで、とにかく「かわいい」全開のSDだよ</span>
           <span class="sim-option-price">¥6,000</span>
         </label>
 
@@ -159,6 +181,7 @@
             <img src="assets/img/figure/2頭身.png" alt="2頭身">
           </div>
           <span class="sim-option-name">2頭身</span>
+          <span class="sim-pose-desc">コロコロぷにぷにな定番SDバランス。シンプルかわいい系のキャラに◎</span>
           <span class="sim-option-price">¥7,000</span>
         </label>
 
@@ -168,6 +191,7 @@
             <img src="assets/img/figure/2.5頭身.png" alt="2.5頭身">
           </div>
           <span class="sim-option-name">2.5頭身</span>
+          <span class="sim-pose-desc">かわいらしさを保ちつつ衣装・髪型の細部まで描き込めるバランス。ぐるにゃが一番よく描くのもこれ！</span>
           <span class="sim-option-price">¥8,000</span>
         </label>
 
@@ -177,6 +201,7 @@
             <img src="assets/img/figure/3頭身.png" alt="3頭身">
           </div>
           <span class="sim-option-name">3頭身</span>
+          <span class="sim-pose-desc">SDの中で一番等身キャラ寄り。体のラインはSDキャラなりによく出るように描ける。アクションポーズも映えてかっこかわいい系にも◎</span>
           <span class="sim-option-price">¥9,000</span>
         </label>
 
@@ -343,6 +368,7 @@
         <label class="sim-option">
           <input type="checkbox" class="i_usage" data-note="正方形構図・顔が中心に来るよう仕上げます">
           <span class="sim-option-label">
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             <span class="sim-option-name">SNSアイコン</span>
             <span class="sim-option-price">構図調整のみ</span>
           </span>
@@ -350,6 +376,7 @@
         <label class="sim-option">
           <input type="checkbox" class="i_usage" data-note="両脇・頭上が切れない横長構図で仕上げます">
           <span class="sim-option-label">
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
             <span class="sim-option-name">SNSヘッダー</span>
             <span class="sim-option-price">構図調整のみ</span>
           </span>
@@ -357,13 +384,17 @@
         <label class="sim-option">
           <input type="checkbox" class="i_usage" data-note="文字を置くスペースを考慮した構図にします">
           <span class="sim-option-label">
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
             <span class="sim-option-name">YouTubeサムネイル</span>
             <span class="sim-option-price">構図調整のみ</span>
           </span>
         </label>
+      </div>
+      <div class="sim-options" style="margin-top:8px;">
         <label class="sim-option">
           <input type="checkbox" id="i_highres" value="3500" data-note="キャンバスサイズ6500px以上・高解像度データで納品します">
           <span class="sim-option-label">
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
             <span class="sim-option-name">動画素材・切り抜き配信</span>
             <span class="sim-option-price">＋¥3,500</span>
           </span>
@@ -374,6 +405,7 @@
         <label class="sim-option">
           <input type="checkbox" id="i_print" value="3500" data-note="A4サイズ・350dpi対応の高解像度データで納品します">
           <span class="sim-option-label">
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
             <span class="sim-option-name">印刷物・グッズ制作</span>
             <span class="sim-option-price">＋¥3,500</span>
           </span>
@@ -381,21 +413,18 @@
             <span class="sim-note-accordion-body">A4サイズ・350dpi対応の高解像度データでお渡しします。グッズ制作・印刷物への利用に適しています。</span>
           </span>
         </label>
-        <p class="sim-note" data-i18n="highres_both" style="margin-top:6px;">※ 両方選択時も高解像度オプションは¥3,500の一回分のみ加算されます</p>
-        <label class="sim-option">
-          <input type="checkbox" id="i_live2d_layer" value="30000" data-note="パーツ分けを考慮した構図で描き起こし、レイヤー分け済みPSDデータで納品します。モデリング作業は含みません。">
-          <span class="sim-option-label">
-            <span class="sim-option-name">Live2D用（レイヤー分けPSD納品）</span>
-            <span class="sim-option-price">＋¥30,000</span>
-          </span>
-          <span class="sim-note-accordion sim-note-accordion--warning">
-            <span class="sim-note-accordion-body">動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。</span>
-          </span>
-        </label>
       </div>
-      <div id="i_usageNotes" style="margin-top:12px; display:none;">
-        <div style="background:var(--color-works); border-radius:8px; padding:12px 14px; font-size:13px; color:rgba(74,42,58,.65); line-height:2; white-space:pre-line;" id="i_usageNoteText"></div>
-      </div>
+      <label class="sim-option sim-option--live2d">
+        <input type="checkbox" id="i_live2d_layer" value="30000" data-note="パーツ分けを考慮した構図で描き起こし、レイヤー分け済みPSDデータで納品します。モデリング作業は含みません。">
+        <span class="sim-option-label">
+          <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/></svg>
+          <span class="sim-option-name">Live2D用（レイヤー分けPSD納品）</span>
+          <span class="sim-option-price">＋¥30,000</span>
+        </span>
+        <span class="sim-note-accordion sim-note-accordion--warning">
+          <span class="sim-note-accordion-body">動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。</span>
+        </span>
+      </label>
     </div>
 
     <!-- ⑥ Live2D -->
@@ -444,7 +473,7 @@
           </span>
         </label>
       </div>
-      <p class="sim-note" data-i18n="note_live2d">※ Live2D選択時はAfter Effectsエフェクト仕上げが込みになります</p>
+      <p class="sim-note" data-i18n="note_live2d">※ Live2D選択時はAfter Effectsエフェクト仕上げが込みになります。動画編集・配信ソフトへの組み込みは別途となりますが、ご相談も承りますのでお気軽にどうぞ。</p>
     </div>
 
     <!-- ⑦ オプション -->
@@ -460,6 +489,7 @@
         <label class="sim-option">
           <input type="checkbox" id="i_commercial" value="5000">
           <span class="sim-option-label">
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.7 3.61.82 1.89 3.2L12 21.04l3.4 1.47 1.89-3.2 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"/></svg>
             <span class="sim-option-name">商用利用ライセンス</span>
             <span class="sim-option-price">＋¥5,000</span>
           </span>
@@ -470,8 +500,12 @@
         <label class="sim-option">
           <input type="checkbox" id="i_nosns" value="5000">
           <span class="sim-option-label">
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
             <span class="sim-option-name">SNS・サンプル掲載不可</span>
             <span class="sim-option-price">＋¥5,000</span>
+          </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-body">完成した作品をぐるにゃのSNS・ポートフォリオ・サンプル画像などへの掲載を行いません。プライベートなご利用・成人向けコンテンツへの使用など、公開を希望されない場合にお選びください。</span>
           </span>
         </label>
       </div>
@@ -490,31 +524,34 @@
         <label class="sim-option">
           <input type="radio" name="i_rush" value="1" checked>
           <span class="sim-option-label">
-            <span class="sim-option-name">通常納期 <span class="sim-tag sim-tag--info" data-i18n="days_standard">10〜14日</span></span>
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
+            <span class="sim-option-name">通常納期</span>
             <span class="sim-option-price">×1.0</span>
           </span>
           <span class="sim-note-accordion">
-            <span class="sim-note-accordion-body">腰上・背景なし基準で10〜14日が目安です。作業量や確認のお返事速度によって前後します。</span>
+            <span class="sim-note-accordion-body" id="delivery-note-standard">腰上・背景なし・通常納期で10〜14日が目安です。混雑状況とお返事の速度によって変わりますが、無料修正3回のやり取りを含めた目安で、ご返信が翌々日以内の場合に限ります。</span>
           </span>
         </label>
         <label class="sim-option">
           <input type="radio" name="i_rush" value="1.5">
           <span class="sim-option-label">
-            <span class="sim-option-name">短縮納期 <span class="sim-tag sim-tag--surcharge">×1.5</span><span class="sim-tag sim-tag--info" data-i18n="days_rush">7日以内</span></span>
+            <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+            <span class="sim-option-name">短縮納期 <span class="sim-tag sim-tag--surcharge">×1.5</span></span>
             <span class="sim-option-price">合計×1.5倍</span>
           </span>
           <span class="sim-note-accordion">
-            <span class="sim-note-accordion-body">ご依頼から7日以内に納品します。確認のご返答は当日〜翌日中にいただける場合に限ります。</span>
+            <span class="sim-note-accordion-body" id="delivery-note-rush">ご依頼から7日以内に納品します。確認のご返答は当日〜翌日中にいただける場合に限ります。</span>
           </span>
         </label>
         <label class="sim-option">
           <input type="radio" name="i_rush" value="2">
           <span class="sim-option-label">
-            <span class="sim-option-name">最短納期 <span class="sim-tag sim-tag--surcharge">×2.0</span><span class="sim-tag sim-tag--info" data-i18n="days_express">5日以内</span></span>
+            <svg class="usage-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M127.083,247.824l50.031-76.906c0,0-74.734-29.688-109.547-3.078C32.755,194.465,0.005,268.184,0.005,268.184l37.109,21.516C37.114,289.699,84.083,198.684,127.083,247.824z"/><path fill="currentColor" d="M264.177,384.918l76.906-50.031c0,0,29.688,74.734,3.078,109.547c-26.625,34.797-100.344,67.563-100.344,67.563l-21.5-37.109C222.317,474.887,313.333,427.918,264.177,384.918z"/><path fill="currentColor" d="M206.692,362.887l-13.203-13.188c-24,62.375-80.375,49.188-80.375,49.188s-13.188-56.375,49.188-80.375l-13.188-13.188c-34.797-6-79.188,35.984-86.391,76.766c-7.188,40.781-8.391,75.563-8.391,75.563s34.781-1.188,75.578-8.391S212.692,397.684,206.692,362.887z"/><path fill="currentColor" d="M505.224,6.777C450.786-18.738,312.927,28.98,236.255,130.668c-58.422,77.453-89.688,129.641-89.688,129.641l46.406,46.406l12.313,12.313l46.391,46.391c0,0,52.219-31.25,129.672-89.656C483.005,199.074,530.739,61.215,505.224,6.777zM274.63,237.371c-12.813-12.813-12.813-33.594,0-46.406s33.578-12.813,46.406,0.016c12.813,12.813,12.813,33.578,0,46.391C308.208,250.184,287.442,250.184,274.63,237.371zM351.552,160.465c-16.563-16.578-16.563-43.422,0-59.984c16.547-16.563,43.406-16.563,59.969,0s16.563,43.406,0,59.984C394.958,177.012,368.099,177.012,351.552,160.465z"/></svg>
+            <span class="sim-option-name">最短納期 <span class="sim-tag sim-tag--surcharge">×2.0</span></span>
             <span class="sim-option-price">合計×2倍</span>
           </span>
           <span class="sim-note-accordion">
-            <span class="sim-note-accordion-body">ご依頼から5日以内に納品します。確認のご返答は当日中にいただける場合に限ります。</span>
+            <span class="sim-note-accordion-body" id="delivery-note-express">ご依頼から5日以内に納品します。確認のご返答は当日中にいただける場合に限ります。</span>
           </span>
         </label>
       </div>
@@ -688,6 +725,9 @@
             <span class="sim-option-name">SNS・サンプル掲載不可</span>
             <span class="sim-option-price">＋¥5,000</span>
           </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-body">完成した作品をぐるにゃのSNS・ポートフォリオ・サンプル画像などへの掲載を行いません。プライベートなご利用・成人向けコンテンツへの使用など、公開を希望されない場合にお選びください。</span>
+          </span>
         </label>
       </div>
     </div>
@@ -754,25 +794,55 @@
 <div class="sim-total-bar">
   <div class="sim-total-inner">
     <div class="sim-total-selected" id="sim-selected-list"></div>
-    <span class="sim-total-label">お見積もり合計（目安）</span>
-    <span class="sim-total-amount" id="totalAmount">¥10,000<span>〜</span></span>
+    <div class="sim-total-main-row">
+      <div class="sim-total-amount-wrap">
+        <span class="sim-total-label">目安合計</span>
+        <span class="sim-total-amount" id="totalAmount">¥10,000<span>〜</span></span>
+      </div>
+      <button class="sim-breakdown-toggle" id="breakdownToggleBar" aria-expanded="false">
+        <span data-i18n="breakdown_toggle">内訳を確認</span>
+        <svg class="breakdown-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="sim-consult" id="sim-consult">
+        <div class="sim-consult-popup" id="sim-consult-popup" aria-hidden="true">
+          <a href="https://tsunagu.cloud/products/95782" target="_blank" rel="noopener" class="sim-consult-item">
+            <svg viewBox="0 0 24 24" class="sim-consult-icon-svg" aria-hidden="true"><path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/></svg>
+            <span>つなぐ</span>
+          </a>
+          <a href="https://coconala.com/users/1524205" target="_blank" rel="noopener" class="sim-consult-item">
+            <img src="assets/img/images/coconala.png" class="sim-consult-icon-img" alt="Coconala">
+            <span>Coconala</span>
+          </a>
+          <a href="https://twitter.com/mitty976" target="_blank" rel="noopener" class="sim-consult-item">
+            <svg viewBox="0 0 24 24" class="sim-consult-icon-svg" aria-hidden="true"><path fill="currentColor" d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg>
+            <span>X (Twitter)</span>
+          </a>
+        </div>
+        <button class="sim-consult-btn" id="sim-consult-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          <span data-i18n="consult_btn">この内容で相談する</span>
+        </button>
+      </div>
+    </div>
     <div class="sim-total-note-box" data-i18n="total_note">
       ※ 実際の金額はご相談にて確定します。<br>
-      ご予算のご相談も大歓迎です。理想のイメージとご予算をお聞かせいただければ、できる限り柔軟にご対応いたします。<br>
-      Coconalaまたは X（Twitter）のDMにてお気軽にご相談ください。
+      ご予算のご相談もお気軽にどうぞ。内容と予算のバランスを見ながら、できる限り柔軟にご提案します。
     </div>
   </div>
 </div>
 
-<script src="simulator.js"></script>
-
-<!-- 常在マスコット（固定・右下 / 将来：目パチ・カーソル追随に差し替え予定） -->
-<div id="mascot-wrap">
-  <div id="mascot-bubble">
-    <p id="mascot-bubble-text">気になる項目は未選択のままでもOK！ざっくり確認してみてね◎</p>
+<!-- 常在マスコット（クリックでページトップ） -->
+<div id="mascot-area">
+  <div id="mascot-wrap">
+    <div id="mascot-bubble">
+      <p id="mascot-bubble-text">気になる項目は未選択のままでもOK！ざっくり確認してみてね◎</p>
+    </div>
+    <a href="#html-root" aria-label="ページトップへ">
+      <img src="assets/img/chara-usa.png" id="chara-mascot" alt="ページトップへ">
+    </a>
   </div>
-  <img src="assets/img/chara-usa.png" id="chara-mascot" alt="">
 </div>
 
+<script src="simulator.js"></script>
 </body>
 </html>
