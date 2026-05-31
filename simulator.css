@@ -197,6 +197,159 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-section { display: none; }
 .sim-section.is-active { display: block; }
 
+/* === ベースタイプタブ === */
+.sim-base-type-tabs {
+  display: flex;
+  gap: 8px;
+  width: 76%;
+  margin: 0 auto 14px;
+}
+
+.sim-base-type-tab {
+  flex: 1;                          /* コンテナいっぱいに広がる */
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  border-radius: 10px;
+  padding: 12px 6px 10px;
+  cursor: pointer;
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(74,42,58,0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  transition: background 0.15s, color 0.15s, border-color 0.15s,
+              transform 0.22s ease-out, box-shadow 0.22s ease-out;
+}
+.sim-base-type-tab:hover {
+  border-color: var(--color-accent);
+  background: var(--color-works);
+  transform: scale(1.04);
+  box-shadow: 0 4px 14px rgba(74,42,58,0.1);
+}
+.sim-base-type-tab.is-active {
+  background: var(--color-works);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: 0 4px 14px rgba(74,42,58,0.1);
+}
+
+/* タブボタン内のサムネイル画像 */
+.base-type-thumb {
+  display: block;
+  width: 44px;
+  height: 68px;
+  object-fit: contain;
+  object-position: top center;
+}
+
+/* 画像ボックス（クロップ用） */
+.sim-pose-img-box {
+  width: 44px;
+  height: 68px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.sim-pose-img-box img {
+  width: auto;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+/* 等身クロップ（高さで縦トリミング） */
+.crop-bust  img { height: 296px; } /* top 23% ≒ 胸上 */
+.crop-waist img { height: 189px; } /* top 36% ≒ 腰上 */
+.crop-thigh img { height: 133px; } /* top 51% ≒ 太もも */
+.crop-full  img { height:  68px; } /* full */
+/* SD比率 */
+.crop-sd img {
+  height: 68px;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* === ポーズ選択グリッド === */
+.sim-pose-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+#pose-sd { grid-template-columns: repeat(4, 1fr); }
+
+.sim-pose-card {
+  cursor: pointer;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  padding: 12px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  position: relative;
+  transition: border-color 0.15s, background 0.15s,
+              transform 0.22s ease-out, box-shadow 0.22s ease-out;
+}
+.sim-pose-card input {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+.sim-pose-card:not(:has(input:checked)):hover {
+  border-color: var(--color-accent);
+  background: var(--color-works);
+  transform: scale(1.04);
+  box-shadow: 0 4px 14px rgba(74,42,58,0.1);
+}
+.sim-pose-card:has(input:checked) {
+  border-color: var(--color-accent);
+  background: var(--color-works);
+}
+/* 選択チェック */
+.sim-pose-card:has(input:checked)::after {
+  content: '✓';
+  position: absolute;
+  top: 5px; right: 6px;
+  font-size: 10px;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+.sim-pose-svg {
+  width: 38px;
+  height: auto;
+  color: var(--color-accent);
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+.sim-pose-card:has(input:checked) .sim-pose-svg,
+.sim-pose-card:hover .sim-pose-svg { opacity: 0.9; }
+
+.sim-pose-name {
+  font-size: 10px;
+  color: rgba(74,42,58,0.7);
+  line-height: 1.35;
+}
+.sim-pose-price {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+@media (max-width: 560px) {
+  #pose-normal { grid-template-columns: repeat(2, 1fr); }
+  #pose-sd     { grid-template-columns: repeat(2, 1fr); }
+  .sim-base-type-tabs { width: 100%; }
+}
+@media (max-width: 360px) {
+  .sim-pose-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* === カード === */
 .sim-card {
   background: #fff;
@@ -215,22 +368,67 @@ body.is-loaded { opacity: 1; filter: none; }
   color: rgba(74,42,58,0.45);
 }
 
-/* === 選択肢 === */
-.sim-options {
+/* === カードセクションヘッダー（番号バッジ＋英語サブタイトル） === */
+.sim-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.sim-card-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.6s ease;
+}
+.sim-card-title-wrap {
   display: flex;
   flex-direction: column;
+  gap: 1px;
+}
+.sim-card-title-en {
+  font-family: var(--font-en);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(74,42,58,0.28);
+  font-weight: 800;
+  line-height: 1.2;
+}
+.sim-card-header h2 {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(74,42,58,0.6);
+}
+
+/* === 選択肢（カードグリッド型） === */
+.sim-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 8px;
 }
 
 .sim-option {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 4px;
   cursor: pointer;
-  padding: 10px 14px;
+  padding: 14px 8px 12px;
   border-radius: 10px;
   border: 1.5px solid var(--color-border);
+  position: relative;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(74,42,58,0.05);
   transition: border-color 0.15s, background 0.15s,
               transform 0.22s ease-out, box-shadow 0.22s ease-out;
 }
@@ -241,7 +439,8 @@ body.is-loaded { opacity: 1; filter: none; }
   font-size: 11px;
   color: rgba(74,42,58,0.55);
   line-height: 1.7;
-  padding-top: 2px;
+  padding-top: 4px;
+  text-align: left;
 }
 .sim-option-inline-note--warning {
   color: #9a3a3a;
@@ -259,62 +458,67 @@ body.is-loaded { opacity: 1; filter: none; }
   background: var(--color-works);
 }
 .sim-option:not(:has(input:checked)):hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 18px rgba(74,42,58,0.1);
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(74,42,58,0.12);
 }
 .sim-option:active {
   transform: scale(0.97);
   transition: transform 0.06s ease;
 }
-
-/* 注意書きあり選択肢：取っ手付きシャッター */
-.sim-option:has(.sim-note-accordion):not(:has(input:checked)) {
-  position: relative;
-  border-bottom: 3px solid var(--color-border);
-  z-index: 1; /* 次の選択肢より手前に */
-}
-
-/* 取っ手（::after）：底辺中央に重ねる */
-.sim-option:has(.sim-note-accordion):not(:has(input:checked))::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 36px;
-  height: 7px;
-  background: var(--color-border);
-  border-radius: 999px;
-  transition: background 0.2s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* 未選択ホバー：取っ手がアクセントカラーに膨らむ */
-.sim-option:has(.sim-note-accordion):not(:has(input:checked)):hover::after {
-  background: var(--color-accent);
-  transform: translateX(-50%) scaleX(1.2) scaleY(1.15);
-}
 .sim-option:has(input:checked) {
   border-color: var(--color-accent);
   background: var(--color-works);
+  box-shadow: 0 4px 14px rgba(74,42,58,0.1);
 }
+.sim-option:has(input:checked)::after {
+  content: '✓';
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  font-family: var(--font-niku);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 20px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(74,42,58,0.15);
+}
+
+/* 応相談マーク */
+.price-consult {
+  font-size: 10.5px;
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+}
+
+/* 入力を視覚的に非表示（機能・アクセシビリティは維持） */
 .sim-option input {
-  accent-color: var(--color-accent);
-  width: 16px; height: 16px;
-  flex-shrink: 0;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
 }
 
 .sim-option-label {
-  flex: 1;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 3px;
+  width: 100%;
 }
-.sim-option-name { font-size: 13.5px; }
+.sim-option-name {
+  font-size: 12.5px;
+  text-align: center;
+  line-height: 1.4;
+}
 .sim-option-price {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(74,42,58,0.5);
-  white-space: nowrap;
+  text-align: center;
 }
 
 /* === カウンター === */
@@ -517,10 +721,77 @@ body.is-loaded { opacity: 1; filter: none; }
   outline: none;
 }
 
-/* === キャラクター・メッセージエリア === */
+/* === 常在マスコット（固定・右下） === */
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+
+#mascot-wrap {
+  position: fixed;
+  right: 20px;
+  bottom: 185px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  z-index: 250;
+  pointer-events: none;
+}
+
+#mascot-bubble {
+  position: relative;
+  background: #fff;
+  border: 1.5px solid var(--color-border);
+  border-radius: 12px 12px 4px 12px;
+  padding: 10px 13px;
+  width: 280px;
+  font-family: var(--font-title);
+  font-size: 11.5px;
+  color: rgba(74,42,58,0.7);
+  line-height: 1.75;
+  box-shadow: 0 3px 14px rgba(74,42,58,0.09);
+  pointer-events: auto;
+  transition: border-color 0.6s ease;
+}
+/* 吹き出しのしっぽ（下向き：ボーダー） */
+#mascot-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  right: 19px;
+  border: 10px solid transparent;
+  border-top-color: var(--color-border);
+  border-bottom-width: 0;
+}
+/* 吹き出しのしっぽ（下向き：白塗り） */
+#mascot-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 21px;
+  border: 8px solid transparent;
+  border-top-color: #fff;
+  border-bottom-width: 0;
+  z-index: 1;
+}
+
+#chara-mascot {
+  width: 160px;
+  display: block;
+  margin-left: auto;
+  animation: mascotFloat 3.2s ease-in-out infinite;
+}
+
+/* スマホでは非表示 */
+@media (max-width: 768px) {
+  #mascot-wrap { display: none; }
+}
+
+/* === キャラクター・メッセージエリア（将来用予約） === */
 .sim-chara-message {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 14px;
   padding: 16px 20px;
   background: var(--color-works);
@@ -529,16 +800,12 @@ body.is-loaded { opacity: 1; filter: none; }
   margin-bottom: 14px;
   transition: background 0.6s ease, border-color 0.6s ease;
 }
-.sim-chara-message-img {
-  width: 56px;
-  flex-shrink: 0;
-}
 .sim-chara-message-text {
   font-family: var(--font-niku);
   font-size: 13px;
   color: rgba(74,42,58,0.75);
   line-height: 1.9;
-  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 /* === レスポンシブ === */
@@ -680,3 +947,82 @@ body.is-loaded { opacity: 1; filter: none; }
   border-top-color: #e8c0c0;
 }
 .sim-note-accordion--warning .sim-note-accordion-body { color: #7a3030; }
+
+/* === タイプ未選択ヒント（浮遊アニメーション） === */
+@keyframes hintFloat {
+  0%, 100% { transform: translateY(0);   opacity: 0.45; }
+  50%       { transform: translateY(-6px); opacity: 0.88; }
+}
+.base-type-hint {
+  text-align: center;
+  font-family: var(--font-niku);
+  font-size: 12.5px;
+  color: rgba(74,42,58,0.55);
+  letter-spacing: 0.1em;
+  padding: 10px 0 2px;
+  animation: hintFloat 2.6s ease-in-out infinite;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* === B案：折りたたみバッジ === */
+.sim-base-type-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--color-accent);
+  background: var(--color-works);
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  font-family: var(--font-title);
+  color: var(--color-accent);
+  transition: box-shadow 0.22s ease-out, transform 0.22s ease-out;
+}
+.sim-base-type-badge:hover {
+  box-shadow: 0 4px 14px rgba(74,42,58,0.12);
+  transform: scale(1.01);
+}
+.base-badge-thumb {
+  display: block;
+  width: 28px;
+  height: 44px;
+  object-fit: contain;
+  object-position: top center;
+}
+.base-badge-label {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+.base-badge-change {
+  font-size: 11px;
+  opacity: 0.6;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  transition: background 0.15s;
+}
+.sim-base-type-badge:hover .base-badge-change {
+  background: rgba(74,42,58,0.06);
+}
+
+@keyframes badgeIn {
+  from { opacity: 0; transform: scaleX(0.85) translateY(-4px); }
+  65%  { transform: scaleX(1.04) translateY(2px); }
+  to   { opacity: 1; transform: none; }
+}
+.sim-base-type-badge.badge-enter {
+  animation: badgeIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* === 等身/SDカードのスプリング登場アニメーション === */
+@keyframes cardSpringIn {
+  from { opacity: 0; transform: scale(0.65) translateY(8px); }
+  65%  { opacity: 1; transform: scale(1.07) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.sim-pose-card.spring-enter {
+  animation: cardSpringIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}

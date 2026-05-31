@@ -72,43 +72,114 @@
 
     <!-- ① ベース -->
     <div class="sim-card">
-      <h2>① ベースイラスト</h2>
-      <div class="sim-options">
-        <label class="sim-option">
-          <input type="radio" name="i_base" value="10000" data-type="normal" checked>
-          <span class="sim-option-label">
-            <span class="sim-option-name">胸上（バストアップ）</span>
-            <span class="sim-option-price">¥10,000</span>
-          </span>
+      <div class="sim-card-header">
+        <span class="sim-card-num">01</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Base Illustration</span>
+          <h2>ベースイラスト</h2>
+        </div>
+      </div>
+      <!-- 等身/SDタブ（A案：常時表示 / B案：選択後バッジに折りたたみ） -->
+      <div class="sim-base-type-tabs">
+        <button class="sim-base-type-tab" data-base-type="normal">
+          <img class="base-type-thumb" src="assets/img/figure/等身.png" alt="" aria-hidden="true">
+          <span>等身キャラ</span>
+        </button>
+        <button class="sim-base-type-tab" data-base-type="sd">
+          <img class="base-type-thumb" src="assets/img/figure/2頭身.png" alt="" aria-hidden="true">
+          <span>SDキャラ</span>
+        </button>
+      </div>
+      <!-- 未選択時のヒント -->
+      <p class="base-type-hint" id="base-type-hint">キャラクタータイプを選んでください</p>
+
+      <!-- B案用バッジ：simulator.js の UX_MODE を 'B' にすると表示される -->
+      <div class="sim-base-type-badge" id="base-type-badge" style="display:none">
+        <img class="base-badge-thumb" id="base-badge-thumb" src="" alt="" aria-hidden="true">
+        <span class="base-badge-label" id="base-badge-label"></span>
+        <span class="base-badge-change">タイプを変更</span>
+      </div>
+
+      <!-- 等身グリッド（胸上・腰上・太もも・全身） -->
+      <div class="sim-pose-grid" id="pose-normal" style="display:none">
+
+        <label class="sim-pose-card">
+          <input type="radio" name="i_base" value="10000" data-type="normal">
+          <div class="sim-pose-img-box crop-bust">
+            <img src="assets/img/figure/等身.png" alt="胸上">
+          </div>
+          <span class="sim-option-name">胸上（バストアップ）</span>
+          <span class="sim-option-price">¥10,000</span>
         </label>
-        <label class="sim-option">
+
+        <label class="sim-pose-card">
           <input type="radio" name="i_base" value="13000" data-type="normal">
-          <span class="sim-option-label">
-            <span class="sim-option-name">腰上</span>
-            <span class="sim-option-price">¥13,000</span>
-          </span>
+          <div class="sim-pose-img-box crop-waist">
+            <img src="assets/img/figure/等身.png" alt="腰上">
+          </div>
+          <span class="sim-option-name">腰上</span>
+          <span class="sim-option-price">¥13,000</span>
         </label>
-        <label class="sim-option">
+
+        <label class="sim-pose-card">
           <input type="radio" name="i_base" value="15000" data-type="normal">
-          <span class="sim-option-label">
-            <span class="sim-option-name">太ももまで</span>
-            <span class="sim-option-price">¥15,000</span>
-          </span>
+          <div class="sim-pose-img-box crop-thigh">
+            <img src="assets/img/figure/等身.png" alt="太ももまで">
+          </div>
+          <span class="sim-option-name">太ももまで</span>
+          <span class="sim-option-price">¥15,000</span>
         </label>
-        <label class="sim-option">
+
+        <label class="sim-pose-card">
           <input type="radio" name="i_base" value="18000" data-type="normal">
-          <span class="sim-option-label">
-            <span class="sim-option-name">全身</span>
-            <span class="sim-option-price">¥18,000</span>
-          </span>
+          <div class="sim-pose-img-box crop-full">
+            <img src="assets/img/figure/等身.png" alt="全身">
+          </div>
+          <span class="sim-option-name">全身</span>
+          <span class="sim-option-price">¥18,000</span>
         </label>
-        <label class="sim-option">
+
+      </div>
+
+      <!-- SDグリッド（1.5・2・2.5・3頭身） -->
+      <div class="sim-pose-grid" id="pose-sd" style="display:none">
+
+        <label class="sim-pose-card">
+          <input type="radio" name="i_base" value="6000" data-type="sd">
+          <div class="sim-pose-img-box crop-sd">
+            <img src="assets/img/figure/1.5頭身.png" alt="1.5頭身">
+          </div>
+          <span class="sim-option-name">1.5頭身</span>
+          <span class="sim-option-price">¥6,000</span>
+        </label>
+
+        <label class="sim-pose-card">
           <input type="radio" name="i_base" value="7000" data-type="sd">
-          <span class="sim-option-label">
-            <span class="sim-option-name">SDキャラ（デフォルメ）</span>
-            <span class="sim-option-price">¥7,000</span>
-          </span>
+          <div class="sim-pose-img-box crop-sd">
+            <img src="assets/img/figure/2頭身.png" alt="2頭身">
+          </div>
+          <span class="sim-option-name">2頭身</span>
+          <span class="sim-option-price">¥7,000</span>
         </label>
+
+        <label class="sim-pose-card">
+          <input type="radio" name="i_base" value="8000" data-type="sd">
+          <div class="sim-pose-img-box crop-sd">
+            <img src="assets/img/figure/2.5頭身.png" alt="2.5頭身">
+          </div>
+          <span class="sim-option-name">2.5頭身</span>
+          <span class="sim-option-price">¥8,000</span>
+        </label>
+
+        <label class="sim-pose-card">
+          <input type="radio" name="i_base" value="9000" data-type="sd">
+          <div class="sim-pose-img-box crop-sd">
+            <img src="assets/img/figure/3頭身.png" alt="3頭身">
+          </div>
+          <span class="sim-option-name">3頭身</span>
+          <span class="sim-option-price">¥9,000</span>
+        </label>
+
       </div>
 
       <div class="sim-divider"></div>
@@ -126,7 +197,13 @@
 
     <!-- ② キャラデザイン -->
     <div class="sim-card">
-      <h2>② キャラクターデザイン</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">02</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Character Design</span>
+          <h2>キャラクターデザイン</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="radio" name="i_design" value="0" checked>
@@ -147,7 +224,13 @@
 
     <!-- ③ 背景 -->
     <div class="sim-card">
-      <h2>③ 背景</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">03</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Background</span>
+          <h2>背景</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="radio" name="i_bg" value="0" checked>
@@ -167,7 +250,8 @@
           <input type="radio" name="i_bg" value="5000">
           <span class="sim-option-label">
             <span class="sim-option-name">描き込みあり背景</span>
-            <span class="sim-option-price">＋¥5,000〜応相談</span>
+            <span class="sim-option-price">＋¥5,000〜</span>
+            <span class="price-consult">✧ 応相談</span>
           </span>
         </label>
         <label class="sim-option" data-show="sd">
@@ -182,7 +266,13 @@
 
     <!-- ④ 差分 -->
     <div class="sim-card">
-      <h2>④ 差分</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">04</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Difference</span>
+          <h2>差分</h2>
+        </div>
+      </div>
       <div class="sim-counter" data-show="normal">
         <span class="sim-counter-label">表情差分（等身キャラ）</span>
         <span class="sim-counter-price">+¥1,500 / 個</span>
@@ -241,7 +331,13 @@
 
     <!-- ⑤ 使用用途 -->
     <div class="sim-card">
-      <h2>⑤ 使用用途（任意・複数選択可）</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">05</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Usage</span>
+          <h2>使用用途（任意・複数選択可）</h2>
+        </div>
+      </div>
       <p class="sim-note" data-i18n="usage_hint" style="margin-top:0; margin-bottom:12px;">用途に合わせた構図・解像度で仕上げます。料金が変わるものは金額を表示しています。</p>
       <div class="sim-options">
         <label class="sim-option">
@@ -304,7 +400,13 @@
 
     <!-- ⑥ Live2D -->
     <div class="sim-card">
-      <h2>⑥ Live2D・動くイラスト</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">06</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Live2D</span>
+          <h2>動くイラスト</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="radio" name="i_live2d" value="0" checked>
@@ -347,7 +449,13 @@
 
     <!-- ⑦ オプション -->
     <div class="sim-card">
-      <h2>⑦ オプション</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">07</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Option</span>
+          <h2>オプション</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="checkbox" id="i_commercial" value="5000">
@@ -371,7 +479,13 @@
 
     <!-- ⑧ 納期 -->
     <div class="sim-card">
-      <h2>⑧ 納期</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">08</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Delivery</span>
+          <h2>納期</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="radio" name="i_rush" value="1" checked>
@@ -408,17 +522,16 @@
       <p class="sim-note" data-i18n="delivery_start_note" style="margin-top:6px;">※ 納期は着手後の目安です。ご依頼時の混み具合によってはお待ちいただく場合があります。</p>
     </div>
 
-    <!-- キャラクター・メッセージ（ここに内容を書いてね） -->
-    <div class="sim-chara-message">
-      <!-- <img src="" alt="" class="sim-chara-message-img"> -->
-      <p class="sim-chara-message-text">
-        <!-- ひとことメッセージをここに -->
-      </p>
-    </div>
 
     <!-- ⑨ リピーター -->
     <div class="sim-card">
-      <h2>⑨ リピーター割引</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">09</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Repeat Discount</span>
+          <h2>リピーター割引</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="checkbox" id="i_repeat">
@@ -432,7 +545,13 @@
 
     <!-- ⑩ 追加修正 -->
     <div class="sim-card">
-      <h2>⑩ 追加修正</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">10</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Extra Revisions</span>
+          <h2>追加修正</h2>
+        </div>
+      </div>
       <p class="sim-note" data-i18n="revision_note" style="margin-top:0; margin-bottom:12px;">無料修正は3回まで。4回目以降は追加料金が発生します。<br>線画後の構図・ポーズなど大きな変更は別案件となります。</p>
       <div class="sim-counter">
         <span class="sim-counter-label">追加修正回数（4回目以降）</span>
@@ -458,7 +577,13 @@
 
     <!-- ① サービス種別 -->
     <div class="sim-card">
-      <h2>① サービス種別</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">01</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Service Type</span>
+          <h2>サービス種別</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="radio" name="d_base" value="5000" checked>
@@ -507,7 +632,13 @@
 
     <!-- ② 制作点数 -->
     <div class="sim-card">
-      <h2>② 制作点数</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">02</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Quantity</span>
+          <h2>制作点数</h2>
+        </div>
+      </div>
       <p class="sim-note" data-i18n="design_qty" style="margin-top:0; margin-bottom:12px;">2点目以降は1点ごとに基本料金の50%を加算します。</p>
       <div class="sim-counter">
         <span class="sim-counter-label">追加制作点数</span>
@@ -522,7 +653,13 @@
 
     <!-- ③ オプション -->
     <div class="sim-card">
-      <h2>③ オプション</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">03</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Option</span>
+          <h2>オプション</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="checkbox" id="d_rawdata" value="5000">
@@ -557,7 +694,13 @@
 
     <!-- ④ 納期 -->
     <div class="sim-card">
-      <h2>④ 納期</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">04</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Delivery</span>
+          <h2>納期</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="radio" name="d_rush" value="1" checked>
@@ -585,7 +728,13 @@
 
     <!-- ⑤ リピーター -->
     <div class="sim-card">
-      <h2>⑤ リピーター割引</h2>
+      <div class="sim-card-header">
+        <span class="sim-card-num">05</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Repeat Discount</span>
+          <h2>リピーター割引</h2>
+        </div>
+      </div>
       <div class="sim-options">
         <label class="sim-option">
           <input type="checkbox" id="d_repeat">
@@ -616,5 +765,14 @@
 </div>
 
 <script src="simulator.js"></script>
+
+<!-- 常在マスコット（固定・右下 / 将来：目パチ・カーソル追随に差し替え予定） -->
+<div id="mascot-wrap">
+  <div id="mascot-bubble">
+    <p id="mascot-bubble-text">気になる項目は未選択のままでもOK！ざっくり確認してみてね◎</p>
+  </div>
+  <img src="assets/img/chara-usa.png" id="chara-mascot" alt="">
+</div>
+
 </body>
 </html>

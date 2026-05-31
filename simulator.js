@@ -100,6 +100,95 @@ document.querySelectorAll('.sim-tab').forEach(btn => {
   });
 });
 
+/* === 等身/SDベースタイプタブ切り替え === */
+/* ▼▼▼ UXモード切り替えはここ1行だけ ▼▼▼ */
+const UX_MODE = 'B'; /* 'A'：タブ常時表示 ／ 'B'：選択後バッジに折りたたみ */
+
+let currentBaseType = '';
+
+const baseTypeThumbs = {
+  normal: 'assets/img/figure/等身.png',
+  sd:     'assets/img/figure/2頭身.png',
+};
+
+const hintEl = document.getElementById('base-type-hint');
+
+function showBaseTypeCards(type) {
+  if (hintEl) hintEl.style.display = 'none';
+  const normalGrid = document.getElementById('pose-normal');
+  const sdGrid     = document.getElementById('pose-sd');
+
+  if (type === 'normal') {
+    sdGrid.style.display     = 'none';
+    normalGrid.style.display = '';
+    document.querySelectorAll('#pose-sd input[type="radio"]').forEach(r => r.checked = false);
+    document.querySelector('#pose-normal input[type="radio"]').checked = true;
+  } else {
+    normalGrid.style.display = 'none';
+    sdGrid.style.display     = '';
+    document.querySelectorAll('#pose-normal input[type="radio"]').forEach(r => r.checked = false);
+    document.querySelector('#pose-sd input[type="radio"]').checked = true;
+  }
+
+  /* 中央から外に向かってスプリング展開 */
+  const activeGrid = type === 'normal' ? normalGrid : sdGrid;
+  const cards = [...activeGrid.querySelectorAll('.sim-pose-card')];
+  const center = (cards.length - 1) / 2;
+  cards.forEach((card, i) => {
+    const dist = Math.abs(i - center);
+    card.classList.remove('spring-enter');
+    void card.offsetWidth;
+    card.style.animationDelay = (dist * 0.07) + 's';
+    card.classList.add('spring-enter');
+  });
+}
+
+function resetBaseType() {
+  document.getElementById('pose-normal').style.display = 'none';
+  document.getElementById('pose-sd').style.display     = 'none';
+  document.querySelectorAll('input[name="i_base"]').forEach(r => r.checked = false);
+  document.querySelectorAll('.sim-base-type-tab').forEach(b => b.classList.remove('is-active'));
+  if (hintEl) hintEl.style.display = '';
+  currentBaseType = '';
+  calcTotal();
+}
+
+document.querySelectorAll('.sim-base-type-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const type = btn.dataset.baseType;
+    if (type === currentBaseType) return;
+    currentBaseType = type;
+
+    document.querySelectorAll('.sim-base-type-tab').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+
+    showBaseTypeCards(type);
+
+    /* B案：タブをバッジに折りたたむ */
+    if (UX_MODE === 'B') {
+      const tabs  = document.querySelector('.sim-base-type-tabs');
+      const badge = document.getElementById('base-type-badge');
+      document.getElementById('base-badge-label').textContent =
+        type === 'normal' ? '等身キャラ' : 'SDキャラ';
+      document.getElementById('base-badge-thumb').src = baseTypeThumbs[type];
+      tabs.style.display  = 'none';
+      badge.style.display = 'flex';
+      badge.classList.remove('badge-enter');
+      void badge.offsetWidth;
+      badge.classList.add('badge-enter');
+    }
+
+    calcTotal();
+  });
+});
+
+/* B案：バッジクリックでタブに戻る */
+document.getElementById('base-type-badge').addEventListener('click', () => {
+  document.getElementById('base-type-badge').style.display = 'none';
+  document.querySelector('.sim-base-type-tabs').style.display = '';
+  resetBaseType();
+});
+
 /* === SD/等身フィルター === */
 function updateFilter() {
   const baseEl = document.querySelector('input[name="i_base"]:checked');
@@ -268,7 +357,7 @@ function updateSelectedItems() {
   const items = [];
   if (currentTab === 'illust') {
     const base = document.querySelector('input[name="i_base"]:checked');
-    if (base) items.push(base.closest('.sim-option').querySelector('.sim-option-name').textContent);
+    if (base) items.push(base.closest('.sim-option, .sim-pose-card')?.querySelector('.sim-option-name')?.textContent || '');
     if (counts.i_extraPerson > 0) items.push('追加キャラ ×' + counts.i_extraPerson);
     const design = document.querySelector('input[name="i_design"]:checked');
     if (design && parseInt(design.value) > 0) items.push('キャラデザイン');
@@ -318,7 +407,7 @@ let currentLang = 'jp';
 /* Fiverrの相場に合わせたUSD金額テーブル（¥÷150の自動換算ではない） */
 const USD_AMOUNT = {
   0:0, 1000:7, 1500:10, 2000:14, 3000:20, 3500:25,
-  5000:35, 6500:45, 7000:50, 8000:55, 10000:70,
+  5000:35, 6000:42, 6500:45, 7000:50, 8000:55, 9000:62, 10000:70,
   13000:90, 15000:100, 18000:125, 20000:140, 30000:200, 35000:240
 };
 
@@ -363,28 +452,30 @@ function switchCurrency(cur) {
 const TRANS_EN = {
   title: 'Price Simulator',
   'お見積もり合計（目安）': 'Estimated Total (approx.)',
-  /* section headers */
-  '① ベースイラスト': '① Base Illustration',
-  '② キャラクターデザイン': '② Character Design',
-  '③ 背景': '③ Background',
-  '④ 差分': '④ Variations',
-  '⑤ 使用用途（任意・複数選択可）': '⑤ Usage (Optional)',
-  '⑥ Live2D・動くイラスト': '⑥ Live2D / Animation',
-  '⑦ オプション': '⑦ Options',
-  '⑧ 納期': '⑧ Delivery',
-  '⑨ リピーター割引': '⑨ Repeat Discount',
-  '⑩ 追加修正': '⑩ Extra Revisions',
-  '① サービス種別': '① Service Type',
-  '② 制作点数': '② Quantity',
-  '③ オプション': '③ Options',
-  '④ 納期': '④ Delivery',
-  '⑤ リピーター割引': '⑤ Repeat Discount',
+  /* section headers（番号バッジ導入後のh2テキスト） */
+  'ベースイラスト': 'Base Illustration',
+  'キャラクターデザイン': 'Character Design',
+  '背景': 'Background',
+  '差分': 'Difference',
+  '使用用途（任意・複数選択可）': 'Usage (Optional)',
+  '動くイラスト': 'Live2D / Animation',
+  'オプション': 'Options',
+  '納期': 'Delivery',
+  'リピーター割引': 'Repeat Discount',
+  '追加修正': 'Extra Revisions',
+  'サービス種別': 'Service Type',
+  '制作点数': 'Quantity',
   /* base options */
   '胸上（バストアップ）': 'Bust Up',
   '腰上': 'Waist Up',
   '太ももまで': 'Thigh Length',
   '全身': 'Full Body',
   'SDキャラ（デフォルメ）': 'SD / Chibi',
+  '等身キャラ': 'Standard',
+  'SDキャラ': 'Chibi / SD',
+  '1.5頭身': '1.5-Head Chibi',
+  '2頭身': '2-Head Chibi',
+  '2.5頭身': '2.5-Head Chibi',
   '追加キャラクター人数': 'Additional Characters',
   'デザイン済み（参考画像あり）': 'Already Designed (with ref)',
   'デザインなし（キャラデザインから依頼）': 'No Design (from scratch)',
