@@ -1268,9 +1268,37 @@ document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach
 
 /* === 内訳パネルトグル（上：breakdownPanel） === */
 document.getElementById('breakdownToggle')?.addEventListener('click', () => {
-  const panel  = document.getElementById('breakdownPanel');
-  const isOpen = panel.classList.toggle('is-open');
-  document.getElementById('breakdownToggle')?.setAttribute('aria-expanded', String(isOpen));
+  const panel     = document.getElementById('breakdownPanel');
+  const toggleBtn = document.getElementById('breakdownToggle');
+  const bar       = panel.querySelector('.receipt-bar');
+  const card      = panel.querySelector('.receipt-card');
+  const zigzag    = panel.querySelector('.receipt-zigzag-bottom');
+
+  if (panel.classList.contains('is-open')) {
+    toggleBtn?.setAttribute('aria-expanded', 'false');
+    const body = panel.querySelector('.receipt-body');
+    const bar  = panel.querySelector('.receipt-bar');
+    const translateY = -(body.offsetHeight + bar.offsetHeight);
+    panel.style.setProperty('--body-close-y', translateY + 'px');
+    panel.classList.add('is-closing');
+
+    /* bodyのtransition(0.4s)完了後にbarをスライドアップ */
+    setTimeout(() => {
+      bar.style.transition = 'transform 0.25s ease-in';
+      bar.style.transform  = 'translateY(-100%)';
+    }, 450);
+
+    setTimeout(() => {
+      panel.classList.remove('is-open');
+      panel.classList.remove('is-closing');
+      panel.style.removeProperty('--body-close-y');
+      bar.style.cssText = '';
+    }, 900);
+
+  } else {
+    panel.classList.add('is-open');
+    toggleBtn?.setAttribute('aria-expanded', 'true');
+  }
 });
 
 /* === タグリストトグル（下バー：sim-total-selected） === */

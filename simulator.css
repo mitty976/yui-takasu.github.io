@@ -638,21 +638,24 @@ body.is-loaded { opacity: 1; filter: none; }
   justify-content: space-between;
   background: #fff;
   border-radius: 14px;
-  padding: 28px 20px;
+  padding: 28px 20px 40px;
   margin-bottom: 20px;
   box-shadow: 0 2px 12px rgba(74,42,58,0.06);
   border: 1px solid rgba(234,181,197,0.3);
   position: relative;
   transition: background 0.6s ease, border-color 0.6s ease,
-              margin-bottom 0s 0.4s, box-shadow 0s 0.4s;
+              margin-bottom 0s, box-shadow 0s 0.4s;
 }
 .sim-total-top-card:has(+ .sim-breakdown-panel.is-open) {
-  margin-bottom: -8px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  margin-bottom: -15px;
   box-shadow: none;
   transition: background 0.6s ease, border-color 0.6s ease,
-              margin-bottom 0s, box-shadow 0s, border-radius 0s;
+              margin-bottom 0s, box-shadow 0s;
+}
+/* 閉じ始めた瞬間に余白を即戻し */
+.sim-total-top-card:has(+ .sim-breakdown-panel .receipt-wrapper.is-closing) {
+  margin-bottom: 20px;
+  transition: margin-bottom 0s;
 }
 .sim-total-top-left {
   display: flex;
@@ -707,8 +710,7 @@ body.is-loaded { opacity: 1; filter: none; }
   border-radius: 14px 14px 0 0;
   max-height: 0;
   margin-bottom: 0;
-  /* 閉じるとき：clip-pathが終わり切ってからmax-heightを回収 */
-  transition: max-height 0s 0.4s, margin-bottom 0.4s ease;
+  transition: max-height 0s, margin-bottom 0s;
 }
 .sim-breakdown-panel.is-open {
   max-height: 1200px;
@@ -717,15 +719,27 @@ body.is-loaded { opacity: 1; filter: none; }
   transition: max-height 0s, margin-bottom 0.4s ease;
 }
 
-/* clip-pathで上端固定・下端が伸びる ＝ プリンターから出てくる紙 */
+/* プリンターから出てくる紙：上からスライドして収まる */
 .receipt-wrapper {
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 14px;
   overflow: hidden;
 }
 .sim-breakdown-panel.is-open .receipt-wrapper {
-  clip-path: inset(0 0 0% 0);
+  animation: printAction 0.5s ease-out forwards;
+}
+
+@keyframes printAction {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+@keyframes printClose {
+  0%   { transform: translateY(0);    opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 0; }
+}
+.sim-breakdown-panel .receipt-wrapper.is-closing {
+  animation: printClose 0.35s ease-in forwards;
 }
 
 /* バーはカードに揃える */
@@ -733,19 +747,24 @@ body.is-loaded { opacity: 1; filter: none; }
   height: 12px;
   background: var(--color-accent);
   border-radius: 14px 14px 0 0;
-  margin: 0 80px;
+  margin: 0 50px;
   transition: background 0.6s ease;
+  position: relative;
+  z-index: 1;
+}
+.sim-breakdown-panel.is-closing .receipt-card {
+  border: none;
 }
 
-/* バーの後にカードが追いかける（C案） */
 .receipt-body {
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
-.sim-breakdown-panel.is-open .receipt-body {
   opacity: 1;
-  transition: opacity 0.3s ease 0.25s;
+  transition: transform 0.4s ease-in;
 }
+
+.sim-breakdown-panel.is-closing .receipt-body {
+  transform: translateY(var(--body-close-y, -94px));
+}
+
 
 /* === 合計バー（固定） === */
 .sim-total-bar {
@@ -1332,7 +1351,7 @@ body.is-loaded { opacity: 1; filter: none; }
 /* 下ギザギザ（レシートの切り取り線） */
 .receipt-zigzag-bottom {
   height: 12px;
-  margin: 0 80px;
+  margin: 0 50px;
   background-image:
     linear-gradient( 45deg, var(--color-bg) 33%, transparent 33%),
     linear-gradient(-45deg, var(--color-bg) 33%, transparent 33%);
@@ -1347,7 +1366,7 @@ body.is-loaded { opacity: 1; filter: none; }
   font-family: var(--font-title);
   background: #fff;
   padding: 8px 24px 12px;
-  margin: 0 80px;
+  margin: 0 50px;
   border: 2px solid var(--color-border);
   font-size: 13px;
   line-height: 1.5;
