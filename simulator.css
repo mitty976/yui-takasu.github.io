@@ -41,8 +41,10 @@
 html, body {
   min-height: 100%;
   font-family: var(--font-title);
-  background: var(--color-bg);
+  background-color: var(--color-works);
+  background-image: none;
   color: #4a2a3a;
+  transition: background-color 0.6s ease;
 }
 
 body {
@@ -69,29 +71,93 @@ body.is-loaded { opacity: 1; filter: none; }
 /* === ヘッダー === */
 .site-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 14px 28px;
+  padding: 14px 28px 0;
   flex-shrink: 0;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 26px;
+  background: var(--color-works);
+  position: relative;
+  transition: background 0.6s ease;
 }
 
-.header-left {
+.header-top {
   display: flex;
   align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  border-bottom: 1px solid rgba(74,42,58,0.15);
+  padding-bottom: 10px;
 }
 
-.main-title {
-  font-family: var(--font-title);
-  font-size: 32px;
-  color: var(--color-accent);
-  letter-spacing: 0.02em;
-  line-height: 1;
-  white-space: nowrap;
+/* タイトルゾーン（スカラップ上端） */
+.sim-title-zone {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 16px;
+  position: relative;
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 50% 100%, rgba(255,255,255,0.85) 30px, transparent 30px)
+      top / 60px 40px repeat-x,
+    linear-gradient(to bottom, transparent 40px, rgba(255,255,255,0.85) 40px);
 }
+.sim-title-zone::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 44px;
+  background: radial-gradient(circle at 23px 44px, var(--color-bg) 22px, transparent 23px);
+  background-size: 46px 44px;
+  background-repeat: repeat-x;
+  flex-shrink: 0;
+  transition: background 0.6s ease;
+}
+
+/* 料金シミュレータータイトル */
+.sim-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  position: relative;
+}
+.sim-page-title {
+  font-family: var(--font-title);
+  font-size: 40px;
+  color: var(--color-accent);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  transition: color 0.6s ease;
+}
+.sim-sparkle {
+  font-size: 18px;
+  color: var(--color-accent);
+  opacity: 0.7;
+  animation: sparkle 2.8s ease-in-out infinite;
+  transition: color 0.6s ease;
+}
+.sim-sparkle:last-child { animation-delay: 1.4s; }
+
+/* タイトル周囲の散らばり✦ */
+.sim-deco {
+  position: absolute;
+  color: var(--color-accent);
+  pointer-events: none;
+  animation: sparkle 2.8s ease-in-out infinite;
+  transition: color 0.6s ease;
+}
+.sim-deco.d1 { top: -14px; left:  40px; font-size: 10px; opacity: 0.55; animation-delay: 0.4s; }
+.sim-deco.d2 { top:  -6px; left:  80px; font-size:  7px; opacity: 0.40; animation-delay: 1.2s; }
+.sim-deco.d3 { top: -16px; right: 40px; font-size: 10px; opacity: 0.55; animation-delay: 0.9s; }
+.sim-deco.d4 { top:  -4px; right: 80px; font-size:  7px; opacity: 0.40; animation-delay: 1.9s; }
+.sim-deco.d5 { bottom: -10px; left: 60px;  font-size: 8px; opacity: 0.35; animation-delay: 2.3s; }
+.sim-deco.d6 { bottom:  -8px; right: 60px; font-size: 6px; opacity: 0.30; animation-delay: 0.7s; }
 
 /* 戻るリンク群 */
 .back-nav {
@@ -125,6 +191,40 @@ body.is-loaded { opacity: 1; filter: none; }
   gap: 16px;
 }
 
+.header-nav-home {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: var(--color-accent);
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+.header-nav-home:hover { opacity: 1; }
+
+.header-nav-home-text {
+  font-family: var(--font-niku);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  transition: color 0.6s ease;
+}
+
+.header-nav-sep {
+  color: rgba(74,42,58,0.3);
+  font-size: 14px;
+  line-height: 1;
+  user-select: none;
+}
+
+.header-top-divider {
+  display: block;
+  width: 1px;
+  height: 22px;
+  background: rgba(74,42,58,0.2);
+  flex-shrink: 0;
+}
+
 .header-icon-img {
   width: 30px; height: 30px;
   object-fit: contain;
@@ -145,7 +245,12 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-page {
   max-width: 760px;
   margin: 0 auto;
-  padding: 20px 16px 180px;
+  padding: 70px 16px 180px;
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 50% 100%, rgba(255,255,255,0.85) 30px, transparent 30px)
+      top / 60px 40px repeat-x,
+    linear-gradient(to bottom, transparent 40px, rgba(255,255,255,0.85) 40px);
 }
 
 .sim-desc {
@@ -155,6 +260,124 @@ body.is-loaded { opacity: 1; filter: none; }
   margin-bottom: 32px;
   font-family: var(--font-title);
   letter-spacing: 0.04em;
+}
+
+/* === 説明文ラッパー（ウサギ絶対配置の基準） === */
+.sim-hero-wrapper {
+  position: relative;
+  margin-bottom: 24px;
+}
+/* === 説明文ボックス === */
+.sim-hero-desc {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background: var(--color-works);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 14px 100px 14px 18px;
+}
+.sim-hero-deco {
+  flex-shrink: 0;
+  display: flex;
+  align-self: flex-start;
+  margin-top: 0px;
+  margin-left: -10px;
+}
+.sim-hero-deco svg {
+  transform: rotate(-15deg);
+  transform-origin: top left;
+}
+.sim-hero-text {
+  flex: 1;
+  font-family: var(--font-title);
+  font-size: 13px;
+  line-height: 1.9;
+  color: rgba(74,42,58,0.72);
+  letter-spacing: 0.04em;
+}
+.sim-hero-rabbit {
+  position: absolute;
+  right: 150px;
+  bottom: 5px;
+  display: flex;
+  align-items: flex-end;
+}
+.sim-hero-rabbit .rabbit-svg {
+  transform-origin: bottom center;
+  transform-box: fill-box;
+  animation: ear-pico 1.6s ease-in-out infinite;
+}
+@keyframes ear-pico {
+  0%, 100%  { transform: scaleY(1)    translateY(0); }
+  45%, 55%  { transform: scaleY(0.88) translateY(4px); }
+}
+
+/* === ウサギのハート === */
+.rheart {
+  position: absolute;
+  bottom: 20px;
+  opacity: 0;
+  animation: heart-float 2.6s ease-in-out infinite;
+  color: var(--color-accent);
+  font-size: 22px;
+  line-height: 1;
+}
+.rheart::after {
+  content: '♥';
+  opacity: 0.85;
+}
+/* 左側3個 */
+.rh1 { left: -50px; animation-delay: 0s; }
+.rh2 { left: -64px; animation-delay: 0.85s;  font-size: 16px; }
+.rh3 { left: -38px; animation-delay: 1.7s;   font-size: 13px; }
+/* 右側3個 */
+.rh4 { right: -50px; animation-delay: 0.42s; }
+.rh5 { right: -64px; animation-delay: 1.28s; font-size: 16px; }
+.rh6 { right: -38px; animation-delay: 2.1s;  font-size: 13px; }
+
+@keyframes heart-float {
+  0%   { transform: translateY(0)    scale(0.4); opacity: 0; }
+  12%  { opacity: 1; }
+  80%  { opacity: 0.3; }
+  100% { transform: translateY(-52px) scale(1.0); opacity: 0; }
+}
+
+/* === 合計カード右エリア（ボタン＋電卓） === */
+.sim-total-top-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 28px;
+}
+.sim-calc-svg {
+  width: 72px;
+  height: auto;
+  display: block;
+  transform: rotate(15deg);
+  transform-origin: center;
+}
+
+/* === 追加キャラクター（カードヘッダー内） === */
+.sim-extra-char-wrap {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.sim-extra-char-label {
+  font-family: var(--font-title);
+  font-size: 11px;
+  color: var(--color-accent);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+.sim-extra-char-price {
+  font-size: 11px;
+  color: rgba(74,42,58,0.45);
+  white-space: nowrap;
 }
 
 /* === タブ === */
@@ -638,7 +861,7 @@ body.is-loaded { opacity: 1; filter: none; }
   justify-content: space-between;
   background: #fff;
   border-radius: 14px;
-  padding: 28px 20px 40px;
+  padding: 28px 20px 40px 36px;
   margin-bottom: 20px;
   box-shadow: 0 2px 12px rgba(74,42,58,0.06);
   border: 1px solid rgba(234,181,197,0.3);
@@ -668,7 +891,39 @@ body.is-loaded { opacity: 1; filter: none; }
   color: rgba(74,42,58,0.5);
   letter-spacing: 0.08em;
 }
+.sim-total-top-card::before {
+  content: '✦';
+  position: absolute;
+  left: 170px; top: 10px;
+  font-size: 11px;
+  color: var(--color-accent);
+  animation: sparkle 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+.sim-total-top-card::after {
+  content: '✦';
+  position: absolute;
+  left: 148px; bottom: 10px;
+  font-size: 7px;
+  color: var(--color-accent);
+  animation: sparkle 2.4s ease-in-out 0.9s infinite;
+  pointer-events: none;
+}
+.sim-total-top-amount::before {
+  content: '✦';
+  position: absolute;
+  left: -18px; top: 4px;
+  font-size: 9px;
+  color: var(--color-accent);
+  animation: sparkle 2.4s ease-in-out 0.45s infinite;
+  pointer-events: none;
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.75) rotate(0deg); }
+  50%       { opacity: 0.9;  transform: scale(1.15) rotate(20deg); }
+}
 .sim-total-top-amount {
+  position: relative;
   font-size: 28px;
   font-weight: 700;
   color: var(--color-accent);
@@ -1123,7 +1378,7 @@ body.is-loaded { opacity: 1; filter: none; }
   .header-nav {
     width: 100%;
     justify-content: flex-start;
-    gap: 14px;
+    gap: px;
     padding-top: 4px;
     border-top: 1px solid var(--color-border);
     order: -1;

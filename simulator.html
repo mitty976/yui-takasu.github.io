@@ -16,48 +16,97 @@
 
 <!-- ヘッダー -->
 <header class="site-header">
-  <div class="header-left">
-    <h1 class="main-title" id="page-title">料金シミュレーター</h1>
-    <nav class="back-nav">
-      <a href="index.html" class="back-link">Home ←</a>
-      <a href="illust/index.html" class="back-link">Illust ←</a>
-      <a href="design/index.html" class="back-link">Design ←</a>
+  <div class="header-top">
+    <div class="header-controls">
+      <div class="lang-switch">
+        <button class="lang-btn is-active" data-lang="jp" onclick="switchLang('jp')">JP</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" data-lang="en" onclick="switchLang('en')">EN</button>
+      </div>
+      <select class="currency-select" id="currencySelect" onchange="switchCurrency(this.value)">
+        <option value="JPY">¥ JPY</option>
+        <option value="USD">$ USD</option>
+      </select>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html" aria-label="Home" class="header-nav-home">
+        <svg class="header-icon-svg" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="currentColor" d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/>
+        </svg>
+        <span class="header-nav-home-text">Home</span>
+      </a>
+      <a href="https://twitter.com/mitty976" target="_blank" rel="noopener" aria-label="X（Twitter）">
+        <svg class="header-icon-svg" style="width:24px;height:24px;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="currentColor" d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/>
+        </svg>
+      </a>
+      <a href="https://coconala.com/users/1524205" target="_blank" rel="noopener" aria-label="Coconala">
+        <img src="assets/img/images/coconala.png" class="header-icon-img" alt="Coconala">
+      </a>
+      <a href="https://skeb.jp/@mitty976" target="_blank" rel="noopener" aria-label="Skeb">
+        <img src="assets/img/images/Skeb.png" class="header-icon-img" alt="Skeb">
+      </a>
+      <a href="mailto:mayuyu9766@gmail.com" aria-label="Mail">
+        <svg class="header-icon-svg" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="currentColor" d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/>
+        </svg>
+      </a>
     </nav>
   </div>
-  <div class="header-controls">
-    <div class="lang-switch">
-      <button class="lang-btn is-active" data-lang="jp" onclick="switchLang('jp')">JP</button>
-      <span class="lang-sep">|</span>
-      <button class="lang-btn" data-lang="en" onclick="switchLang('en')">EN</button>
+  <div class="sim-title-zone">
+    <div class="sim-header-title">
+      <span class="sim-sparkle" aria-hidden="true">✦</span>
+      <h1 class="sim-page-title" id="page-title">料金シミュレーター</h1>
+      <span class="sim-sparkle" aria-hidden="true">✦</span>
+      <span class="sim-deco d1" aria-hidden="true">✦</span>
+      <span class="sim-deco d2" aria-hidden="true">✧</span>
+      <span class="sim-deco d3" aria-hidden="true">✦</span>
+      <span class="sim-deco d4" aria-hidden="true">✧</span>
+      <span class="sim-deco d5" aria-hidden="true">✦</span>
+      <span class="sim-deco d6" aria-hidden="true">✧</span>
     </div>
-    <select class="currency-select" id="currencySelect" onchange="switchCurrency(this.value)">
-      <option value="JPY">¥ JPY</option>
-      <option value="USD">$ USD</option>
-    </select>
+    <nav class="back-nav">
+      <a href="index.html" class="back-link">Home ▶</a>
+      <a href="illust/index.html" class="back-link">Illust ▶</a>
+      <a href="design/index.html" class="back-link">Design ▶</a>
+    </nav>
   </div>
-  <nav class="header-nav">
-    <a href="https://twitter.com/mitty976" target="_blank" rel="noopener" aria-label="X（Twitter）">
-      <svg class="header-icon-svg" style="width:24px;height:24px;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path fill="currentColor" d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/>
-      </svg>
-    </a>
-    <a href="https://coconala.com/users/1524205" target="_blank" rel="noopener" aria-label="Coconala">
-      <img src="assets/img/images/coconala.png" class="header-icon-img" alt="Coconala">
-    </a>
-    <a href="https://skeb.jp/@mitty976" target="_blank" rel="noopener" aria-label="Skeb">
-      <img src="assets/img/images/Skeb.png" class="header-icon-img" alt="Skeb">
-    </a>
-    <a href="mailto:mayuyu9766@gmail.com" aria-label="Mail">
-      <svg class="header-icon-svg" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path fill="currentColor" d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/>
-      </svg>
-    </a>
-  </nav>
 </header>
 
 <!-- メインコンテンツ -->
 <main class="sim-page">
-  <p class="sim-desc" data-i18n="page_desc">オプションを選ぶと合計金額が自動で計算されます。あくまでも目安です。</p>
+
+  <div class="sim-hero-wrapper">
+  <div class="sim-hero-desc">
+    <span class="sim-hero-deco" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="48" height="48">
+        <path d="M500.297,350.4c-27.014-16.684-110.2-70.81-166.993-136.76c54.373,3.585,129.914,7.733,148.8,4.582
+          c30.343-5.057,32.032-33.71,28.654-45.514c-2.42-8.445-30.531-80.213-57.307-111.256c-10.657-12.357-32.032-20.228-47.203-8.425
+          c-29.7,23.103-76.064,60.962-101.073,81.467c-6.361-15.606-19.942-27.4-49.168-27.4c-29.76,0-43.332,12.208-49.544,28.239
+          c-22.56-18.914-69.536-58.058-100.708-82.306c-15.172-11.803-36.546-3.932-47.203,8.425C31.774,92.496,3.663,164.264,1.243,172.709
+          c-3.378,11.804-1.689,40.457,28.654,45.514c18.56,3.092,93.32-0.86,148.642-4.396C121.745,279.688,38.697,333.737,11.703,350.4
+          c-5.62,3.476-2.914,8.286,0.533,9.373c3.448,1.086,60.38,26.125,60.38,26.125c3.328,1.442,5.777,4.366,6.608,7.902
+          c0,0,14.272,62.236,15.872,67.303c1.6,5.066,7.231,4.187,9.7,1.65c90.653-93.28,131.149-183.785,147.634-231.226
+          c1.186,0.079,2.371,0.178,3.576,0.178c1.204,0,2.38-0.099,3.565-0.178c16.485,47.441,56.982,137.945,147.634,231.226
+          c2.47,2.538,8.1,3.416,9.7-1.65c1.6-5.067,15.872-67.303,15.872-67.303c0.83-3.536,3.28-6.46,6.608-7.902
+          c0,0,56.932-25.039,60.379-26.125C503.211,358.687,505.918,353.876,500.297,350.4z" fill="var(--color-border)"/>
+      </svg>
+    </span>
+    <p class="sim-hero-text" data-i18n="page_desc">ご希望の内容を選ぶだけで、<br>ざっくり料金を確認できます。<br>迷った項目は未選択でもOKです。</p>
+  </div>
+  <span class="sim-hero-rabbit" aria-hidden="true">
+      <span class="rheart rh1"></span>
+      <span class="rheart rh2"></span>
+      <span class="rheart rh3"></span>
+      <span class="rheart rh4"></span>
+      <span class="rheart rh5"></span>
+      <span class="rheart rh6"></span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="391 29 817 1145" width="48" height="67" class="rabbit-svg">
+        <path d="M0 0 C9.62993536 8.46128169 18.05263515 17.38440487 24.64160156 28.44238281 C25.01623535 29.06951172 25.39086914 29.69664063 25.77685547 30.34277344 C37.90299376 51.04915788 43.45016021 73.30375301 46.47363281 96.90722656 C46.55838867 97.5671183 46.64314453 98.22701004 46.73046875 98.9068985 C49.18798374 118.13308511 51.16330231 137.41215597 53.14160156 156.69238281 C53.35381896 158.75333678 53.56603823 160.81429055 53.77825928 162.87524414 C62.84976945 251.14268625 70.63807546 339.55048156 78.64160156 439.44238281 C79.19101913 439.38572449 79.74043671 439.32906616 80.3065033 439.27069092 C92.26843828 438.05011229 104.18304781 437.02317097 116.20410156 436.69238281 C116.92497955 436.67081116 117.64585754 436.6492395 118.38858032 436.62701416 C137.12660684 436.10110414 156.25943998 436.59112781 174.87019348 438.96194458 C176.11475815 439.1204892 177.35932281 439.27903381 178.64160156 439.44238281 C178.6841507 438.35334152 178.72669983 437.26430023 178.77053833 436.14225769 C179.41450135 421.07134692 180.69261733 406.06238031 182.00686264 391.03799987 C182.26541755 388.07631319 182.52142926 385.11440854 182.77751899 382.15250784 C183.61054797 372.51980735 184.45310008 362.88795036 185.29746532 353.25623798 C185.59037369 349.91280258 185.88252166 346.5693009 186.17469537 343.22580123 C191.59082319 281.25768191 197.31835716 219.32539511 203.64160156 157.44238281 C203.73296387 156.5464592 203.82432617 155.65053558 203.91845703 154.72746277 C204.95093389 144.60602728 205.99997658 134.4866289 207.09283447 124.371521 C207.36623459 121.83657465 207.63675284 119.30131504 207.90374756 116.76568604 C211.65941618 81.34970001 218.0372396 45.4576609 241.64160156 17.44238281 C242.44855469 16.46140625 243.25550781 15.48042969 244.08691406 14.46972656 C267.47803252 -13.04192302 304.29369307 -26.61086567 339.39160156 -30.24511719 C382.66211355 -33.09030154 424.9420209 -23.02116995 458.45410156 5.37988281 C463.40483527 9.94484506 467.55551924 15.10484354 471.64160156 20.44238281 C472.23714844 21.21066406 472.83269531 21.97894531 473.44628906 22.77050781 C496.00765114 53.3375145 503.13780743 93.92612495 502.95410156 131.19238281 C502.95194641 131.99052399 502.94979126 132.78866516 502.9475708 133.61099243 C502.57300236 220.99910911 470.06805906 309.83104981 396.64160156 494.44238281 C396.37095886 495.06723572 396.10031616 495.69208862 395.82147217 496.33587646 C392.77187107 503.37590069 389.71379565 510.41218788 386.64160156 517.44238281 C388.57806235 519.089452 390.51559659 520.73522178 392.45410156 522.37988281 C393.04795654 522.88422852 393.64181152 523.38857422 394.25366211 523.90820312 C397.77804663 526.8928765 401.34262755 529.81311313 404.95410156 532.69238281 C418.14058872 543.42332178 430.61545597 555.50533151 441.64160156 568.44238281 C442.85976562 569.84423828 442.85976562 569.84423828 444.10253906 571.27441406 C507.58694602 644.74916442 541.8095959 745.64010176 537.33300781 845.28222656 C533.57070584 893.68482504 514.73279877 937.16960536 482.64160156 973.44238281 C481.89394531 974.30089844 481.14628906 975.15941406 480.37597656 976.04394531 C472.03594104 985.49398556 463.28682272 994.4001318 453.40332031 1002.23925781 C450.5269168 1004.53387108 447.74607609 1006.9210322 444.95410156 1009.31738281 C437.867162 1015.22012939 430.34226518 1020.37701908 422.64160156 1025.44238281 C421.54501221 1026.16578857 421.54501221 1026.16578857 420.42626953 1026.90380859 C349.46375376 1073.42930833 264.30263706 1098.88894934 17.01660156 1097.62988281 C-39.68613712 1085.61082093 -95.4863108 1066.30418728 -145.35839844 1036.44238281 C-146.1021875 1035.99942871 -146.84597656 1035.55647461 -147.61230469 1035.10009766 C-168.02485649 1022.86854325 -186.87649854 1008.57736266 -204.35839844 992.44238281 C-205.36644591 991.53624636 -206.37562187 990.63136422 -207.38574219 989.72753906 C-213.1014422 984.5930517 -218.4437312 979.35896719 -223.35839844 973.44238281 C-224.16535156 972.52328125 -224.97230469 971.60417969 -225.80371094 970.65722656 C-266.80148452 923.79625051 -283.51920935 865.24113549 -280.15185547 803.66552734 C-276.85848346 755.04937981 -263.30245899 706.82169333 -243.35839844 662.44238281 C-242.75777588 661.09877686 -242.75777588 661.09877686 -242.14501953 659.72802734 C-219.12197792 608.68419163 -183.49654279 561.17628801 -139.35839844 526.44238281 C-138.49859375 525.74886719 -137.63878906 525.05535156 -136.75292969 524.34082031 C-130.61524605 519.44238281 -130.61524605 519.44238281 -128.35839844 519.44238281 C-128.82511963 518.38889648 -129.29184082 517.33541016 -129.77270508 516.25 C-140.60804539 491.77163125 -151.22959075 467.22204097 -161.35839844 442.44238281 C-161.61840637 441.80697571 -161.87841431 441.1715686 -162.14630127 440.51690674 C-176.57596893 405.22554157 -190.13021932 369.55723006 -202.35839844 333.44238281 C-202.65488281 332.56731079 -202.95136719 331.69223877 -203.25683594 330.79064941 C-220.63825615 279.3866576 -235.86309977 227.29438307 -243.35839844 173.44238281 C-243.54523193 172.10433594 -243.54523193 172.10433594 -243.73583984 170.73925781 C-250.62363229 120.12673849 -247.19280766 60.72717685 -215.35839844 18.44238281 C-212.49335974 14.96897836 -209.46963636 11.69527912 -206.35839844 8.44238281 C-205.64554687 7.64316406 -204.93269531 6.84394531 -204.19824219 6.02050781 C-154.97394068 -47.00326808 -53.21239867 -45.21250632 0 0 Z"
+          fill="var(--color-border)" transform="translate(671.3583984375,76.5576171875)"/>
+      </svg>
+  </span>
+</div>
 
   <!-- タブ切り替え -->
   <div class="sim-tabs">
@@ -71,10 +120,40 @@
       <span class="sim-total-top-label" data-i18n="total_label_top">お見積もり合計（目安）</span>
       <span class="sim-total-top-amount" id="totalAmountTop">¥10,000<span>〜</span></span>
     </div>
-    <button class="sim-breakdown-toggle" id="breakdownToggle" aria-expanded="false">
-      <span id="breakdownToggleText" data-i18n="breakdown_toggle">内訳を確認</span>
-      <svg class="breakdown-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
-    </button>
+    <div class="sim-total-top-right">
+      <button class="sim-breakdown-toggle" id="breakdownToggle" aria-expanded="false">
+        <span id="breakdownToggleText" data-i18n="breakdown_toggle">内訳を表示</span>
+        <svg class="breakdown-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -8 88 96" class="sim-calc-svg" aria-hidden="true">
+        <rect x="0" y="0" width="62" height="82" rx="11" fill="var(--color-accent)"/>
+        <rect x="7" y="8" width="48" height="15" rx="4" fill="white" fill-opacity="0.85"/>
+        <rect x="7"  y="29" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="20" y="29" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="33" y="29" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="46" y="29" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="7"  y="41" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="20" y="41" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="33" y="41" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="46" y="41" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="7"  y="53" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="20" y="53" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="33" y="53" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="46" y="53" width="10" height="21" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="7"  y="65" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="20" y="65" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <rect x="33" y="65" width="10" height="9" rx="2.5" fill="white" fill-opacity="0.78"/>
+        <g transform="translate(61,-7) scale(1.5)">
+          <path d="M5,3 C5,2 4,1 3,1 C1,1 0,3 0,4 C0,6 3,8 5,10 C7,8 10,6 10,4 C10,3 9,1 7,1 C6,1 5,2 5,3Z" fill="var(--color-border)" fill-opacity="0.9"/>
+        </g>
+        <g transform="translate(67,30) scale(0.85)">
+          <path d="M5,3 C5,2 4,1 3,1 C1,1 0,3 0,4 C0,6 3,8 5,10 C7,8 10,6 10,4 C10,3 9,1 7,1 C6,1 5,2 5,3Z" fill="var(--color-accent)" fill-opacity="0.7"/>
+        </g>
+        <g transform="translate(62,56) scale(1.1)">
+          <path d="M5,3 C5,2 4,1 3,1 C1,1 0,3 0,4 C0,6 3,8 5,10 C7,8 10,6 10,4 C10,3 9,1 7,1 C6,1 5,2 5,3Z" fill="var(--color-sidebar)" fill-opacity="0.9"/>
+        </g>
+      </svg>
+    </div>
   </div>
   <div class="sim-breakdown-panel" id="breakdownPanel">
     <div class="receipt-wrapper">
@@ -98,6 +177,15 @@
         <div class="sim-card-title-wrap">
           <span class="sim-card-title-en">Base Illustration</span>
           <h2>ベースイラスト</h2>
+        </div>
+        <div class="sim-extra-char-wrap">
+          <span class="sim-extra-char-label">追加キャラクター</span>
+          <span class="sim-extra-char-price" id="extraPersonPrice" data-pre="+" data-suf=" / 人" data-suf-en=" / person">+¥5,000〜</span>
+          <div class="sim-counter-controls" id="extraCharControls">
+            <button class="sim-counter-btn sim-counter-btn--minus" onclick="changeCount('i_extraPerson', -1)">−</button>
+            <span class="sim-counter-num" id="i_extraPersonNum">0</span>
+            <button class="sim-counter-btn" onclick="changeCount('i_extraPerson', 1)">＋</button>
+          </div>
         </div>
       </div>
       <!-- 等身/SDタブ（A案：常時表示 / B案：選択後バッジに折りたたみ） -->
@@ -207,17 +295,6 @@
 
       </div>
 
-      <div class="sim-divider"></div>
-
-      <div class="sim-counter">
-        <span class="sim-counter-label">追加キャラクター人数</span>
-        <span class="sim-counter-price" id="extraPersonPrice">+¥6,500 / 人</span>
-        <div class="sim-counter-controls">
-          <button class="sim-counter-btn" onclick="changeCount('i_extraPerson', -1)">−</button>
-          <span class="sim-counter-num" id="i_extraPersonNum">0</span>
-          <button class="sim-counter-btn" onclick="changeCount('i_extraPerson', 1)">＋</button>
-        </div>
-      </div>
     </div>
 
     <!-- ② キャラデザイン -->
@@ -522,7 +599,7 @@
       </div>
       <div class="sim-options">
         <label class="sim-option">
-          <input type="radio" name="i_rush" value="1" checked>
+          <input type="radio" name="i_rush" value="1">
           <span class="sim-option-label">
             <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
             <span class="sim-option-name">通常納期</span>
@@ -607,10 +684,6 @@
        デザインセクション
   ========================= -->
   <div class="sim-section" id="sim-design">
-
-    <p class="sim-note" data-i18n="design_top" style="text-align:center; margin-bottom:24px;">
-      ※ デザイン料金はCoconaラ市場相場をもとにした目安です。詳細はお見積もりにてご確認ください。
-    </p>
 
     <!-- ① サービス種別 -->
     <div class="sim-card">
@@ -743,7 +816,7 @@
       </div>
       <div class="sim-options">
         <label class="sim-option">
-          <input type="radio" name="d_rush" value="1" checked>
+          <input type="radio" name="d_rush" value="1">
           <span class="sim-option-label">
             <span class="sim-option-name">通常納期</span>
             <span class="sim-option-price">×1.0</span>

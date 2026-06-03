@@ -347,7 +347,7 @@ function updateFilter() {
   const newExtraPrice = isSD ? 5000 : 6500;
   countPrices.i_extraPerson = newExtraPrice;
   const extraPriceEl = document.getElementById('extraPersonPrice');
-  if (extraPriceEl) {
+  if (extraPriceEl && baseEl) {
     extraPriceEl.dataset.yen = String(newExtraPrice);
     const suf = currentLang === 'en' ? extraPriceEl.dataset.sufEn : extraPriceEl.dataset.suf;
     extraPriceEl.textContent = extraPriceEl.dataset.pre + formatAmt(newExtraPrice) + (suf || '');
