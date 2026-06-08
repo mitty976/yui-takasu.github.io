@@ -703,7 +703,8 @@ body.is-loaded {
   letter-spacing: 0.05em;
   transition: background 0.6s ease;
 }
-.status-bar__item { letter-spacing: 0.03em; }
+.status-bar__item { display: flex; align-items: baseline; letter-spacing: 0.03em; }
+.status-bar__label { display: inline-block; min-width: 4.5em; }
 .status-bar__item strong { font-weight: 700; color: var(--color-accent); }
 .status-bar__sep { opacity: 0.4; }
 
