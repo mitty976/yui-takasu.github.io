@@ -1401,7 +1401,8 @@ body.is-loaded { opacity: 1; filter: none; }
 @media (max-width: 768px) {
   .sim-hero-rabbit { display: none; }
   .rheart { display: none; }
-  .site-header { gap: 0; align-items: stretch; }
+  .site-header { gap: 0; }
+  .sim-title-zone { margin: 0; }
   .sim-page { max-width: 100%; padding: 24px 25px 180px; }
   .sim-hero-desc { padding-right: 18px; }
 }
