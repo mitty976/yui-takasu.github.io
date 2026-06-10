@@ -1398,6 +1398,13 @@ body.is-loaded { opacity: 1; filter: none; }
   .back-link { font-size: 12px; padding: 4px 10px; }
 }
 
+@media (max-width: 768px) {
+  .sim-hero-rabbit { display: none; }
+  .rheart { display: none; }
+  .sim-page { padding: 50px 16px 180px; }
+  .sim-hero-desc { padding-right: 18px; }
+}
+
 @media (max-width: 480px) {
   .sim-card { padding: 16px; }
   .sim-total-amount { font-size: 22px; }
