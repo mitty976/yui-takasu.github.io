@@ -39,6 +39,8 @@
 }
 
 html, body {
+  margin: 0;
+  padding: 0;
   min-height: 100%;
   font-family: var(--font-title);
   background-color: var(--color-works);
@@ -1401,8 +1403,10 @@ body.is-loaded { opacity: 1; filter: none; }
 @media (max-width: 768px) {
   .sim-hero-rabbit { display: none; }
   .rheart { display: none; }
-  .sim-title-zone { max-width: none; }
-  .header-top { padding-left: 25px; padding-right: 25px; }
+  .site-header { display: block; padding: 0; }
+  .header-nav { border-top: none; }
+  .sim-title-zone { max-width: none; margin-top: 50px; }
+  .header-top { padding: 10px 25px; }
   .sim-page { max-width: 100%; padding: 24px 25px 180px; }
   .sim-hero-desc { padding-right: 18px; }
 }
