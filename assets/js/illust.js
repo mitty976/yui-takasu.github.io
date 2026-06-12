@@ -529,6 +529,31 @@
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, digital gifts, and merchandise.</p>
       </div>`,
     },
+    illust_palma: {
+      title: '【お仕事絵】有明パルマ様‐午後のティータイム',
+      titleEn: '[Commission] Palma Ariake — Afternoon Tea',
+      subtitle: 'Still illustration / Full illustration',
+      html: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/有明パルマ様（わっかありバージョン）.webp" alt="午後のティータイム（わっかあり）"><figcaption class="illu-cap">わっかありバージョン（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/有明パルマ様（わっかなしバージョン）.webp" alt="午後のティータイム（わっかなし）"><figcaption class="illu-cap">わっかなしバージョン（50%）</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 06月 制作</p>
+        <p class="illu-desc">有明パルマ様（<a class="illu-handle" href="https://x.com/Palmaaa_ariake" target="_blank" rel="noopener">@Palmaaa_ariake</a>）より、優雅に紅茶を飲むシーンのご依頼をいただきました。昼下がりのやわらかな光の中に佇む、落ち着きと品のある雰囲気を目指して制作しました。</p>
+        <p class="illu-note">光の柔らかさと落ち着いた配色で、午後の静けさと優雅さを表現しました。わっかあり・わっかなしの2バージョンを納品しています。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/有明パルマ様（わっかありバージョン）.webp" alt="Afternoon Tea (with ring)"><figcaption class="illu-cap">with ring（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/有明パルマ様（わっかなしバージョン）.webp" alt="Afternoon Tea (without ring)"><figcaption class="illu-cap">without ring（50%）</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created June 2026</p>
+        <p class="illu-desc">Commissioned by Palma Ariake (<a class="illu-handle" href="https://x.com/Palmaaa_ariake" target="_blank" rel="noopener">@Palmaaa_ariake</a>) for an elegant tea-time illustration. Set in the gentle light of a quiet afternoon, the piece captures a composed and graceful atmosphere.</p>
+        <p class="illu-note">Soft lighting and a calm palette were used to convey the serenity and elegance of an afternoon moment. Delivered in two versions — with and without a ring accessory.</p>
+      </div>`,
+    },
     illust_kaikunchibi: {
       title: '【お仕事絵】白旗かい様‐SDミニキャラ＋表情差分',
       titleEn: '[Commission] Hakki Kai — SD Chibi & Expression Variants',
