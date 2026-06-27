@@ -529,6 +529,25 @@
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, digital gifts, and merchandise.</p>
       </div>`,
     },
+    logo_amazai: {
+      title: '【ご依頼もの】甘罪めぇる様‐デコロゴ',
+      titleEn: '[Commission] Amazai Meeru — Deco Logo',
+      subtitle: 'Logo design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/甘罪めぇる様ー相棒ありバージョン.jpg" alt="甘罪めぇる様ロゴ"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 06月 制作</p>
+        <p class="illu-desc">甘罪めぇる様（<a class="illu-handle" href="https://x.com/amatsumi_meElu" target="_blank" rel="noopener">@amatsumi_meElu</a>）よりロゴのご依頼をいただきました。きゅるきゅるとした可愛らしい雰囲気を意識し、相棒キャラクターも一緒に配置したデザインに仕上げました。</p>
+        <p class="illu-note">SNS・配信・グッズなど幅広い商用利用を想定し、PNG透過データでご納品しております。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/甘罪めぇる様ー相棒ありバージョン.jpg" alt="Amazai Meeru logo"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created June 2026</p>
+        <p class="illu-desc">Commissioned by Amazai Meeru (<a class="illu-handle" href="https://x.com/amatsumi_meElu" target="_blank" rel="noopener">@amatsumi_meElu</a>) for a logo design. Designed with a cute, bubbly feel in mind, featuring their companion character alongside the main logo.</p>
+        <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, and merchandise.</p>
+      </div>`,
+    },
     illust_palma: {
       title: '【お仕事絵】有明パルマ様‐午後のティータイム',
       titleEn: '[Commission] Palma Ariake — Afternoon Tea',
