@@ -529,6 +529,25 @@
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, digital gifts, and merchandise.</p>
       </div>`,
     },
+    illust_yakumoroki: {
+      title: '【お仕事絵】八雲ロキ様‐立ち絵＋表情差分',
+      titleEn: '[Commission] Yakumo Roki — Full Illustration & Expression Variants',
+      subtitle: 'Character design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yakumoroki.webp" alt="八雲ロキ様"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 06月 制作</p>
+        <p class="illu-desc">八雲ロキ様（<a class="illu-handle" href="https://x.com/Yakumo_Roki" target="_blank" rel="noopener">@Yakumo_Roki</a>）より、立ち絵と表情差分のご依頼をいただきました。グレー×ブルーのイメージカラーに、ワイドシルエットのストリートファッションを合わせ、お酒とタバコをこよなく愛する気だるげな雰囲気を意識して制作しました。</p>
+        <p class="illu-desc">※ 依頼主様の権利を守るため、立ち絵全体の公開は控えております。気になった方はぜひIRIAMでの配信に遊びに行ってみてください。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yakumoroki.webp" alt="Yakumo Roki"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created June 2026</p>
+        <p class="illu-desc">Commissioned by Yakumo Roki (<a class="illu-handle" href="https://x.com/Yakumo_Roki" target="_blank" rel="noopener">@Yakumo_Roki</a>) for a full character illustration with expression variants. Designed with a gray × blue color palette and a wide-silhouette street fashion look, aiming to capture a laid-back vibe fitting a character who loves drinking and smoking.</p>
+        <p class="illu-desc">※ To respect the client's rights, the full illustration is not shown here. Please check out their streams on IRIAM if you're curious.</p>
+      </div>`,
+    },
     logo_amazai: {
       title: '【ご依頼もの】甘罪めぇる様‐デコロゴ',
       titleEn: '[Commission] Amazai Meeru — Deco Logo',
