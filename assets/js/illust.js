@@ -529,6 +529,88 @@
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, digital gifts, and merchandise.</p>
       </div>`,
     },
+    illust_yomeiyura: {
+      title: '【お仕事絵】夜冥ゆら様‐立ち絵＋表情差分',
+      titleEn: '[Commission] Yomei Yura — Full Illustration & Expression Variants',
+      subtitle: 'Character design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yomeiyura.webp" alt="夜冥ゆら様"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 07月 制作</p>
+        <p class="illu-desc">個人勢・夜冥ゆら様（<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>）より、立ち絵と表情差分のご依頼をいただきました。「引きこもりでヤニカス死神」という設定をもとに、白から毛先へ黒が落ちるロングヘアと黒の編み上げ・ハーネス系衣装で、ダウナーで儚い空気感をつくっています。</p>
+        <p class="illu-note">アイシャドウはIRIAM配信での視認性を優先し、上まつげを太めに取る形で代用。シルバーのインダストリアルピアスや首元のタトゥーなど、細部の情報量で「気だるさ」を補強しました。</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura_chibi">ちびキャラアイコンを見る</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">ロゴを見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yomeiyura.webp" alt="Yomei Yura"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created July 2026</p>
+        <p class="illu-desc">Commissioned by independent VTuber Yomei Yura (<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>) for a full character illustration with expression variants. Built around the concept of a shut-in, chain-smoking grim reaper: long white hair fading to black at the tips, paired with black lace-up and harness-style clothing for a downer, fragile mood.</p>
+        <p class="illu-note">Eyeshadow was replaced with a thicker upper lash line for better readability on IRIAM streams. Silver industrial piercings and a neck tattoo add the small details that sell the character's listless attitude.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura_chibi">View the chibi icon</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">View the logo</a></p>
+      </div>`,
+    },
+    illust_yomeiyura_chibi: {
+      title: '【お仕事絵】夜冥ゆら様‐ちびキャラアイコン',
+      titleEn: '[Commission] Yomei Yura — Chibi Icon',
+      subtitle: 'Chibi illustration / Icon',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yomeiyura-chibi.webp" alt="夜冥ゆら様 ちびキャラアイコン"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 07月 制作</p>
+        <p class="illu-desc">夜冥ゆら様（<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>）の立ち絵に合わせたちびキャラアイコンです。「引きこもりでヤニカス死神」という設定はそのままに、SNSアイコンサイズでも表情が読めるようパーツを大きく整理しています。</p>
+        <p class="illu-note">小さく表示されても印象が崩れないよう、髪先の黒とシルバーのピアスなど識別性の高い要素を残す方向で調整しました。</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">立ち絵を見る</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">ロゴを見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yomeiyura-chibi.webp" alt="Yomei Yura chibi icon"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created July 2026</p>
+        <p class="illu-desc">A chibi icon designed to match Yomei Yura's (<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>) full illustration. The shut-in, chain-smoking grim reaper concept is kept intact, with features enlarged and simplified so the expression still reads at social-media icon size.</p>
+        <p class="illu-note">High-recognition elements — the black hair tips, the silver piercing — were preserved so the character holds up even when displayed small.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">View the full illustration</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">View the logo</a></p>
+      </div>`,
+    },
+    logo_yomeiyura: {
+      title: '【ご依頼もの】夜冥ゆら様‐ロゴ',
+      titleEn: '[Commission] Yomei Yura — Logo',
+      subtitle: 'Logo design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/yomeiyura-logo.jpg" alt="夜冥ゆら様ロゴ"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 07月 制作</p>
+        <p class="illu-desc">夜冥ゆら様（<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>）よりロゴのご依頼をいただきました。立ち絵・ちびキャラと世界観を揃え、「引きこもりでヤニカス死神」らしいダウナーで儚い質感を文字に落とし込んでいます。</p>
+        <p class="illu-note">配信画面やSNSでの使用を想定し、縮小しても読める字面のバランスを優先しました。</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">立ち絵を見る</a>　/　<a href="#" data-modal-jump="illust_yomeiyura_chibi">ちびキャラアイコンを見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/yomeiyura-logo.jpg" alt="Yomei Yura logo"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created July 2026</p>
+        <p class="illu-desc">Commissioned by Yomei Yura (<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>) for a logo. Matched to the world of the full illustration and chibi icon, translating the shut-in, chain-smoking grim reaper's downer, fragile texture into lettering.</p>
+        <p class="illu-note">Designed for use on stream overlays and social media, prioritizing legibility at small sizes.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">View the full illustration</a>　/　<a href="#" data-modal-jump="illust_yomeiyura_chibi">View the chibi icon</a></p>
+      </div>`,
+    },
+    illust_kuromarushidare: {
+      title: '【お仕事絵】黒丸しだれ様‐立ち絵＋表情差分',
+      titleEn: '[Commission] Kuromaru Shidare — Full Illustration & Expression Variants',
+      subtitle: 'Character design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/kuromarushidare.webp" alt="黒丸しだれ様"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 07月 14日 制作</p>
+        <p class="illu-desc">りみれす！所属・黒丸しだれ様（<a class="illu-handle" href="https://x.com/shidare_kuro" target="_blank" rel="noopener">@shidare_kuro</a>）より、立ち絵と表情差分のご依頼をいただきました。ライトアップされた夜桜をイメージし、黒ベースの和装に白と桜ピンクを差し色として配置。しだれ桜のモチーフを髪のインナーカラーや帯飾りに落とし込んでいます。</p>
+        <p class="illu-note">IRIAM ver4.1対応。配信で使いやすいよう、表情差分は感情の振れ幅がはっきり伝わる方向で調整しました。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/kuromarushidare.webp" alt="Kuromaru Shidare"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created July 2026</p>
+        <p class="illu-desc">Commissioned by Kuromaru Shidare (<a class="illu-handle" href="https://x.com/shidare_kuro" target="_blank" rel="noopener">@shidare_kuro</a>) of Rimiresu! for a full character illustration with expression variants. Inspired by illuminated night cherry blossoms, the design pairs black traditional Japanese clothing with white and sakura-pink accents, echoing the weeping cherry motif in the hair's inner color and the obi ornament.</p>
+        <p class="illu-note">Compatible with IRIAM ver4.1. Expressions were tuned for a wide, clearly readable emotional range so they work well on stream.</p>
+      </div>`,
+    },
     illust_yakumoroki: {
       title: '【お仕事絵】八雲ロキ様‐立ち絵＋表情差分',
       titleEn: '[Commission] Yakumo Roki — Full Illustration & Expression Variants',
@@ -1308,6 +1390,14 @@
       if (card.classList.contains('work-card--locked')) return;
       openWorkModal(card.dataset.modal, card);
     });
+  });
+
+  /* モーダル内の関連作品リンク（同じクライアントの別納品物へ移動） */
+  document.getElementById('wm-body').addEventListener('click', e => {
+    const jump = e.target.closest('[data-modal-jump]');
+    if (!jump) return;
+    e.preventDefault();
+    openWorkModal(jump.dataset.modalJump);
   });
 
   wmClose.addEventListener('click', closeWorkModal);
