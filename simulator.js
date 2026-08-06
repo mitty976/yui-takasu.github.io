@@ -120,7 +120,7 @@ const DELIVERY_TABLE = {
   '10000': { label: '胸上',      sd: false, normal: { noBg: '10〜14日', bg: '18日' }, rush: { noBg: '7日',  bg: '11日' }, express: { noBg: '5日', bg: '7日'  } },
   '13000': { label: '腰上',      sd: false, normal: { noBg: '10〜14日', bg: '18日' }, rush: { noBg: '7日',  bg: '11日' }, express: { noBg: '5日', bg: '7日'  } },
   '15000': { label: '太ももまで', sd: false, normal: { noBg: '14〜20日', bg: '26日' }, rush: { noBg: '10日', bg: '14日' }, express: { noBg: '7日', bg: '7日'  } },
-  '18000': { label: '全身',      sd: false, normal: { noBg: '14〜20日', bg: '27日〜' }, rush: { noBg: '15日', bg: '20日' }, express: { noBg: '10日', bg: '15日' } },
+  '18000': { label: '全身',      sd: false, normal: { noBg: '14〜20日', bg: '27日〜' }, rush: { noBg: '12日', bg: '20日' }, express: { noBg: '8日', bg: '15日' } },
   /* SDキャラ: noBg=背景なし/簡易背景, bg=描き込み背景 */
   '6000':  { label: '1.5頭身', sd: true, normal: { noBg: '3日', bg: '5日' }, rush: { noBg: '2日', bg: '3日' }, express: { noBg: '当日', bg: '2日'  } },
   '7000':  { label: '2頭身',   sd: true, normal: { noBg: '3日', bg: '5日' }, rush: { noBg: '2日', bg: '3日' }, express: { noBg: '当日', bg: '2日'  } },
