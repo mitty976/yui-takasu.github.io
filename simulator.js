@@ -120,7 +120,7 @@ const DELIVERY_TABLE = {
   '10000': { label: '胸上',      sd: false, normal: { noBg: '10〜14日', bg: '18日' }, rush: { noBg: '7日',  bg: '11日' }, express: { noBg: '5日', bg: '7日'  } },
   '13000': { label: '腰上',      sd: false, normal: { noBg: '10〜14日', bg: '18日' }, rush: { noBg: '7日',  bg: '11日' }, express: { noBg: '5日', bg: '7日'  } },
   '15000': { label: '太ももまで', sd: false, normal: { noBg: '14〜20日', bg: '26日' }, rush: { noBg: '10日', bg: '14日' }, express: { noBg: '7日', bg: '7日'  } },
-  '18000': { label: '全身',      sd: false, normal: { noBg: '14〜20日', bg: '27日〜' }, rush: { noBg: '12日', bg: '20日' }, express: { noBg: '8日', bg: '15日' } },
+  '18000': { label: '全身',      sd: false, normal: { noBg: '16〜22日', bg: '27日〜' }, rush: { noBg: '12日', bg: '20日' }, express: { noBg: '8日', bg: '15日' } },
   /* SDキャラ: noBg=背景なし/簡易背景, bg=描き込み背景 */
   '6000':  { label: '1.5頭身', sd: true, normal: { noBg: '3日', bg: '5日' }, rush: { noBg: '2日', bg: '3日' }, express: { noBg: '当日', bg: '2日'  } },
   '7000':  { label: '2頭身',   sd: true, normal: { noBg: '3日', bg: '5日' }, rush: { noBg: '2日', bg: '3日' }, express: { noBg: '当日', bg: '2日'  } },
@@ -404,6 +404,18 @@ function calcTotal() {
     totalJPY += n * p;
     totalUSD += n * (USD_AMOUNT[p] !== undefined ? USD_AMOUNT[p] : Math.round(p / 150));
   }
+  /* ライセンス料は権利の対価なので納期倍率・リピーター割引の対象外。
+     倍率・割引を適用したあとに定額で加算する */
+  let licenseJPY = 0, licenseUSD = 0;
+  function addLicense(ids) {
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el || !el.checked) return;
+      const yen = parseInt(el.value);
+      licenseJPY += yen;
+      licenseUSD += USD_AMOUNT[yen] !== undefined ? USD_AMOUNT[yen] : Math.round(yen / 150);
+    });
+  }
   if (currentTab === 'illust') {
     const base = document.querySelector('input[name="i_base"]:checked');
     if (base) addY(parseInt(base.value));
@@ -424,10 +436,7 @@ function calcTotal() {
     if (document.getElementById('i_highres').checked || document.getElementById('i_print').checked) addY(3500);
     const live2dLayerEl = document.getElementById('i_live2d_layer');
     if (live2dLayerEl && live2dLayerEl.checked) addY(parseInt(live2dLayerEl.value));
-    ['i_commercial', 'i_nosns'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.checked) addY(parseInt(el.value));
-    });
+    addLicense(['i_commercial', 'i_nosns']);
     addC(counts.i_revision, 'i_revision');
     const rush = document.querySelector('input[name="i_rush"]:checked');
     if (rush) {
@@ -447,10 +456,11 @@ function calcTotal() {
     totalUSD += baseUSD;
     totalJPY += counts.d_extra * Math.round(baseJPY * 0.5);
     totalUSD += counts.d_extra * Math.round(baseUSD * 0.5);
-    ['d_rawdata', 'd_print', 'd_commercial', 'd_nosns'].forEach(id => {
+    ['d_rawdata', 'd_print'].forEach(id => {
       const el = document.getElementById(id);
       if (el && el.checked) addY(parseInt(el.value));
     });
+    addLicense(['d_commercial', 'd_nosns']);
     const rush = document.querySelector('input[name="d_rush"]:checked');
     if (rush) {
       const r = parseFloat(rush.value);
@@ -462,6 +472,9 @@ function calcTotal() {
       totalUSD = Math.round(totalUSD * 0.9);
     }
   }
+  /* 倍率・割引の適用後にライセンス料を定額で加算 */
+  totalJPY += licenseJPY;
+  totalUSD += licenseUSD;
   const totalEl = document.getElementById('totalAmount');
   totalEl.innerHTML =
     (currentCurrency === 'USD'
@@ -486,6 +499,15 @@ function calcTotal() {
 function updateSelectedItems() {
   /* lineItems: { name, yen, type:'item'|'free'|'multiplier'|'discount', multiplier? } */
   const lineItems = [];
+  /* ライセンス料の内訳行（倍率・割引の対象外である旨を名前に添える） */
+  function pushLicenseItems(ids) {
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el || !el.checked) return;
+      const name = el.closest('.sim-option').querySelector('.sim-option-name').textContent;
+      lineItems.push({ name, yen: parseInt(el.value) });
+    });
+  }
 
   if (currentTab === 'illust') {
     const base = document.querySelector('input[name="i_base"]:checked');
@@ -521,11 +543,6 @@ function updateSelectedItems() {
       lineItems.push({ name: live2d.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: parseInt(live2d.value) });
     const live2dLayerEl = document.getElementById('i_live2d_layer');
     if (live2dLayerEl && live2dLayerEl.checked) lineItems.push({ name: 'Live2Dパーツ分け', yen: 30000 });
-    ['i_commercial', 'i_nosns'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.checked)
-        lineItems.push({ name: el.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: parseInt(el.value) });
-    });
     if (counts.i_revision > 0)
       lineItems.push({ name: `追加修正 ×${counts.i_revision}`, yen: counts.i_revision * 1500 });
     const rush = document.querySelector('input[name="i_rush"]:checked');
@@ -535,6 +552,8 @@ function updateSelectedItems() {
     }
     if (document.getElementById('i_repeat').checked)
       lineItems.push({ name: 'リピーター割引', yen: null, type: 'discount' });
+    /* ライセンス料は倍率・割引の対象外なので、内訳でも倍率行より後に並べる */
+    pushLicenseItems(['i_commercial', 'i_nosns']);
   } else {
     const base = document.querySelector('input[name="d_base"]:checked');
     if (base) {
@@ -543,7 +562,7 @@ function updateSelectedItems() {
       if (counts.d_extra > 0)
         lineItems.push({ name: `追加 ${counts.d_extra}点`, yen: counts.d_extra * Math.round(baseJPY * 0.5) });
     }
-    ['d_rawdata', 'd_print', 'd_commercial', 'd_nosns'].forEach(id => {
+    ['d_rawdata', 'd_print'].forEach(id => {
       const el = document.getElementById(id);
       if (el && el.checked)
         lineItems.push({ name: el.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: parseInt(el.value) });
@@ -555,6 +574,7 @@ function updateSelectedItems() {
     }
     if (document.getElementById('d_repeat').checked)
       lineItems.push({ name: 'リピーター割引', yen: null, type: 'discount' });
+    pushLicenseItems(['d_commercial', 'd_nosns']);
   }
 
   /* 下部バー：簡易タグ */
@@ -717,8 +737,8 @@ const TRANS_EN = {
   'SDキャラ・ポーズ切り替えあり': 'Chibi · With Pose Switch',
   '商用利用ライセンス': 'Commercial Use License',
   'SNS・サンプル掲載不可': 'No SNS / Portfolio Posting',
-  '完成した作品をぐるにゃのSNS・ポートフォリオ・サンプル画像などへの掲載を行いません。プライベートなご利用・成人向けコンテンツへの使用など、公開を希望されない場合にお選びください。':
-    'The completed artwork will not be posted on ぐるにゃ\'s SNS, portfolio, or sample pages. Please select this option if you prefer the work to remain private — for personal use, adult content, or any other reason.',
+  '完成した作品をぐるにゃのSNS・ポートフォリオ・サンプル画像などへの掲載を行いません。プライベートなご利用・成人向けコンテンツへの使用など、公開を希望されない場合にお選びください。※ ライセンス料は定額のため、納期倍率・リピーター割引の対象外です。':
+    'The completed artwork will not be posted on ぐるにゃ\'s SNS, portfolio, or sample pages. Please select this option if you prefer the work to remain private — for personal use, adult content, or any other reason. * License fees are flat-rate and are not affected by rush multipliers or the repeat-client discount.',
   '通常納期': 'Standard Delivery',
   '短縮納期': 'Rush Delivery',
   '最短納期': 'Express Delivery',
@@ -753,8 +773,8 @@ const TRANS_EN = {
     'Delivered at A4 size / 350dpi. Suitable for merchandise and print production.',
   '⚠ 動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。':
     '⚠ If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
-  'グッズ販売・企業広告・有料コンテンツへの使用・収益化チャンネルでの継続使用など、金銭的利益を伴う利用に必要です。現在未収益化でも、収益化を目標とされている配信者・VTuberの方にもお選びいただけますようお願いいたします。個人のSNS投稿・非営利目的には不要です。著作権はぐるにゃに帰属し、このライセンスに著作権の譲渡は含まれません。':
-    'Required for any use involving financial gain — merchandise sales, commercial advertising, paid content, monetized channels, etc. We also kindly ask streamers and VTubers who are currently non-monetized but working towards monetization to select this option. Not required for personal SNS or non-commercial use. Copyright remains with ぐるにゃ and is not transferred by this license.',
+  'グッズ販売・企業広告・有料コンテンツへの使用・収益化チャンネルでの継続使用など、金銭的利益を伴う利用に必要です。現在未収益化でも、収益化を目標とされている配信者・VTuberの方にもお選びいただけますようお願いいたします。個人のSNS投稿・非営利目的には不要です。著作権はぐるにゃに帰属し、このライセンスに著作権の譲渡は含まれません。※ ライセンス料は定額のため、納期倍率・リピーター割引の対象外です。':
+    'Required for any use involving financial gain — merchandise sales, commercial advertising, paid content, monetized channels, etc. We also kindly ask streamers and VTubers who are currently non-monetized but working towards monetization to select this option. Not required for personal SNS or non-commercial use. Copyright remains with ぐるにゃ and is not transferred by this license. * License fees are flat-rate and are not affected by rush multipliers or the repeat-client discount.',
   /* アコーディオンタイトル */
   '詳細': 'Details',
   '⚠ 注意': '⚠ Note',
