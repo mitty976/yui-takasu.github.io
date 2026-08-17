@@ -81,10 +81,21 @@ function changeCount(key, delta) {
 }
 
 /* === グッズ・物販の二次利用 === */
-/* 商品カテゴリごとに1種類と数える。1種類目は商用利用ライセンスの範囲内、
-   2種類目から日本イラストレーター協会の基準（二次70% / 三次50% / 四次50% / 五次以降20%）で
-   ベース料金に対して二次利用料が発生する */
-const GOODS_RATES = [0, 0.7, 0.5, 0.5, 0.2];
+/* 商品カテゴリごとに1種類と数える。配信・アイコン等の使用が一次使用（商用利用ライセンスの範囲内）で、
+   グッズは1種類目から二次使用にあたる。日本イラストレーター協会の基準
+   （二次70% / 三次50% / 四次50% / 五次以降20%）でベース料金に対して発生する */
+const GOODS_RATES = [0.7, 0.5, 0.5, 0.2];
+
+/* 著作権譲渡料の最低額。ベース料金×3がこれを下回る場合はこちらを採用する */
+const COPYRIGHT_MIN = 30000;
+
+/* 一次使用がどれかで数え方がずれる。
+   配信でも使う場合：配信が一次使用 → グッズ1種類目が二次使用（70%）
+   グッズ制作のみ ：グッズ1種類目が一次使用 → 商用利用ライセンスの範囲内、2種類目から70% */
+function goodsScope() {
+  const el = document.querySelector('input[name="i_goods_scope"]:checked');
+  return el ? el.value : '';
+}
 const GOODS_MAX   = 12;
 
 /* 入力欄のプレースホルダ。行ごとに違う例を出して「商品カテゴリごとに1種類」を伝える */
@@ -100,7 +111,10 @@ const GOODS_PLACEHOLDERS_EN = [
 ];
 
 function goodsRate(index) {
-  return GOODS_RATES[Math.min(index, GOODS_RATES.length - 1)];
+  /* グッズのみの場合は1種類目が一次使用なので、料率の並びを1つ後ろにずらす */
+  const i = goodsScope() === 'goods' ? index - 1 : index;
+  if (i < 0) return 0;
+  return GOODS_RATES[Math.min(i, GOODS_RATES.length - 1)];
 }
 
 /* 現在の行数を返す */
@@ -171,10 +185,16 @@ function updateGoodsVisibility() {
           : '「07 オプション」の<strong>商用利用ライセンス</strong>を選ぶと入力できます。');
   }
 
+  /* 配信でも使うのか、グッズのみなのかを選ぶまでは入力欄を出さない */
+  const scope = goodsScope();
+  card.classList.toggle('is-await-scope', open && !scope);
+
   if (open) {
-    /* 初回に1種類目の行を用意する（金額計算は呼び出し元に任せる） */
-    if (goodsRowEls().length === 0) addGoodsRow(false);
-    /* 言語切り替え後もプレースホルダの例を追従させる */
+    /* 二次利用料が自動で乗らないよう、行の追加はお客様の操作に任せる */
+    if (!scope) {
+      const list = document.getElementById('goodsList');
+      if (list) list.innerHTML = '';
+    }
     refreshGoodsRows();
   } else {
     /* 閉じたら入力内容ごとリセットする。
@@ -183,6 +203,7 @@ function updateGoodsVisibility() {
     if (list) list.innerHTML = '';
     const usage = document.getElementById('i_goods_usage');
     if (usage) usage.checked = false;
+    document.querySelectorAll('input[name="i_goods_scope"]').forEach(el => { el.checked = false; });
     refreshGoodsRows();
   }
 }
@@ -591,12 +612,13 @@ function calcTotal() {
     const copyrightEl = document.getElementById('i_copyright');
     const isCopyright = !!(copyrightEl && copyrightEl.checked);
     if (isCopyright) {
-      licenseJPY += baseYen * 3;
-      licenseUSD += baseUsd * 3;
+      /* ベース料金の3倍。ただし最低¥30,000（SDなど3倍でも下回る場合に備える） */
+      licenseJPY += Math.max(baseYen * 3, COPYRIGHT_MIN);
+      licenseUSD += Math.max(baseUsd * 3, usdOf(COPYRIGHT_MIN));
       addLicense(['i_nosns']);
     } else {
       addLicense(['i_commercial', 'i_nosns']);
-      /* グッズ二次利用料：2種類目からベース料金に対して発生する */
+      /* グッズ二次利用料：一次使用にあたる分を除いてベース料金に対して発生する */
       goodsRowEls().forEach((row, i) => {
         const rate = goodsRate(i);
         if (rate === 0) return;
@@ -741,7 +763,12 @@ function updateSelectedItems() {
     const copyrightEl = document.getElementById('i_copyright');
     if (copyrightEl && copyrightEl.checked) {
       /* 譲渡した時点で権利が移るので、商用利用ライセンスとグッズ二次利用料は計上しない */
-      lineItems.push({ name: '著作権譲渡（ベース料金×3）', yen: baseYen * 3, usd: baseUsd * 3 });
+      /* 最低額が適用されたときは、内訳でもその旨がわかるようにする */
+      const cyen = Math.max(baseYen * 3, COPYRIGHT_MIN);
+      const cusd = Math.max(baseUsd * 3, usdOf(COPYRIGHT_MIN));
+      lineItems.push({
+        name: cyen > baseYen * 3 ? '著作権譲渡（最低額）' : '著作権譲渡（ベース料金×3）',
+        yen: cyen, usd: cusd });
       pushLicenseItems(['i_nosns']);
     } else {
       pushLicenseItems(['i_commercial', 'i_nosns']);
@@ -750,7 +777,7 @@ function updateSelectedItems() {
         const typed = row.querySelector('.sim-goods-input').value.trim();
         const label = typed || `グッズ ${i + 1}種類目`;
         if (rate === 0) {
-          /* 未入力のときは「グッズ 1種類目」だけで足りるので括弧を重ねない */
+          /* グッズのみの場合の1種類目（一次使用） */
           lineItems.push({ name: typed ? `${typed}（1種類目）` : label, yen: 0, type: 'goodsFree' });
         } else {
           lineItems.push({ name: `${label}（二次利用 ${Math.round(rate * 100)}%）`,
@@ -805,6 +832,11 @@ function updateSelectedItems() {
         <span class="receipt-item-name">${l.name}</span>
         <span class="receipt-item-price">−10%</span>
       </div>`;
+    } else if (type === 'goodsFree') {
+      rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
+        <span class="receipt-item-name">${l.name}</span>
+        <span class="receipt-item-price">${currentLang === 'en' ? 'included in license' : '商用ライセンスに含む'}</span>
+      </div>`;
     } else if (type === 'free') {
       rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
         <span class="receipt-item-name">${l.name}</span>
@@ -814,11 +846,6 @@ function updateSelectedItems() {
       rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
         <span class="receipt-item-name">${l.name}</span>
         <span class="receipt-item-price">${currentLang === 'en' ? 'please inquire' : '応相談'}</span>
-      </div>`;
-    } else if (type === 'goodsFree') {
-      rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
-        <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">${currentLang === 'en' ? 'included in license' : '商用ライセンスに含む'}</span>
       </div>`;
     } else {
       /* ％計算で出た行は換算済みのドル額をそのまま使う */
@@ -907,18 +934,23 @@ const TRANS_EN = {
   /* グッズ二次利用・著作権譲渡 */
   'グッズ・物販の二次利用': 'Merchandise & Secondary Use',
   'グッズ販売': 'Merchandise Sales',
+  goods_scope_q: 'First, let me know whether you\'ll also use it for streaming. Which use counts as the primary one changes the fee.',
+  '配信でも使う＋グッズ展開': 'Streaming + merchandise',
+  'グッズ制作のみ': 'Merchandise only',
+  '1種類目から二次利用料': 'secondary use fee from the 1st type',
+  '1種類目は商用ライセンス内': '1st type covered by the license',
   '応相談': 'please inquire',
   'アクリルスタンド・缶バッジ・Tシャツなど、グッズとして販売される場合はこちらをお選びください。展開される商品の種類によって金額が変わるため、こちらの項目自体に料金は設定していません。':
     'Choose this if you plan to sell the artwork as merchandise — acrylic stands, can badges, T-shirts and so on. No fixed price is set here because the amount depends on how many product types you release.',
   goods_add: '＋ Add merchandise',
   goods_hint:
-    'Counted by product category — one acrylic stand, one can badge and one T-shirt count as 3 types. Multiple expression variants of the same product still count as one type.<br>The first type is covered by the commercial use license; from the second type onward a secondary use fee is charged against the base price (based on the Japan Illustrators\' Association guidelines).',
+    'Use on stream overlays, icons and headers is covered by the commercial use license (＋¥5,000). If you also release merchandise, <strong>a secondary use fee applies from the very first product type</strong> (based on the Japan Illustrators\' Association guidelines).<br>Counted by product category — one acrylic stand, one can badge and one T-shirt count as 3 types. Multiple expression variants of the same product still count as one type.',
   '＋ベース料金の70% / セット': '＋70% of base price / set',
   '＋ベース料金の50% / 種':   '＋50% of base price / style',
   '著作権譲渡': 'Copyright Transfer',
-  '＋ベース料金 ×3': '＋3× base price',
-  '原則としてお受けしておりません。譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。':
-    '<strong>As a rule I do not offer copyright transfer.</strong> If a transfer is agreed, the copyright passes to you, so the commercial use license (＋¥5,000) and merchandise secondary use fees are no longer required.',
+  '＋ベース料金×3（最低30,000円）': '＋3× base price (min 30,000 yen)',
+  '原則としてお受けしておりません。譲渡料はベース料金の3倍（最低30,000円）です。譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。':
+    '<strong>As a rule I do not offer copyright transfer.</strong> The transfer fee is 3× the base price (minimum 30,000 yen). If a transfer is agreed, the copyright passes to you, so the commercial use license (＋¥5,000) and merchandise secondary use fees are no longer required.',
   'いつもありがとうございます。2回目以降のご依頼は、イラスト本体（構図・追加キャラクター）を10%引きにさせていただきます。背景や差分などのオプション、商用利用・著作権譲渡・グッズの二次利用といった権利のお料金は、割引の対象外とさせてください。':
     'Thank you for coming back. From your second commission onward, <strong>10% off the illustration itself (framing and additional characters)</strong>.<br>Options such as backgrounds and variations, and rights fees such as commercial use, copyright transfer and merchandise secondary use, are outside the discount.',
   /* section headers（番号バッジ導入後のh2テキスト） */
