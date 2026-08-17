@@ -1746,3 +1746,132 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-pose-card.spring-enter {
   animation: cardSpringIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
+
+/* === グッズ・物販の二次利用 === */
+.sim-goods-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--color-border);
+  font-size: 13.5px;
+}
+.sim-goods-row + .sim-goods-row { margin-top: 8px; }
+
+/* 何種類目かの通し番号 */
+.sim-goods-index {
+  flex: 0 0 auto;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--color-works);
+  color: var(--color-accent);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* グッズ名の自由入力欄 */
+.sim-goods-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  border-bottom: 1.5px solid var(--color-border);
+  background: transparent;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: inherit;
+  padding: 3px 2px;
+  transition: border-color 0.15s;
+}
+.sim-goods-input:focus {
+  outline: none;
+  border-bottom-color: var(--color-accent);
+}
+.sim-goods-input::placeholder { color: rgba(74,42,58,0.3); }
+
+/* 料率・金額表示 */
+.sim-goods-rate {
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: rgba(74,42,58,0.5);
+  text-align: right;
+}
+.sim-goods-rate--free { color: #3a7a3a; }
+
+/* 削除ボタン */
+.sim-goods-remove {
+  flex: 0 0 auto;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: #fff;
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(74,42,58,0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.sim-goods-remove:hover {
+  background: #fdf0f0;
+  border-color: #d89a9a;
+  color: #9a3a3a;
+}
+
+/* 追加ボタン */
+.sim-goods-add {
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1.5px dashed var(--color-border);
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.sim-goods-add:hover {
+  background: var(--color-works);
+  border-color: var(--color-accent);
+}
+.sim-goods-add:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* 行の登場アニメーション */
+.sim-goods-row.row-enter {
+  animation: goodsRowIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes goodsRowIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 商用利用ライセンス未選択時：カードは出したまま入力だけ閉じる */
+.sim-card.is-locked .sim-note,
+.sim-card.is-locked .sim-card-header {
+  opacity: 0.45;
+}
+.sim-card.is-locked .sim-goods-list,
+.sim-card.is-locked .sim-goods-add {
+  display: none;
+}
+.sim-goods-locked {
+  display: none;
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(74,42,58,0.55);
+  background: var(--color-works);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.sim-goods-locked strong { color: var(--color-accent); }
+.sim-card.is-locked .sim-goods-locked { display: block; }

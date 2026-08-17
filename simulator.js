@@ -80,6 +80,130 @@ function changeCount(key, delta) {
   calcTotal();
 }
 
+/* === グッズ・物販の二次利用 === */
+/* 商品カテゴリごとに1種類と数える。1種類目は商用利用ライセンスの範囲内、
+   2種類目から日本イラストレーター協会の基準（二次70% / 三次50% / 四次50% / 五次以降20%）で
+   ベース料金に対して二次利用料が発生する */
+const GOODS_RATES = [0, 0.7, 0.5, 0.5, 0.2];
+const GOODS_MAX   = 12;
+
+/* 入力欄のプレースホルダ。行ごとに違う例を出して「商品カテゴリごとに1種類」を伝える */
+const GOODS_PLACEHOLDERS = [
+  'アクリルスタンド', '缶バッジ', 'Tシャツ', 'アクリルキーホルダー',
+  'ステッカー', 'タペストリー', 'マグカップ', 'クリアファイル',
+  'トートバッグ', 'ポストカード', 'スマホケース', 'ラバーストラップ'
+];
+const GOODS_PLACEHOLDERS_EN = [
+  'acrylic stand', 'can badge', 'T-shirt', 'acrylic keychain',
+  'sticker', 'tapestry', 'mug', 'clear file',
+  'tote bag', 'postcard', 'phone case', 'rubber strap'
+];
+
+function goodsRate(index) {
+  return GOODS_RATES[Math.min(index, GOODS_RATES.length - 1)];
+}
+
+/* 現在の行数を返す */
+function goodsRowEls() {
+  return Array.from(document.querySelectorAll('#goodsList .sim-goods-row'));
+}
+
+function addGoodsRow(triggerCalc = true) {
+  const list = document.getElementById('goodsList');
+  if (!list || list.children.length >= GOODS_MAX) return;
+
+  const row = document.createElement('div');
+  row.className = 'sim-goods-row row-enter';
+  row.innerHTML =
+    '<span class="sim-goods-index"></span>' +
+    '<input type="text" class="sim-goods-input" maxlength="30">' +
+    '<span class="sim-goods-rate"></span>' +
+    '<button type="button" class="sim-goods-remove" aria-label="この行を削除">×</button>';
+
+  row.querySelector('.sim-goods-remove').addEventListener('click', () => {
+    row.remove();
+    refreshGoodsRows();
+    calcTotal();
+  });
+  /* 名前の入力は金額に影響しないので、内訳の表示だけ更新する */
+  row.querySelector('.sim-goods-input').addEventListener('input', updateSelectedItems);
+
+  list.appendChild(row);
+  refreshGoodsRows();
+  if (triggerCalc) calcTotal();
+}
+
+/* 通し番号の振り直しと追加ボタンの上限制御 */
+function refreshGoodsRows() {
+  const examples = currentLang === 'en' ? GOODS_PLACEHOLDERS_EN : GOODS_PLACEHOLDERS;
+  goodsRowEls().forEach((row, i) => {
+    row.querySelector('.sim-goods-index').textContent = i + 1;
+    const input = row.querySelector('.sim-goods-input');
+    const ex = examples[i % examples.length];
+    input.placeholder = currentLang === 'en' ? 'e.g. ' + ex : '例：' + ex;
+  });
+  const addBtn = document.getElementById('goodsAddBtn');
+  if (addBtn) addBtn.disabled = goodsRowEls().length >= GOODS_MAX;
+}
+
+/* グッズ欄の開閉：カード自体は常に表示し、商用利用ライセンス未選択のときは
+   入力欄だけ閉じて案内文を出す。著作権譲渡を選んだ場合は権利ごと移転するので
+   二次利用料は発生しない */
+function updateGoodsVisibility() {
+  const card = document.getElementById('goodsCard');
+  if (!card) return;
+  const commercial = document.getElementById('i_commercial');
+  const copyright  = document.getElementById('i_copyright');
+  const isCopyright = !!(copyright && copyright.checked);
+  const open = !!(commercial && commercial.checked) && !isCopyright;
+
+  card.classList.toggle('is-locked', !open);
+
+  /* 閉じている理由に合わせて案内文を切り替える */
+  const lockedEl = document.getElementById('goodsLocked');
+  if (lockedEl && !open) {
+    lockedEl.innerHTML = isCopyright
+      ? (currentLang === 'en'
+          ? 'With a copyright transfer the rights pass to you, so no secondary use fee applies.'
+          : '<strong>著作権譲渡</strong>の場合は権利ごと移転するため、二次利用料はかかりません。')
+      : (currentLang === 'en'
+          ? 'Select the <strong>commercial use license</strong> under “07 Option” to fill this in.'
+          : '「07 オプション」の<strong>商用利用ライセンス</strong>を選ぶと入力できます。');
+  }
+
+  if (open) {
+    /* 初回に1種類目の行を用意する（金額計算は呼び出し元に任せる） */
+    if (goodsRowEls().length === 0) addGoodsRow(false);
+    /* 言語切り替え後もプレースホルダの例を追従させる */
+    refreshGoodsRows();
+  } else {
+    /* 閉じたら入力内容ごとリセットする。
+       使用用途の「グッズ販売」も外して、選択状態の矛盾を残さない */
+    const list = document.getElementById('goodsList');
+    if (list) list.innerHTML = '';
+    const usage = document.getElementById('i_goods_usage');
+    if (usage) usage.checked = false;
+    refreshGoodsRows();
+  }
+}
+
+/* 各行の料率・金額表示を更新する（行のDOMは作り直さない：入力中のフォーカスを保つため） */
+function updateGoodsRates(baseYen, baseUsd) {
+  goodsRowEls().forEach((row, i) => {
+    const rateEl = row.querySelector('.sim-goods-rate');
+    const rate   = goodsRate(i);
+    if (rate === 0) {
+      rateEl.textContent = currentLang === 'en' ? 'included in license' : '商用ライセンスに含む';
+      rateEl.classList.add('sim-goods-rate--free');
+    } else {
+      const yen = Math.round(baseYen * rate);
+      const usd = Math.round(baseUsd * rate);
+      rateEl.textContent = Math.round(rate * 100) + '%　＋' + formatPair(yen, usd);
+      rateEl.classList.remove('sim-goods-rate--free');
+    }
+  });
+}
+
 /* === タブ切り替え === */
 let currentTab = 'illust';
 document.querySelectorAll('.sim-tab').forEach(btn => {
@@ -397,14 +521,21 @@ function calcTotal() {
   let totalJPY = 0, totalUSD = 0;
   function addY(yen) {
     totalJPY += yen;
-    totalUSD += USD_AMOUNT[yen] !== undefined ? USD_AMOUNT[yen] : Math.round(yen / 150);
+    totalUSD += usdOf(yen);
   }
   function addC(n, key) {
     const p = countPrices[key];
     totalJPY += n * p;
-    totalUSD += n * (USD_AMOUNT[p] !== undefined ? USD_AMOUNT[p] : Math.round(p / 150));
+    totalUSD += n * usdOf(p);
   }
-  /* ライセンス料は権利の対価なので納期倍率・リピーター割引の対象外。
+  /* リピーター割引はイラスト制作の対価にだけ掛かるお礼なので、
+     割引対象（ベースイラスト＋追加キャラクター）を別枠で持っておく */
+  let discountJPY = 0, discountUSD = 0;
+  function addBase(yen, usd) {
+    totalJPY += yen;  totalUSD += usd;
+    discountJPY += yen; discountUSD += usd;
+  }
+  /* ライセンス料・権利料は権利の対価なので納期倍率・リピーター割引の対象外。
      倍率・割引を適用したあとに定額で加算する */
   let licenseJPY = 0, licenseUSD = 0;
   function addLicense(ids) {
@@ -413,22 +544,41 @@ function calcTotal() {
       if (!el || !el.checked) return;
       const yen = parseInt(el.value);
       licenseJPY += yen;
-      licenseUSD += USD_AMOUNT[yen] !== undefined ? USD_AMOUNT[yen] : Math.round(yen / 150);
+      licenseUSD += usdOf(yen);
     });
   }
   if (currentTab === 'illust') {
-    const base = document.querySelector('input[name="i_base"]:checked');
-    if (base) addY(parseInt(base.value));
-    addC(counts.i_extraPerson, 'i_extraPerson');
+    const base    = document.querySelector('input[name="i_base"]:checked');
+    const baseYen = base ? parseInt(base.value) : 0;
+    const baseUsd = usdOf(baseYen);
+    const isSD    = base ? base.dataset.type === 'sd' : false;
+    /* 言語切り替え・タブ切り替えでも案内文と行の状態を揃える */
+    updateGoodsVisibility();
+    /* ベースイラストと追加キャラクターは割引対象 */
+    if (base) addBase(baseYen, baseUsd);
+    const extraYen = countPrices.i_extraPerson;
+    if (counts.i_extraPerson > 0)
+      addBase(counts.i_extraPerson * extraYen, counts.i_extraPerson * usdOf(extraYen));
+
     const design = document.querySelector('input[name="i_design"]:checked');
     if (design) addY(parseInt(design.value));
     const bg = document.querySelector('input[name="i_bg"]:checked');
     if (bg) addY(parseInt(bg.value));
     addC(counts.i_expression,    'i_expression');
     addC(counts.i_expression_sd, 'i_expression_sd');
-    addC(counts.i_costume,       'i_costume');
+    /* 等身キャラの衣装・髪型差分はベース料金に対する％（衣装70% / 髪型50%）。
+       SDキャラは画風上どのみち省略が入り工数が増えないので固定額のまま */
+    if (!isSD) {
+      if (counts.i_costume > 0) {
+        totalJPY += counts.i_costume * Math.round(baseYen * 0.7);
+        totalUSD += counts.i_costume * Math.round(baseUsd * 0.7);
+      }
+      if (counts.i_hairstyle > 0) {
+        totalJPY += counts.i_hairstyle * Math.round(baseYen * 0.5);
+        totalUSD += counts.i_hairstyle * Math.round(baseUsd * 0.5);
+      }
+    }
     addC(counts.i_costume_sd,    'i_costume_sd');
-    addC(counts.i_hairstyle,     'i_hairstyle');
     addC(counts.i_hairstyle_sd,  'i_hairstyle_sd');
     const live2d = document.querySelector('input[name="i_live2d"]:checked');
     if (live2d) addY(parseInt(live2d.value));
@@ -436,18 +586,39 @@ function calcTotal() {
     if (document.getElementById('i_highres').checked || document.getElementById('i_print').checked) addY(3500);
     const live2dLayerEl = document.getElementById('i_live2d_layer');
     if (live2dLayerEl && live2dLayerEl.checked) addY(parseInt(live2dLayerEl.value));
-    addLicense(['i_commercial', 'i_nosns']);
+
+    /* 著作権譲渡：ベース料金の3倍。譲渡した時点で権利が移るので商用利用ライセンスは不要 */
+    const copyrightEl = document.getElementById('i_copyright');
+    const isCopyright = !!(copyrightEl && copyrightEl.checked);
+    if (isCopyright) {
+      licenseJPY += baseYen * 3;
+      licenseUSD += baseUsd * 3;
+      addLicense(['i_nosns']);
+    } else {
+      addLicense(['i_commercial', 'i_nosns']);
+      /* グッズ二次利用料：2種類目からベース料金に対して発生する */
+      goodsRowEls().forEach((row, i) => {
+        const rate = goodsRate(i);
+        if (rate === 0) return;
+        licenseJPY += Math.round(baseYen * rate);
+        licenseUSD += Math.round(baseUsd * rate);
+      });
+    }
+
     addC(counts.i_revision, 'i_revision');
     const rush = document.querySelector('input[name="i_rush"]:checked');
     if (rush) {
       const r = parseFloat(rush.value);
       totalJPY = Math.round(totalJPY * r);
       totalUSD = Math.round(totalUSD * r);
+      discountJPY = Math.round(discountJPY * r);
+      discountUSD = Math.round(discountUSD * r);
     }
     if (document.getElementById('i_repeat').checked) {
-      totalJPY = Math.round(totalJPY * 0.9);
-      totalUSD = Math.round(totalUSD * 0.9);
+      totalJPY -= Math.round(discountJPY * 0.1);
+      totalUSD -= Math.round(discountUSD * 0.1);
     }
+    updateGoodsRates(baseYen, baseUsd);
   } else {
     const base = document.querySelector('input[name="d_base"]:checked');
     const baseJPY = base ? parseInt(base.value) : 0;
@@ -510,10 +681,13 @@ function updateSelectedItems() {
   }
 
   if (currentTab === 'illust') {
-    const base = document.querySelector('input[name="i_base"]:checked');
+    const base    = document.querySelector('input[name="i_base"]:checked');
+    const baseYen = base ? parseInt(base.value) : 0;
+    const baseUsd = usdOf(baseYen);
+    const isSD    = base ? base.dataset.type === 'sd' : false;
     if (base) {
       const nameEl = base.closest('.sim-option, .sim-pose-card')?.querySelector('.sim-option-name');
-      lineItems.push({ name: nameEl?.textContent || '', yen: parseInt(base.value) });
+      lineItems.push({ name: nameEl?.textContent || '', yen: baseYen });
     }
     if (counts.i_extraPerson > 0)
       lineItems.push({ name: `追加キャラクター ×${counts.i_extraPerson}`, yen: counts.i_extraPerson * countPrices.i_extraPerson });
@@ -525,13 +699,24 @@ function updateSelectedItems() {
       lineItems.push({ name: bg.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: parseInt(bg.value) });
     if (counts.i_expression > 0)    lineItems.push({ name: `表情差分（等身） ×${counts.i_expression}`,    yen: counts.i_expression * 1500 });
     if (counts.i_expression_sd > 0) lineItems.push({ name: `表情差分（SD） ×${counts.i_expression_sd}`,   yen: counts.i_expression_sd * 1000 });
-    if (counts.i_costume > 0)       lineItems.push({ name: `衣装差分（等身） ×${counts.i_costume}`,       yen: counts.i_costume * 4000 });
-    if (counts.i_costume_sd > 0)    lineItems.push({ name: `衣装差分（SD） ×${counts.i_costume_sd}`,      yen: counts.i_costume_sd * 2000 });
-    if (counts.i_hairstyle > 0)     lineItems.push({ name: `髪型差分（等身） ×${counts.i_hairstyle}`,     yen: counts.i_hairstyle * 4000 });
-    if (counts.i_hairstyle_sd > 0)  lineItems.push({ name: `髪型差分（SD） ×${counts.i_hairstyle_sd}`,    yen: counts.i_hairstyle_sd * 2000 });
+    /* 等身の衣装・髪型差分はベース料金の70% / 50%。内訳では実額に換算して表示する */
+    if (!isSD && counts.i_costume > 0)
+      lineItems.push({ name: `衣装差分（等身・70%） ×${counts.i_costume}`,
+                       yen: counts.i_costume * Math.round(baseYen * 0.7),
+                       usd: counts.i_costume * Math.round(baseUsd * 0.7) });
+    if (counts.i_costume_sd > 0)    lineItems.push({ name: `衣装差分（SD） ×${counts.i_costume_sd}`,      yen: counts.i_costume_sd * countPrices.i_costume_sd });
+    if (!isSD && counts.i_hairstyle > 0)
+      lineItems.push({ name: `髪型差分（等身・50%） ×${counts.i_hairstyle}`,
+                       yen: counts.i_hairstyle * Math.round(baseYen * 0.5),
+                       usd: counts.i_hairstyle * Math.round(baseUsd * 0.5) });
+    if (counts.i_hairstyle_sd > 0)  lineItems.push({ name: `髪型差分（SD） ×${counts.i_hairstyle_sd}`,    yen: counts.i_hairstyle_sd * countPrices.i_hairstyle_sd });
     document.querySelectorAll('.i_usage:checked').forEach(el => {
       lineItems.push({ name: el.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: 0, type: 'free' });
     });
+    /* グッズ販売は項目自体に定価がなく、金額は08の二次利用料として計上される */
+    const goodsUsage = document.getElementById('i_goods_usage');
+    if (goodsUsage && goodsUsage.checked)
+      lineItems.push({ name: 'グッズ販売', yen: 0, type: 'quote' });
     const hc = document.getElementById('i_highres').checked;
     const pc = document.getElementById('i_print').checked;
     if (hc || pc) {
@@ -551,9 +736,29 @@ function updateSelectedItems() {
       lineItems.push({ name: rName?.firstChild?.textContent?.trim() || rName?.textContent || '', yen: null, type: 'multiplier', multiplier: parseFloat(rush.value) });
     }
     if (document.getElementById('i_repeat').checked)
-      lineItems.push({ name: 'リピーター割引', yen: null, type: 'discount' });
-    /* ライセンス料は倍率・割引の対象外なので、内訳でも倍率行より後に並べる */
-    pushLicenseItems(['i_commercial', 'i_nosns']);
+      lineItems.push({ name: 'リピーター割引（ベース料金・追加キャラクター）', yen: null, type: 'discount' });
+    /* ライセンス料・権利料は倍率・割引の対象外なので、内訳でも倍率行より後に並べる */
+    const copyrightEl = document.getElementById('i_copyright');
+    if (copyrightEl && copyrightEl.checked) {
+      /* 譲渡した時点で権利が移るので、商用利用ライセンスとグッズ二次利用料は計上しない */
+      lineItems.push({ name: '著作権譲渡（ベース料金×3）', yen: baseYen * 3, usd: baseUsd * 3 });
+      pushLicenseItems(['i_nosns']);
+    } else {
+      pushLicenseItems(['i_commercial', 'i_nosns']);
+      goodsRowEls().forEach((row, i) => {
+        const rate  = goodsRate(i);
+        const typed = row.querySelector('.sim-goods-input').value.trim();
+        const label = typed || `グッズ ${i + 1}種類目`;
+        if (rate === 0) {
+          /* 未入力のときは「グッズ 1種類目」だけで足りるので括弧を重ねない */
+          lineItems.push({ name: typed ? `${typed}（1種類目）` : label, yen: 0, type: 'goodsFree' });
+        } else {
+          lineItems.push({ name: `${label}（二次利用 ${Math.round(rate * 100)}%）`,
+                           yen: Math.round(baseYen * rate),
+                           usd: Math.round(baseUsd * rate) });
+        }
+      });
+    }
   } else {
     const base = document.querySelector('input[name="d_base"]:checked');
     if (base) {
@@ -605,10 +810,22 @@ function updateSelectedItems() {
         <span class="receipt-item-name">${l.name}</span>
         <span class="receipt-item-price">構図調整のみ</span>
       </div>`;
+    } else if (type === 'quote') {
+      rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
+        <span class="receipt-item-name">${l.name}</span>
+        <span class="receipt-item-price">${currentLang === 'en' ? 'please inquire' : '応相談'}</span>
+      </div>`;
+    } else if (type === 'goodsFree') {
+      rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
+        <span class="receipt-item-name">${l.name}</span>
+        <span class="receipt-item-price">${currentLang === 'en' ? 'included in license' : '商用ライセンスに含む'}</span>
+      </div>`;
     } else {
+      /* ％計算で出た行は換算済みのドル額をそのまま使う */
+      const price = l.usd !== undefined ? formatPair(l.yen, l.usd) : formatAmt(l.yen);
       rows += `<div class="receipt-item" style="animation-delay:${(delay++) * 0.06}s">
         <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">${formatAmt(l.yen)}</span>
+        <span class="receipt-item-price">${price}</span>
       </div>`;
     }
   });
@@ -634,12 +851,24 @@ const USD_AMOUNT = {
   13000:90, 15000:100, 18000:125, 20000:140, 30000:200, 35000:240
 };
 
+/* 円→ドル換算（テーブルにない金額は¥150/＄で丸める） */
+function usdOf(yen) {
+  return USD_AMOUNT[yen] !== undefined ? USD_AMOUNT[yen] : Math.round(yen / 150);
+}
+
 function formatAmt(yen) {
   if (currentCurrency === 'USD') {
-    const usd = USD_AMOUNT[yen];
-    return '$' + (usd !== undefined ? usd : Math.round(yen / 150)).toLocaleString('en-US');
+    return '$' + usdOf(yen).toLocaleString('en-US');
   }
   return '¥' + yen.toLocaleString('ja-JP');
+}
+
+/* ％計算で出た金額用：ドル額を換算せず渡された値で表示する。
+   ベース料金のUSDに％を掛けた額と、合計への加算額をズレさせないため */
+function formatPair(yen, usd) {
+  return currentCurrency === 'USD'
+    ? '$' + usd.toLocaleString('en-US')
+    : '¥' + yen.toLocaleString('ja-JP');
 }
 
 const SUFFIX_EN = {
@@ -675,6 +904,23 @@ function switchCurrency(cur) {
 const TRANS_EN = {
   title: 'Price Simulator',
   'お見積もり合計（目安）': 'Estimated Total (approx.)',
+  /* グッズ二次利用・著作権譲渡 */
+  'グッズ・物販の二次利用': 'Merchandise & Secondary Use',
+  'グッズ販売': 'Merchandise Sales',
+  '応相談': 'please inquire',
+  'アクリルスタンド・缶バッジ・Tシャツなど、グッズとして販売される場合はこちらをお選びください。展開される商品の種類によって金額が変わるため、こちらの項目自体に料金は設定していません。':
+    'Choose this if you plan to sell the artwork as merchandise — acrylic stands, can badges, T-shirts and so on. No fixed price is set here because the amount depends on how many product types you release.',
+  goods_add: '＋ Add merchandise',
+  goods_hint:
+    'Counted by product category — one acrylic stand, one can badge and one T-shirt count as 3 types. Multiple expression variants of the same product still count as one type.<br>The first type is covered by the commercial use license; from the second type onward a secondary use fee is charged against the base price (based on the Japan Illustrators\' Association guidelines).',
+  '＋ベース料金の70% / セット': '＋70% of base price / set',
+  '＋ベース料金の50% / 種':   '＋50% of base price / style',
+  '著作権譲渡': 'Copyright Transfer',
+  '＋ベース料金 ×3': '＋3× base price',
+  '原則としてお受けしておりません。譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。':
+    '<strong>As a rule I do not offer copyright transfer.</strong> If a transfer is agreed, the copyright passes to you, so the commercial use license (＋¥5,000) and merchandise secondary use fees are no longer required.',
+  '2回目以降のご依頼で、ベースイラスト（構図）と追加キャラクターの料金から10%引きになります。※ 背景・キャラクターデザイン・各種差分・高解像度・Live2D・追加修正などのオプション料金、および商用利用・著作権譲渡・グッズ二次利用などの権利料は対象外です。割引はイラスト制作の対価に対するお礼のため、権利の対価は値引きしておりません。':
+    'From your second commission onward, <strong>10% off the base illustration (framing) and additional character fees</strong>. <strong>* Options such as backgrounds, character design, variations, high resolution, Live2D and extra revisions, as well as rights fees (commercial use, copyright transfer, merchandise secondary use), are excluded.</strong> The discount is a thank-you for the illustration work itself, so payment for rights is not discounted.',
   /* section headers（番号バッジ導入後のh2テキスト） */
   'ベースイラスト': 'Base Illustration',
   'キャラクターデザイン': 'Character Design',
@@ -728,7 +974,7 @@ const TRANS_EN = {
   'SNSヘッダー': 'SNS Header',
   'YouTubeサムネイル': 'YouTube Thumbnail',
   '動画素材・切り抜き配信': 'Video / Streaming Assets',
-  '印刷物・グッズ制作': 'Print / Merchandise',
+  '印刷用高解像度データ（A3対応）': 'Print-ready High-res Data (up to A3)',
   'Live2D用（レイヤー分けPSD納品）': 'Live2D (Layered PSD)',
   'なし': 'None',
   '等身・基本（まばたき・口・呼吸）': 'Standard · Basic (blink, mouth, breath)',
@@ -737,6 +983,8 @@ const TRANS_EN = {
   'SDキャラ・ポーズ切り替えあり': 'Chibi · With Pose Switch',
   '商用利用ライセンス': 'Commercial Use License',
   'SNS・サンプル掲載不可': 'No SNS / Portfolio Posting',
+  '完成した作品をぐるにゃのSNS・ポートフォリオ・サンプル画像などへの掲載を行いません。プライベートなご利用・成人向けコンテンツへの使用など、公開を希望されない場合にお選びください。':
+    'The completed artwork will not be posted on ぐるにゃ\'s SNS, portfolio, or sample pages. Please select this option if you prefer the work to remain private — for personal use, adult content, or any other reason.',
   '完成した作品をぐるにゃのSNS・ポートフォリオ・サンプル画像などへの掲載を行いません。プライベートなご利用・成人向けコンテンツへの使用など、公開を希望されない場合にお選びください。※ ライセンス料は定額のため、納期倍率・リピーター割引の対象外です。':
     'The completed artwork will not be posted on ぐるにゃ\'s SNS, portfolio, or sample pages. Please select this option if you prefer the work to remain private — for personal use, adult content, or any other reason. * License fees are flat-rate and are not affected by rush multipliers or the repeat-client discount.',
   '通常納期': 'Standard Delivery',
@@ -769,12 +1017,13 @@ const TRANS_EN = {
   /* inline notes */
   'キャンバスサイズ6,500px以上の高解像度データでお渡しします。切り抜き配信・拡大編集・動画素材への利用に適しています。':
     'Delivered at 6,500px or more on the long side. Suitable for stream overlays, video editing, and motion assets.',
-  'A4サイズ・350dpi対応の高解像度データでお渡しします。グッズ制作・印刷物への利用に適しています。':
-    'Delivered at A4 size / 350dpi. Suitable for merchandise and print production.',
+  'A3サイズ・350dpi対応の印刷用データでお渡しします。これはデータの仕様に対する料金です。グッズ・物販として販売される場合は、別途「07 オプション」の商用利用ライセンスと「08 グッズ・物販の二次利用」の二次利用料が必要になります。':
+    'Delivered as print-ready data at A3 size / 350dpi. <strong>This fee covers the data specification only.</strong> If you sell the artwork as merchandise, the commercial use license under “07 Option” and the secondary use fee under “08 Merchandise & Secondary Use” are required separately.',
   '⚠ 動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。':
     '⚠ If you order Live2D animation (section ⑥), layered PSD is already included — no need to check this. If you only need the PSD from a regular illustration, please consult in advance.',
-  'グッズ販売・企業広告・有料コンテンツへの使用・収益化チャンネルでの継続使用など、金銭的利益を伴う利用に必要です。現在未収益化でも、収益化を目標とされている配信者・VTuberの方にもお選びいただけますようお願いいたします。個人のSNS投稿・非営利目的には不要です。著作権はぐるにゃに帰属し、このライセンスに著作権の譲渡は含まれません。※ ライセンス料は定額のため、納期倍率・リピーター割引の対象外です。':
-    'Required for any use involving financial gain — merchandise sales, commercial advertising, paid content, monetized channels, etc. We also kindly ask streamers and VTubers who are currently non-monetized but working towards monetization to select this option. Not required for personal SNS or non-commercial use. Copyright remains with ぐるにゃ and is not transferred by this license. * License fees are flat-rate and are not affected by rush multipliers or the repeat-client discount.',
+  'グッズ販売・企業広告・有料コンテンツ・収益化チャンネルでの使用など、金銭的利益を伴う利用に必要です。個人のSNS投稿・非営利目的には不要です。著作権はぐるにゃに帰属し、このライセンスに譲渡は含まれません。':
+    '<strong>Required for any use involving financial gain</strong> — merchandise sales, commercial advertising, paid content, monetized channels and so on. Not required for personal SNS posts or non-commercial use. Copyright remains with ぐるにゃ and is not transferred by this license.',
+  option_note: '* Option fees and rights fees are not affected by rush multipliers or the repeat-client discount.',
   /* アコーディオンタイトル */
   '詳細': 'Details',
   '⚠ 注意': '⚠ Note',
@@ -840,8 +1089,8 @@ function switchLang(lang) {
       const en = TRANS_EN[jp];
       if (en) el.innerHTML = en;
     });
-    /* ¥なしのテキストのみ価格スパン */
-    document.querySelectorAll('.sim-option-price:not([data-yen])').forEach(el => {
+    /* ¥なしのテキストのみ価格スパン（％表記の差分料金・著作権譲渡料を含む） */
+    document.querySelectorAll('.sim-option-price:not([data-yen]), .sim-counter-price:not([data-yen])').forEach(el => {
       if (!el.dataset.jp) el.dataset.jp = el.textContent.trim();
       const en = TRANS_EN[el.dataset.jp];
       if (en !== undefined) el.textContent = en;
@@ -876,7 +1125,8 @@ function switchLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('is-active', btn.dataset.lang === lang);
   });
-  updateSelectedItems();
+  /* グッズ行の料率表示も言語に合わせて更新するため calcTotal 経由で再描画する */
+  calcTotal();
   updateMascotMessage(null);
   updateDeliveryNote();
   /* バッジラベルを言語に合わせて更新 */
@@ -921,9 +1171,54 @@ function createPriceBurst() {
   }
 }
 
+/* === 著作権譲渡と商用利用ライセンスの排他制御 === */
+/* 譲渡が成立すると権利ごと移るので、商用利用ライセンスは選べないようにする */
+function updateCopyrightState() {
+  const copyright  = document.getElementById('i_copyright');
+  const commercial = document.getElementById('i_commercial');
+  if (!copyright || !commercial) return;
+  const label = commercial.closest('label');
+  if (copyright.checked) {
+    commercial.checked  = false;
+    commercial.disabled = true;
+    label?.classList.add('is-disabled');
+  } else {
+    commercial.disabled = false;
+    label?.classList.remove('is-disabled');
+  }
+}
+
 /* === イベント登録・初期化 === */
+/* 商用利用・著作権譲渡・グッズ販売はグッズ欄の状態更新を挟むので、下で個別に登録する */
 document.querySelectorAll('input[type="radio"], input[type="checkbox"]')
-  .forEach(el => el.addEventListener('change', calcTotal));
+  .forEach(el => {
+    if (el.id === 'i_commercial' || el.id === 'i_copyright' || el.id === 'i_goods_usage') return;
+    el.addEventListener('change', calcTotal);
+  });
+/* 使用用途で「グッズ販売」を選んだら商用利用ライセンスを自動で入れる。
+   著作権譲渡を選んでいる場合は権利ごと移転するので何もしない */
+const goodsUsageEl = document.getElementById('i_goods_usage');
+if (goodsUsageEl) {
+  goodsUsageEl.addEventListener('change', () => {
+    const commercial = document.getElementById('i_commercial');
+    const copyright  = document.getElementById('i_copyright');
+    if (goodsUsageEl.checked && commercial && !(copyright && copyright.checked)) {
+      commercial.checked = true;
+    }
+    updateGoodsVisibility();
+    calcTotal();
+  });
+}
+/* 商用利用・著作権譲渡の切り替えでグッズ欄の表示を更新する */
+['i_commercial', 'i_copyright'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('change', () => {
+    updateCopyrightState();
+    updateGoodsVisibility();
+    calcTotal();
+  });
+});
 /* ベース・背景・Live2D変更時に納期注意書きを更新 */
 ['input[name="i_base"]', 'input[name="i_bg"]', 'input[name="i_live2d"]', 'input[name="i_rush"]'].forEach(sel =>
   document.querySelectorAll(sel).forEach(el => el.addEventListener('change', updateDeliveryNote))
@@ -954,6 +1249,8 @@ function updateRushAvailability() {
 document.querySelectorAll('input[name="i_live2d"]')
   .forEach(el => el.addEventListener('change', updateRushAvailability));
 initPriceEls();
+updateCopyrightState();
+updateGoodsVisibility();
 calcTotal();
 updateDeliveryNote();
 updateRushAvailability();
@@ -1147,6 +1444,12 @@ const MASCOT_CONDITIONS = [
 
   /* ── 使用用途 ── */
   {
+    trigger: '#i_goods_usage',
+    check:   () => document.getElementById('i_goods_usage')?.checked,
+    message:    'グッズ販売だね₍ᐢ‥ᐢ₎ ♡ 「07 オプション」の商用利用ライセンスは自動で入れておいたうさよ！\n出す予定のグッズは「08 グッズ・物販の二次利用」に入れてみてね₍ᐢ- -ᐢ₎',
+    message_en: 'Selling merch ₍ᐢ‥ᐢ₎ ♡ I\'ve already ticked the commercial use license under “07 Option” for you!\nList the items you\'re planning under “08 Merchandise & Secondary Use” ₍ᐢ- -ᐢ₎',
+  },
+  {
     trigger: '#i_highres, #i_print',
     check:   () => document.getElementById('i_highres')?.checked && document.getElementById('i_print')?.checked,
     message:    '動画素材と印刷物、両方選んでくれたね₍ᐢ‥ᐢ₎ ♡ 高解像度料金は一回分でいいんだよ！\n二次利用する時は追加料金取らないけど、事前にお知らせしてくれるとすごくすごく嬉しいうさ₍ᐢ;ｗ;ᐢ₎',
@@ -1161,8 +1464,8 @@ const MASCOT_CONDITIONS = [
   {
     trigger: '#i_print',
     check:   () => document.getElementById('i_print')?.checked,
-    message:    'A4・350dpi対応で仕上げるよ₍ᐢ‥ᐢ₎ ♡ \nグッズ完成楽しみだね！',
-    message_en: 'I\'ll finish it at A4 / 350dpi ₍ᐢ‥ᐢ₎ ♡\nCan\'t wait to see your merch!',
+    message:    'A3・350dpi対応で仕上げるよ₍ᐢ‥ᐢ₎ ♡ \nグッズ完成楽しみだね！',
+    message_en: 'I\'ll finish it at A3 / 350dpi ₍ᐢ‥ᐢ₎ ♡\nCan\'t wait to see your merch!',
   },
   {
     trigger: '.i_usage[data-note*="文字"]',
@@ -1185,10 +1488,16 @@ const MASCOT_CONDITIONS = [
 
   /* ── オプション ── */
   {
+    trigger: '#i_copyright',
+    check:   () => document.getElementById('i_copyright')?.checked,
+    message:    '著作権譲渡は原則お受けしてないんだ₍ᐢ- -ᐢ₎\nでもご事情によっては特別にお客様のご意思を尊重するうさよ！まずは気軽に相談してみてね₍ᐢ‥ᐢ₎ ♡',
+    message_en: 'I don\'t normally offer copyright transfer ₍ᐢ- -ᐢ₎\nBut depending on your situation I\'ll respect your wishes as a special case — just ask me first ₍ᐢ‥ᐢ₎ ♡',
+  },
+  {
     trigger: '#i_commercial',
     check:   () => document.getElementById('i_commercial')?.checked,
-    message:    '商用ライセンスありがとうございます₍ᐢ‥ᐢ₎ ♡ 収益化頑張って！',
-    message_en: 'Thank you for choosing the commercial license ₍ᐢ‥ᐢ₎ ♡ Best of luck with monetization!',
+    message:    '商用ライセンスありがとうございます₍ᐢ‥ᐢ₎ ♡ 収益化頑張って！\n今はまだ未収益化でも、目指してる配信者さん・VTuberさんは選んでくれると嬉しいうさ₍ᐢ- -ᐢ₎',
+    message_en: 'Thank you for choosing the commercial license ₍ᐢ‥ᐢ₎ ♡ Best of luck with monetization!\nEven if you\'re not monetized yet, I\'d be happy if you pick this when you\'re working towards it ₍ᐢ- -ᐢ₎',
   },
   {
     trigger: '#i_nosns',
