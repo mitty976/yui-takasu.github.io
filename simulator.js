@@ -919,8 +919,8 @@ const TRANS_EN = {
   '＋ベース料金 ×3': '＋3× base price',
   '原則としてお受けしておりません。譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。':
     '<strong>As a rule I do not offer copyright transfer.</strong> If a transfer is agreed, the copyright passes to you, so the commercial use license (＋¥5,000) and merchandise secondary use fees are no longer required.',
-  '2回目以降のご依頼で、ベースイラスト（構図）と追加キャラクターの料金から10%引きになります。※ 背景・キャラクターデザイン・各種差分・高解像度・Live2D・追加修正などのオプション料金、および商用利用・著作権譲渡・グッズ二次利用などの権利料は対象外です。割引はイラスト制作の対価に対するお礼のため、権利の対価は値引きしておりません。':
-    'From your second commission onward, <strong>10% off the base illustration (framing) and additional character fees</strong>. <strong>* Options such as backgrounds, character design, variations, high resolution, Live2D and extra revisions, as well as rights fees (commercial use, copyright transfer, merchandise secondary use), are excluded.</strong> The discount is a thank-you for the illustration work itself, so payment for rights is not discounted.',
+  'いつもありがとうございます。2回目以降のご依頼は、イラスト本体（構図・追加キャラクター）を10%引きにさせていただきます。背景や差分などのオプション、商用利用・著作権譲渡・グッズの二次利用といった権利のお料金は、割引の対象外とさせてください。':
+    'Thank you for coming back. From your second commission onward, <strong>10% off the illustration itself (framing and additional characters)</strong>.<br>Options such as backgrounds and variations, and rights fees such as commercial use, copyright transfer and merchandise secondary use, are outside the discount.',
   /* section headers（番号バッジ導入後のh2テキスト） */
   'ベースイラスト': 'Base Illustration',
   'キャラクターデザイン': 'Character Design',
@@ -1518,8 +1518,8 @@ const MASCOT_CONDITIONS = [
   {
     trigger: '#i_repeat',
     check:   () => document.getElementById('i_repeat')?.checked,
-    message:    'またきてくれてありがとう₍ᐢ‥ᐢ₎ ♡ いつも応援してるうさ！',
-    message_en: 'Welcome back ₍ᐢ‥ᐢ₎ ♡ I\'m always rooting for you!',
+    message:    'またきてくれてありがとう₍ᐢ‥ᐢ₎ ♡ いつも応援してるうさ！\n描かせてもらうお礼の割引だから、イラスト本体からお値引きさせてね₍ᐢ- -ᐢ₎',
+    message_en: 'Welcome back ₍ᐢ‥ᐢ₎ ♡ I\'m always rooting for you!\nIt\'s my thank-you for letting me draw, so the discount comes off the illustration itself ₍ᐢ- -ᐢ₎',
   },
 
 ];
