@@ -108,12 +108,6 @@
   </span>
 </div>
 
-  <!-- タブ切り替え -->
-  <div class="sim-tabs">
-    <button class="sim-tab is-active" data-target="illust">Illustration</button>
-    <button class="sim-tab" data-target="design">Design</button>
-  </div>
-
   <!-- 上部合計エリア -->
   <div class="sim-total-top-card">
     <div class="sim-total-top-left">
@@ -163,6 +157,19 @@
         <div class="receipt-zigzag-bottom"></div>
       </div>
     </div>
+  </div>
+
+  <!-- 点数タブ（上段） -->
+  <div class="sim-piece-tabs" id="pieceTabs">
+    <button class="sim-tab sim-piece-tab is-active" data-piece="0">1点目</button>
+    <button class="sim-tab sim-piece-add" id="pieceAddBtn" type="button">＋</button>
+  </div>
+
+  <!-- サービスタブ（下段） -->
+  <div class="sim-tabs">
+    <button class="sim-tab is-active" data-target="illust">イラスト</button>
+    <button class="sim-tab" data-target="design">デザイン</button>
+    <button class="sim-tab" data-target="video">ＭＶ制作</button>
   </div>
 
   <!-- ========================
@@ -920,6 +927,22 @@
     </div>
 
   </div><!-- /sim-design -->
+
+  <!-- ========================
+       動画編集セクション
+  ========================= -->
+  <div class="sim-section" id="sim-video">
+    <div class="sim-card">
+      <div class="sim-card-header">
+        <span class="sim-card-num">01</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">MV Plan</span>
+          <h2>ＭＶ制作プラン</h2>
+        </div>
+      </div>
+      <p class="sim-note" data-i18n="video_wip" style="margin-top:0;">準備中です。</p>
+    </div>
+  </div><!-- /sim-video -->
 
 </main>
 

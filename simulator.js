@@ -225,11 +225,12 @@ function updateGoodsRates(baseYen, baseUsd) {
   });
 }
 
-/* === タブ切り替え === */
+/* === サービスタブ切り替え === */
+/* .sim-tab は点数タブでも使っているので、サービスタブの行に限定して拾う */
 let currentTab = 'illust';
-document.querySelectorAll('.sim-tab').forEach(btn => {
+document.querySelectorAll('.sim-tabs .sim-tab').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.sim-tab').forEach(b => b.classList.remove('is-active'));
+    document.querySelectorAll('.sim-tabs .sim-tab').forEach(b => b.classList.remove('is-active'));
     btn.classList.add('is-active');
     currentTab = btn.dataset.target;
     document.querySelectorAll('.sim-section').forEach(s => s.classList.remove('is-active'));
