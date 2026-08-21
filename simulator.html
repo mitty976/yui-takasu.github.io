@@ -266,7 +266,7 @@
             <img src="assets/img/figure/1.5頭身.png" alt="1.5頭身">
           </div>
           <span class="sim-option-name">1.5頭身</span>
-          <span class="sim-pose-desc">もっちもちで一番ゆるかわいいバランス。手足もシンプルで、とにかく「かわいい」全開のSDだよ</span>
+          <span class="sim-pose-desc">もっちもちで一番ゆるかわいいバランス。<br>手足もシンプルで、とにかく「かわいい」全開のSDだよ</span>
           <span class="sim-option-price">¥6,000</span>
         </label>
 
@@ -286,7 +286,7 @@
             <img src="assets/img/figure/2.5頭身.png" alt="2.5頭身">
           </div>
           <span class="sim-option-name">2.5頭身</span>
-          <span class="sim-pose-desc">かわいらしさを保ちつつ衣装・髪型の細部まで描き込めるバランス。ぐるにゃが一番よく描くのもこれ！</span>
+          <span class="sim-pose-desc">かわいらしさを保ちつつ衣装・髪型の細部まで描き込めるバランス。<br>ぐるにゃが一番よく描くのもこれ！</span>
           <span class="sim-option-price">¥8,000</span>
         </label>
 
@@ -296,7 +296,7 @@
             <img src="assets/img/figure/3頭身.png" alt="3頭身">
           </div>
           <span class="sim-option-name">3頭身</span>
-          <span class="sim-pose-desc">SDの中で一番等身キャラ寄り。体のラインはSDキャラなりによく出るように描ける。アクションポーズも映えてかっこかわいい系にも◎</span>
+          <span class="sim-pose-desc">SDの中で一番等身キャラ寄り。<br>体のラインはSDキャラなりによく出るように描ける。<br>アクションポーズも映えてかっこかわいい系にも◎</span>
           <span class="sim-option-price">¥9,000</span>
         </label>
 
@@ -608,10 +608,10 @@
           <span class="sim-option-label">
             <svg class="usage-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm2.4-9.6c-.4-.7-1.1-1.1-2-1.1-1.5 0-2.6 1.2-2.6 2.7s1.1 2.7 2.6 2.7c.9 0 1.6-.4 2-1.1l1.7 1c-.8 1.3-2.1 2.1-3.7 2.1-2.5 0-4.5-2-4.5-4.7s2-4.7 4.5-4.7c1.6 0 2.9.8 3.7 2.1l-1.7 1z"/></svg>
             <span class="sim-option-name">著作権譲渡</span>
-            <span class="sim-option-price">＋ベース料金×3（最低30,000円）</span>
+            <span class="sim-option-price">応相談</span>
           </span>
           <span class="sim-note-accordion">
-            <span class="sim-note-accordion-body"><strong>原則としてお受けしておりません。</strong>譲渡料はベース料金の3倍（最低30,000円）です。譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。</span>
+            <span class="sim-note-accordion-body"><strong>原則としてお受けしておりません。</strong>譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。</span>
           </span>
         </label>
       </div>
@@ -761,77 +761,271 @@
           <h2>サービス種別</h2>
         </div>
       </div>
-      <div class="sim-options">
-        <label class="sim-option">
-          <input type="radio" name="d_base" value="5000" checked>
-          <span class="sim-option-label">
-            <span class="sim-option-name">バナー・広告（静止画）</span>
-            <span class="sim-option-price">¥5,000〜</span>
-          </span>
+      <p class="sim-note" id="d-kind-hint" style="margin-top:0; margin-bottom:12px;">つくりたいものを選んでください。<br>デザインのご依頼では、<strong>キャラクター素材はすべてお持ち込み</strong>となります。<br>描き下ろしをご希望の場合はイラストのタブからご依頼ください。</p>
+      <div class="sim-kind-tabs" id="d-kind-tabs">
+        <div class="sim-kind-group">
+          <span class="sim-kind-group-label">配信まわり</span>
+          <div class="sim-kind-group-row" data-cols="2">
+            <button type="button" class="sim-kind-tab" data-kind="overlay">配信オーバーレイ</button>
+            <button type="button" class="sim-kind-tab" data-kind="bg">配信背景</button>
+            <button type="button" class="sim-kind-tab" data-kind="schedule">配信スケジュール表</button>
+            <button type="button" class="sim-kind-tab" data-kind="thumb">配信サムネイル</button>
+            <button type="button" class="sim-kind-tab" data-kind="namelogo">ネームロゴ</button>
+            <button type="button" class="sim-kind-tab" data-kind="profile">プロフィールカード</button>
+          </div>
+        </div>
+        <div class="sim-kind-group">
+          <span class="sim-kind-group-label">返礼品など</span>
+          <div class="sim-kind-group-row" data-cols="2">
+            <button type="button" class="sim-kind-tab" data-kind="stamp">スタンプ・バッジ</button>
+            <button type="button" class="sim-kind-tab" data-kind="wallpaper">動く壁紙</button>
+            <button type="button" class="sim-kind-tab" data-kind="ring">アイコンリング</button>
+            <button type="button" class="sim-kind-tab" data-kind="header">ヘッダー</button>
+          </div>
+        </div>
+        <div class="sim-kind-group">
+          <span class="sim-kind-group-label">準備中</span>
+          <div class="sim-kind-group-row" data-cols="3">
+            <button type="button" class="sim-kind-tab sim-kind-tab--soon" data-kind="commentcss">コメント欄カスタムCSS</button>
+            <button type="button" class="sim-kind-tab sim-kind-tab--soon" data-kind="clock">配信時計</button>
+            <button type="button" class="sim-kind-tab sim-kind-tab--soon" data-kind="profilesite">プロフィールサイト</button>
+          </div>
+        </div>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-namelogo" data-cols="3" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="6000" data-monitor="1" data-campaign-price="4200" data-campaign-until="2026-09-30">
+          <div class="sim-logo-img-box"><img src="assets/img/design/namelogo-simple.jpg" alt="シンプルのサンプル" loading="lazy"></div>
+          <span class="sim-option-name">シンプル</span>
+          <span class="sim-pose-desc">キャラクターのモチーフを1点だけ添えた、すっきりした構成です。</span>
+          <span class="sim-option-price">¥6,000〜</span>
         </label>
-        <label class="sim-option">
-          <input type="radio" name="d_base" value="10000">
-          <span class="sim-option-label">
-            <span class="sim-option-name">バナー・広告（GIFアニメ）</span>
-            <span class="sim-option-price">¥10,000〜</span>
-          </span>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="10000" data-monitor="1" data-campaign-price="7000" data-campaign-until="2026-09-30">
+          <div class="sim-logo-img-box"><img src="assets/img/design/namelogo-deco.jpg" alt="デコのサンプル" loading="lazy"></div>
+          <span class="sim-option-name">デコ</span>
+          <span class="sim-pose-desc">キャラクターのモチーフを複数点あしらった、装飾の多い構成です。</span>
+          <span class="sim-option-price">¥10,000〜</span>
         </label>
-        <label class="sim-option">
-          <input type="radio" name="d_base" value="8000">
-          <span class="sim-option-label">
-            <span class="sim-option-name">チラシ・フライヤー（片面）</span>
-            <span class="sim-option-price">¥8,000〜</span>
-          </span>
-        </label>
-        <label class="sim-option">
-          <input type="radio" name="d_base" value="5000">
-          <span class="sim-option-label">
-            <span class="sim-option-name">名刺・ショップカード</span>
-            <span class="sim-option-price">¥5,000〜</span>
-          </span>
-        </label>
-        <label class="sim-option">
-          <input type="radio" name="d_base" value="15000">
-          <span class="sim-option-label">
-            <span class="sim-option-name">ロゴデザイン</span>
-            <span class="sim-option-price">¥15,000〜</span>
-          </span>
-        </label>
-        <label class="sim-option">
-          <input type="radio" name="d_base" value="30000">
-          <span class="sim-option-label">
-            <span class="sim-option-name">LPデザイン（コーディングなし）</span>
-            <span class="sim-option-price">¥30,000〜</span>
-          </span>
+        <label class="sim-pose-card" id="d_deco2_label">
+          <input type="radio" name="d_base" value="15000" id="d_deco2" data-campaign-price="10000" data-campaign-until="2026-08-31">
+          <div class="sim-logo-img-box"><img src="assets/img/design/namelogo-deco2.jpg" alt="デコデコのサンプル" loading="lazy"></div>
+          <span class="sim-option-name">デコデコ</span>
+          <span class="sim-pose-desc">文字そのものをモチーフに置き換えてデザインし、相棒キャラクター（ちびキャラ）を1点お描きします。</span>
+          <span class="sim-option-price">¥15,000〜</span>
         </label>
       </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-schedule" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="5000">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">デコデコ風の装飾でお作りします。<br>曜日・時間帯のレイアウトはご希望に合わせて調整いたします。</span>
+          <span class="sim-option-price">¥5,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="8000">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">世界観に合わせた背景を手描きで描き下ろします（人物は含みません）。</span>
+          <span class="sim-option-price">¥8,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-overlay" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="4000" data-monitor="1" data-campaign-price="2800" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">待機画面・枠などをシンプルな構成でお作りします。</span>
+          <span class="sim-option-price">¥4,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="8000" data-monitor="1" data-campaign-price="5600" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">世界観に合わせて描き込んだ、作り込みのある構成です。</span>
+          <span class="sim-option-price">¥8,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-tabs sim-sub-tabs" data-heading="配信スタイル" data-cols="2" id="d-sub-bg" style="display:none">
+        <button type="button" class="sim-kind-tab sim-sub-tab" data-sub="bg-h" data-parent="bg">横配信</button>
+        <button type="button" class="sim-kind-tab sim-sub-tab" data-sub="bg-v" data-parent="bg">縦配信</button>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-bg-h" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="10000" data-monitor="1" data-campaign-price="7000" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">パソコン・横画面での配信向け。描き込みは控えめです。</span>
+          <span class="sim-option-price">¥10,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="20000" data-monitor="1" data-campaign-price="14000" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">パソコン・横画面での配信向け。描き込みをたっぷり入れます。</span>
+          <span class="sim-option-price">¥20,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-bg-v" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="6000" data-monitor="1" data-campaign-price="4200" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">スマートフォンの縦画面での配信向け。描き込みは控えめです。</span>
+          <span class="sim-option-price">¥6,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="10000" data-monitor="1" data-campaign-price="7000" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">スマートフォンの縦画面での配信向け。描き込みをたっぷり入れます。</span>
+          <span class="sim-option-price">¥10,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-tabs sim-sub-tabs" data-heading="使用用途" data-cols="2" id="d-sub-header" style="display:none">
+        <button type="button" class="sim-kind-tab sim-sub-tab" data-sub="header-gift" data-parent="header">バッジ返礼品</button>
+        <button type="button" class="sim-kind-tab sim-sub-tab" data-sub="header-marriage" data-parent="header">よめこな王返礼品</button>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-header-gift" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="4000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">X・YouTube・Twitchなどのヘッダーをお作りします。<br>シンプルな構成です。<br>サイズはご指定ください。</span>
+          <span class="sim-option-price">¥4,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="6000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">装飾や書き文字を多く入れた、作り込みのある構成です。サイズはご指定ください。</span>
+          <span class="sim-option-price">¥6,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-header-marriage" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="500">
+          <span class="sim-option-name">スタンダード（量産型婚姻届）</span>
+          <span class="sim-pose-desc">テンプレートをお渡しします。ご自分で素材と文字を重ねてお使いください。</span>
+          <span class="sim-option-price">¥500〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="8000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">プレミアム（一点物婚姻届）</span>
+          <span class="sim-pose-desc">鉛筆の落書き付きの一点物です。<br>ウェディングドレス姿の横顔など、ご希望に合わせてお描きします。</span>
+          <span class="sim-option-price">¥8,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-profile" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="4000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">自己紹介・ボイス診断などのカードをお作りします。項目はご相談のうえ決めます。</span>
+          <span class="sim-option-price">¥4,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="6000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">装飾を多く入れた、作り込みのある構成です。項目数が多い場合にも向いています。</span>
+          <span class="sim-option-price">¥6,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-thumb" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="1500" data-per-unit="1">
+          <span class="sim-option-name">1点ずつ</span>
+          <span class="sim-pose-desc">配信のサムネイルを1点ごとにお作りします。</span>
+          <span class="sim-option-price">¥1,500〜 / 点</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="9000">
+          <span class="sim-option-name">一週間セット</span>
+          <span class="sim-pose-desc">IRIAMの初配信WEEKやイベント用に、7日分をまとめてお作りします。</span>
+          <span class="sim-option-price">¥9,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-wallpaper" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="4000" data-campaign-price="2800" data-monitor="1" data-campaign-until="2026-09-30" data-commercial-included="1">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">お持ちの写真やイラストでデザインし、iPhoneのライブ写真とAndroid用のmp4でお渡しします。<br>ロック画面で1〜3秒動きます。</span>
+          <span class="sim-option-price">¥4,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="6000" data-campaign-price="4200" data-monitor="1" data-campaign-until="2026-09-30" data-commercial-included="1">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">装飾やコラージュを作り込んだ構成です。動きにも変化をつけます。</span>
+          <span class="sim-option-price">¥6,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-tabs sim-sub-tabs" data-heading="モチーフ" data-cols="3" id="d-sub-stamp" style="display:none">
+        <button type="button" class="sim-kind-tab sim-sub-tab" data-sub="stamp-chara" data-parent="stamp">キャラ</button>
+        <button type="button" class="sim-kind-tab sim-sub-tab" data-sub="stamp-text" data-parent="stamp">文字のみ</button>
+        <button type="button" class="sim-kind-tab sim-sub-tab" data-sub="stamp-item" data-parent="stamp">小物・食べ物</button>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-stamp-chara" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="4000" data-per-unit="1">
+          <span class="sim-option-name">静止画</span>
+          <span class="sim-pose-desc">キャラクターのスタンプ・バッジです。文字入れは無料でお付けします。</span>
+          <span class="sim-option-price">¥4,000〜 / 点</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="8000" data-per-unit="1">
+          <span class="sim-option-name">アニメーション</span>
+          <span class="sim-pose-desc">動くキャラクタースタンプです。文字入れは無料でお付けします。</span>
+          <span class="sim-option-price">¥8,000〜 / 点</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-stamp-text" data-cols="1" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="2000" data-per-unit="1">
+          <span class="sim-option-name">文字のみ</span>
+          <span class="sim-pose-desc">文字だけで構成したスタンプ・バッジです。</span>
+          <span class="sim-option-price">¥2,000〜 / 点</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-stamp-item" data-cols="1" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="3000" data-per-unit="1">
+          <span class="sim-option-name">小物・食べ物</span>
+          <span class="sim-pose-desc">食べ物や小物のスタンプ・バッジです。</span>
+          <span class="sim-option-price">¥3,000〜 / 点</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid" data-heading="プラン" id="d-kind-ring" data-cols="2" style="display:none">
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="4000" data-campaign-price="2800" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">スタンダード</span>
+          <span class="sim-pose-desc">アイコンのまわりを飾るリングです。シンプルな構成でお作りします。</span>
+          <span class="sim-option-price">¥4,000〜</span>
+        </label>
+        <label class="sim-pose-card">
+          <input type="radio" name="d_base" value="6000" data-campaign-price="4200" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-name">プレミアム</span>
+          <span class="sim-pose-desc">モチーフや装飾を多く入れた、作り込みのあるリングです。</span>
+          <span class="sim-option-price">¥6,000〜</span>
+        </label>
+      </div>
+      <div class="sim-kind-grid sim-kind-soon" id="d-kind-commentcss" data-cols="1" style="display:none">
+        <p class="sim-soon-note">わんコメなどのコメント欄を、キャラクターに合わせたデザインに差し替えるカスタムCSSです。<br>通常メッセージ・メンバーシップ・スパチャ・スーパースティッカーなど、8種類の枠組みに対応します。<br><br>CSS構築費 ¥10,000〜／描き下ろしイラスト ＋¥2,000〜 1点／色別対応 ＋¥3,000〜（5色一括）<br><br><strong>ただいま準備中です。</strong>ご興味がありましたらお気軽にお声がけください。<br></p>
+      </div>
+      <div class="sim-kind-grid sim-kind-soon" id="d-kind-profilesite" data-cols="1" style="display:none">
+        <p class="sim-soon-note">リンクまとめやプロフィールを1ページにまとめたWebサイトをお作りします。<br>スマートフォンからも見やすく、SNSのプロフィール欄に貼ってお使いいただけます。<br>絵師様からのご依頼も承ります。<br><strong>いまご覧のサイトのようなポートフォリオサイト</strong>の制作もご相談ください。<br><br><strong>ただいま準備中です。</strong>料金は未定のため、ご興味がありましたらお気軽にお声がけください。<br></p>
+      </div>
+      <div class="sim-kind-grid sim-kind-soon" id="d-kind-clock" data-cols="1" style="display:none">
+        <p class="sim-soon-note">配信画面に出す時計・配信経過時間の表示を、キャラクターに合わせたデザインでお作りします。<br><strong>ただいま準備中です。</strong>ご興味がありましたらお気軽にお声がけください。<br></p>
+      </div>
+      <div class="sim-counter" id="d-qty-counter" style="display:none; margin-top:10px;">
+        <span class="sim-counter-label">点数</span>
+        <span class="sim-counter-price">1点あたりの単価です</span>
+        <div class="sim-counter-controls">
+          <button class="sim-counter-btn" onclick="changeCount('d_qty', -1)">−</button>
+          <span class="sim-counter-num" id="d_qtyNum">1</span>
+          <button class="sim-counter-btn" onclick="changeCount('d_qty', 1)">＋</button>
+        </div>
+      </div>
+      <p class="sim-note" id="d-monitor-note" style="display:none"><strong>サンプル掲載モニター価格（30%引き）です。</strong>完成した作品をぐるにゃのSNS・ポートフォリオに掲載させていただくことが条件のため、「SNS・サンプル掲載不可」との併用はできません。<br>掲載を希望されない場合は通常価格となります。<br><strong>先着数名様まで。</strong></p>
+      <p class="sim-note" id="d-wallpaper-note" style="display:none">デザインの細かさによって<strong>¥4,000〜¥7,000程度</strong>になります。<br>素材は7枚までを目安にお持ちください（8枚以上は画面がごちゃつくため、ご相談ください）。<br>イラストの描き下ろし、Live2Dで動かす場合は応相談です。</p>
+      <p class="sim-note" id="d-header-note" style="display:none"><strong>量産型婚姻届</strong>：テンプレートでご自分が素材と文字を重ねるようにお願いいたします。<br>なるべく公文書として受け付けられないように制作いたしますが、<br>記念品としてのデザインのため、実際の届出にはお使いいただけません。<br><br><strong>一点物婚姻届</strong>：鉛筆の落書き付きの一点物です。<br>嫁こな王（婿こな王）になる方の立ち絵データのご提出が必須です。<br>切り抜きや加工は行いません。<br>同性のお相手の場合は、どちらを妻側にするかご相談させてください。<br>記念品としてのデザインのため、実際の届出にはお使いいただけません。</p>
+      <p class="sim-note" id="d-stamp-note" style="display:none">YouTubeメンバーシップのスタンプ・バッジです。<br>Discordでもお使いいただけます。</p>
+      <p class="sim-note sim-card-footnote">※ 完成したデザインは、ファンの方への<strong>配布はご自由に</strong>お使いいただけます。<strong>グッズとして展開される場合は別途ご相談ください。</strong></p>
     </div>
-
-    <!-- ② 制作点数 -->
+    <!-- ② オプション -->
     <div class="sim-card">
       <div class="sim-card-header">
         <span class="sim-card-num">02</span>
-        <div class="sim-card-title-wrap">
-          <span class="sim-card-title-en">Quantity</span>
-          <h2>制作点数</h2>
-        </div>
-      </div>
-      <p class="sim-note" data-i18n="design_qty" style="margin-top:0; margin-bottom:12px;">2点目以降は1点ごとに基本料金の50%を加算します。</p>
-      <div class="sim-counter">
-        <span class="sim-counter-label">追加制作点数</span>
-        <span class="sim-counter-price">基本料金×50% / 点</span>
-        <div class="sim-counter-controls">
-          <button class="sim-counter-btn" onclick="changeCount('d_extra', -1)">−</button>
-          <span class="sim-counter-num" id="d_extraNum">0</span>
-          <button class="sim-counter-btn" onclick="changeCount('d_extra', 1)">＋</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ③ オプション -->
-    <div class="sim-card">
-      <div class="sim-card-header">
-        <span class="sim-card-num">03</span>
         <div class="sim-card-title-wrap">
           <span class="sim-card-title-en">Option</span>
           <h2>オプション</h2>
@@ -872,10 +1066,10 @@
       </div>
     </div>
 
-    <!-- ④ 納期 -->
+    <!-- ③ 納期 -->
     <div class="sim-card">
       <div class="sim-card-header">
-        <span class="sim-card-num">04</span>
+        <span class="sim-card-num">03</span>
         <div class="sim-card-title-wrap">
           <span class="sim-card-title-en">Delivery</span>
           <h2>納期</h2>
@@ -906,10 +1100,10 @@
       </div>
     </div>
 
-    <!-- ⑤ リピーター -->
+    <!-- ④ リピーター -->
     <div class="sim-card">
       <div class="sim-card-header">
-        <span class="sim-card-num">05</span>
+        <span class="sim-card-num">04</span>
         <div class="sim-card-title-wrap">
           <span class="sim-card-title-en">Repeat Discount</span>
           <h2>リピーター割引</h2>
@@ -932,6 +1126,8 @@
        動画編集セクション
   ========================= -->
   <div class="sim-section" id="sim-video">
+
+    <!-- ① 制作プラン -->
     <div class="sim-card">
       <div class="sim-card-header">
         <span class="sim-card-num">01</span>
@@ -940,7 +1136,72 @@
           <h2>ＭＶ制作プラン</h2>
         </div>
       </div>
-      <p class="sim-note" data-i18n="video_wip" style="margin-top:0;">準備中です。</p>
+      <p class="sim-note" data-i18n="video_hint" style="margin-top:0; margin-bottom:12px;">価格は楽曲の長さによって変動します。表示価格はイラストをご用意いただく場合の料金です。</p>
+      <div class="sim-options">
+        <label class="sim-option">
+          <input type="radio" name="v_plan" value="30000" data-campaign-price="21000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-label">
+            <span class="sim-option-name">ライトプラン</span>
+            <span class="sim-option-price">¥30,000〜</span>
+          </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-body">楽曲に合わせたカット割り／歌詞のテキストアニメーション中心／基本的なトランジション・モーショングラフィックス／構成はシンプルにまとめます。</span>
+          </span>
+        </label>
+        <label class="sim-option">
+          <input type="radio" name="v_plan" value="50000" data-campaign-price="35000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-label">
+            <span class="sim-option-name">スタンダードプラン</span>
+            <span class="sim-option-price">¥50,000〜</span>
+          </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-body">曲の展開を意識したカット割り／歌詞アニメーションの作り込み（動きとタイミングの演出）／エフェクト・装飾によるデザイン演出／カメラワークによる奥行きの表現。</span>
+          </span>
+        </label>
+        <label class="sim-option" id="v_premium_label">
+          <input type="radio" name="v_plan" value="70000" id="v_premium" data-campaign-price="49000" data-monitor="1" data-campaign-until="2026-09-30">
+          <span class="sim-option-label">
+            <span class="sim-option-name">プレミアムプラン</span>
+            <span class="sim-option-price">¥70,000〜</span>
+          </span>
+          <span class="sim-note-accordion">
+            <span class="sim-note-accordion-body">構成から組み立てるカット割り／<strong>Live2Dでリギングした人物アニメーション</strong>（疑似的な「Live2D風」ではなく、実際にモデルを動かします）／リリックモーションの作り込み／デザイン演出全体の作り込み。</span>
+          </span>
+        </label>
+      </div>
+      <p class="sim-note sim-video-note" id="v_premium_note" style="display:none">Live2D風の演出での制作になります</p>
+      <p class="sim-note" id="v-monitor-note" style="display:none"><strong>サンプル掲載モニター価格（30%引き）です。</strong>完成した作品をぐるにゃのSNS・ポートフォリオに掲載させていただくことが条件です。掲載を希望されない場合は通常価格となります。</p>
+      <p class="sim-note" data-i18n="video_other" style="margin-bottom:0;">※ OP・ED、ショート動画などその他の映像制作もご相談ください。</p>
+    </div>
+
+    <!-- ② ご依頼前にご確認ください -->
+    <div class="sim-card">
+      <div class="sim-card-header">
+        <span class="sim-card-num">02</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Before You Order</span>
+          <h2>ご依頼前にご確認ください</h2>
+        </div>
+      </div>
+      <p class="sim-note" data-i18n="video_terms" style="margin-top:0; margin-bottom:0;">
+        ・イラスト制作もご希望の場合は別途承ります（曲の世界観に合わせた表情・衣装での描き下ろしが可能です）<br>
+        ・Live2Dモデルの持ち込みが可能です。レイヤー分けされたデータをご用意いただけると確実です<br>
+        ・レイヤー分けされていない場合もこちらでパーツ分けできますが、イラストを描かれた絵師様の許可が必要です<br>
+        ・ポーズ切り替えをご希望の場合は別途承ります（応相談）
+      </p>
+    </div>
+
+
+    <!-- ③ 納期 -->
+    <div class="sim-card">
+      <div class="sim-card-header">
+        <span class="sim-card-num">03</span>
+        <div class="sim-card-title-wrap">
+          <span class="sim-card-title-en">Delivery</span>
+          <h2>納期</h2>
+        </div>
+      </div>
+      <p class="sim-note" data-i18n="video_delivery" style="margin-top:0; margin-bottom:0;">どのプランも<strong>1ヶ月前後</strong>が目安です。混雑状況とお返事の速度によって変わります。<br>お急ぎの場合はご相談ください。スケジュールによってはお受けできることがあります。</p>
     </div>
   </div><!-- /sim-video -->
 
@@ -996,6 +1257,38 @@
     <a href="#html-root" aria-label="ページトップへ">
       <img src="assets/img/chara-usa.png" id="chara-mascot" alt="ページトップへ">
     </a>
+  </div>
+</div>
+
+
+<!-- プレミアムプランの確認モーダル -->
+<div class="sim-modal-overlay" id="v2dModal" hidden>
+  <div class="sim-modal" role="dialog" aria-modal="true" aria-labelledby="v2dModalTitle">
+    <h3 id="v2dModalTitle" data-i18n="v2d_title">Live2Dアニメーションについて</h3>
+    <p data-i18n="v2d_body">プレミアムプランでは、基本的にLive2Dでリギングした人物アニメーション（ポーズ切り替えは含みません）で制作いたします。<br>
+      パーツごとにレイヤー分けされたイラストをお持ちでしょうか。<br>
+      レイヤー分けされていない場合もこちらでパーツ分けができますが、その際は<strong>イラストを描かれた絵師様の許可</strong>が必要です。</p>
+    <div class="sim-options">
+      <label class="sim-option">
+        <input type="radio" name="v_permit" value="yes">
+        <span class="sim-option-label">
+          <span class="sim-option-name">絵師様の許可をいただいています（ご自身で描かれた場合も含みます）</span>
+        </span>
+      </label>
+      <label class="sim-option">
+        <input type="radio" name="v_permit" value="no">
+        <span class="sim-option-label">
+          <span class="sim-option-name">絵師様の許可はまだいただいていません</span>
+        </span>
+      </label>
+    </div>
+    <p class="sim-modal-warn" id="v2dWarn" hidden data-i18n="v2d_warn">Live2D風の演出での制作となります<br>
+      <span class="sim-modal-warn-sub">後日許可をいただけましたら、Live2Dでの制作に変更いたします。お気軽にご相談ください。</span></p>
+    <p class="sim-modal-note" data-i18n="v2d_pose">※ ポーズ切り替えをご希望の場合は別途承ります</p>
+    <div class="sim-modal-actions">
+      <button type="button" class="sim-modal-ok" id="v2dOk" disabled data-i18n="v2d_ok">確認済み</button>
+      <button type="button" class="sim-modal-cancel" id="v2dCancel" data-i18n="v2d_cancel">キャンセル</button>
+    </div>
   </div>
 </div>
 

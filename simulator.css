@@ -1912,3 +1912,322 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-piece-tabs .sim-piece-add:hover {
   background: rgba(255,255,255,0.6);
 }
+
+/* 点数タブの削除ボタン */
+.sim-piece-tabs .sim-piece-del {
+  flex: 0 0 auto;
+  width: 34px;
+  padding: 10px 0;
+  color: rgba(74,42,58,0.45);
+}
+.sim-piece-tabs .sim-piece-del:hover {
+  background: rgba(255,255,255,0.6);
+  color: #9a3a3a;
+}
+/* 内訳レシートの点数見出し */
+.receipt-piece-head {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  margin: 10px 0 4px;
+  padding-bottom: 3px;
+  border-bottom: 1px dashed var(--color-border);
+}
+.receipt-piece-head:first-child { margin-top: 0; }
+
+/* === 期間限定キャンペーン価格 === */
+.sim-option.is-campaign,
+.sim-pose-card.is-campaign {
+  position: relative;
+  border-color: #d98a8a;
+}
+/* カード左上のラベル */
+.sim-campaign-badge {
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  z-index: 2;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: #c0392b;
+  border-radius: 999px;
+  padding: 2px 10px;
+  box-shadow: 0 2px 6px rgba(192,57,43,0.25);
+}
+/* 特価は赤い太字、通常価格は打ち消し線 */
+.sim-price-campaign {
+  color: #c0392b;
+  font-weight: 700;
+}
+.sim-price-regular {
+  color: rgba(74,42,58,0.4);
+  font-weight: 400;
+  text-decoration: line-through;
+  margin-right: 4px;
+}
+
+/* === ＭＶ制作：確認モーダル === */
+.sim-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(74,42,58,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.sim-modal-overlay[hidden] { display: none; }
+.sim-modal {
+  background: #fff;
+  border-radius: 14px;
+  padding: 26px 24px 20px;
+  width: min(520px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 40px rgba(74,42,58,0.22);
+  animation: modalIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.sim-modal h3 {
+  font-family: var(--font-title);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin: 0 0 12px;
+}
+.sim-modal p {
+  font-size: 12.5px;
+  line-height: 1.85;
+  margin: 0 0 14px;
+}
+/* 許可なしを選んだときの赤い注記 */
+.sim-modal-warn {
+  color: #c0392b;
+  font-weight: 700;
+  font-size: 12.5px;
+  background: #fdf0f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.sim-modal-warn[hidden] { display: none; }
+.sim-modal-warn-sub {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  color: rgba(74,42,58,0.6);
+  font-size: 11.5px;
+}
+.sim-modal-note {
+  font-size: 11.5px;
+  color: rgba(74,42,58,0.5);
+}
+.sim-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.sim-modal-ok, .sim-modal-cancel {
+  flex: 1 1 0;
+  padding: 11px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.15s;
+}
+.sim-modal-ok {
+  border: 0;
+  background: var(--color-accent);
+  color: #fff;
+}
+.sim-modal-ok:disabled { opacity: 0.35; cursor: default; }
+.sim-modal-cancel {
+  border: 1.5px solid var(--color-border);
+  background: #fff;
+  color: rgba(74,42,58,0.6);
+}
+.sim-modal-cancel:hover { background: var(--color-works); }
+
+/* プレミアムカードに残る赤い注記 */
+.sim-video-note {
+  color: #c0392b;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+/* === デザイン：種別タブ（イラストの等身/SDタブと同じ語彙） === */
+.sim-kind-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  margin: 0 auto 14px;
+}
+/* 意味のまとまりごとに1ブロック */
+.sim-kind-group {
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--color-border);
+}
+.sim-kind-group:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.sim-kind-group-label,
+.sim-step-label {
+  display: block;
+  text-align: center;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: rgba(74,42,58,0.45);
+  margin-bottom: 6px;
+}
+/* 第2段階の見出しは、種別の選択から十分に離して段階の切れ目を見せる */
+.sim-step-label { margin-top: 28px; }
+/* 幅を揃えてガタつきをなくす */
+.sim-kind-group-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.sim-kind-group-row[data-cols="3"],
+.sim-kind-tabs.sim-sub-tabs[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+.sim-kind-tab {
+  min-width: 0;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  border-radius: 10px;
+  padding: 14px 6px;
+  cursor: pointer;
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(74,42,58,0.55);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.sim-kind-tab:hover {
+  background: var(--color-works);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+/* 選択後に折りたたむバッジ */
+.sim-kind-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--color-accent);
+  background: var(--color-works);
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  font-family: var(--font-title);
+  color: var(--color-accent);
+  transition: box-shadow 0.22s ease-out, transform 0.22s ease-out;
+}
+.sim-kind-badge:hover {
+  box-shadow: 0 4px 14px rgba(74,42,58,0.12);
+  transform: scale(1.01);
+}
+.sim-kind-badge-change {
+  font-size: 10.5px;
+  color: rgba(74,42,58,0.5);
+  border: 1px solid var(--color-border);
+  background: #fff;
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+/* バリエーションのカード。点数が少ないので3列まで */
+/* 選択肢の数に合わせて列数を変える（2択なら2列、3択なら3列） */
+.sim-kind-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+/* 選択肢が1つのときは横いっぱいに広げる（半分だけ埋まって見えないように） */
+.sim-kind-grid[data-cols="1"]:not(.sim-kind-soon) { grid-template-columns: 1fr; }
+.sim-kind-grid[data-cols="2"] { grid-template-columns: repeat(2, 1fr); }
+/* サブ種別のタブは少し小さく */
+.sim-kind-tabs.sim-sub-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin: 12px 0 0;
+}
+.sim-sub-tabs .sim-kind-tab { padding: 14px 6px; font-size: 13px; }
+.sim-kind-grid .sim-pose-card { padding: 14px 10px 12px; }
+.sim-kind-grid .sim-pose-desc { min-height: 0; }
+@media (max-width: 640px) {
+  .sim-kind-grid { grid-template-columns: 1fr; }
+  .sim-kind-group-row,
+  .sim-kind-tabs.sim-sub-tabs { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 準備中の種別 */
+.sim-kind-soon { display: block; }
+.sim-soon-note {
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: rgba(74,42,58,0.6);
+  background: var(--color-works);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 0;
+}
+.sim-soon-note strong { color: var(--color-accent); }
+
+/* 準備中の種別タブは控えめに（押せば案内は出る） */
+.sim-kind-tab--soon {
+  opacity: 0.55;
+  border-style: dashed;
+}
+.sim-kind-tab--soon:hover { opacity: 0.8; }
+
+/* 準備中の案内の中の価格行 */
+.sim-soon-note { white-space: normal; }
+
+/* 選択中の種別 */
+.sim-kind-tab.is-active {
+  background: var(--color-works);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(74,42,58,0.10);
+}
+.sim-kind-tab--soon.is-active { opacity: 1; }
+
+/* 開いている選択肢は上に余白を入れてタブと区切る */
+.sim-kind-grid { margin: 12px 0 0; }
+
+/* カード全体にかかる注記。直前の選択肢とくっつくと
+   そのカテゴリーだけの注意書きに見えるので、十分に離す */
+.sim-card-footnote {
+  margin-top: 44px;
+  margin-bottom: 0;
+}
+
+/* ネームロゴのサンプル画像（横長なので専用の枠） */
+.sim-logo-img-box {
+  width: 100%;
+  height: 74px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sim-logo-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}

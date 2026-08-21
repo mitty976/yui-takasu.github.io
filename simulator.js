@@ -35,6 +35,7 @@ document.querySelectorAll('a, button, input, label, [role="button"]').forEach(el
 
 /* === カウンターの状態管理 === */
 const counts = {
+  d_qty:           1,
   i_extraPerson:   0,
   i_expression:    0,
   i_expression_sd: 0,
@@ -46,6 +47,7 @@ const counts = {
   d_extra:         0
 };
 const countPrices = {
+  d_qty:           0,
   i_extraPerson:   6500,
   i_expression:    1500,
   i_expression_sd: 1000,
@@ -58,7 +60,9 @@ const countPrices = {
 };
 
 function changeCount(key, delta) {
-  const next = Math.max(0, counts[key] + delta);
+  /* 点数は1点未満にできない */
+  const floor = key === 'd_qty' ? 1 : 0;
+  const next = Math.max(floor, counts[key] + delta);
   if (next === counts[key]) return;
   counts[key] = next;
 
@@ -86,8 +90,15 @@ function changeCount(key, delta) {
    （二次70% / 三次50% / 四次50% / 五次以降20%）でベース料金に対して発生する */
 const GOODS_RATES = [0.7, 0.5, 0.5, 0.2];
 
-/* 著作権譲渡料の最低額。ベース料金×3がこれを下回る場合はこちらを採用する */
-const COPYRIGHT_MIN = 30000;
+
+/* 日本イラストレーター協会の次数表記。idx=0 が二次使用にあたる */
+const GOODS_ORDER_JP = ['二次利用', '三次利用', '四次利用', '五次利用以降'];
+const GOODS_ORDER_EN = ['secondary use', 'tertiary use', 'quaternary use', 'quinary use onward'];
+function goodsOrderLabel(idx) {
+  const list = currentLang === 'en' ? GOODS_ORDER_EN : GOODS_ORDER_JP;
+  return list[Math.min(idx, list.length - 1)];
+}
+
 
 /* 一次使用がどれかで数え方がずれる。
    配信でも使う場合：配信が一次使用 → グッズ1種類目が二次使用（70%）
@@ -140,7 +151,7 @@ function addGoodsRow(triggerCalc = true) {
     calcTotal();
   });
   /* 名前の入力は金額に影響しないので、内訳の表示だけ更新する */
-  row.querySelector('.sim-goods-input').addEventListener('input', updateSelectedItems);
+  row.querySelector('.sim-goods-input').addEventListener('input', calcTotal);
 
   list.appendChild(row);
   refreshGoodsRows();
@@ -537,336 +548,842 @@ function updateFilter() {
   }
 }
 
-/* === 合計金額の計算 === */
+/* === 複数点オーダー：点数ごとの状態 === */
+/* フォームは1つのまま、点数を切り替えるときに内容を保存・復元する。
+   DOMを複製するとidが重複して既存コードが壊れるため、この方式にしている。
+   納期・リピーター割引・追加修正は注文全体で1回なので、点数ごとには保存しない */
+const PIECE_RADIOS = ['i_base', 'i_bg', 'i_design', 'i_live2d', 'i_goods_scope', 'd_base', 'v_plan', 'v_permit'];
+const PIECE_CHECKS = [
+  'i_commercial', 'i_nosns', 'i_copyright', 'i_highres', 'i_print',
+  'i_live2d_layer', 'i_goods_usage',
+  'd_rawdata', 'd_print', 'd_commercial', 'd_nosns'
+];
+const PIECE_COUNTS = [
+  'd_qty',
+  'i_extraPerson', 'i_expression', 'i_expression_sd',
+  'i_costume', 'i_costume_sd', 'i_hairstyle', 'i_hairstyle_sd'
+];
+
+function newPieceState() {
+  return { service: 'illust', kind: '', sub: '', baseType: '', radios: {}, checks: {}, counts: {}, usage: [], goods: [] };
+}
+
+let pieces = [newPieceState()];
+let currentPiece = 0;
+/* 復元中は calcTotal に状態を保存させない（途中経過が保存されるのを防ぐ） */
+let isApplyingPiece = false;
+
+/* 今のフォームの内容を状態オブジェクトに写し取る */
+function readPieceState() {
+  const st = newPieceState();
+  st.service  = currentTab;
+  st.kind     = currentKind;
+  st.sub      = currentSub;
+  st.baseType = currentBaseType;
+  if (!st.baseType) {
+    const b = document.querySelector('input[name="i_base"]:checked');
+    if (b) st.baseType = b.dataset.type;
+  }
+  /* 同じ値の選択肢が複数あっても取り違えないよう、値ではなく位置で覚える */
+  PIECE_RADIOS.forEach(n => {
+    const list = Array.from(document.querySelectorAll('input[name="' + n + '"]'));
+    const idx  = list.findIndex(e => e.checked);
+    st.radios[n] = idx < 0 ? null : idx;
+  });
+  PIECE_CHECKS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) st.checks[id] = el.checked;
+  });
+  PIECE_COUNTS.forEach(k => { st.counts[k] = counts[k] || 0; });
+  st.usage = Array.from(document.querySelectorAll('.i_usage')).map(el => el.checked);
+  st.goods = goodsRowEls().map(r => r.querySelector('.sim-goods-input').value);
+  return st;
+}
+
+/* 状態オブジェクトをフォームに書き戻す（表示中の点数を切り替えるときに使う） */
+function applyPieceState(st) {
+  isApplyingPiece = true;
+  /* サービスタブ */
+  currentTab = st.service;
+  document.querySelectorAll('.sim-tabs .sim-tab').forEach(b => {
+    b.classList.toggle('is-active', b.dataset.target === st.service);
+  });
+  document.querySelectorAll('.sim-section').forEach(sec => sec.classList.remove('is-active'));
+  const sec = document.getElementById('sim-' + st.service);
+  if (sec) sec.classList.add('is-active');
+
+  /* ラジオ */
+  PIECE_RADIOS.forEach(n => {
+    document.querySelectorAll('input[name="' + n + '"]').forEach((el, i) => {
+      el.checked = (st.radios[n] === i);
+    });
+  });
+  /* チェックボックス */
+  PIECE_CHECKS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = !!st.checks[id];
+  });
+  /* 使用用途 */
+  document.querySelectorAll('.i_usage').forEach((el, i) => { el.checked = !!st.usage[i]; });
+  /* カウンター */
+  PIECE_COUNTS.forEach(k => {
+    counts[k] = st.counts[k] || 0;
+    const numEl = document.getElementById(k + 'Num');
+    if (numEl) {
+      numEl.textContent = counts[k];
+      const ctrl = numEl.closest('.sim-counter-controls');
+      if (ctrl) ctrl.classList.toggle('is-zero', counts[k] === 0);
+    }
+  });
+  /* グッズの行 */
+  const list = document.getElementById('goodsList');
+  if (list) {
+    list.innerHTML = '';
+    st.goods.forEach(name => {
+      addGoodsRow(false);
+      const rows = goodsRowEls();
+      rows[rows.length - 1].querySelector('.sim-goods-input').value = name;
+    });
+  }
+  /* デザインの種別表示を戻す */
+  currentSub = st.sub || '';
+  if (st.kind) showKind(st.kind, true); else resetKind();
+  /* 等身／SDの表示切り替え */
+  currentBaseType = st.baseType;
+  if (st.baseType) {
+    showBaseTypeCards(st.baseType);
+    if (UX_MODE === 'B') {
+      const tabs  = document.querySelector('.sim-base-type-tabs');
+      const badge = document.getElementById('base-type-badge');
+      const label = document.getElementById('base-badge-label');
+      const thumb = document.getElementById('base-badge-thumb');
+      if (label) label.textContent = st.baseType === 'normal'
+        ? (currentLang === 'en' ? 'Standard' : '等身キャラ')
+        : (currentLang === 'en' ? 'Chibi / SD' : 'SDキャラ');
+      if (thumb) thumb.src = baseTypeThumbs[st.baseType];
+      if (tabs)  tabs.style.display  = 'none';
+      if (badge) badge.style.display = 'flex';
+    }
+  } else if (st.radios.i_base === null || st.radios.i_base === undefined) {
+    resetBaseType();
+    if (UX_MODE === 'B') {
+      const tabs  = document.querySelector('.sim-base-type-tabs');
+      const badge = document.getElementById('base-type-badge');
+      if (badge) badge.style.display = 'none';
+      if (tabs)  tabs.style.display  = '';
+    }
+  }
+  /* showBaseTypeCards はグリッドの先頭カードを選ぶ仕様なので、保存していた構図を選び直す */
+  if (st.radios.i_base !== null && st.radios.i_base !== undefined) {
+    document.querySelectorAll('input[name="i_base"]').forEach((el, i) => {
+      el.checked = (st.radios.i_base === i);
+    });
+  }
+  isApplyingPiece = false;
+}
+
+/* === 1点ぶんの計算 === */
+/* DOMではなく状態オブジェクトから計算する。
+   DOMを見るのはラベル文字列の取得だけで、値の書き換えはしない。
+   戻り値： prod  … 制作の対価（納期倍率がかかる）
+            disc  … 割引対象（ベース料金＋追加キャラクター）
+            lic   … 権利料（倍率・割引の対象外）
+            items … 内訳の行 */
+function labelOf(el) {
+  const wrap = el && el.closest('.sim-option, .sim-pose-card');
+  const name = wrap && wrap.querySelector('.sim-option-name');
+  return name ? name.textContent.trim() : '';
+}
+function radioEl(name, idx) {
+  if (idx === null || idx === undefined) return null;
+  return document.querySelectorAll('input[name="' + name + '"]')[idx] || null;
+}
+
+function computePiece(st) {
+  let prodJPY = 0, prodUSD = 0, discJPY = 0, discUSD = 0, licJPY = 0, licUSD = 0;
+  const items = [];
+  const addY = yen => { prodJPY += yen; prodUSD += usdOf(yen); };
+  const addBase = (yen, usd) => { prodJPY += yen; prodUSD += usd; discJPY += yen; discUSD += usd; };
+  const addLic = (yen, usd) => { licJPY += yen; licUSD += usd; };
+  const c = k => st.counts[k] || 0;
+
+  if (st.service === 'illust') {
+    const baseEl  = radioEl('i_base', st.radios.i_base);
+    const baseYen = baseEl ? parseInt(baseEl.value) : 0;
+    const baseUsd = usdOf(baseYen);
+    const isSD    = baseEl ? baseEl.dataset.type === 'sd' : false;
+
+    if (baseYen) {
+      addBase(baseYen, baseUsd);
+      items.push({ name: labelOf(baseEl), yen: baseYen });
+    }
+    const extraYen = isSD ? 5000 : 6500;
+    if (c('i_extraPerson') > 0) {
+      addBase(c('i_extraPerson') * extraYen, c('i_extraPerson') * usdOf(extraYen));
+      items.push({ name: '追加キャラクター ×' + c('i_extraPerson'), yen: c('i_extraPerson') * extraYen });
+    }
+    const designEl  = radioEl('i_design', st.radios.i_design);
+    const designVal = designEl ? parseInt(designEl.value) : 0;
+    if (designVal > 0) { addY(designVal); items.push({ name: 'キャラクターデザイン', yen: designVal }); }
+    const bgEl  = radioEl('i_bg', st.radios.i_bg);
+    const bgVal = bgEl ? parseInt(bgEl.value) : 0;
+    if (bgVal > 0) { addY(bgVal); items.push({ name: labelOf(bgEl), yen: bgVal }); }
+
+    if (c('i_expression') > 0)    { addY(c('i_expression') * 1500);    items.push({ name: '表情差分（等身） ×' + c('i_expression'), yen: c('i_expression') * 1500 }); }
+    if (c('i_expression_sd') > 0) { addY(c('i_expression_sd') * 1000); items.push({ name: '表情差分（SD） ×' + c('i_expression_sd'), yen: c('i_expression_sd') * 1000 }); }
+    /* 等身の衣装・髪型差分はベース料金に対する％。SDは固定額 */
+    if (!isSD) {
+      if (c('i_costume') > 0) {
+        const y = c('i_costume') * Math.round(baseYen * 0.7), u = c('i_costume') * Math.round(baseUsd * 0.7);
+        prodJPY += y; prodUSD += u;
+        items.push({ name: '衣装差分（等身・70%） ×' + c('i_costume'), yen: y, usd: u });
+      }
+      if (c('i_hairstyle') > 0) {
+        const y = c('i_hairstyle') * Math.round(baseYen * 0.5), u = c('i_hairstyle') * Math.round(baseUsd * 0.5);
+        prodJPY += y; prodUSD += u;
+        items.push({ name: '髪型差分（等身・50%） ×' + c('i_hairstyle'), yen: y, usd: u });
+      }
+    }
+    if (c('i_costume_sd') > 0)   { addY(c('i_costume_sd') * 2000);   items.push({ name: '衣装差分（SD） ×' + c('i_costume_sd'), yen: c('i_costume_sd') * 2000 }); }
+    if (c('i_hairstyle_sd') > 0) { addY(c('i_hairstyle_sd') * 2000); items.push({ name: '髪型差分（SD） ×' + c('i_hairstyle_sd'), yen: c('i_hairstyle_sd') * 2000 }); }
+
+    document.querySelectorAll('.i_usage').forEach((el, i) => {
+      if (st.usage[i]) items.push({ name: labelOf(el), yen: 0, type: 'free' });
+    });
+    if (st.checks.i_goods_usage) items.push({ name: 'グッズ販売', yen: 0, type: 'quote' });
+
+    const hc = !!st.checks.i_highres, pc = !!st.checks.i_print;
+    if (hc || pc) {
+      addY(3500);
+      items.push({ name: hc && pc ? '高解像度（動画＋印刷）' : hc ? '高解像度（動画素材）' : '高解像度（印刷用）', yen: 3500 });
+    }
+    const live2dEl  = radioEl('i_live2d', st.radios.i_live2d);
+    const live2dVal = live2dEl ? parseInt(live2dEl.value) : 0;
+    if (live2dVal > 0) { addY(live2dVal); items.push({ name: labelOf(live2dEl), yen: live2dVal }); }
+    if (st.checks.i_live2d_layer) { addY(30000); items.push({ name: 'Live2Dパーツ分け', yen: 30000 }); }
+
+    /* 権利料 */
+    if (st.checks.i_copyright) {
+      /* 譲渡料は金額を出さず応相談。合計には加算しない */
+      items.push({ name: '著作権譲渡', yen: 0, type: 'quote' });
+      if (st.checks.i_nosns) { addLic(5000, usdOf(5000)); items.push({ name: 'SNS・サンプル掲載不可', yen: 5000 }); }
+    } else {
+      if (st.checks.i_commercial) { addLic(5000, usdOf(5000)); items.push({ name: '商用利用ライセンス', yen: 5000 }); }
+      if (st.checks.i_nosns)      { addLic(5000, usdOf(5000)); items.push({ name: 'SNS・サンプル掲載不可', yen: 5000 }); }
+      const scopeEl = radioEl('i_goods_scope', st.radios.i_goods_scope);
+      if (st.checks.i_commercial && scopeEl) {
+        const scope = scopeEl.value;
+        st.goods.forEach((typed, i) => {
+          const idx  = scope === 'goods' ? i - 1 : i;
+          const rate = idx < 0 ? 0 : GOODS_RATES[Math.min(idx, GOODS_RATES.length - 1)];
+          const label = (typed || '').trim() || ('グッズ ' + (i + 1) + '種類目');
+          if (rate === 0) {
+            items.push({ name: (typed || '').trim() ? label + '（1種類目）' : label, yen: 0, type: 'goodsFree' });
+          } else {
+            const y = Math.round(baseYen * rate), u = Math.round(baseUsd * rate);
+            addLic(y, u);
+            items.push({ name: label + '（' + goodsOrderLabel(idx) + ' ' + Math.round(rate * 100) + '%）', yen: y, usd: u });
+          }
+        });
+      }
+    }
+  } else if (st.service === 'design') {
+    const bEl     = radioEl('d_base', st.radios.d_base);
+    const unitYen = bEl ? effectivePrice(bEl) : 0;
+    /* 「1点あたり」の種別は個数を掛ける */
+    const perUnit = !!(bEl && bEl.dataset.perUnit);
+    const qty     = perUnit ? Math.max(1, st.counts.d_qty || 1) : 1;
+    const baseYen = unitYen * qty;
+    const baseUsd = usdOf(unitYen) * qty;
+    if (baseYen) {
+      /* キャンペーン価格はすでに値引きした価格なので、割引対象には入れない */
+      if (isCampaignActive(bEl)) { prodJPY += baseYen; prodUSD += baseUsd; }
+      else addBase(baseYen, baseUsd);
+      items.push({ name: labelOf(bEl) + (perUnit ? ' ×' + qty : '') + (isCampaignActive(bEl) ? '（キャンペーン価格）' : ''), yen: baseYen });
+    }
+    ['d_rawdata', 'd_print'].forEach(id => {
+      if (!st.checks[id]) return;
+      const el = document.getElementById(id);
+      const yen = parseInt(el.value);
+      addY(yen);
+      items.push({ name: labelOf(el), yen });
+    });
+    ['d_commercial', 'd_nosns'].forEach(id => {
+      if (!st.checks[id]) return;
+      const el = document.getElementById(id);
+      const yen = parseInt(el.value);
+      addLic(yen, usdOf(yen));
+      items.push({ name: labelOf(el), yen });
+    });
+  } else if (st.service === 'video') {
+    const planEl  = radioEl('v_plan', st.radios.v_plan);
+    const planVal = planEl ? planEl.value : null;
+    if (planEl) {
+      const yen = effectivePrice(planEl);
+      /* プランは制作の対価。ただしモニター価格はすでに値引き済みなので割引対象に入れない */
+      if (isCampaignActive(planEl)) { prodJPY += yen; prodUSD += usdOf(yen); }
+      else addBase(yen, usdOf(yen));
+      const permitEl = radioEl('v_permit', st.radios.v_permit);
+      const suffix = (planVal === '70000' && permitEl && permitEl.value === 'no') ? '（Live2D風での制作）' : '';
+      items.push({ name: labelOf(planEl) + suffix + (isCampaignActive(planEl) ? '（モニター価格）' : ''), yen });
+    }
+  }
+
+
+  return { prodJPY, prodUSD, discJPY, discUSD, licJPY, licUSD, items };
+}
+
+/* === 合計金額の計算（全点数の合算） === */
 function calcTotal() {
   updateFilter();
-  let totalJPY = 0, totalUSD = 0;
-  function addY(yen) {
-    totalJPY += yen;
-    totalUSD += usdOf(yen);
-  }
-  function addC(n, key) {
-    const p = countPrices[key];
-    totalJPY += n * p;
-    totalUSD += n * usdOf(p);
-  }
-  /* リピーター割引はイラスト制作の対価にだけ掛かるお礼なので、
-     割引対象（ベースイラスト＋追加キャラクター）を別枠で持っておく */
-  let discountJPY = 0, discountUSD = 0;
-  function addBase(yen, usd) {
-    totalJPY += yen;  totalUSD += usd;
-    discountJPY += yen; discountUSD += usd;
-  }
-  /* ライセンス料・権利料は権利の対価なので納期倍率・リピーター割引の対象外。
-     倍率・割引を適用したあとに定額で加算する */
-  let licenseJPY = 0, licenseUSD = 0;
-  function addLicense(ids) {
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el || !el.checked) return;
-      const yen = parseInt(el.value);
-      licenseJPY += yen;
-      licenseUSD += usdOf(yen);
-    });
-  }
-  if (currentTab === 'illust') {
-    const base    = document.querySelector('input[name="i_base"]:checked');
-    const baseYen = base ? parseInt(base.value) : 0;
-    const baseUsd = usdOf(baseYen);
-    const isSD    = base ? base.dataset.type === 'sd' : false;
-    /* 言語切り替え・タブ切り替えでも案内文と行の状態を揃える */
-    updateGoodsVisibility();
-    /* ベースイラストと追加キャラクターは割引対象 */
-    if (base) addBase(baseYen, baseUsd);
-    const extraYen = countPrices.i_extraPerson;
-    if (counts.i_extraPerson > 0)
-      addBase(counts.i_extraPerson * extraYen, counts.i_extraPerson * usdOf(extraYen));
+  updateGoodsVisibility();
+  updateCommercialIncluded();
+  updateVideoMonitorNote();
+  /* 表示中の点数の内容を取り込んでから合算する */
+  if (!isApplyingPiece) pieces[currentPiece] = readPieceState();
 
-    const design = document.querySelector('input[name="i_design"]:checked');
-    if (design) addY(parseInt(design.value));
-    const bg = document.querySelector('input[name="i_bg"]:checked');
-    if (bg) addY(parseInt(bg.value));
-    addC(counts.i_expression,    'i_expression');
-    addC(counts.i_expression_sd, 'i_expression_sd');
-    /* 等身キャラの衣装・髪型差分はベース料金に対する％（衣装70% / 髪型50%）。
-       SDキャラは画風上どのみち省略が入り工数が増えないので固定額のまま */
-    if (!isSD) {
-      if (counts.i_costume > 0) {
-        totalJPY += counts.i_costume * Math.round(baseYen * 0.7);
-        totalUSD += counts.i_costume * Math.round(baseUsd * 0.7);
-      }
-      if (counts.i_hairstyle > 0) {
-        totalJPY += counts.i_hairstyle * Math.round(baseYen * 0.5);
-        totalUSD += counts.i_hairstyle * Math.round(baseUsd * 0.5);
-      }
-    }
-    addC(counts.i_costume_sd,    'i_costume_sd');
-    addC(counts.i_hairstyle_sd,  'i_hairstyle_sd');
-    const live2d = document.querySelector('input[name="i_live2d"]:checked');
-    if (live2d) addY(parseInt(live2d.value));
-    /* 動画素材・印刷物は両方選択でも一回分のみ */
-    if (document.getElementById('i_highres').checked || document.getElementById('i_print').checked) addY(3500);
-    const live2dLayerEl = document.getElementById('i_live2d_layer');
-    if (live2dLayerEl && live2dLayerEl.checked) addY(parseInt(live2dLayerEl.value));
+  /* 納期・リピーター割引は注文全体で1回 */
+  const rushSel = document.querySelector('input[name="i_rush"]:checked')
+               || document.querySelector('input[name="d_rush"]:checked');
+  const rushRate = rushSel ? parseFloat(rushSel.value) : 1;
+  const repeatEl = document.getElementById('i_repeat');
+  const isRepeat = !!(repeatEl && repeatEl.checked);
 
-    /* 著作権譲渡：ベース料金の3倍。譲渡した時点で権利が移るので商用利用ライセンスは不要 */
-    const copyrightEl = document.getElementById('i_copyright');
-    const isCopyright = !!(copyrightEl && copyrightEl.checked);
-    if (isCopyright) {
-      /* ベース料金の3倍。ただし最低¥30,000（SDなど3倍でも下回る場合に備える） */
-      licenseJPY += Math.max(baseYen * 3, COPYRIGHT_MIN);
-      licenseUSD += Math.max(baseUsd * 3, usdOf(COPYRIGHT_MIN));
-      addLicense(['i_nosns']);
-    } else {
-      addLicense(['i_commercial', 'i_nosns']);
-      /* グッズ二次利用料：一次使用にあたる分を除いてベース料金に対して発生する */
-      goodsRowEls().forEach((row, i) => {
-        const rate = goodsRate(i);
-        if (rate === 0) return;
-        licenseJPY += Math.round(baseYen * rate);
-        licenseUSD += Math.round(baseUsd * rate);
-      });
-    }
+  let totalJPY = 0, totalUSD = 0, licJPY = 0, licUSD = 0;
+  const breakdown = [];
 
-    addC(counts.i_revision, 'i_revision');
-    const rush = document.querySelector('input[name="i_rush"]:checked');
-    if (rush) {
-      const r = parseFloat(rush.value);
-      totalJPY = Math.round(totalJPY * r);
-      totalUSD = Math.round(totalUSD * r);
-      discountJPY = Math.round(discountJPY * r);
-      discountUSD = Math.round(discountUSD * r);
-    }
-    if (document.getElementById('i_repeat').checked) {
-      totalJPY -= Math.round(discountJPY * 0.1);
-      totalUSD -= Math.round(discountUSD * 0.1);
-    }
-    updateGoodsRates(baseYen, baseUsd);
-  } else {
-    const base = document.querySelector('input[name="d_base"]:checked');
-    const baseJPY = base ? parseInt(base.value) : 0;
-    const baseUSD = USD_AMOUNT[baseJPY] !== undefined ? USD_AMOUNT[baseJPY] : Math.round(baseJPY / 150);
-    totalJPY += baseJPY;
-    totalUSD += baseUSD;
-    totalJPY += counts.d_extra * Math.round(baseJPY * 0.5);
-    totalUSD += counts.d_extra * Math.round(baseUSD * 0.5);
-    ['d_rawdata', 'd_print'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.checked) addY(parseInt(el.value));
-    });
-    addLicense(['d_commercial', 'd_nosns']);
-    const rush = document.querySelector('input[name="d_rush"]:checked');
-    if (rush) {
-      const r = parseFloat(rush.value);
-      totalJPY = Math.round(totalJPY * r);
-      totalUSD = Math.round(totalUSD * r);
-    }
-    if (document.getElementById('d_repeat').checked) {
-      totalJPY = Math.round(totalJPY * 0.9);
-      totalUSD = Math.round(totalUSD * 0.9);
-    }
+  pieces.forEach((st, i) => {
+    const p = computePiece(st);
+    const prodJ = Math.round(p.prodJPY * rushRate);
+    const prodU = Math.round(p.prodUSD * rushRate);
+    const discJ = Math.round(p.discJPY * rushRate);
+    const discU = Math.round(p.discUSD * rushRate);
+    /* リピーター割引と複数点割引はどちらも10%引きなので、重ねずに一度だけ引く */
+    const applyCut = isRepeat || i > 0;
+    const cutJ = applyCut ? Math.round(discJ * 0.1) : 0;
+    const cutU = applyCut ? Math.round(discU * 0.1) : 0;
+    totalJPY += prodJ - cutJ;
+    totalUSD += prodU - cutU;
+    licJPY += p.licJPY;
+    licUSD += p.licUSD;
+    breakdown.push({ index: i, items: p.items, cutJ, cutU, reason: !applyCut ? '' : (i > 0 ? 'multi' : 'repeat') });
+  });
+
+  /* 追加修正は注文全体で1回。制作の対価なので納期倍率はかかる */
+  const rev = counts.i_revision || 0;
+  if (rev > 0) {
+    totalJPY += Math.round(rev * 1500 * rushRate);
+    totalUSD += Math.round(rev * usdOf(1500) * rushRate);
   }
-  /* 倍率・割引の適用後にライセンス料を定額で加算 */
-  totalJPY += licenseJPY;
-  totalUSD += licenseUSD;
+  /* 権利料は倍率・割引の対象外なので最後に定額で足す */
+  totalJPY += licJPY;
+  totalUSD += licUSD;
+
   const totalEl = document.getElementById('totalAmount');
   totalEl.innerHTML =
     (currentCurrency === 'USD'
       ? '$' + totalUSD.toLocaleString('en-US')
       : '¥' + totalJPY.toLocaleString('ja-JP'))
     + '<span>〜</span>';
-  /* 金額更新のパルスアニメーション */
   totalEl.classList.remove('is-updated');
   void totalEl.offsetWidth;
   totalEl.classList.add('is-updated');
-  /* 上部合計エリアにも反映 */
   const totalTopEl = document.getElementById('totalAmountTop');
   if (totalTopEl) totalTopEl.innerHTML = totalEl.innerHTML;
-  /* ¥8,000以上の上昇でバースト */
   if (prevTotalJPY !== -1 && totalJPY - prevTotalJPY >= 8000) createPriceBurst();
   prevTotalJPY = totalJPY;
-  updateSelectedItems();
+
+  /* 表示中の点数のグッズ料率を更新する */
+  const cur = pieces[currentPiece];
+  if (cur.service === 'illust') {
+    const bYen = cur.radios.i_base ? parseInt(cur.radios.i_base) : 0;
+    updateGoodsRates(bYen, usdOf(bYen));
+  }
+  renderBreakdown(breakdown, rev, rushRate, rushSel);
+  updatePieceTabs();
 }
 
+/* === 内訳レシート === */
+function renderBreakdown(breakdown, rev, rushRate, rushSel) {
+  /* 下部バー：表示中の点数のタグだけ出す */
+  const cur = breakdown[currentPiece];
+  const tagsHtml = cur ? cur.items.map(l => '<span class="sim-total-selected-tag">' + l.name + '</span>').join('') : '';
+  const selEl = document.getElementById('sim-selected-list');
+  if (selEl) selEl.innerHTML = tagsHtml;
 
-/* === 選択中項目の可視化 === */
-function updateSelectedItems() {
-  /* lineItems: { name, yen, type:'item'|'free'|'multiplier'|'discount', multiplier? } */
-  const lineItems = [];
-  /* ライセンス料の内訳行（倍率・割引の対象外である旨を名前に添える） */
-  function pushLicenseItems(ids) {
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el || !el.checked) return;
-      const name = el.closest('.sim-option').querySelector('.sim-option-name').textContent;
-      lineItems.push({ name, yen: parseInt(el.value) });
-    });
-  }
-
-  if (currentTab === 'illust') {
-    const base    = document.querySelector('input[name="i_base"]:checked');
-    const baseYen = base ? parseInt(base.value) : 0;
-    const baseUsd = usdOf(baseYen);
-    const isSD    = base ? base.dataset.type === 'sd' : false;
-    if (base) {
-      const nameEl = base.closest('.sim-option, .sim-pose-card')?.querySelector('.sim-option-name');
-      lineItems.push({ name: nameEl?.textContent || '', yen: baseYen });
-    }
-    if (counts.i_extraPerson > 0)
-      lineItems.push({ name: `追加キャラクター ×${counts.i_extraPerson}`, yen: counts.i_extraPerson * countPrices.i_extraPerson });
-    const design = document.querySelector('input[name="i_design"]:checked');
-    if (design && parseInt(design.value) > 0)
-      lineItems.push({ name: 'キャラクターデザイン', yen: parseInt(design.value) });
-    const bg = document.querySelector('input[name="i_bg"]:checked');
-    if (bg && parseInt(bg.value) > 0)
-      lineItems.push({ name: bg.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: parseInt(bg.value) });
-    if (counts.i_expression > 0)    lineItems.push({ name: `表情差分（等身） ×${counts.i_expression}`,    yen: counts.i_expression * 1500 });
-    if (counts.i_expression_sd > 0) lineItems.push({ name: `表情差分（SD） ×${counts.i_expression_sd}`,   yen: counts.i_expression_sd * 1000 });
-    /* 等身の衣装・髪型差分はベース料金の70% / 50%。内訳では実額に換算して表示する */
-    if (!isSD && counts.i_costume > 0)
-      lineItems.push({ name: `衣装差分（等身・70%） ×${counts.i_costume}`,
-                       yen: counts.i_costume * Math.round(baseYen * 0.7),
-                       usd: counts.i_costume * Math.round(baseUsd * 0.7) });
-    if (counts.i_costume_sd > 0)    lineItems.push({ name: `衣装差分（SD） ×${counts.i_costume_sd}`,      yen: counts.i_costume_sd * countPrices.i_costume_sd });
-    if (!isSD && counts.i_hairstyle > 0)
-      lineItems.push({ name: `髪型差分（等身・50%） ×${counts.i_hairstyle}`,
-                       yen: counts.i_hairstyle * Math.round(baseYen * 0.5),
-                       usd: counts.i_hairstyle * Math.round(baseUsd * 0.5) });
-    if (counts.i_hairstyle_sd > 0)  lineItems.push({ name: `髪型差分（SD） ×${counts.i_hairstyle_sd}`,    yen: counts.i_hairstyle_sd * countPrices.i_hairstyle_sd });
-    document.querySelectorAll('.i_usage:checked').forEach(el => {
-      lineItems.push({ name: el.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: 0, type: 'free' });
-    });
-    /* グッズ販売は項目自体に定価がなく、金額は08の二次利用料として計上される */
-    const goodsUsage = document.getElementById('i_goods_usage');
-    if (goodsUsage && goodsUsage.checked)
-      lineItems.push({ name: 'グッズ販売', yen: 0, type: 'quote' });
-    const hc = document.getElementById('i_highres').checked;
-    const pc = document.getElementById('i_print').checked;
-    if (hc || pc) {
-      const name = hc && pc ? '高解像度（動画＋印刷）' : hc ? '高解像度（動画素材）' : '高解像度（印刷物）';
-      lineItems.push({ name, yen: 3500 });
-    }
-    const live2d = document.querySelector('input[name="i_live2d"]:checked');
-    if (live2d && parseInt(live2d.value) > 0)
-      lineItems.push({ name: live2d.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: parseInt(live2d.value) });
-    const live2dLayerEl = document.getElementById('i_live2d_layer');
-    if (live2dLayerEl && live2dLayerEl.checked) lineItems.push({ name: 'Live2Dパーツ分け', yen: 30000 });
-    if (counts.i_revision > 0)
-      lineItems.push({ name: `追加修正 ×${counts.i_revision}`, yen: counts.i_revision * 1500 });
-    const rush = document.querySelector('input[name="i_rush"]:checked');
-    if (rush && parseFloat(rush.value) > 1) {
-      const rName = rush.closest('.sim-option').querySelector('.sim-option-name');
-      lineItems.push({ name: rName?.firstChild?.textContent?.trim() || rName?.textContent || '', yen: null, type: 'multiplier', multiplier: parseFloat(rush.value) });
-    }
-    if (document.getElementById('i_repeat').checked)
-      lineItems.push({ name: 'リピーター割引（ベース料金・追加キャラクター）', yen: null, type: 'discount' });
-    /* ライセンス料・権利料は倍率・割引の対象外なので、内訳でも倍率行より後に並べる */
-    const copyrightEl = document.getElementById('i_copyright');
-    if (copyrightEl && copyrightEl.checked) {
-      /* 譲渡した時点で権利が移るので、商用利用ライセンスとグッズ二次利用料は計上しない */
-      /* 最低額が適用されたときは、内訳でもその旨がわかるようにする */
-      const cyen = Math.max(baseYen * 3, COPYRIGHT_MIN);
-      const cusd = Math.max(baseUsd * 3, usdOf(COPYRIGHT_MIN));
-      lineItems.push({
-        name: cyen > baseYen * 3 ? '著作権譲渡（最低額）' : '著作権譲渡（ベース料金×3）',
-        yen: cyen, usd: cusd });
-      pushLicenseItems(['i_nosns']);
-    } else {
-      pushLicenseItems(['i_commercial', 'i_nosns']);
-      goodsRowEls().forEach((row, i) => {
-        const rate  = goodsRate(i);
-        const typed = row.querySelector('.sim-goods-input').value.trim();
-        const label = typed || `グッズ ${i + 1}種類目`;
-        if (rate === 0) {
-          /* グッズのみの場合の1種類目（一次使用） */
-          lineItems.push({ name: typed ? `${typed}（1種類目）` : label, yen: 0, type: 'goodsFree' });
-        } else {
-          lineItems.push({ name: `${label}（二次利用 ${Math.round(rate * 100)}%）`,
-                           yen: Math.round(baseYen * rate),
-                           usd: Math.round(baseUsd * rate) });
-        }
-      });
-    }
-  } else {
-    const base = document.querySelector('input[name="d_base"]:checked');
-    if (base) {
-      const baseJPY = parseInt(base.value);
-      lineItems.push({ name: base.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: baseJPY });
-      if (counts.d_extra > 0)
-        lineItems.push({ name: `追加 ${counts.d_extra}点`, yen: counts.d_extra * Math.round(baseJPY * 0.5) });
-    }
-    ['d_rawdata', 'd_print'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.checked)
-        lineItems.push({ name: el.closest('.sim-option').querySelector('.sim-option-name').textContent, yen: parseInt(el.value) });
-    });
-    const rush = document.querySelector('input[name="d_rush"]:checked');
-    if (rush && parseFloat(rush.value) > 1) {
-      const rName = rush.closest('.sim-option').querySelector('.sim-option-name');
-      lineItems.push({ name: rName?.firstChild?.textContent?.trim() || rName?.textContent || '', yen: null, type: 'multiplier', multiplier: parseFloat(rush.value) });
-    }
-    if (document.getElementById('d_repeat').checked)
-      lineItems.push({ name: 'リピーター割引', yen: null, type: 'discount' });
-    pushLicenseItems(['d_commercial', 'd_nosns']);
-  }
-
-  /* 下部バー：簡易タグ */
-  const tagsHtml = lineItems.map(l => `<span class="sim-total-selected-tag">${l.name}</span>`).join('');
-  document.getElementById('sim-selected-list').innerHTML = tagsHtml;
-
-  /* レシート内訳 */
   const breakdownList = document.getElementById('breakdownList');
   if (!breakdownList) return;
 
-  let rows = '';
-  let delay = 0;
+  let rows = '', delay = 0;
+  const row = (cls, name, price) =>
+    '<div class="receipt-item' + (cls ? ' ' + cls : '') + '" style="animation-delay:' + ((delay++) * 0.06) + 's">' +
+    '<span class="receipt-item-name">' + name + '</span>' +
+    '<span class="receipt-item-price">' + price + '</span></div>';
 
-  lineItems.forEach(l => {
-    const type = l.type || 'item';
-    if (type === 'multiplier') {
-      rows += `<div class="receipt-item receipt-item--surcharge" style="animation-delay:${(delay++) * 0.06}s">
-        <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">×${l.multiplier}</span>
-      </div>`;
-    } else if (type === 'discount') {
-      rows += `<div class="receipt-item receipt-item--discount" style="animation-delay:${(delay++) * 0.06}s">
-        <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">−10%</span>
-      </div>`;
-    } else if (type === 'goodsFree') {
-      rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
-        <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">${currentLang === 'en' ? 'included in license' : '商用ライセンスに含む'}</span>
-      </div>`;
-    } else if (type === 'free') {
-      rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
-        <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">構図調整のみ</span>
-      </div>`;
-    } else if (type === 'quote') {
-      rows += `<div class="receipt-item receipt-item--free" style="animation-delay:${(delay++) * 0.06}s">
-        <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">${currentLang === 'en' ? 'please inquire' : '応相談'}</span>
-      </div>`;
-    } else {
-      /* ％計算で出た行は換算済みのドル額をそのまま使う */
-      const price = l.usd !== undefined ? formatPair(l.yen, l.usd) : formatAmt(l.yen);
-      rows += `<div class="receipt-item" style="animation-delay:${(delay++) * 0.06}s">
-        <span class="receipt-item-name">${l.name}</span>
-        <span class="receipt-item-price">${price}</span>
-      </div>`;
+  breakdown.forEach(b => {
+    /* 2点以上あるときだけ点数の見出しを出す */
+    if (breakdown.length > 1) {
+      rows += '<div class="receipt-piece-head" style="animation-delay:' + ((delay++) * 0.06) + 's">' +
+              (currentLang === 'en' ? 'Piece ' + (b.index + 1) : (b.index + 1) + '点目') + '</div>';
+    }
+    b.items.forEach(l => {
+      const type = l.type || 'item';
+      if (type === 'free')          rows += row('receipt-item--free', l.name, currentLang === 'en' ? 'framing only' : '構図調整のみ');
+      else if (type === 'quote')    rows += row('receipt-item--free', l.name, currentLang === 'en' ? 'please inquire' : '応相談');
+      else if (type === 'goodsFree')rows += row('receipt-item--free', l.name, currentLang === 'en' ? 'included in license' : '商用ライセンスに含む');
+      else rows += row('', l.name, l.usd !== undefined ? formatPair(l.yen, l.usd) : formatAmt(l.yen));
+    });
+    if (b.cutJ > 0) {
+      const label = b.reason === 'multi'
+        ? (currentLang === 'en' ? 'Multiple-piece discount' : '複数点割引（ベース料金）')
+        : (currentLang === 'en' ? 'Repeat discount' : 'リピーター割引（ベース料金）');
+      rows += row('receipt-item--discount', label, '−' + formatPair(b.cutJ, b.cutU));
     }
   });
 
-  rows += `<hr class="receipt-divider" style="animation-delay:${(delay++) * 0.06}s">`;
-  const totalEl = document.getElementById('totalAmount');
-  rows += `<div class="receipt-total" style="animation-delay:${(delay++) * 0.06}s">
-    <span class="receipt-total-label">目安合計</span>
-    <span class="receipt-total-price">${totalEl ? totalEl.innerHTML : ''}</span>
-  </div>`;
+  if (rev > 0) rows += row('', (currentLang === 'en' ? 'Extra revisions ×' : '追加修正 ×') + rev, formatAmt(rev * 1500));
+  if (rushSel && rushRate > 1) {
+    const rName = rushSel.closest('.sim-option').querySelector('.sim-option-name');
+    const nm = (rName && rName.firstChild && rName.firstChild.textContent.trim()) || '納期';
+    rows += row('receipt-item--surcharge', nm, '×' + rushRate);
+  }
 
+  rows += '<hr class="receipt-divider" style="animation-delay:' + ((delay++) * 0.06) + 's">';
+  const totalEl = document.getElementById('totalAmount');
+  rows += '<div class="receipt-total" style="animation-delay:' + ((delay++) * 0.06) + 's">' +
+          '<span class="receipt-total-label">' + (currentLang === 'en' ? 'Estimated total' : '目安合計') + '</span>' +
+          '<span class="receipt-total-price">' + (totalEl ? totalEl.innerHTML : '') + '</span></div>';
   breakdownList.innerHTML = rows;
 }
+
+/* === 点数タブの操作 === */
+const PIECE_MAX = 5;
+
+function pieceLabel(i) {
+  return currentLang === 'en' ? 'Piece ' + (i + 1) : (i + 1) + '点目';
+}
+
+/* タブのボタンを点数ぶん作り直す */
+function updatePieceTabs() {
+  const bar = document.getElementById('pieceTabs');
+  if (!bar) return;
+  const addBtn = document.getElementById('pieceAddBtn');
+  bar.querySelectorAll('.sim-piece-tab').forEach(b => b.remove());
+  pieces.forEach((st, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'sim-tab sim-piece-tab' + (i === currentPiece ? ' is-active' : '');
+    b.dataset.piece = i;
+    b.textContent = pieceLabel(i);
+    b.addEventListener('click', () => switchPiece(i));
+    bar.insertBefore(b, addBtn);
+  });
+  addBtn.disabled = pieces.length >= PIECE_MAX;
+  /* 2点以上のときだけ削除ボタンを出す */
+  let del = document.getElementById('pieceDelBtn');
+  if (pieces.length > 1) {
+    if (!del) {
+      del = document.createElement('button');
+      del.type = 'button';
+      del.id = 'pieceDelBtn';
+      del.className = 'sim-tab sim-piece-del';
+      del.textContent = '×';
+      del.addEventListener('click', removeCurrentPiece);
+      bar.appendChild(del);
+    }
+  } else if (del) {
+    del.remove();
+  }
+}
+
+function switchPiece(i) {
+  if (i === currentPiece) return;
+  pieces[currentPiece] = readPieceState();
+  currentPiece = i;
+  applyPieceState(pieces[i]);
+  updateCopyrightState();
+  updateGoodsVisibility();
+  calcTotal();
+  updateDeliveryNote();
+  updateRushAvailability();
+}
+
+function addPiece() {
+  if (pieces.length >= PIECE_MAX) return;
+  pieces[currentPiece] = readPieceState();
+  pieces.push(newPieceState());
+  currentPiece = pieces.length - 1;
+  applyPieceState(pieces[currentPiece]);
+  updateCopyrightState();
+  updateGoodsVisibility();
+  calcTotal();
+  updateDeliveryNote();
+}
+
+function removeCurrentPiece() {
+  if (pieces.length <= 1) return;
+  pieces.splice(currentPiece, 1);
+  currentPiece = Math.max(0, currentPiece - 1);
+  applyPieceState(pieces[currentPiece]);
+  updateCopyrightState();
+  updateGoodsVisibility();
+  calcTotal();
+  updateDeliveryNote();
+}
+
+/* === デザイン：種別 → バリエーションの2段階選択 === */
+/* イラストタブの「等身/SD → 構図」と同じ作り。
+   種別を選ぶとバッジに折りたたみ、その種別のバリエーションだけ表示する */
+const KIND_LABELS = {
+  namelogo: 'ネームロゴ', schedule: '配信スケジュール表', overlay: '配信オーバーレイ',
+  bg: '配信背景', header: 'ヘッダー', profile: 'プロフィールカード',
+  thumb: '配信サムネイル', wallpaper: '動く壁紙', stamp: 'スタンプ・バッジ',
+  ring: 'アイコンリング', commentcss: 'コメント欄カスタムCSS', clock: '配信時計', profilesite: 'プロフィールサイト'
+};
+const KIND_LABELS_EN = {
+  namelogo: 'Name Logo', schedule: 'Stream Schedule', overlay: 'Stream Overlay',
+  bg: 'Stream Background', header: 'Header', profile: 'Profile Card',
+  thumb: 'Stream Thumbnail', wallpaper: 'Live Wallpaper', stamp: 'Stamps & Badges',
+  ring: 'Icon Ring', commentcss: 'Chat CSS', clock: 'Stream Clock', profilesite: 'Profile Site'
+};
+const SUB_LABELS = { 'header-gift': 'バッジ返礼品', 'header-marriage': 'よめこな王返礼品', 'bg-h': '横配信', 'bg-v': '縦配信', 'stamp-chara': 'キャラ', 'stamp-text': '文字のみ', 'stamp-item': '小物・食べ物' };
+const SUB_LABELS_EN = { 'header-gift': 'Badge gift', 'header-marriage': 'Marriage form gift', 'bg-h': 'Landscape', 'bg-v': 'Portrait', 'stamp-chara': 'Character', 'stamp-text': 'Text only', 'stamp-item': 'Items & Food' };
+let currentKind = '';
+let currentSub  = '';
+
+function kindLabel(kind) {
+  return (currentLang === 'en' ? KIND_LABELS_EN : KIND_LABELS)[kind] || '';
+}
+
+/* 指定した種別のバリエーションだけ出す。他の種別の選択は解除する */
+function showKind(kind, keepSelection) {
+  currentKind = kind;
+  const subTabs = document.getElementById('d-sub-' + kind);
+  /* サブ種別を持つ種別は、まずサブを選んでもらう */
+  document.querySelectorAll('.sim-sub-tabs').forEach(t => { t.style.display = (t.id === 'd-sub-' + kind) ? '' : 'none'; });
+  const targetGrid = subTabs ? ('d-kind-' + currentSub) : ('d-kind-' + kind);
+  document.querySelectorAll('.sim-kind-grid').forEach(g => {
+    const on = g.id === targetGrid;
+    g.style.display = on ? '' : 'none';
+    if (!on) g.querySelectorAll('input[name="d_base"]').forEach(r => { r.checked = false; });
+  });
+  /* 押したタブのすぐ下に開くよう、選択肢のかたまりを移動する */
+  const activeBtn = document.querySelector('.sim-kind-tab[data-kind="' + kind + '"]');
+  const group     = activeBtn && activeBtn.closest('.sim-kind-group');
+  const gridEl    = document.getElementById(targetGrid);
+  const qtyEl     = document.getElementById('d-qty-counter');
+  /* 選択肢が1つしかない場合は選ばせない（そこまで選んだ時点で決まっているため） */
+  if (gridEl && !keepSelection) {
+    const only = gridEl.querySelectorAll('input[name="d_base"]');
+    if (only.length === 1) only[0].checked = true;
+  }
+
+  /* 「配信スタイル」「モチーフ」「プラン」の見出しを、それぞれの直前に置く */
+  function headingFor(el) {
+    if (!el || !el.dataset.heading) return null;
+    const id = el.id + '-heading';
+    let h = document.getElementById(id);
+    if (!h) {
+      h = document.createElement('span');
+      h.id = id;
+      h.className = 'sim-step-label';
+    }
+    h.textContent = el.dataset.heading;
+    return h;
+  }
+  /* 使っていない見出しは隠す */
+  document.querySelectorAll('.sim-step-label').forEach(h => { h.style.display = 'none'; });
+
+  /* カテゴリーの枠の中に入れることで、点線の区切りより上に収まる */
+  if (group) {
+    if (subTabs) {
+      const h = headingFor(subTabs);
+      if (h) { h.style.display = ''; group.appendChild(h); }
+      group.appendChild(subTabs);
+    }
+    if (gridEl) {
+      const h = headingFor(gridEl);
+      if (h) { h.style.display = ''; group.appendChild(h); }
+      group.appendChild(gridEl);
+    }
+    if (qtyEl) group.appendChild(qtyEl);
+    /* 詳細の注記も、そのカテゴリーの中（点線の上）に置く */
+    ['d-monitor-note', 'd-wallpaper-note', 'd-stamp-note', 'd-header-note'].forEach(id => {
+      const n = document.getElementById(id);
+      if (n) group.appendChild(n);
+    });
+  }
+
+  /* タブは畳まず、選んだものをハイライトして選び直せるようにする */
+  document.querySelectorAll('.sim-kind-tab[data-kind]').forEach(b => {
+    b.classList.toggle('is-active', b.dataset.kind === kind);
+  });
+  document.querySelectorAll('.sim-sub-tab').forEach(b => {
+    b.classList.toggle('is-active', b.dataset.sub === currentSub);
+  });
+  /* 種別を選んだ直後は未選択のまま。お客さんにバリエーションを選んでもらう。
+     点数も1点に戻す（前の種別の点数を持ち越さない） */
+  if (!keepSelection) {
+    document.querySelectorAll('#d-kind-' + kind + ' input[name="d_base"]').forEach(r => { r.checked = false; });
+    counts.d_qty = 1;
+    const numEl = document.getElementById('d_qtyNum');
+    if (numEl) numEl.textContent = '1';
+  }
+}
+
+/* 種別の選択そのものをやり直す */
+function resetKind() {
+  currentKind = '';
+  currentSub  = '';
+  document.querySelectorAll('.sim-sub-tabs').forEach(t => { t.style.display = 'none'; });
+  counts.d_qty = 1;
+  const qtyNum = document.getElementById('d_qtyNum');
+  if (qtyNum) qtyNum.textContent = '1';
+  document.querySelectorAll('.sim-kind-grid').forEach(g => {
+    g.style.display = 'none';
+    g.querySelectorAll('input[name="d_base"]').forEach(r => { r.checked = false; });
+  });
+  document.querySelectorAll('.sim-kind-tab, .sim-sub-tab').forEach(b => b.classList.remove('is-active'));
+}
+
+function initKindTabs() {
+  document.querySelectorAll('.sim-kind-tab[data-kind]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSub = '';
+      showKind(btn.dataset.kind, false);
+      calcTotal();
+      updateMascotMessage(btn);
+    });
+  });
+  document.querySelectorAll('.sim-sub-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSub = btn.dataset.sub;
+      showKind(btn.dataset.parent, false);
+      calcTotal();
+    });
+  });
+
+}
+
+
+/* === 商用利用が込みの種別（動く壁紙など）=== */
+/* data-commercial-included を持つ選択肢では、商用利用ライセンスを二重取りしない */
+function updateCommercialIncluded() {
+  const sel = document.querySelector('input[name="d_base"]:checked');
+  const included = !!(sel && sel.dataset.commercialIncluded);
+  const com = document.getElementById('d_commercial');
+  if (!com) return;
+  const label = com.closest('label');
+  if (included) {
+    com.checked = false;
+    com.disabled = true;
+    if (label) label.classList.add('is-disabled');
+  } else {
+    com.disabled = false;
+    if (label) label.classList.remove('is-disabled');
+  }
+  /* モニター価格（サンプル掲載と引き換えの割引）を選んだら、掲載不可は選べない。
+     サンプルを集めるための値引きなので、掲載を止められると目的が消えるため */
+  const nosns = document.getElementById('d_nosns');
+  const isMonitor = !!(sel && sel.dataset.monitor);
+  if (nosns) {
+    const nlabel = nosns.closest('label');
+    if (isMonitor) {
+      nosns.checked = false;
+      nosns.disabled = true;
+      if (nlabel) nlabel.classList.add('is-disabled');
+    } else {
+      nosns.disabled = false;
+      if (nlabel) nlabel.classList.remove('is-disabled');
+    }
+  }
+  const mnote = document.getElementById('d-monitor-note');
+  if (mnote) mnote.style.display = isMonitor ? '' : 'none';
+
+  /* 種別ごとの注記の出し分け */
+  const wnote = document.getElementById('d-wallpaper-note');
+  if (wnote) wnote.style.display = (currentKind === 'wallpaper') ? '' : 'none';
+  const snote = document.getElementById('d-stamp-note');
+  if (snote) snote.style.display = (currentKind === 'stamp') ? '' : 'none';
+  const hnote = document.getElementById('d-header-note');
+  if (hnote) hnote.style.display = (currentSub === 'header-marriage') ? '' : 'none';
+  /* 1点あたりの単価の種別だけ点数カウンターを出す */
+  const qty = document.getElementById('d-qty-counter');
+  if (qty) qty.style.display = (sel && sel.dataset.perUnit) ? '' : 'none';
+}
+
+/* === ＭＶ制作：プレミアムプランの確認モーダル === */
+/* プレミアムを選んだ瞬間に開き、絵師様の許可の有無を確認する。
+   許可なしでもプレミアムのまま。ただし「Live2D風の演出での制作」の注記がカードに残る */
+let v2dPrevPlan = null;
+
+function openV2dModal() {
+  const modal = document.getElementById('v2dModal');
+  if (!modal) return;
+  modal.hidden = false;
+  document.querySelectorAll('input[name="v_permit"]').forEach(r => { r.checked = false; });
+  const warn = document.getElementById('v2dWarn');
+  if (warn) warn.hidden = true;
+  const ok = document.getElementById('v2dOk');
+  if (ok) ok.disabled = true;
+}
+
+function closeV2dModal() {
+  const modal = document.getElementById('v2dModal');
+  if (modal) modal.hidden = true;
+}
+
+/* 許可なしのときだけ、プレミアムのカードに赤い注記を残す */
+function updateVideoMonitorNote() {
+  const note = document.getElementById('v-monitor-note');
+  if (!note) return;
+  const sel = document.querySelector('input[name="v_plan"]:checked');
+  note.style.display = (sel && isCampaignActive(sel)) ? '' : 'none';
+}
+
+function updateV2dNote() {
+  const note = document.getElementById('v_premium_note');
+  if (!note) return;
+  const premium = document.getElementById('v_premium');
+  const permit  = document.querySelector('input[name="v_permit"]:checked');
+  const show = !!(premium && premium.checked && permit && permit.value === 'no');
+  note.style.display = show ? '' : 'none';
+}
+
+function initV2dModal() {
+  const premium = document.getElementById('v_premium');
+  if (!premium) return;
+
+  /* プレミアム以外を選んだら、許可の選択と注記をリセットする */
+  document.querySelectorAll('input[name="v_plan"]').forEach(r => {
+    r.addEventListener('change', () => {
+      if (r.id === 'v_premium') {
+        openV2dModal();
+      } else {
+        v2dPrevPlan = r.value;
+        document.querySelectorAll('input[name="v_permit"]').forEach(p => { p.checked = false; });
+        updateV2dNote();
+      }
+    });
+  });
+
+  document.querySelectorAll('input[name="v_permit"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const warn = document.getElementById('v2dWarn');
+      if (warn) warn.hidden = r.value !== 'no';
+      const ok = document.getElementById('v2dOk');
+      if (ok) ok.disabled = false;
+    });
+  });
+
+  const okBtn = document.getElementById('v2dOk');
+  if (okBtn) okBtn.addEventListener('click', () => {
+    closeV2dModal();
+    updateV2dNote();
+    calcTotal();
+  });
+
+  const cancelBtn = document.getElementById('v2dCancel');
+  if (cancelBtn) cancelBtn.addEventListener('click', () => {
+    /* プレミアムの選択を取り消して、直前のプランに戻す */
+    premium.checked = false;
+    if (v2dPrevPlan) {
+      const prev = document.querySelector('input[name="v_plan"][value="' + v2dPrevPlan + '"]');
+      if (prev) prev.checked = true;
+    }
+    document.querySelectorAll('input[name="v_permit"]').forEach(p => { p.checked = false; });
+    closeV2dModal();
+    updateV2dNote();
+    calcTotal();
+  });
+
+  /* 背景クリックでもキャンセル扱いにする */
+  const overlay = document.getElementById('v2dModal');
+  if (overlay) overlay.addEventListener('click', e => {
+    if (e.target === overlay && cancelBtn) cancelBtn.click();
+  });
+}
+
+
+/* === モニター価格の端数処理 === */
+/* 割引後の端数（1000円未満の部分）を、500円以上なら500円に、500円未満なら切り捨てる。
+   例：4,000×0.7＝2,800 → 2,500 ／ 6,000×0.7＝4,200 → 4,000 */
+const MONITOR_RATE = 0.7;
+function roundMonitor(yen) {
+  const base = Math.floor(yen / 1000) * 1000;
+  return base + (yen - base >= 500 ? 500 : 0);
+}
+
+/* ¥2,000以下のサービスはモニター価格の対象外。
+   割引しても手取りが残らないため */
+const MONITOR_MIN = 2000;
+function monitorPriceOf(regular) {
+  if (regular <= MONITOR_MIN) return null;
+  const v = roundMonitor(regular * MONITOR_RATE);
+  return v > 0 ? v : null;
+}
+
+/* モニター価格の項目は、通常価格から計算して端数を丸める。
+   HTMLに書いた金額ではなくこの計算式が正になるので、割引率を変えても揃う */
+function initMonitorPrices() {
+  document.querySelectorAll('input[data-monitor]').forEach(el => {
+    const regular = parseInt(el.value);
+    if (!regular) return;
+    const v = monitorPriceOf(regular);
+    if (v === null) { delete el.dataset.monitor; delete el.dataset.campaignPrice; return; }
+    el.dataset.campaignPrice = String(v);
+  });
+}
+
+/* === 期間限定キャンペーン価格 === */
+/* data-campaign-price（特価）と data-campaign-until（最終日）を持つ選択肢を対象に、
+   期限内なら特価に差し替える。期限を過ぎたら何もしないので通常価格に戻る。
+   キャンペーン価格はすでに値引きした価格なので、リピーター割引・複数点割引の対象外にする */
+function isCampaignActive(el) {
+  if (!el || !el.dataset.campaignPrice || !el.dataset.campaignUntil) return false;
+  const until = new Date(el.dataset.campaignUntil + 'T23:59:59');
+  return new Date() <= until;
+}
+
+/* 実際にご請求する金額。キャンペーン中なら特価を返す */
+function effectivePrice(el) {
+  if (isCampaignActive(el)) return parseInt(el.dataset.campaignPrice);
+  return el ? parseInt(el.value) : 0;
+}
+
+/* キャンペーン中なら表示を特価に差し替えてラベルと赤字を出す */
+function applyCampaigns() {
+  document.querySelectorAll('input[data-campaign-price]').forEach(el => {
+    const label   = el.closest('.sim-option, .sim-pose-card');
+    const priceEl = label && label.querySelector('.sim-option-price');
+    if (!label || !priceEl) return;
+    const regular = parseInt(el.value);
+
+    if (isCampaignActive(el)) {
+      label.classList.add('is-campaign');
+      priceEl.classList.add('sim-price-campaign');
+      priceEl.innerHTML =
+        '<span class="sim-price-regular">' + formatAmt(regular) + '</span> ' +
+        formatAmt(parseInt(el.dataset.campaignPrice)) + '〜';
+      if (!label.querySelector('.sim-campaign-badge')) {
+        const badge = document.createElement('span');
+        badge.className = 'sim-campaign-badge';
+        badge.textContent = currentLang === 'en' ? 'SALE' : 'キャンペーン価格';
+        label.insertBefore(badge, label.firstChild);
+      } else {
+        label.querySelector('.sim-campaign-badge').textContent =
+          currentLang === 'en' ? 'SALE' : 'キャンペーン価格';
+      }
+    } else {
+      label.classList.remove('is-campaign');
+      priceEl.classList.remove('sim-price-campaign');
+      priceEl.textContent = formatAmt(regular) + '〜';
+      const badge = label.querySelector('.sim-campaign-badge');
+      if (badge) badge.remove();
+    }
+  });
+}
+
 
 /* === 通貨・言語 === */
 let currentCurrency = 'JPY';
@@ -926,6 +1443,7 @@ function updatePriceEls() {
 function switchCurrency(cur) {
   currentCurrency = cur;
   updatePriceEls();
+  applyCampaigns();
   calcTotal();
 }
 
@@ -934,6 +1452,91 @@ const TRANS_EN = {
   'お見積もり合計（目安）': 'Estimated Total (approx.)',
   /* グッズ二次利用・著作権譲渡 */
   'グッズ・物販の二次利用': 'Merchandise & Secondary Use',
+  'プラン': 'Plan',
+  '使用用途': 'Purpose',
+  '配信スタイル': 'Stream style',
+  'モチーフ': 'Motif',
+  'バッジ返礼品': 'Badge gift',
+  'よめこな王返礼品': 'Marriage form gift',
+  'スタンダード（量産型婚姻届）': 'Standard (template)',
+  'プレミアム（一点物婚姻届）': 'Premium (one-off)',
+  'テンプレートをお渡しします。ご自分で素材と文字を重ねてお使いください。': 'You receive the template and layer your own artwork and text onto it.',
+  '鉛筆の落書き付きの一点物です。ウェディングドレス姿の横顔など、ご希望に合わせてお描きします。': 'A one-off piece with a pencil sketch — a profile in a wedding dress, or whatever you have in mind.',
+  /* デザインの種別タブ */
+  'ネームロゴ': 'Name Logo',
+  '配信スケジュール表': 'Schedule Graphic',
+  '配信オーバーレイ': 'Stream Overlay',
+  '配信背景': 'Stream Background',
+  'ヘッダー': 'Header',
+  'プロフィールカード': 'Profile Card',
+  '配信サムネイル': 'Thumbnail',
+  '動く壁紙': 'Live Wallpaper',
+  'スタンプ・バッジ': 'Stamps & Badges',
+  'アイコンリング': 'Icon Ring',
+  'コメント欄カスタムCSS': 'Chat CSS',
+  '配信時計': 'Stream Clock',
+  'プロフィールサイト': 'Profile Site',
+  '横配信': 'Landscape',
+  '縦配信': 'Portrait',
+  'キャラ': 'Character',
+  '文字のみ': 'Text only',
+  '小物・食べ物': 'Items & Food',
+  /* デザインのカード説明 */
+  'キャラクターのモチーフを1点だけ添えた、すっきりした構成です。': 'A clean design with a single motif from your character.',
+  'キャラクターのモチーフを複数点あしらった、装飾の多い構成です。': 'A decorated design with several motifs from your character.',
+  '文字そのものをモチーフに置き換えてデザインし、相棒キャラクター（ちびキャラ）を1点お描きします。': 'The letters themselves are redrawn as motifs, plus one companion chibi character.',
+  'デコデコ風の装飾でお作りします。曜日・時間帯のレイアウトはご希望に合わせて調整いたします。': 'Made in the heavily decorated style. The layout of days and times is adjusted to your wishes.',
+  '世界観に合わせた背景を手描きで描き下ろします（人物は含みません）。': 'A hand-drawn background matching the world of your character (characters not included).',
+  '待機画面・枠などをシンプルな構成でお作りします。': 'Waiting screens, frames and so on in a simple layout.',
+  '世界観に合わせて描き込んだ、作り込みのある構成です。': 'Richly drawn to match the world of your character.',
+  'パソコン・横画面での配信向け。描き込みは控えめです。': 'For landscape streaming on PC. Lightly detailed.',
+  'パソコン・横画面での配信向け。描き込みをたっぷり入れます。': 'For landscape streaming on PC. Richly detailed.',
+  'スマートフォンの縦画面での配信向け。描き込みは控えめです。': 'For portrait streaming on smartphones. Lightly detailed.',
+  'スマートフォンの縦画面での配信向け。描き込みをたっぷり入れます。': 'For portrait streaming on smartphones. Richly detailed.',
+  'X・YouTube・Twitchなどのヘッダーをお作りします。シンプルな構成です。サイズはご指定ください。': 'Headers for X, YouTube, Twitch and more, in a simple layout. Please specify the size.',
+  '装飾や書き文字を多く入れた、作り込みのある構成です。サイズはご指定ください。': 'A richly decorated layout with hand-lettered text. Please specify the size.',
+  '装飾を多く入れた、作り込みのある構成です。項目数が多い場合にも向いています。': 'A richly decorated layout, also suited to cards with many items.',
+  '装飾やコラージュを作り込んだ構成です。動きにも変化をつけます。': 'A richly built collage with more movement in the animation.',
+  '自己紹介・ボイス診断などのカードをお作りします。項目はご相談のうえ決めます。': 'Profile cards, voice-type cards and similar. We decide the items together.',
+  '配信のサムネイルを1点ごとにお作りします。': 'Stream thumbnails, made one at a time.',
+  'IRIAMの初配信WEEKやイベント用に、7日分をまとめてお作りします。': 'Seven days in one set — for IRIAM debut weeks and events.',
+  'お持ちの写真やイラストでデザインし、iPhoneのライブ写真とAndroid用のmp4でお渡しします。ロック画面で1〜3秒動きます。': 'Designed from your own photos or illustrations, delivered as an iPhone Live Photo and an mp4 for Android. It moves for 1–3 seconds on your lock screen.',
+  'キャラクターのスタンプ・バッジです。文字入れは無料でお付けします。': 'Character stamps and badges. Text is added free of charge.',
+  '動くキャラクタースタンプです。文字入れは無料でお付けします。': 'Animated character stamps. Text is added free of charge.',
+  '文字だけで構成したスタンプ・バッジです。': 'Stamps and badges made of text only.',
+  '食べ物や小物のスタンプ・バッジです。': 'Stamps and badges of food and small items.',
+  'アイコンのまわりを飾るリングです。シンプルな構成でお作りします。': 'A ring that frames your icon, in a simple design.',
+  'モチーフや装飾を多く入れた、作り込みのあるリングです。': 'A richly decorated ring with plenty of motifs.',
+  /* デザインの種別・バリエーション */
+  'シンプル': 'Simple',
+  'デコ': 'Deco',
+  'デコデコ': 'Deco Deco',
+  'スタンダード': 'Standard',
+  'プレミアム': 'Premium',
+  '1点ずつ': 'Per piece',
+  '一週間セット': 'One-week set',
+  '静止画': 'Still image',
+  'アニメーション': 'Animated',
+  /* ＭＶ制作 */
+  'ＭＶ制作プラン': 'MV Production Plans',
+  'ご依頼前にご確認ください': 'Before You Order',
+  'ライトプラン': 'Light Plan',
+  'スタンダードプラン': 'Standard Plan',
+  'プレミアムプラン': 'Premium Plan',
+  video_delivery: 'All plans take around <strong>one month</strong>. This varies with workload and how quickly we can exchange messages.<br>If you are in a hurry, please ask — depending on my schedule I may be able to accommodate you.',
+  '納期': 'Delivery',
+  video_hint: 'Prices vary with the length of the track. The listed price assumes you provide the illustration.',
+  video_other: '* I also take on other video work such as openings, endings and short-form videos — feel free to ask.',
+  video_terms: '・ Illustration work can be commissioned separately (drawn to match the world of the track, with matching expressions and outfits)<br>・ You may bring your own Live2D model. Layered data makes it certain<br>・ If the artwork is not layered I can separate the parts myself, but this requires permission from the artist who drew it<br>・ Pose switching can be added separately (please inquire)',
+  /* プレミアムの確認モーダル */
+  v2d_title: 'About the Live2D animation',
+  v2d_body: 'The Premium plan is animated with a Live2D-rigged character (pose switching is not included).<br>Do you have an illustration separated into layers?<br>I can separate the parts myself if it is not layered, but that requires <strong>permission from the artist who drew it</strong>.',
+  '絵師様の許可をいただいています（ご自身で描かれた場合も含みます）': "I have the artist's permission (including artwork you drew yourself)",
+  '絵師様の許可はまだいただいていません': "I do not have the artist's permission yet",
+  v2d_warn: 'The work will be produced with Live2D-style motion instead<br><span class="sim-modal-warn-sub">If you obtain permission later, I can switch to real Live2D animation. Feel free to ask.</span>',
+  v2d_pose: '* Pose switching can be added separately',
+  v2d_ok: 'Confirmed',
+  v2d_cancel: 'Cancel',
   'グッズ販売': 'Merchandise Sales',
   goods_scope_q: 'First, let me know whether you\'ll also use it for streaming. Which use counts as the primary one changes the fee.',
   '配信でも使う＋グッズ展開': 'Streaming + merchandise',
@@ -941,6 +1544,10 @@ const TRANS_EN = {
   '1種類目から二次利用料': 'secondary use fee from the 1st type',
   '1種類目は商用ライセンス内': '1st type covered by the license',
   '応相談': 'please inquire',
+  '配信スケジュール表': 'Stream Schedule Graphic',
+  'ネームロゴ シンプル': 'Name Logo (Simple)',
+  'ネームロゴ デコ': 'Name Logo (Deco)',
+  'ネームロゴ デコデコ': 'Name Logo (Deco Deco)',
   'アクリルスタンド・缶バッジ・Tシャツなど、グッズとして販売される場合はこちらをお選びください。展開される商品の種類によって金額が変わるため、こちらの項目自体に料金は設定していません。':
     'Choose this if you plan to sell the artwork as merchandise — acrylic stands, can badges, T-shirts and so on. No fixed price is set here because the amount depends on how many product types you release.',
   goods_add: '＋ Add merchandise',
@@ -949,9 +1556,8 @@ const TRANS_EN = {
   '＋ベース料金の70% / セット': '＋70% of base price / set',
   '＋ベース料金の50% / 種':   '＋50% of base price / style',
   '著作権譲渡': 'Copyright Transfer',
-  '＋ベース料金×3（最低30,000円）': '＋3× base price (min 30,000 yen)',
-  '原則としてお受けしておりません。譲渡料はベース料金の3倍（最低30,000円）です。譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。':
-    '<strong>As a rule I do not offer copyright transfer.</strong> The transfer fee is 3× the base price (minimum 30,000 yen). If a transfer is agreed, the copyright passes to you, so the commercial use license (＋¥5,000) and merchandise secondary use fees are no longer required.',
+  '原則としてお受けしておりません。譲渡が成立した場合は著作権がお客様に移転するため、商用利用ライセンス（＋¥5,000）とグッズの二次利用料は不要になります。':
+    '<strong>As a rule I do not offer copyright transfer.</strong> If a transfer is agreed, the copyright passes to you, so the commercial use license (＋¥5,000) and merchandise secondary use fees are no longer required.',
   'いつもありがとうございます。2回目以降のご依頼は、イラスト本体（構図・追加キャラクター）を10%引きにさせていただきます。背景や差分などのオプション、商用利用・著作権譲渡・グッズの二次利用といった権利のお料金は、割引の対象外とさせてください。':
     'Thank you for coming back. From your second commission onward, <strong>10% off the illustration itself (framing and additional characters)</strong>.<br>Options such as backgrounds and variations, and rights fees such as commercial use, copyright transfer and merchandise secondary use, are outside the discount.',
   /* section headers（番号バッジ導入後のh2テキスト） */
@@ -1102,7 +1708,7 @@ function switchLang(lang) {
     titleEl.textContent = TRANS_EN.title;
     if (totalLabelEl) totalLabelEl.textContent = TRANS_EN['お見積もり合計（目安）'];
     /* セクション見出し・選択肢名・カウンターラベル */
-    document.querySelectorAll('.sim-card h2, .sim-option-name, .sim-counter-label, .sim-pose-desc, .sim-base-type-tab span').forEach(el => {
+    document.querySelectorAll('.sim-card h2, .sim-option-name, .sim-counter-label, .sim-pose-desc, .sim-base-type-tab span, .sim-kind-tab').forEach(el => {
       const jp = el.dataset.jp || getJpText(el);
       if (!el.dataset.jp) el.dataset.jp = jp;
       const en = TRANS_EN[jp];
@@ -1158,7 +1764,7 @@ function switchLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('is-active', btn.dataset.lang === lang);
   });
-  /* グッズ行の料率表示も言語に合わせて更新するため calcTotal 経由で再描画する */
+  /* 内訳・グッズ行の表示も言語に合わせるため calcTotal 経由で再描画する */
   calcTotal();
   updateMascotMessage(null);
   updateDeliveryNote();
@@ -1281,6 +1887,13 @@ function updateRushAvailability() {
 }
 document.querySelectorAll('input[name="i_live2d"]')
   .forEach(el => el.addEventListener('change', updateRushAvailability));
+initMonitorPrices();
+applyCampaigns();
+initV2dModal();
+initKindTabs();
+const pieceAddBtnEl = document.getElementById('pieceAddBtn');
+if (pieceAddBtnEl) pieceAddBtnEl.addEventListener('click', addPiece);
+updatePieceTabs();
 initPriceEls();
 updateCopyrightState();
 updateGoodsVisibility();
@@ -1517,6 +2130,52 @@ const MASCOT_CONDITIONS = [
     check:   () => document.querySelector('.i_usage[data-note*="正方形"]')?.checked,
     message:    '基本はご自分でトリミングして使ってね、正方形構図でも顔が映えるよう仕上げるね₍ᐢ‥ᐢ₎ ♡',
     message_en: 'You can crop it yourself to fit — I\'ll make sure the face stands out even in a square frame ₍ᐢ‥ᐢ₎ ♡',
+  },
+
+  /* ── ＭＶ制作 ── */
+  {
+    trigger: '#v_premium',
+    check:   () => document.getElementById('v_premium')?.checked,
+    message:    'ポーズ切り替えありにもできるうさよ₍ᐢ‥ᐢ₎ ♡\n顔はそのままで体だけ動かすのでも、立ち絵がガラッと変わるのでも、どっちもかっこいいね！\n同じ顔で体を動かすのか、別のポーズをもう一枚描いてもらってるのか、ヒアリングのときに教えてね♡\nどっちにしてもMVの印象がすごく変わるのは間違いないうさ₍ᐢ- -ᐢ₎',
+    message_en: 'Pose switching can be added too ₍ᐢ‥ᐢ₎ ♡\nWhether the face stays and only the body moves, or the whole illustration changes — both look great!\nLet me know during our chat which one you have: the same face with body motion, or a second illustration drawn in a different pose ♡\nEither way it changes the feel of the MV completely ₍ᐢ- -ᐢ₎',
+  },
+  {
+    trigger: 'input[name="v_plan"]',
+    check:   () => !!document.querySelector('input[name="v_plan"]:checked'),
+    message:    'MV制作、ありがとうございます₍ᐢ‥ᐢ₎ ♡\nお値段は曲の長さで変わるから、尺がわかったら教えてね！\nイラストの描き下ろしもできるうさよ₍ᐢ- -ᐢ₎',
+    message_en: 'Thank you for considering an MV ₍ᐢ‥ᐢ₎ ♡\nThe price moves with the length of the track, so let me know the runtime!\nI can draw new illustrations for it too ₍ᐢ- -ᐢ₎',
+  },
+
+  /* ── デザイン：動く壁紙 ── */
+  {
+    trigger: '#d-kind-wallpaper input',
+    check:   () => currentKind === 'wallpaper' && !!document.querySelector('#d-kind-wallpaper input:checked'),
+    message:    '動く壁紙だね₍ᐢ‥ᐢ₎ ♡ ロック画面でふわっと動くやつ！\n同じ作り方で、配信のアラート演出やトランジションも作れるうさよ。気になったら聞いてね₍ᐢ- -ᐢ₎',
+    message_en: 'A live wallpaper ₍ᐢ‥ᐢ₎ ♡ The kind that moves softly on your lock screen!\nI can make stream alerts and transitions the same way — just ask if you are curious ₍ᐢ- -ᐢ₎',
+  },
+  /* ── デザイン：スタンプ・バッジ ── */
+  {
+    trigger: '#d-kind-stamp-chara input',
+    check:   () => currentSub === 'stamp-chara' && !!document.querySelector('#d-kind-stamp-chara input:checked'),
+    message:    'スタンプは文字入れ無料でお付けするうさよ₍ᐢ‥ᐢ₎ ♡\nYouTubeのメンバーシップだけじゃなくて、Discordでも使えるからおすすめ！',
+    message_en: 'Text is added free of charge on stamps ₍ᐢ‥ᐢ₎ ♡\nThey work on Discord as well as YouTube memberships — highly recommended!',
+  },
+  /* ── デザイン：モニター価格 ── */
+  {
+    trigger: 'input[name="d_base"]',
+    check:   () => {
+      const sel = document.querySelector('input[name="d_base"]:checked');
+      return !!(sel && sel.dataset.monitor && isCampaignActive(sel));
+    },
+    message:    'いまサンプルを集めてるところだから、お安くしてるうさよ₍ᐢ‥ᐢ₎ ♡\n完成したものをSNSやポートフォリオに載せさせてもらうのが条件だけど、大丈夫かな？\n先着数名様までなので、気になったらお早めに₍ᐢ- -ᐢ₎',
+    message_en: 'I am collecting samples right now, so this one is discounted ₍ᐢ‥ᐢ₎ ♡\nThe condition is that I may post the finished work on my SNS and portfolio — is that okay?\nOnly a few slots, so do let me know soon ₍ᐢ- -ᐢ₎',
+  },
+  /* ── 準備中の種別 ── */
+  {
+    trigger: '.sim-kind-tab--soon',
+    check:   () => ['commentcss', 'clock', 'profilesite'].includes(currentKind),
+    message:    'これ、まだ準備中なんだけど作れるうさよ₍ᐢ‥ᐢ₎ ♡\n気になったら気軽にDMしてね！相談だけでも大歓迎うさ＞＜',
+    message_en: 'This one is still in the works, but I can make it ₍ᐢ‥ᐢ₎ ♡\nJust DM me if you are curious — happy to chat about it! ＞＜',
   },
 
   /* ── オプション ── */
