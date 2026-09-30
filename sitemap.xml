@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 検索エンジンに「このサイトにはこのページがあります」と伝える地図。
      ページを増やしたら、ここに <url> を1つ足すこと。
-     lastmod（最終更新日）は、そのページを大きく変えたときに更新する。 -->
+     lastmod（最終更新日）は、そのページを大きく変えたときに更新する。
+
+     priority は「サイト内でどれを優先して見てほしいか」の目安（0.0〜1.0）。
+     見つけてほしい順に イラスト＞料金シミュレーター＞トップ＞デザイン としている。
+
+     ★ about.html は載せていない。2026年3月に作ったままでリニューアル前のため、
+       about.html 側に noindex を入れて検索結果に出ないようにしてある。
+       リニューアルが終わったら、noindex を外してここに戻すこと。 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url>
-    <loc>https://www.yui-takasu.com/</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
+  <!-- 作品を見てもらうページ。いちばん見つけてほしい -->
   <url>
     <loc>https://www.yui-takasu.com/illust/</loc>
     <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>1.0</priority>
   </url>
 
-  <url>
-    <loc>https://www.yui-takasu.com/design/</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://www.yui-takasu.com/about.html</loc>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
+  <!-- 料金を知りたい人の着地点 -->
   <url>
     <loc>https://www.yui-takasu.com/simulator.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- サイトの入口 -->
+  <url>
+    <loc>https://www.yui-takasu.com/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- デザイン実績（Yui-Takasu名義） -->
+  <url>
+    <loc>https://www.yui-takasu.com/design/</loc>
     <lastmod>2026-09-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
