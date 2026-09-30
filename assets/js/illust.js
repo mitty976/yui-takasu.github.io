@@ -2044,6 +2044,11 @@
       tabIllust:         'イラスト',
       tabLogo:           'ロゴ',
       tabSchedule:       '配信関連',
+      /* 受注状況バナー。日付を変えるときは illust/index.html の初期表示も同じ内容に直すこと */
+      statusBadge:       '📋 受注状況',
+      statusIllust:      '<span class="status-bar__label">イラスト：</span><strong>10月上旬</strong>着手、<strong>10月中下旬以降</strong>納品可能',
+      statusDesign:      '<span class="status-bar__label">デザイン：</span><strong>10月上旬</strong>着手、<strong>10月中旬以降</strong>納品可能',
+      statusNote:        'お急ぎの場合は短縮納期・最短納期も承ります。',
       filterAll:         'すべて',
       filterOverlay:     'オーバーレイ',
       filterBg:          '配信背景',
@@ -2069,6 +2074,10 @@
       tabIllust:         'Illustration',
       tabLogo:           'Logo',
       tabSchedule:       'Streaming',
+      statusBadge:       '📋 Availability',
+      statusIllust:      '<span class="status-bar__label">Illustration:</span> starting <strong>early October</strong>, delivery from <strong>mid-to-late October</strong>',
+      statusDesign:      '<span class="status-bar__label">Design:</span> starting <strong>early October</strong>, delivery from <strong>mid-October</strong>',
+      statusNote:        'Rush and express turnaround are also available on request.',
       filterAll:         'All',
       filterOverlay:     'Overlay',
       filterBg:          'Stream Background',
@@ -2094,6 +2103,10 @@
       tabIllust:         'Illustration',
       tabLogo:           'Logo',
       tabSchedule:       'Diffusion',
+      statusBadge:       '📋 Disponibilité',
+      statusIllust:      "<span class=\"status-bar__label\">Illustration :</span> prise en charge <strong>début octobre</strong>, livraison à partir de <strong>mi-octobre à fin octobre</strong>",
+      statusDesign:      "<span class=\"status-bar__label\">Design :</span> prise en charge <strong>début octobre</strong>, livraison à partir de <strong>mi-octobre</strong>",
+      statusNote:        'Des délais raccourcis ou express sont également possibles sur demande.',
       filterAll:         'Tout',
       filterOverlay:     'Overlay',
       filterBg:          'Arrière-plan',
@@ -2145,6 +2158,13 @@
       const key = el.dataset.i18n;
       if (key === 'pageTitle') { document.title = i18n[lang][key]; return; }
       if (i18n[lang][key] !== undefined) el.textContent = i18n[lang][key];
+    });
+
+    /* <strong> などのタグを含む文言（受注状況バナー）は innerHTML で差し替える。
+       data-i18n は textContent なのでタグがそのまま文字として出てしまうため。 */
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.dataset.i18nHtml;
+      if (i18n[lang][key] !== undefined) el.innerHTML = i18n[lang][key];
     });
 
     /* ページ全体の alt・aria-label・title も切り替える（ヘッダーやボタン類） */

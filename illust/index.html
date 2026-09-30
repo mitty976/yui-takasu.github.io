@@ -144,11 +144,13 @@
     <div class="works-scroll-area">
       <!-- 受注状況バナー -->
       <div class="status-bar">
-        <span class="status-bar__badge">📋 受注状況</span>
+        <span class="status-bar__badge" data-i18n="statusBadge">📋 受注状況</span>
         <div class="status-bar__list">
-          <span class="status-bar__item"><span class="status-bar__label">イラスト：</span><strong>8月中下旬</strong>着手、<strong>9月上旬以降</strong>納品可能</span>
-          <span class="status-bar__item"><span class="status-bar__label">ロゴ：</span><strong>8月中下旬</strong>着手、<strong>9月上旬以降</strong>納品可能</span>
-          <span class="status-bar__note">お急ぎの場合は短縮納期・最短納期も承ります。</span>
+          <!-- 受注状況。日付を変えるときは、この3行と illust.js の i18n辞書
+               （statusIllust / statusDesign / statusNote）を3言語ぶん揃えて直すこと -->
+          <span class="status-bar__item" data-i18n-html="statusIllust"><span class="status-bar__label">イラスト：</span><strong>10月上旬</strong>着手、<strong>10月中下旬以降</strong>納品可能</span>
+          <span class="status-bar__item" data-i18n-html="statusDesign"><span class="status-bar__label">デザイン：</span><strong>10月上旬</strong>着手、<strong>10月中旬以降</strong>納品可能</span>
+          <span class="status-bar__note" data-i18n="statusNote">お急ぎの場合は短縮納期・最短納期も承ります。</span>
         </div>
       </div>
 
