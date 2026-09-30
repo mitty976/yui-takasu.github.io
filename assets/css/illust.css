@@ -705,7 +705,12 @@ body.is-loaded {
   letter-spacing: 0.05em;
   transition: background 0.6s ease;
 }
-.status-bar__item { display: flex; align-items: baseline; letter-spacing: 0.03em; }
+/* display:flex にすると、要素間のテキストの半角スペースが消える。
+   日本語は単語の間に空白が要らないので気づかないが、
+   英語・フランス語だと「Illustration:starting」のように語がくっついてしまう。
+   縦並びと間隔は親の .status-bar__list（flex column / gap）が持っているので、
+   ここは block で問題ない。 */
+.status-bar__item { display: block; letter-spacing: 0.03em; }
 .status-bar__label { display: inline-block; min-width: 4.5em; }
 .status-bar__item strong { font-weight: 700; color: var(--color-accent); }
 .status-bar__sep { opacity: 0.4; }
