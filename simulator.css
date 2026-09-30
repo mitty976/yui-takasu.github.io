@@ -1098,6 +1098,17 @@ body.is-loaded { opacity: 1; filter: none; }
 .sim-total-bar .sim-total-selected.is-open {
   display: flex;
 }
+/* 下部バーで、どの点数のタグかを示す見出し */
+.sim-total-piece-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(74,42,58,0.5);
+  align-self: center;
+  padding: 4px 2px 4px 8px;
+  white-space: nowrap;
+}
+.sim-total-piece-label:first-child { padding-left: 0; }
+.sim-total-piece-label.is-current { color: var(--color-accent); }
 .sim-total-selected-tag {
   font-size: 13px;
   background: var(--color-works);
@@ -2230,4 +2241,118 @@ body.is-loaded { opacity: 1; filter: none; }
   display: block;
   pointer-events: none;
   -webkit-user-drag: none;
+}
+
+/* サンプル画像にポインターを当てたら拡大して見せる */
+.sim-logo-img-box { position: relative; overflow: visible; }
+.sim-logo-img-box > img {
+  border-radius: 6px;
+  transition: opacity 0.15s;
+}
+.sim-logo-zoom {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  width: min(400px, 82vw);
+  padding: 8px;
+  background: #fff;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(74,42,58,0.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(6px) scale(0.96);
+  transform-origin: bottom center;
+  transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.18s;
+  pointer-events: none;
+  z-index: 500;
+}
+/* 一番縦長のぐるにゃロゴ（比率1.72）に高さを合わせ、3枚とも同じ枠に収める。
+   contain なので横長のものは上下に余白ができるだけで、切れることはない */
+.sim-logo-zoom img {
+  width: 100%;
+  height: min(232px, 46vw);
+  object-fit: contain;
+  display: block;
+  border-radius: 6px;
+}
+.sim-pose-card:hover .sim-logo-zoom,
+.sim-logo-img-box:hover .sim-logo-zoom {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+/* 画面が狭いときは拡大しない（はみ出して横スクロールの原因になるため） */
+@media (max-width: 640px) {
+  .sim-logo-zoom { display: none; }
+}
+
+/* 説明が長い選択肢は、横に並べると細くて読みづらいので縦1列にする */
+.sim-options--stack {
+  grid-template-columns: 1fr;
+}
+
+/* === キャンペーン中であることの表示 === */
+/* サービスタブの右上につく印 */
+.sim-tab { position: relative; }
+.sim-tab-sale {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c0392b;
+  box-shadow: 0 0 0 2px #fff;
+}
+/* セクション冒頭の一行 */
+.sim-campaign-banner {
+  margin: 0 0 14px;
+  padding: 10px 16px;
+  border: 1.5px solid #d98a8a;
+  border-radius: 10px;
+  background: #fdf3f3;
+  color: #9a3a3a;
+  font-size: 12.5px;
+  line-height: 1.7;
+  text-align: center;
+}
+.sim-campaign-banner strong { color: #c0392b; }
+
+/* 選択できない案内カード（BOOTH配布準備中など） */
+.sim-pose-card-info {
+  cursor: default;
+  border-style: dashed;
+  background: var(--color-works);
+}
+.sim-pose-card-info:hover {
+  border-color: var(--color-border);
+  background: var(--color-works);
+  transform: none;
+  box-shadow: none;
+}
+.sim-pose-card-info .sim-option-name,
+.sim-pose-card-info .sim-pose-desc {
+  color: rgba(74,42,58,0.62);
+}
+.sim-pose-card-info .sim-option-price {
+  color: rgba(74,42,58,0.55);
+  font-weight: 600;
+}
+
+/* 確認モーダルの中に出す、コピーされる本文 */
+.sim-modal-quote { width: min(560px, 100%); }
+.sim-quote-text {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  background: var(--color-works);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: rgba(74,42,58,0.85);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 40vh;
+  overflow-y: auto;
 }

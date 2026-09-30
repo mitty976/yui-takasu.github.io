@@ -608,6 +608,8 @@ body.is-loaded {
 .illu-date { font-size: 11px; color: var(--color-accent); opacity: 0.65; margin-bottom: 12px; letter-spacing: 0.04em; }
 .illu-desc { font-size: 13px; color: var(--color-accent); line-height: 1.85; margin-bottom: 12px; }
 .illu-note { font-size: 12px; color: var(--color-accent); opacity: 0.8; line-height: 1.85; margin-bottom: 12px; }
+/* 本文内で目立たせたくない一節（例：元所属先の表記）をグレーに落とす */
+.illu-muted { opacity: 0.45; }
 .illu-link { font-size: 12px; margin-top: 16px; }
 .illu-link a, .illu-handle { color: var(--color-accent); text-decoration: underline; text-decoration-color: var(--color-border); }
 /* 複数画像：矢印カルーセル */
@@ -1249,6 +1251,51 @@ body.is-loaded {
     gap: 10px;
   }
   .main-title { font-size: 32px; }
+}
+
+/* 配信関連タブの絞り込みバー。
+   項目が増えても横に溢れないよう flex-wrap: wrap で折り返す */
+.works-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.works-filter .filter-btn {
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.works-filter .filter-btn:hover { background: var(--color-works); }
+.works-filter .filter-btn.is-active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+@media (max-width: 480px) {
+  .works-filter { gap: 6px; }
+  .works-filter .filter-btn { font-size: 10px; padding: 4px 10px; letter-spacing: 0.02em; }
+}
+
+/* タブが3つ（イラスト／ロゴ／配信関連）あるため、
+   狭い画面では文字が折り返してしまう。
+   横スクロールを出さずに収めるため、font-sizeとpaddingを詰める。
+   タブ名自体は変えない（英語のIllustrationが一番長い） */
+@media (max-width: 900px) {
+  .tab-btn { font-size: 12px; padding: 5px 12px; letter-spacing: 0.03em; }
+  .works-tab { gap: 4px; }
+}
+@media (max-width: 420px) {
+  .tab-btn { font-size: 11px; padding: 5px 8px; letter-spacing: 0; }
+  .works-tab { gap: 3px; }
 }
 
 /* === ローダー=== */

@@ -75,7 +75,7 @@
 </div>
 
 <!-- モバイル用コンタクト固定ボタン（右上） -->
-<a id="mobile-contact" href="mailto:mayuyu9766@gmail.com" aria-label="メールでお問い合わせ">
+<a id="mobile-contact" href="mailto:mayuyu9766@gmail.com" aria-label="メールでお問い合わせ" data-aria-ja="メールでお問い合わせ" data-aria-en="Contact by email" data-aria-fr="Contacter par e-mail">
   <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path fill="currentColor" d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/>
   </svg>
@@ -98,16 +98,20 @@
             <div class="lang-switch">
               <button class="lang-btn is-active" data-lang="ja">JP</button>
               <button class="lang-btn" data-lang="en">EN</button>
+              <button class="lang-btn" data-lang="fr">FR</button>
             </div>
-            <div class="season-switch" aria-label="季節テーマ切り替え">
-              <button class="season-btn" data-season="spring" title="春テーマ">🌸</button>
-              <button class="season-btn" data-season="summer" title="夏テーマ">🌊</button>
-              <button class="season-btn" data-season="autumn" title="秋テーマ">🍂</button>
-              <button class="season-btn" data-season="winter" title="冬テーマ">❄️</button>
+            <!-- 季節切り替えは動作確認用。公開サイトでは design.js が丸ごと削除する。
+                 hidden を付けているのは、公開環境で一瞬でも表示されないようにするため。
+                 ローカルで開いたときだけ design.js が hidden を外す。 -->
+            <div class="season-switch" hidden aria-label="季節テーマ切り替え" data-aria-ja="季節テーマ切り替え" data-aria-en="Seasonal theme switcher" data-aria-fr="Sélecteur de thème saisonnier">
+              <button class="season-btn" data-season="spring" title="春テーマ" data-tip-ja="春テーマ" data-tip-en="Spring theme" data-tip-fr="Thème printemps">🌸</button>
+              <button class="season-btn" data-season="summer" title="夏テーマ" data-tip-ja="夏テーマ" data-tip-en="Summer theme" data-tip-fr="Thème été">🌊</button>
+              <button class="season-btn" data-season="autumn" title="秋テーマ" data-tip-ja="秋テーマ" data-tip-en="Autumn theme" data-tip-fr="Thème automne">🍂</button>
+              <button class="season-btn" data-season="winter" title="冬テーマ" data-tip-ja="冬テーマ" data-tip-en="Winter theme" data-tip-fr="Thème hiver">❄️</button>
             </div>
           </div>
           <nav class="header-nav">
-            <a href="../index.html" class="home-link" aria-label="ホームへ戻る">Home ←</a>
+            <a href="../index.html" class="home-link" aria-label="ホームへ戻る" data-aria-ja="ホームへ戻る" data-aria-en="Back to home" data-aria-fr="Retour à l'accueil">Home ←</a>
           </nav>
         </header>
       <div class="left-bg-scroll">
@@ -133,7 +137,7 @@
             <span class="work-badge">In Progress</span>
           </div>
           <div class="work-meta">
-            <p class="work-title">Yori｜プライベートサロン LP</p>
+            <p class="work-title" data-ja="Yori｜プライベートサロン LP" data-en="Yori｜Private Salon LP" data-fr="Yori｜LP Salon Privé">Yori｜プライベートサロン LP</p>
             <div class="work-tags">
               <span class="work-tag">Web Design</span>
               <span class="work-tag">UI Design</span>
@@ -141,7 +145,8 @@
             </div>
             <p class="work-featured-desc"
                data-ja="デザイン設計からHTML/CSS/JSコーディングまで一貫対応。Adobe Firefly による画像生成を活用したコンセプトワーク。"
-               data-en="Full design-to-code production — UI design through HTML/CSS/JS implementation. Adobe Firefly used for image generation.">デザイン設計からHTML/CSS/JSコーディングまで一貫対応。Adobe Firefly による画像生成を活用したコンセプトワーク。</p>
+               data-en="Full design-to-code production — UI design through HTML/CSS/JS implementation. Adobe Firefly used for image generation."
+               data-fr="Production complète du design au code — conception UI jusqu'à l'implémentation HTML/CSS/JS. Génération d'images avec Adobe Firefly.">デザイン設計からHTML/CSS/JSコーディングまで一貫対応。Adobe Firefly による画像生成を活用したコンセプトワーク。</p>
           </div>
         </a>
 
@@ -154,7 +159,7 @@
             <span class="work-badge">In Progress</span>
           </div>
           <div class="work-meta">
-            <p class="work-title">Yori｜予約フォーム UI設計</p>
+            <p class="work-title" data-ja="Yori｜予約フォーム UI設計" data-en="Yori｜Reservation Form UI Design" data-fr="Yori｜Design UI du formulaire de réservation">Yori｜予約フォーム UI設計</p>
             <div class="work-tags">
               <span class="work-tag">UI Design</span>
               <span class="work-tag">UX</span>
@@ -171,7 +176,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">LUMIÈRE｜スキンケア LP</p>
+            <p class="work-title" data-ja="LUMIÈRE｜スキンケア LP" data-en="LUMIÈRE｜Skincare LP" data-fr="LUMIÈRE｜LP Soins de la peau">LUMIÈRE｜スキンケア LP</p>
             <div class="work-tags">
               <span class="work-tag">Web Design</span>
               <span class="work-tag">UI Design</span>
@@ -188,7 +193,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">STILL AIR｜お香ブランド LP</p>
+            <p class="work-title" data-ja="STILL AIR｜お香ブランド LP" data-en="STILL AIR｜Incense Brand LP" data-fr="STILL AIR｜LP Marque d'encens">STILL AIR｜お香ブランド LP</p>
             <div class="work-tags">
               <span class="work-tag">Web Design</span>
               <span class="work-tag">UI Design</span>
@@ -206,7 +211,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">潤肌（URU-HADA）導入美容液</p>
+            <p class="work-title" data-ja="潤肌（URU-HADA）導入美容液" data-en="URU-HADA｜Introductory Beauty Serum" data-fr="URU-HADA｜Sérum de beauté d'introduction">潤肌（URU-HADA）導入美容液</p>
             <div class="work-tags">
               <span class="work-tag">Concept Work</span>
               <span class="work-tag">Emotion</span>
@@ -223,7 +228,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">ビジネス統計学（Online Course）</p>
+            <p class="work-title" data-ja="ビジネス統計学（Online Course）" data-en="Business Statistics (Online Course)" data-fr="Statistiques appliquées au business (Cours en ligne)">ビジネス統計学（Online Course）</p>
             <div class="work-tags">
               <span class="work-tag">Concept Work</span>
               <span class="work-tag">Logic</span>
@@ -274,7 +279,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">醸す（KAMOSU）</p>
+            <p class="work-title" data-ja="醸す（KAMOSU）" data-en="KAMOSU" data-fr="KAMOSU">醸す（KAMOSU）</p>
             <div class="work-tags">
               <span class="work-tag">Business Card Design</span>
             </div>
@@ -354,7 +359,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">冬限定 ひとくちチョコ</p>
+            <p class="work-title" data-ja="冬限定 ひとくちチョコ" data-en="Winter Limited Bite-Size Chocolates" data-fr="Chocolats bouchées édition hiver">冬限定 ひとくちチョコ</p>
             <div class="work-tags">
               <span class="work-tag">Promotion Banner</span>
               <span class="work-tag">季節商品訴求</span>
@@ -370,7 +375,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">貸切露天風呂付き宿泊プラン</p>
+            <p class="work-title" data-ja="貸切露天風呂付き宿泊プラン" data-en="Private Open-Air Bath Stay Plan" data-fr="Forfait séjour avec bain extérieur privé">貸切露天風呂付き宿泊プラン</p>
             <div class="work-tags">
               <span class="work-tag">Promotion Banner</span>
               <span class="work-tag">2 Variations（販促・ブランディング）</span>
@@ -386,7 +391,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">Kobayasランド 開園記念</p>
+            <p class="work-title" data-ja="Kobayasランド 開園記念" data-en="Kobayas Land｜Opening Commemoration" data-fr="Kobayas Land｜Commémoration de l'ouverture">Kobayasランド 開園記念</p>
             <div class="work-tags">
               <span class="work-tag">Promotion Banner</span>
               <span class="work-tag">イベント告知</span>
@@ -402,7 +407,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">Koba-Pay クリスマスキャンペーン</p>
+            <p class="work-title" data-ja="Koba-Pay クリスマスキャンペーン" data-en="Koba Pay｜Christmas Campaign" data-fr="Koba Pay｜Campagne de Noël">Koba-Pay クリスマスキャンペーン</p>
             <div class="work-tags">
               <span class="work-tag">Promotion Banner</span>
               <span class="work-tag">アプリ利用促進</span>
@@ -418,7 +423,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">スポーツKoba 新春入会キャンペーン</p>
+            <p class="work-title" data-ja="スポーツKoba 新春入会キャンペーン" data-en="Sports Koba｜New Year Membership Campaign" data-fr="Sports Koba｜Campagne d'adhésion du Nouvel An">スポーツKoba 新春入会キャンペーン</p>
             <div class="work-tags">
               <span class="work-tag">Promotion Banner</span>
               <span class="work-tag">入会促進</span>
@@ -450,7 +455,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">自分用名刺</p>
+            <p class="work-title" data-ja="自分用名刺" data-en="Personal Business Card" data-fr="Carte de visite personnelle">自分用名刺</p>
             <div class="work-tags">
               <span class="work-tag">Print Design</span>
             </div>
@@ -465,7 +470,7 @@
             <div class="work-hover-overlay"></div>
           </div>
           <div class="work-meta">
-            <p class="work-title">紙ポートフォリオ</p>
+            <p class="work-title" data-ja="紙ポートフォリオ" data-en="Printed Portfolio" data-fr="Portfolio papier">紙ポートフォリオ</p>
             <div class="work-tags">
               <span class="work-tag">Print Design</span>
             </div>
@@ -498,7 +503,7 @@
 
       </div><!-- /.left-bg-scroll -->
     </main>
-    <a class="page-top" id="page-top" href="#" aria-label="ページ上部へ">
+    <a class="page-top" id="page-top" href="#" aria-label="ページ上部へ" data-aria-ja="ページ上部へ" data-aria-en="Back to top" data-aria-fr="Haut de page">
       <span class="page-top__text">PAGE TOP</span>
     </a>
   </div>
@@ -558,7 +563,7 @@
 <!-- モーダル -->
 <div class="modal-overlay" id="work-modal" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="modal-box" id="modal-box">
-    <button class="modal-close" id="modal-close" aria-label="閉じる">×</button>
+    <button class="modal-close" id="modal-close" aria-label="閉じる" data-aria-ja="閉じる" data-aria-en="Close" data-aria-fr="Fermer">×</button>
     <h2 class="modal-title" id="modal-title"></h2>
     <p class="modal-subtitle" id="modal-subtitle"></p>
     <div class="modal-body" id="modal-body"></div>

@@ -1,0 +1,9 @@
+# 検索エンジンのクロールを全ページ許可する
+User-agent: *
+Allow: /
+
+# 作業用のファイルは検索結果に出さない
+Disallow: /back-up/
+
+# サイトの地図の場所を伝える
+Sitemap: https://www.yui-takasu.com/sitemap.xml

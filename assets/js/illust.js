@@ -434,6 +434,270 @@
 
   /* === ワークモーダル === */
   const WORK_MODAL_DATA = {
+    illust_kaikunschedule: {
+      title: '【お仕事絵】白旗かい様‐週間配信スケジュール表',
+      titleEn: '[Commission] Hakki Kai — Weekly Stream Schedule',
+      titleFr: '[Commande] Hakki Kai — Planning hebdomadaire de diffusion',
+      subtitle: 'Schedule / Still illustration',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/かいくんー配信スケジュールサンプル.webp" alt="白旗かい様 週間配信スケジュール表"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 06月 制作</p>
+        <p class="illu-desc">白旗かい様（<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>）より、週間配信スケジュール表のご依頼をいただきました。パン職人という設定に合わせ、作業机に広げた手帳のシーンとして描き下ろしています。曜日の記入欄は手帳のページに見立て、パンのステッカーを散らしてデコ手帳のような雰囲気に仕上げました。メガネとスマートフォンを添え、配信前の机まわりの空気を作っています。</p>
+        <p class="illu-note">テキスト入りの見本と、曜日・時間帯が空欄のテンプレートの2種をご納品。日付のリボンと曜日欄を書き換えて毎週使い回していただけます。スマートフォンの画面に入れている画像も差し替え可能です。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/かいくんー配信スケジュールサンプル.webp" alt="Hakki Kai weekly stream schedule"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created June 2026</p>
+        <p class="illu-desc">Commissioned by Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>) for a weekly stream schedule. To match their baker persona, the piece is drawn as a notebook lying open on a work desk. The day-of-week rows are treated as notebook lines and scattered with bread stickers for the look of a decorated planner, while glasses and a smartphone complete the atmosphere of a desk just before a stream.</p>
+        <p class="illu-note">Delivered in two versions: one filled in as a sample, and a blank template. The date ribbon and the daily rows can be rewritten each week, and the image shown on the smartphone screen can be swapped out as well.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/かいくんー配信スケジュールサンプル.webp" alt="Planning hebdomadaire de diffusion de Hakki Kai"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juin 2026</p>
+        <p class="illu-desc">Commande réalisée pour Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>) : un planning hebdomadaire de diffusion. En accord avec son personnage de boulanger, la scène représente un carnet ouvert sur un bureau de travail. Les lignes des jours de la semaine reprennent celles d'un carnet et sont parsemées d'autocollants en forme de pains, pour l'allure d'un agenda décoré ; des lunettes et un smartphone complètent l'ambiance d'un bureau juste avant un live.</p>
+        <p class="illu-note">Livré en deux versions : un exemplaire rempli et un modèle vierge. Le ruban de dates et les lignes de chaque jour peuvent être réécrits chaque semaine, et l'image affichée sur l'écran du smartphone peut également être remplacée.</p>
+      </div>`,
+    },
+    illust_wokka: {
+      title: '【お仕事絵】wokka様‐グッズ用イラスト',
+      titleEn: '[Commission] wokka — Merchandise Illustration',
+      titleFr: '[Commande] wokka — Illustration pour produits dérivés',
+      subtitle: 'Goods / Still illustration',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/wokka様仮置き.jpg" alt="wokka様グッズ用イラスト"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 09月 17日 制作</p>
+        <p class="illu-desc">CRAZY RACOON所属のwokka様よりグッズイラストの依頼を頂き、制作致しました。アクリルスタンド・缶バッジ・チェキ風カードと商品ごとにトリミングの形が変わるため、人物の見せどころが端に寄らない構図で組み立てています。</p>
+        <p class="illu-note">著作権譲渡の案件のため、グッズの申し込み開始後に、ご本人の許可をいただいたうえで商品サンプル画像のみを掲載しております。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/wokka様仮置き.jpg" alt="wokka merchandise illustration"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created September 2026</p>
+        <p class="illu-desc">Commissioned by wokka of CRAZY RACOON for merchandise illustrations. Since each product — acrylic stands, tin badges, and instant-photo-style cards — crops the artwork differently, the composition was built so the key parts of the character never sit too close to the edges.</p>
+        <p class="illu-note">The copyright was transferred to the client, so only sample images of the finished merchandise are shown here, with their permission, after sales opened.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/wokka様仮置き.jpg" alt="Illustration produits dérivés wokka"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en septembre 2026</p>
+        <p class="illu-desc">Commande réalisée pour wokka (CRAZY RACOON) : des illustrations destinées à des produits dérivés. Chaque support — acrylique, badge, carte façon instantané — recadre l'image différemment, d'où une composition pensée pour que les éléments essentiels du personnage ne se retrouvent jamais trop près des bords.</p>
+        <p class="illu-note">Les droits ayant été cédés au client, seules des images d'échantillon des produits finis sont présentées ici, avec son autorisation, après l'ouverture des ventes.</p>
+      </div>`,
+    },
+    illust_kaifa: {
+      title: '【ＦＡ】白旗かい様‐パン工房のひととき',
+      titleEn: '[Fan art] Hakki Kai — A Moment at the Bakery',
+      titleFr: '[Fan art] Hakki Kai — Un moment à la boulangerie',
+      subtitle: 'SD chibi / Still illustration',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/re-kaiFA.webp" alt="白旗かい様ファンアート"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 09月 制作（初稿：2026年 05月）</p>
+        <p class="illu-desc">パン職人系VTuberの白旗かい様（<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>）へのファンアートです。厨房でパン生地をこねている場面を切り取り、焼き上がりを待つクロワッサンとメロンパンを手前に並べて、お店の空気ごと収めました。ステンレスのオーブンとグレーの什器で画面を落ち着かせ、焼き上がったパンとエプロンの茶色を暖色のアクセントとして効かせています。</p>
+        <p class="illu-note">2026年5月に描いた初稿をもとに、2026年9月に塗りをより精確に描き直したリメイク版です。</p>
+        <p class="illu-desc">※ 本作は白旗かい様ご本人以外の方が、ご本人の許可なくお使いすることを禁止させていただいております。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/re-kaiFA.webp" alt="Hakki Kai fan art"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created September 2026 (first version: May 2026)</p>
+        <p class="illu-desc">Fan art for Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>), a VTuber whose theme is being a baker. The scene captures a moment of kneading dough in the kitchen, with croissants and melon pan waiting to be baked lined up in the foreground to bring in the atmosphere of the shop itself. The stainless oven and gray fixtures keep the image calm, letting the browns of the baked bread and the apron work as warm accents.</p>
+        <p class="illu-note">A remake of the first version drawn in May 2026, with the coloring reworked more precisely in September 2026.</p>
+        <p class="illu-desc">※ This piece may not be used by anyone other than Hakki Kai without their permission.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/re-kaiFA.webp" alt="Fan art Hakki Kai"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en septembre 2026 (première version : mai 2026)</p>
+        <p class="illu-desc">Fan art pour Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>), VTuber au thème de boulanger. La scène saisit un moment de pétrissage dans le fournil, avec au premier plan les croissants et les melon pan qui attendent la cuisson, afin de restituer l'atmosphère de la boutique elle-même. Le four en inox et le mobilier gris apaisent l'image, laissant les bruns du pain cuit et du tablier jouer le rôle d'accents chauds.</p>
+        <p class="illu-note">Remake de la première version dessinée en mai 2026, dont les couleurs ont été reprises avec plus de précision en septembre 2026.</p>
+        <p class="illu-desc">※ Cette illustration ne peut être utilisée par quiconque d'autre que Hakki Kai sans son autorisation.</p>
+      </div>`,
+    },
+    illust_kamishiro: {
+      title: '【お仕事絵】神代黎様‐立ち絵＋表情差分',
+      titleEn: '[Commission] Kamishiro Ray — Full Illustration & Expression Variants',
+      titleFr: "[Commande] Kamishiro Ray — Illustration complète et variantes d'expression",
+      subtitle: 'Character design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yanikasujyun.webp" alt="神代黎様"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 08月 27日 制作</p>
+        <p class="illu-desc">321.inc所属の神代黎様（<a class="illu-handle" href="https://x.com/UIro7f" target="_blank" rel="noopener">@UIro7f</a>）よりお姿の仕立て依頼をいただきました。筋肉質の大柄なクールガイという設定に合わせ、黒スーツの肩まわりに厚みを持たせつつ、金髪の無造作なシルエットと鋭い青い目で甘さを抑えています。二刀流の帯刀なので、腰には童子切安綱と数珠丸恒次を付けています。</p>
+        <p class="illu-note">IRIAM ver4.1対応。トラッキング優先で目は開いた形を基準にしたうえで、表情差分3種はいずれも目元を細めたお顔に整えました。高解像度データ（A3・PNG）も併せてご納品しております。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yanikasujyun.webp" alt="Kamishiro Ray"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created August 2026</p>
+        <p class="illu-desc">Commissioned by Kamishiro Ray (<a class="illu-handle" href="https://x.com/UIro7f" target="_blank" rel="noopener">@UIro7f</a>) of 321.inc for a full character illustration. To match a character written as a tall, muscular cool guy, the black suit was given weight through the shoulders, while the loose blond silhouette and sharp blue eyes keep any softness in check. As a dual-wielding swordsman, he carries Dojigiri Yasutsuna and Juzumaru Tsunetsugu at his waist.</p>
+        <p class="illu-note">Compatible with IRIAM ver4.1. The eyes were drawn open as a baseline to prioritize tracking, while all three expression variants were tuned with narrowed eyes. High-resolution data (A3, PNG) was delivered alongside.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yanikasujyun.webp" alt="Kamishiro Ray"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en août 2026</p>
+        <p class="illu-desc">Commande réalisée pour Kamishiro Ray (<a class="illu-handle" href="https://x.com/UIro7f" target="_blank" rel="noopener">@UIro7f</a>), du groupe 321.inc : une illustration complète. Pour un personnage décrit comme un grand gaillard musclé au tempérament froid, le costume noir a été épaissi au niveau des épaules, tandis que la silhouette blonde en désordre et le regard bleu perçant en contiennent toute douceur. Bretteur à deux sabres, il porte Dojigiri Yasutsuna et Juzumaru Tsunetsugu à la taille.</p>
+        <p class="illu-note">Compatible IRIAM ver4.1. Les yeux ont été dessinés ouverts comme base afin de privilégier le tracking, les trois variantes d'expression ayant toutes été ajustées avec un regard plus plissé. Les fichiers haute résolution (A3, PNG) ont également été livrés.</p>
+      </div>`,
+    },
+    illust_kainekopv: {
+      title: '【お仕事絵】白旗かい様‐「飼猫」オリジナルPV',
+      titleEn: '[Commission] Hakki Kai — Original MV for "Kaineko"',
+      titleFr: '[Commande] Hakki Kai — Clip original pour « Kaineko »',
+      subtitle: 'Thumbnail / MV / Portrait painting',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/白旗かいー飼猫pvサムネイル.webp" alt="飼猫PVサムネイル"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 08月 15日 制作</p>
+        <p class="illu-desc">白旗かい様（<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>）の「飼猫」の歌ってみたのオリジナルPVを、イラストとPV制作ともに担当させていただきました。本家に寄せつつ、ご本人の世界観も織り込ませていただいています。赤い壁と額縁で閉じた室内をつくり、銀髪に赤い瞳、チョーカーから垂らしたチェーンを画面手前まで引き込むことで、「飼う側」の執着が見える構図にしました。</p>
+        <p class="illu-note">本家に似た表情を中心に表情差分21枚を描き起こし、歌詞タイポグラフィと一枚絵のカメラワークで構成したPV本編（2分18秒）も制作しています。</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=dsj6egTpu2U" target="_blank" rel="noopener">実際に投稿された動画を見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/白旗かいー飼猫pvサムネイル.webp" alt="Kaineko MV thumbnail"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created August 2026</p>
+        <p class="illu-desc">For Hakki Kai's (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>) cover of "Kaineko", I handled both the illustration and the production of the original music video. The work stays close to the original song while weaving in Kai's own world. A closed interior of red walls and picture frames sets the stage, and the silver hair, red eyes, and the chain hanging from the choker drawn toward the viewer put the possessiveness of the one doing the keeping right in the frame.</p>
+        <p class="illu-note">21 expression variants were drawn, mostly echoing expressions from the original video, along with the full 2:18 music video built from lyric typography and camera work over the single illustration.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=dsj6egTpu2U" target="_blank" rel="noopener">Watch the published video</a></p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/白旗かいー飼猫pvサムネイル.webp" alt="Miniature du clip Kaineko"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en août 2026</p>
+        <p class="illu-desc">Pour la reprise de « Kaineko » par Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>), j'ai réalisé à la fois l'illustration et le clip original. Le travail reste proche de l'univers du morceau d'origine tout en y intégrant celui de Kai. Un intérieur clos aux murs rouges et aux cadres plante le décor ; les cheveux argentés, les yeux rouges et la chaîne pendant du collier, tirée vers le spectateur, font entrer dans le cadre la possessivité de celui qui « garde » l'autre.</p>
+        <p class="illu-note">21 variantes d'expression ont été dessinées, reprenant pour l'essentiel celles de la vidéo d'origine, ainsi que le clip complet (2 min 18) construit à partir de la typographie des paroles et des mouvements de caméra sur l'illustration unique.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=dsj6egTpu2U" target="_blank" rel="noopener">Voir la vidéo publiée</a></p>
+      </div>`,
+    },
+    illust_hayamisyuuchibi: {
+      title: '【お仕事絵】速水シュウ様‐ちびキャラ',
+      titleEn: '[Commission] Hayami Shu — Chibi Illustration',
+      titleFr: '[Commande] Hayami Shu — Illustration chibi',
+      subtitle: 'Chibi illustration',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/hayamisyuuchibi-sp.webp" alt="速水シュウ様ちびキャラ"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 08月 14日 制作</p>
+        <p class="illu-desc"><span class="illu-muted">元りみれす！所属・</span>現個人勢の速水シュウ様（<a class="illu-handle" href="https://x.com/hayamisecond" target="_blank" rel="noopener">@hayamisecond</a>）よりちびのお姿の仕立て依頼をいただきました。立ち絵のダークな配色から一転、オオカミの着ぐるみパーカーでまとめ、肉球と尻尾で愛嬌を足しています。チョーカーとチェーンは立ち絵から残し、同じキャラクターとしての繋がりを保ちました。</p>
+        <p class="illu-note">背景透過でご納品。配信画面やSNSで小さく表示してもシルエットが読めるよう、色数と情報量を整理しています。</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_hayamisyuu">立ち絵を見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/hayamisyuuchibi-sp.webp" alt="Hayami Shu chibi"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created August 2026</p>
+        <p class="illu-desc">Commissioned by Hayami Shu (<a class="illu-handle" href="https://x.com/hayamisecond" target="_blank" rel="noopener">@hayamisecond</a>), <span class="illu-muted">formerly of Rimiresu! and</span> now an independent streamer, for a chibi illustration. Turning away from the dark palette of the full illustration, this one is built around a wolf kigurumi hoodie, with paw pads and a tail added for charm. The choker and chain were carried over from the full illustration so both read as the same character.</p>
+        <p class="illu-note">Delivered with a transparent background. Colors and detail were pared back so the silhouette still reads when displayed small on stream overlays or social media.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_hayamisyuu">View the full illustration</a></p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/hayamisyuuchibi-sp.webp" alt="Hayami Shu chibi"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en août 2026</p>
+        <p class="illu-desc">Commande réalisée pour Hayami Shu (<a class="illu-handle" href="https://x.com/hayamisecond" target="_blank" rel="noopener">@hayamisecond</a>), <span class="illu-muted">anciennement du groupe Rimiresu! et</span> aujourd'hui streameur indépendant : une illustration chibi. À rebours de la palette sombre de l'illustration complète, celle-ci s'organise autour d'un kigurumi loup à capuche, agrémenté de coussinets et d'une queue. Le collier et la chaîne ont été conservés depuis l'illustration complète afin de préserver le lien entre les deux versions du personnage.</p>
+        <p class="illu-note">Livré sur fond transparent. Le nombre de couleurs et le niveau de détail ont été réduits pour que la silhouette reste lisible en petit format, sur un overlay de stream comme sur les réseaux sociaux.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_hayamisyuu">Voir l'illustration complète</a></p>
+      </div>`,
+    },
+    illust_ryuhsai: {
+      title: '【お仕事絵】琉祭 匠様‐女体化立ち絵＋表情差分',
+      titleEn: '[Commission] Ryuhsai Takumi — Genderbent Full Illustration & Expression Variants',
+      titleFr: "[Commande] Ryuhsai Takumi — Illustration complète genderbend et variantes d'expression",
+      subtitle: 'Character design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ryuhsai.webp" alt="琉祭匠様"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 08月 08日 制作</p>
+        <p class="illu-desc">事務所LivelyNight所属の琉祭 匠様（<a class="illu-handle" href="https://x.com/T_ryuhsai" target="_blank" rel="noopener">@T_ryuhsai</a>）より女体化依頼をいただいて、仕立てさせていただきました。男性バージョンの立ち絵から要素を抽出し、オレンジ×黒×白の配色をうさ耳の内側・ジップ襟・アームバンド・太もものストラップへ落とし込んで、同じキャラクターとしての繋がりを担保しています。髪は男性時の雰囲気を引き継いだ後れ毛多めのサイドポニーテール、体つきは筋肉の流れを取ってから女性寄りに柔らかく整えました。</p>
+        <p class="illu-note">IRIAM ver4.1対応・表情差分3種付き。黒のサイハイとジップ襟、体を捻ったポーズで配信審査の安全圏に収めています。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ryuhsai.webp" alt="Ryuhsai Takumi"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created August 2026</p>
+        <p class="illu-desc">Commissioned by Ryuhsai Takumi (<a class="illu-handle" href="https://x.com/T_ryuhsai" target="_blank" rel="noopener">@T_ryuhsai</a>) of LivelyNight for a genderbent version of their character. Elements were pulled from the existing male illustration, carrying the orange × black × white palette into the inner ears, zip collar, armband, and thigh strap so both read as the same character. The hair keeps the feel of the male version in a side ponytail with plenty of loose strands, and the body was built from the flow of the muscles first, then softened toward a feminine silhouette.</p>
+        <p class="illu-note">Compatible with IRIAM ver4.1, with three expression variants included. Black thigh-highs, the zip collar, and a twisted pose keep the design safely within streaming review guidelines.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ryuhsai.webp" alt="Ryuhsai Takumi"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en août 2026</p>
+        <p class="illu-desc">Commande réalisée pour Ryuhsai Takumi (<a class="illu-handle" href="https://x.com/T_ryuhsai" target="_blank" rel="noopener">@T_ryuhsai</a>), du groupe LivelyNight : une version féminisée de son personnage. Les éléments ont été repris de l'illustration masculine existante, la palette orange × noir × blanc se retrouvant à l'intérieur des oreilles de lapin, sur le col zippé, le brassard et la sangle de cuisse, afin que les deux versions se lisent comme un même personnage. La coiffure conserve l'esprit de la version masculine sous forme de queue-de-cheval latérale aux mèches folles, et la morphologie a d'abord été construite sur le tracé des muscles avant d'être adoucie vers une silhouette féminine.</p>
+        <p class="illu-note">Compatible IRIAM ver4.1, trois variantes d'expression incluses. Les bas noirs montants, le col zippé et une pose de trois-quarts maintiennent le design dans les limites des règles de validation du streaming.</p>
+      </div>`,
+    },
+    illust_hayamisyuu: {
+      title: '【お仕事絵】速水シュウ様‐立ち絵＋表情差分',
+      titleEn: '[Commission] Hayami Shu — Full Illustration & Expression Variants',
+      titleFr: "[Commande] Hayami Shu — Illustration complète et variantes d'expression",
+      subtitle: 'Character design',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/hayamisyuu.webp" alt="速水シュウ様"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 07月 25日 制作</p>
+        <p class="illu-desc"><span class="illu-muted">元りみれす！所属・</span>現個人勢の速水シュウ様（<a class="illu-handle" href="https://x.com/hayamisecond" target="_blank" rel="noopener">@hayamisecond</a>）よりお姿の仕立て依頼をいただきました。いただいたイメージ画像から設定を読み取り、黒×ブルーのロングアウターにチェーンを重ねたダークストリートの装いへ落とし込んでいます。チャームポイントのオッドアイが埋もれないよう、前髪は目にかかる長さを保ちながら瞳の見え方を確保しました。</p>
+        <p class="illu-note">IRIAM ver4.1対応。読み取り用に口を開いた状態を基準とし、チョーカーとレイヤードネックレスで胸元の情報量をつくることで、配信ガイドラインに沿わせつつ「俺様だけど甘い」雰囲気を残しています。</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_hayamisyuuchibi">ちびキャラを見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/hayamisyuu.webp" alt="Hayami Shu"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created July 2026</p>
+        <p class="illu-desc">Commissioned by Hayami Shu (<a class="illu-handle" href="https://x.com/hayamisecond" target="_blank" rel="noopener">@hayamisecond</a>), <span class="illu-muted">formerly of Rimiresu! and</span> now an independent streamer, for a full character illustration. The character settings were read out of the reference image provided and translated into a dark street look: a long black × blue outer layered with chains. So the odd eyes — their defining feature — would not get lost, the bangs were kept long enough to fall over the eyes while still leaving the irises visible.</p>
+        <p class="illu-note">Compatible with IRIAM ver4.1. The mouth is drawn open as the tracking baseline, and the choker and layered necklaces fill out the chest area, keeping the design within streaming guidelines while preserving the "arrogant, but sweet on you" mood.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_hayamisyuuchibi">View the chibi illustration</a></p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/hayamisyuu.webp" alt="Hayami Shu"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juillet 2026</p>
+        <p class="illu-desc">Commande réalisée pour Hayami Shu (<a class="illu-handle" href="https://x.com/hayamisecond" target="_blank" rel="noopener">@hayamisecond</a>), <span class="illu-muted">anciennement du groupe Rimiresu! et</span> aujourd'hui streameur indépendant : une illustration complète. Les caractéristiques du personnage ont été déduites de l'image de référence fournie, puis traduites en un style dark street : un long manteau noir × bleu surchargé de chaînes. Pour que les yeux vairons, sa signature, ne disparaissent pas, la frange reste assez longue pour tomber sur les yeux tout en laissant les iris visibles.</p>
+        <p class="illu-note">Compatible IRIAM ver4.1. La bouche est dessinée ouverte comme référence de tracking, et le collier ras-de-cou ainsi que les chaînes superposées habillent le décolleté : le design reste conforme aux règles du streaming tout en gardant l'attitude « arrogant, mais tendre avec toi ».</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_hayamisyuuchibi">Voir l'illustration chibi</a></p>
+      </div>`,
+    },
+    illust_nemure: {
+      title: '【お仕事絵】ネムレ様‐配信待機画面用の動くイラスト',
+      titleEn: '[Commission] Nemure — Animated Stream Standby Screen',
+      titleFr: "[Commande] Nemure — Écran d'attente animé pour stream",
+      subtitle: 'Loop animation / Background illustration',
+      html: `<div class="mwork mwork--illu">
+        <video autoplay loop muted playsinline style="width:100%; border-radius:8px; margin-bottom:4px;">
+          <source src="../images/works/illust/original/nemure.mp4" type="video/mp4">
+        </video>
+        <span class="illu-cap" style="display:block; text-align:center; margin-bottom:16px;">ループアニメーション（50%）</span>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 07月 10日 制作</p>
+        <p class="illu-desc">ネムレ様（<a class="illu-handle" href="https://x.com/Namele_vip" target="_blank" rel="noopener">@Namele_vip</a>）より配信待機画面の動くイラスト依頼を頂きまして、制作致しました。実際にご本人様の配信部屋を参考にし、機材の配置ごとリアルに描き下ろしています。モニターの光を主光源に、紫のアンビエントライトで部屋全体を包み、黒×ピンクの髪とスリーピースの刺繍が暗部に沈まないよう明度を調整しました。</p>
+        <p class="illu-note">目がぱちぱちと瞬いたあと完全に閉じてうとうとし、手からすり落ちたレバーレスコントローラーが肘掛けに当たってガクッと起き、コントローラーを太ももの上に戻す。この一連の流れに、うとうとしている間の口元のもにゅもにゅと、ゲーミングライトの点滅を重ねています。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <video autoplay loop muted playsinline style="width:100%; border-radius:8px; margin-bottom:4px;">
+          <source src="../images/works/illust/original/nemure.mp4" type="video/mp4">
+        </video>
+        <span class="illu-cap" style="display:block; text-align:center; margin-bottom:16px;">loop animation（50%）</span>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created July 2026</p>
+        <p class="illu-desc">Commissioned by Nemure (<a class="illu-handle" href="https://x.com/Namele_vip" target="_blank" rel="noopener">@Namele_vip</a>) for an animated stream standby screen. The room was drawn from their actual streaming setup, reproducing the arrangement of the gear as it really is. Light from the monitors serves as the key light, purple ambient lighting wraps the room, and brightness was tuned so the black × pink hair and the embroidery on the three-piece suit never sink into the shadows.</p>
+        <p class="illu-note">The eyes blink, close completely, and drift toward sleep; the leverless controller slips from the hand and knocks against the armrest, jolting him awake to set it back on his lap. Layered over that sequence are the small movements of the mouth while dozing and the flicker of the gaming lights.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <video autoplay loop muted playsinline style="width:100%; border-radius:8px; margin-bottom:4px;">
+          <source src="../images/works/illust/original/nemure.mp4" type="video/mp4">
+        </video>
+        <span class="illu-cap" style="display:block; text-align:center; margin-bottom:16px;">animation en boucle（50%）</span>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juillet 2026</p>
+        <p class="illu-desc">Commande réalisée pour Nemure (<a class="illu-handle" href="https://x.com/Namele_vip" target="_blank" rel="noopener">@Namele_vip</a>) : une illustration animée pour écran d'attente de stream. La pièce a été dessinée d'après son véritable espace de diffusion, en reproduisant fidèlement la disposition du matériel. La lumière des écrans sert de source principale, un éclairage d'ambiance violet enveloppe la pièce, et la luminosité a été ajustée pour que les cheveux noir × rose et les broderies du costume trois-pièces ne se perdent pas dans les zones sombres.</p>
+        <p class="illu-note">Les yeux clignent, se ferment complètement, puis la somnolence s'installe ; la manette leverless glisse de la main et heurte l'accoudoir, le réveillant en sursaut avant qu'il ne la repose sur ses cuisses. À cette séquence se superposent les petits mouvements de la bouche pendant l'assoupissement et le clignotement des lumières gaming.</p>
+      </div>`,
+    },
     logo_okota: {
       title: '【ご依頼もの】おこた様‐デコロゴ',
       titleEn: '[Commission] Okota — Deco Logo',
@@ -451,6 +715,14 @@
         <p class="illu-date">Created May 2026</p>
         <p class="illu-desc">Commissioned by Okota (<a class="illu-handle" href="https://x.com/kotakota_okota" target="_blank" rel="noopener">@kotakota_okota</a>) for a logo design. Designed with a soft pink × green palette matching their character, incorporating flowers, hearts, pearls, green ribbon, and a mascot character for a fluffy, adorable feel.</p>
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, and merchandise.</p>
+      </div>`,
+      titleFr: '[Commande] Okota — Logo décoratif',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/おこた様ー枠あり（影付き）.jpg" alt="Logo Okota"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mai 2026</p>
+        <p class="illu-desc">Commande réalisée pour Okota (<a class="illu-handle" href="https://x.com/kotakota_okota" target="_blank" rel="noopener">@kotakota_okota</a>) : un logo aux couleurs rose × vert assorties à son personnage, avec fleurs, cœurs, perles, ruban vert et une mascotte, pour une ambiance douce et adorable.</p>
+        <p class="illu-note">Livré en PNG transparent, utilisable pour les réseaux sociaux, le streaming et les produits dérivés.</p>
       </div>`,
     },
     logo_hatae: {
@@ -471,6 +743,14 @@
         <p class="illu-desc">Commissioned by Hatae Zikiru (<a class="illu-handle" href="https://x.com/hatae_zikiru" target="_blank" rel="noopener">@hatae_zikiru</a>) for a logo design. Themed around jiraiya-kei and doll aesthetics, with a muted palette of reds and blacks, incorporating roses, keys, a top hat, ribbons, hearts, black bear motifs, and frills.</p>
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, and merchandise.</p>
       </div>`,
+      titleFr: '[Commande] Hatae Zikiru — Logo décoratif',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/はたえじきる様ー枠あり（影付き.jpg" alt="Logo Hatae Zikiru"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mai 2026</p>
+        <p class="illu-desc">Commande réalisée pour Hatae Zikiru (<a class="illu-handle" href="https://x.com/hatae_zikiru" target="_blank" rel="noopener">@hatae_zikiru</a>) : un logo sur le thème jirai-kei et poupée, dans une palette douce de rouges et de noirs, avec roses, clés, chapeau haut-de-forme, rubans, cœurs, ourson noir et volants, pour un équilibre entre mignonnerie et beauté décadente.</p>
+        <p class="illu-note">Livré en PNG transparent, utilisable pour les réseaux sociaux, le streaming et les produits dérivés.</p>
+      </div>`,
     },
     logo_homare: {
       title: '【ご依頼もの】招来ほまれ様‐デコロゴ',
@@ -489,6 +769,14 @@
         <p class="illu-date">Created May 2026</p>
         <p class="illu-desc">Commissioned by Maneki Homare (<a class="illu-handle" href="https://x.com/mane_homa" target="_blank" rel="noopener">@mane_homa</a>) for a logo design. Inspired by a white Pomeranian beckoning-dog character, using red and white as the main palette with narutomaki, shrine gates, cherry blossoms, fortune-tying ribbons, and fluffy motifs for a design that blends good luck charms with cuteness.</p>
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, goods, and event gifts.</p>
+      </div>`,
+      titleFr: '[Commande] Maneki Homare — Logo décoratif',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/招来ほまれ様ー枠あり（影付きサブ文字なし）.jpg" alt="Logo Maneki Homare"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mai 2026</p>
+        <p class="illu-desc">Commande réalisée pour Maneki Homare (<a class="illu-handle" href="https://x.com/mane_homa" target="_blank" rel="noopener">@mane_homa</a>) : un logo inspiré d'un poméranien blanc porte-bonheur, en rouge et blanc, avec narutomaki, torii, fleurs de cerisier, ruban porte-bonheur et éléments duveteux, pour un équilibre entre bonne fortune et mignonnerie.</p>
+        <p class="illu-note">Livré en PNG transparent, utilisable pour les réseaux sociaux, le streaming, les produits dérivés et les cadeaux d'événements.</p>
       </div>`,
     },
     logo_sasiro: {
@@ -509,6 +797,14 @@
         <p class="illu-desc">Commissioned by Sasiro Rei (<a class="illu-handle" href="https://x.com/sasirorei" target="_blank" rel="noopener">@sasirorei</a>) for a logo design. A vibrant design in red-purple, pink, and white-outlined gradients, adorned with ribbons, hearts, crosses, a Pomeranian, beads, and frills for a bold and distinctive look.</p>
         <p class="illu-note">Delivered as transparent PNG files for digital gifts, merchandise, and FANBOX commercial use.</p>
       </div>`,
+      titleFr: '[Commande] Sasiro Rei — Logo décoratif',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/佐城玲様ー枠あり（影付き）.jpg" alt="Logo Sasiro Rei"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mai 2026</p>
+        <p class="illu-desc">Commande réalisée pour Sasiro Rei (<a class="illu-handle" href="https://x.com/sasirorei" target="_blank" rel="noopener">@sasirorei</a>) : un logo éclatant en dégradés rouge-violet, rose et contours blancs, orné de rubans, cœurs, croix, poméranien, perles et volants, pour un look flamboyant et distinctif.</p>
+        <p class="illu-note">Livré en PNG transparent pour cadeaux numériques, produits dérivés et usage commercial FANBOX.</p>
+      </div>`,
     },
     logo_yume: {
       title: '【ご依頼もの】叶守ユメ様‐デコロゴ',
@@ -527,6 +823,14 @@
         <p class="illu-date">Created May 2026</p>
         <p class="illu-desc">Commissioned by Kanmamori Yume (<a class="illu-handle" href="https://x.com/knmr0406" target="_blank" rel="noopener">@knmr0406</a>) for a logo design. Inspired by a white mage girl character, using pink, purple, and white tones with a witch hat, sheep, ribbons, stars, and a crown to create a design that balances cuteness with a mystical elegance.</p>
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, digital gifts, and merchandise.</p>
+      </div>`,
+      titleFr: '[Commande] Kanmamori Yume — Logo décoratif',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/叶守ユメ様ー枠あり（影付き）.jpg" alt="Logo Kanmamori Yume"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mai 2026</p>
+        <p class="illu-desc">Commande réalisée pour Kanmamori Yume (<a class="illu-handle" href="https://x.com/knmr0406" target="_blank" rel="noopener">@knmr0406</a>) : un logo inspiré d'une jeune mage blanche, en rose, violet et blanc, avec chapeau de sorcière, mouton, rubans, étoiles et couronne, pour un design mêlant mignonnerie et beauté mystique.</p>
+        <p class="illu-note">Livré en PNG transparent, utilisable pour les réseaux sociaux, le streaming, les cadeaux numériques et les produits dérivés.</p>
       </div>`,
     },
     illust_yomeiyura: {
@@ -549,6 +853,15 @@
         <p class="illu-note">Eyeshadow was replaced with a thicker upper lash line for better readability on IRIAM streams. Silver industrial piercings and a neck tattoo add the small details that sell the character's listless attitude.</p>
         <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura_chibi">View the chibi icon</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">View the logo</a></p>
       </div>`,
+      titleFr: '[Commande] Yomei Yura — Illustration complète et expressions',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yomeiyura.webp" alt="Yomei Yura"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juillet 2026</p>
+        <p class="illu-desc">Commande réalisée pour la VTuber indépendante Yomei Yura (<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>) : une illustration complète avec variantes d'expression. Construite autour d'un concept de faucheuse recluse et fumeuse : longs cheveux blancs virant au noir aux pointes, associés à une tenue noire à lacets et harnais pour une ambiance mélancolique et fragile.</p>
+        <p class="illu-note">Le fard à paupières a été remplacé par une ligne de cils supérieurs plus épaisse pour une meilleure lisibilité en direct sur IRIAM. Les piercings industriels argentés et le tatouage au cou ajoutent les détails qui renforcent son attitude nonchalante.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura_chibi">Voir l'icône chibi</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">Voir le logo</a></p>
+      </div>`,
     },
     illust_yomeiyura_chibi: {
       title: '【お仕事絵】夜冥ゆら様‐ちびキャラアイコン',
@@ -569,6 +882,15 @@
         <p class="illu-desc">A chibi icon designed to match Yomei Yura's (<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>) full illustration. The shut-in, chain-smoking grim reaper concept is kept intact, with features enlarged and simplified so the expression still reads at social-media icon size.</p>
         <p class="illu-note">High-recognition elements — the black hair tips, the silver piercing — were preserved so the character holds up even when displayed small.</p>
         <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">View the full illustration</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">View the logo</a></p>
+      </div>`,
+      titleFr: '[Commande] Yomei Yura — Icône chibi',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yomeiyura-chibi.webp" alt="Icône chibi Yomei Yura"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juillet 2026</p>
+        <p class="illu-desc">Une icône chibi conçue pour correspondre à l'illustration complète de Yomei Yura (<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>). Le concept de faucheuse recluse et fumeuse est conservé, avec des traits agrandis et simplifiés pour que l'expression reste lisible même en taille icône.</p>
+        <p class="illu-note">Les éléments les plus reconnaissables — les pointes de cheveux noires, le piercing argenté — ont été conservés pour que le personnage reste identifiable même en petite taille.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">Voir l'illustration complète</a>　/　<a href="#" data-modal-jump="logo_yomeiyura">Voir le logo</a></p>
       </div>`,
     },
     logo_yomeiyura: {
@@ -591,6 +913,15 @@
         <p class="illu-note">Designed for use on stream overlays and social media, prioritizing legibility at small sizes.</p>
         <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">View the full illustration</a>　/　<a href="#" data-modal-jump="illust_yomeiyura_chibi">View the chibi icon</a></p>
       </div>`,
+      titleFr: '[Commande] Yomei Yura — Logo',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/yomeiyura-logo.jpg" alt="Logo Yomei Yura"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juillet 2026</p>
+        <p class="illu-desc">Commande réalisée pour Yomei Yura (<a class="illu-handle" href="https://x.com/ymch_llll" target="_blank" rel="noopener">@ymch_llll</a>) : un logo assorti à l'illustration complète et à l'icône chibi, traduisant en lettrage la texture mélancolique et fragile de la faucheuse recluse et fumeuse.</p>
+        <p class="illu-note">Conçu pour les overlays de streaming et les réseaux sociaux, en priorisant la lisibilité en petite taille.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_yomeiyura">Voir l'illustration complète</a>　/　<a href="#" data-modal-jump="illust_yomeiyura_chibi">Voir l'icône chibi</a></p>
+      </div>`,
     },
     illust_kuromarushidare: {
       title: '【お仕事絵】黒丸しだれ様‐立ち絵＋表情差分',
@@ -609,6 +940,14 @@
         <p class="illu-date">Created July 2026</p>
         <p class="illu-desc">Commissioned by Kuromaru Shidare (<a class="illu-handle" href="https://x.com/shidare_kuro" target="_blank" rel="noopener">@shidare_kuro</a>) of Rimiresu! for a full character illustration with expression variants. Inspired by illuminated night cherry blossoms, the design pairs black traditional Japanese clothing with white and sakura-pink accents, echoing the weeping cherry motif in the hair's inner color and the obi ornament.</p>
         <p class="illu-note">Compatible with IRIAM ver4.1. Expressions were tuned for a wide, clearly readable emotional range so they work well on stream.</p>
+      </div>`,
+      titleFr: '[Commande] Kuromaru Shidare — Illustration complète et expressions',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/kuromarushidare.webp" alt="Kuromaru Shidare"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juillet 2026</p>
+        <p class="illu-desc">Commande réalisée pour Kuromaru Shidare (<a class="illu-handle" href="https://x.com/shidare_kuro" target="_blank" rel="noopener">@shidare_kuro</a>) du groupe Rimiresu! : une illustration complète avec variantes d'expression. Inspirée des cerisiers nocturnes illuminés, la tenue traditionnelle noire est rehaussée de blanc et de rose sakura, avec le motif du cerisier pleureur repris dans la couleur intérieure des cheveux et l'ornement de l'obi.</p>
+        <p class="illu-note">Compatible IRIAM ver4.1. Les expressions ont été ajustées pour une large amplitude émotionnelle, facilement lisible en direct.</p>
       </div>`,
     },
     illust_yakumoroki: {
@@ -629,6 +968,14 @@
         <p class="illu-desc">Commissioned by Yakumo Roki (<a class="illu-handle" href="https://x.com/Yakumo_Roki" target="_blank" rel="noopener">@Yakumo_Roki</a>) for a full character illustration with expression variants. Designed with a gray × blue color palette and a wide-silhouette street fashion look, aiming to capture a laid-back vibe fitting a character who loves drinking and smoking.</p>
         <p class="illu-desc">※ To respect the client's rights, the full illustration is not shown here. Please check out their streams on IRIAM if you're curious.</p>
       </div>`,
+      titleFr: '[Commande] Yakumo Roki — Illustration complète et expressions',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/yakumoroki.webp" alt="Yakumo Roki"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juin 2026</p>
+        <p class="illu-desc">Commande réalisée pour Yakumo Roki (<a class="illu-handle" href="https://x.com/Yakumo_Roki" target="_blank" rel="noopener">@Yakumo_Roki</a>) : une illustration complète avec variantes d'expression. Réalisée dans une palette gris × bleu avec une tenue streetwear à silhouette ample, pour capturer une ambiance nonchalante propre à un personnage amateur d'alcool et de cigarettes.</p>
+        <p class="illu-desc">※ Par respect pour les droits du client, l'illustration complète n'est pas montrée ici. N'hésitez pas à visiter ses streams sur IRIAM.</p>
+      </div>`,
     },
     logo_amazai: {
       title: '【ご依頼もの】甘罪めぇる様‐デコロゴ',
@@ -647,6 +994,14 @@
         <p class="illu-date">Created June 2026</p>
         <p class="illu-desc">Commissioned by Amazai Meeru (<a class="illu-handle" href="https://x.com/amatsumi_meElu" target="_blank" rel="noopener">@amatsumi_meElu</a>) for a logo design. Designed with a cute, bubbly feel in mind, featuring their companion character alongside the main logo.</p>
         <p class="illu-note">Delivered as transparent PNG files for use across SNS, streams, and merchandise.</p>
+      </div>`,
+      titleFr: '[Commande] Amazai Meeru — Logo décoratif',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/logo/甘罪めぇる様ー相棒ありバージョン.jpg" alt="Logo Amazai Meeru"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juin 2026</p>
+        <p class="illu-desc">Commande réalisée pour Amazai Meeru (<a class="illu-handle" href="https://x.com/amatsumi_meElu" target="_blank" rel="noopener">@amatsumi_meElu</a>) : un logo à l'ambiance mignonne et pétillante, incluant son personnage compagnon aux côtés du logo principal.</p>
+        <p class="illu-note">Livré en PNG transparent, utilisable pour les réseaux sociaux, le streaming et les produits dérivés.</p>
       </div>`,
     },
     illust_palma: {
@@ -672,6 +1027,17 @@
         <p class="illu-date">Created June 2026</p>
         <p class="illu-desc">Commissioned by Palma Ariake (<a class="illu-handle" href="https://x.com/Palmaaa_ariake" target="_blank" rel="noopener">@Palmaaa_ariake</a>) for an elegant tea-time illustration. Set in the gentle light of a quiet afternoon, the piece captures a composed and graceful atmosphere.</p>
         <p class="illu-note">Soft lighting and a calm palette were used to convey the serenity and elegance of an afternoon moment. Delivered in two versions — with and without a ring accessory.</p>
+      </div>`,
+      titleFr: '[Commande] Palma Ariake — Thé de l’après-midi',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/有明パルマ様（わっかありバージョン）.webp" alt="Thé de l'après-midi (avec anneau)"><figcaption class="illu-cap">avec anneau（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/有明パルマ様（わっかなしバージョン）.webp" alt="Thé de l'après-midi (sans anneau)"><figcaption class="illu-cap">sans anneau（50%）</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juin 2026</p>
+        <p class="illu-desc">Commande réalisée pour Palma Ariake (<a class="illu-handle" href="https://x.com/Palmaaa_ariake" target="_blank" rel="noopener">@Palmaaa_ariake</a>) : une illustration élégante autour d'une scène de thé. Baignée dans la lumière douce d'un après-midi tranquille, l'œuvre cherche à capturer une atmosphère posée et raffinée.</p>
+        <p class="illu-note">Une lumière douce et une palette apaisée traduisent la sérénité et l'élégance d'un moment d'après-midi. Livré en deux versions, avec et sans anneau décoratif.</p>
       </div>`,
     },
     illust_kaikunchibi: {
@@ -708,6 +1074,22 @@
         <p class="illu-desc">Commissioned by Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>) for an SD chibi character (standing pose, transparent background) with 4 emotion expression variants. I'm truly grateful to have been entrusted with another commission following the previous stream ED loop animation.<br>As the files are intended for use as thumbnail assets, each body part was delivered separately so Hakki Kai can animate them freely.</p>
         <p class="illu-note">For "Anger," two variations were created to match their personality — one with puffed cheeks and one with a composed expression. Each emotion variant was carefully adjusted in expression and eye shape to ensure the nuance comes through naturally. Delivered with commercial use license.</p>
       </div>`,
+      titleFr: '[Commande] Hakki Kai — Chibi SD et variantes d’expression',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/ノーマル-sample.webp" alt="Normal"><figcaption class="illu-cap">Normal（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/喜-sample.webp" alt="Joie"><figcaption class="illu-cap">Joie（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/怒-sample.webp" alt="Colère"><figcaption class="illu-cap">Colère（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/怒(膨らまず-sampe.webp" alt="Colère (joues gonflées)"><figcaption class="illu-cap">Colère · joues gonflées（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/哀-sample.webp" alt="Tristesse"><figcaption class="illu-cap">Tristesse（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/楽-sample.webp" alt="Amusement"><figcaption class="illu-cap">Amusement（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/納品sample-原寸.webp" alt="Taille réelle"><figcaption class="illu-cap">Échantillon de livraison · taille réelle（50%）</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mai 2026</p>
+        <p class="illu-desc">Commande réalisée pour Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>) : un chibi SD (pose debout, fond transparent) avec 4 variantes d'expression. Je suis très reconnaissante d'avoir reçu une nouvelle commande après la précédente animation en boucle pour l'ED de stream.<br>Les fichiers étant destinés à un usage en miniatures, chaque partie du corps a été livrée séparément pour une animation facile.</p>
+        <p class="illu-note">Pour « Colère », deux variantes ont été créées selon la personnalité du personnage : une avec les joues gonflées et une plus posée. Chaque expression a été ajustée avec soin au niveau du regard et des traits pour transmettre la nuance naturellement. Livré avec licence d'usage commercial.</p>
+      </div>`,
     },
     illust_510camera: {
       title: '【お仕事絵】5×10様‐お祝いイラスト',
@@ -732,6 +1114,17 @@
         <p class="illu-date">Created April 2026</p>
         <p class="illu-desc">Commissioned by 5×10 (<a class="illu-handle" href="https://x.com/510Mstar" target="_blank" rel="noopener">@510Mstar</a>) for a lively celebration illustration for use at birthday and anniversary events. Created with a warm, festive feel that everyone can enjoy together.</p>
         <p class="illu-note">Focused on the character's personality and vibrant composition, with color balance chosen to suit the celebratory setting.</p>
+      </div>`,
+      titleFr: '[Commande] 5×10 — Illustration de célébration',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/510cameraーsample.webp" alt="Illustration de célébration"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/510cameraoffーsample.webp" alt="Sans fond"><figcaption class="illu-cap">sample (sans fond · 50%)</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en avril 2026</p>
+        <p class="illu-desc">Commande réalisée pour 5×10 (<a class="illu-handle" href="https://x.com/510Mstar" target="_blank" rel="noopener">@510Mstar</a>) : une illustration festive pour un anniversaire ou un événement commémoratif. Créée avec une ambiance chaleureuse et joyeuse, à partager avec tous les participants.</p>
+        <p class="illu-note">L'accent a été mis sur la personnalité du personnage et une composition vive, avec un équilibre des couleurs adapté à l'ambiance festive.</p>
       </div>`,
     },
     illust_hakkikai: {
@@ -758,6 +1151,17 @@
         <p class="illu-desc">Commissioned by Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>) for a looping background animation for their stream ED. The scene depicts a lazy afternoon in a cozy study, working at a laptop with a cat curled up nearby.</p>
         <p class="illu-note">Focused on a warm, relaxed atmosphere, with care given to the way light filters through the window and the arrangement of room details.</p>
       </div>`,
+      titleFr: '[Commande] Hakki Kai — Animation en boucle pour ED de stream',
+      htmlFr: `<div class="mwork mwork--illu">
+        <video autoplay loop muted playsinline style="width:100%; border-radius:8px; margin-bottom:4px;">
+          <source src="../images/works/illust/original/Scene1_1.mp4" type="video/mp4">
+        </video>
+        <span class="illu-cap" style="display:block; text-align:center; margin-bottom:16px;">animation en boucle（50%）</span>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en avril 2026</p>
+        <p class="illu-desc">Commande réalisée pour Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>) : une animation de fond en boucle pour l'ED de son stream. La scène dépeint un après-midi paisible dans un bureau douillet, en train de travailler avec un chat lové à ses côtés.</p>
+        <p class="illu-note">L'accent a été mis sur une ambiance chaleureuse et détendue, avec un soin particulier apporté à la lumière filtrant par la fenêtre et à la disposition des objets de la pièce.</p>
+      </div>`,
     },
     illust_yuuuuto: {
       title: '【お仕事絵】ゆーと様‐アイコン等',
@@ -783,6 +1187,17 @@
         <p class="illu-desc">Commissioned by Yuuto (<a class="illu-handle" href="https://x.com/yuuuuto0404" target="_blank" rel="noopener">@yuuuuto0404</a>) for a soft, gentle icon and a transparent-background half-body illustration for video editing use.</p>
         <p class="illu-note">Colors were kept subdued to avoid competing with on-screen text and elements, while ensuring the expression reads clearly even at small sizes.<br>The composition centers on the cat as the visual anchor; outlines and saturation were refined for seamless video compositing.</p>
       </div>`,
+      titleFr: '[Commande] Yuuto — Icône et illustration mi-corps',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/yuuuutoicon.webp" alt="Icône"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/yuuuuto.webp" alt="Mi-corps"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en janvier 2026</p>
+        <p class="illu-desc">Commande réalisée pour Yuuto (<a class="illu-handle" href="https://x.com/yuuuuto0404" target="_blank" rel="noopener">@yuuuuto0404</a>) : une icône douce et tout en délicatesse, ainsi qu'une illustration mi-corps à fond transparent destinée au montage vidéo.</p>
+        <p class="illu-note">Les couleurs ont été atténuées pour ne pas entrer en conflit avec le texte et les éléments à l'écran, tout en gardant une expression lisible même en petite taille.<br>La composition place le chat comme point d'ancrage visuel ; les contours et la saturation ont été affinés pour un compositing vidéo harmonieux.</p>
+      </div>`,
     },
     illust_shiraishiayameheader: {
       title: '【お仕事絵】白石あやめ様 - ヘッダー',
@@ -801,6 +1216,14 @@
         <p class="illu-date">Created November 2025</p>
         <p class="illu-desc">Commissioned by Shiraishi Ayame (<a class="illu-handle" href="https://x.com/ayamechan36" target="_blank" rel="noopener">@ayamechan36</a>) for a header illustration.</p>
         <p class="illu-note">Themed around an introverted character who yearns for brightness, using lolita fashion and floral motifs to convey emotional contrast.<br>Hydrangeas tucked into the skirt and roses scattered around symbolize hidden feelings and outward elegance.</p>
+      </div>`,
+      titleFr: '[Commande] Shiraishi Ayame — Bannière',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/shiraishiayameheader.webp" alt="Bannière"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en novembre 2025</p>
+        <p class="illu-desc">Commande réalisée pour Shiraishi Ayame (<a class="illu-handle" href="https://x.com/ayamechan36" target="_blank" rel="noopener">@ayamechan36</a>) : une illustration pour bannière.</p>
+        <p class="illu-note">Sur le thème d'un personnage introverti aspirant à la luminosité, l'illustration utilise la mode lolita et des motifs floraux pour exprimer un contraste émotionnel.<br>Les hortensias glissés dans la jupe et les roses éparpillées symbolisent des sentiments cachés et une élégance apparente.</p>
       </div>`,
     },
     illust_koihachi: {
@@ -822,6 +1245,15 @@
         <p class="illu-desc">Commissioned by Kotodori Seseri (<a class="illu-handle" href="https://x.com/seseri120" target="_blank" rel="noopener">@seseri120</a>) for a thumbnail for their "Ima, Koi ga Hajimere" (by HoneyWorks) cover video. Includes original title logo creation.</p>
         <p class="illu-note">Focused on capturing an expression that matches the mood of the song.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=GwAjyjjn4bo" target="_blank" rel="noopener">Watch the video</a></p>
+      </div>`,
+      titleFr: '[Commande] Ima, Koi ga Hajimere (cover de Kotodori Seseri)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/koihachi.webp" alt="Ima, Koi ga Hajimere"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en octobre 2025</p>
+        <p class="illu-desc">Commande réalisée pour Kotodori Seseri (<a class="illu-handle" href="https://x.com/seseri120" target="_blank" rel="noopener">@seseri120</a>) : une miniature pour son cover vidéo de « Ima, Koi ga Hajimere » (HoneyWorks). Création du logo du titre incluse.</p>
+        <p class="illu-note">L'expression a été pensée pour correspondre à l'ambiance du morceau.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=GwAjyjjn4bo" target="_blank" rel="noopener">Voir la vidéo</a></p>
       </div>`,
     },
     illust_characterdesign: {
@@ -853,6 +1285,20 @@
         <p class="illu-date">2024–2025 collection</p>
         <p class="illu-desc">Received VTuber / character design commissions from creators active on TikTok in the Chinese-speaking community. Design work only.</p>
         <p class="illu-note">Individual chibi variants and costume variants included.</p>
+      </div>`,
+      titleFr: '[Commande] Recueil de character design',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/01.webp" alt="1"><figcaption>1</figcaption></figure>
+          <figure><img src="../images/works/illust/original/02.webp" alt="2"><figcaption>2</figcaption></figure>
+          <figure><img src="../images/works/illust/original/03.webp" alt="3"><figcaption>3</figcaption></figure>
+          <figure><img src="../images/works/illust/original/04.webp" alt="4"><figcaption>4</figcaption></figure>
+          <figure><img src="../images/works/illust/original/05.webp" alt="5"><figcaption>5</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Recueil 2024–2025</p>
+        <p class="illu-desc">Commandes de character design VTuber reçues de créateurs actifs sur TikTok dans la communauté sinophone. Travail de design uniquement.</p>
+        <p class="illu-note">Variantes chibi et variantes de tenues incluses individuellement.</p>
       </div>`,
     },
     illust_otome: {
@@ -887,6 +1333,21 @@
         <p class="illu-note">Focused on crafting expressions that match the mood of the song.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=S6r3AWerjI4" target="_blank" rel="noopener">Watch the video</a></p>
       </div>`,
+      titleFr: '[Commande] Otome Kaibou / DECO*27 (cover de Hananoin Toa)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/otome.webp" alt="Miniature"><figcaption>Miniature</figcaption></figure>
+          <figure><img src="../images/works/illust/original/otome-dop.webp" alt="Yeux ouverts, bouche ouverte"><figcaption>Yeux ouverts, bouche ouverte</figcaption></figure>
+          <figure><img src="../images/works/illust/original/otome.eomc.webp" alt="Yeux ouverts, bouche fermée"><figcaption>Yeux ouverts, bouche fermée</figcaption></figure>
+          <figure><img src="../images/works/illust/original/otome.ehcmo.webp" alt="Yeux mi-clos, bouche ouverte"><figcaption>Yeux mi-clos, bouche ouverte</figcaption></figure>
+          <figure><img src="../images/works/illust/original/otome.ehcmc.webp" alt="Yeux mi-clos, bouche fermée"><figcaption>Yeux mi-clos, bouche fermée</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mars 2024</p>
+        <p class="illu-desc">Commande réalisée pour Hananoin Toa (<a class="illu-handle" href="https://x.com/hananoin_toa" target="_blank" rel="noopener">@hananoin_toa</a>) : une miniature pour son cover vidéo de « Otome Kaibou » (DECO*27). Création du logo du titre incluse.</p>
+        <p class="illu-note">L'expression a été pensée pour correspondre à l'ambiance du morceau.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=S6r3AWerjI4" target="_blank" rel="noopener">Voir la vidéo</a></p>
+      </div>`,
     },
     illust_sokkenai: {
       title: '【お仕事絵】そっけない(cover by Numa)',
@@ -908,6 +1369,15 @@
         <p class="illu-note">Depicts a quiet, solitary moment at a bus stop on a snowy night. Left room for the viewer to bring their own interpretation.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=aXxRNVyMvLI" target="_blank" rel="noopener">Watch the video</a></p>
       </div>`,
+      titleFr: '[Commande] Sokkenaï (cover de Numa)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/sokkenai.webp" alt="Sokkenaï"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en décembre 2023</p>
+        <p class="illu-desc">Commande réalisée pour Numa (<a class="illu-handle" href="https://x.com/Numa_identity" target="_blank" rel="noopener">@Numa_identity</a>) : une miniature pour son cover vidéo de « Sokkenaï » (RADWIMPS).</p>
+        <p class="illu-note">Dépeint un moment calme et solitaire à un arrêt de bus, sous la neige. Un espace volontairement laissé ouvert à l'interprétation de chacun.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=aXxRNVyMvLI" target="_blank" rel="noopener">Voir la vidéo</a></p>
+      </div>`,
     },
     illust_rarumucris: {
       title: '【お仕事絵】クリスマステーマの一枚絵',
@@ -927,6 +1397,14 @@
         <p class="illu-desc">Commissioned by Haibara Rarumu (<a class="illu-handle" href="https://x.com/LArm_hy" target="_blank" rel="noopener">@LArm_hy</a>) for an original illustration.</p>
         <p class="illu-note">A dreamlike scene bathed in moonlight, surrounded by Christmas gifts. Focused on soft layered light and harmonious color.</p>
       </div>`,
+      titleFr: '[Commande] Illustration sur le thème de Noël',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/rarumucris.webp" alt="Illustration sur le thème de Noël"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en décembre 2023</p>
+        <p class="illu-desc">Commande réalisée pour Haibara Rarumu (<a class="illu-handle" href="https://x.com/LArm_hy" target="_blank" rel="noopener">@LArm_hy</a>) : une illustration originale.</p>
+        <p class="illu-note">Une scène onirique baignée de clair de lune, entourée de cadeaux de Noël. L'accent a été mis sur une lumière douce en superposition et des couleurs harmonieuses.</p>
+      </div>`,
     },
     illust_hujii: {
       title: '【お仕事絵】配信用兼グッズに使うイラスト',
@@ -943,6 +1421,13 @@
         <div class="mwork__divider"></div>
         <p class="illu-date">Created October 2023</p>
         <p class="illu-note">Created for use as a streaming visual and merchandise illustration. Commercial use included. Client name and related links are withheld as the original source cannot be confirmed.</p>
+      </div>`,
+      titleFr: '[Commande] Illustration pour stream et produits dérivés',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/hujii.webp" alt="Illustration pour stream et produits dérivés"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en octobre 2023</p>
+        <p class="illu-note">Réalisée pour un usage en visuel de stream et en produit dérivé. Usage commercial inclus. Le nom du client et les liens associés ne sont pas indiqués, la source d'origine n'ayant pas pu être confirmée.</p>
       </div>`,
     },
     illust_sukiccyu: {
@@ -963,6 +1448,14 @@
         <p class="illu-desc">Commissioned by Chii (<a class="illu-handle" href="https://x.com/chii1402" target="_blank" rel="noopener">@chii1402</a>) for a thumbnail for their "Sukicchu no!" (by HoneyWorks) cover video.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=x396yZY2f2c" target="_blank" rel="noopener">Watch the video</a></p>
       </div>`,
+      titleFr: '[Commande] Sukicchu no! (cover de Chii)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/sukiccyu.webp" alt="Sukicchu no!"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en septembre 2023</p>
+        <p class="illu-desc">Commande réalisée pour Chii (<a class="illu-handle" href="https://x.com/chii1402" target="_blank" rel="noopener">@chii1402</a>) : une miniature pour son cover vidéo de « Sukicchu no! » (HoneyWorks).</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=x396yZY2f2c" target="_blank" rel="noopener">Voir la vidéo</a></p>
+      </div>`,
     },
     illust_dokusou: {
       title: '【お仕事絵】独奏(cover by うみか)',
@@ -981,6 +1474,14 @@
         <p class="illu-date">Created September 2023</p>
         <p class="illu-desc">Commissioned by Umika (<a class="illu-handle" href="https://x.com/000umika000" target="_blank" rel="noopener">@000umika000</a>) for a still illustration and MV for their "Dokusou" (by YASUHIRO) cover video. Includes original MV, background change, and title logo creation.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=zwI8HzYCMGw" target="_blank" rel="noopener">Watch the video</a></p>
+      </div>`,
+      titleFr: '[Commande] Dokusou (cover de Umika)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/dokusou.webp" alt="Dokusou"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en septembre 2023</p>
+        <p class="illu-desc">Commande réalisée pour Umika (<a class="illu-handle" href="https://x.com/000umika000" target="_blank" rel="noopener">@000umika000</a>) : une illustration et un MV pour son cover vidéo de « Dokusou » (YASUHIRO). Comprend un MV original, un changement de fond et la création du logo du titre.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=zwI8HzYCMGw" target="_blank" rel="noopener">Voir la vidéo</a></p>
       </div>`,
     },
     illust_allback: {
@@ -1001,6 +1502,14 @@
         <p class="illu-desc">Commissioned by Umika (<a class="illu-handle" href="https://x.com/000umika000" target="_blank" rel="noopener">@000umika000</a>) for a thumbnail for their "Kyoufu Allback" (by Yukopi) cover video.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=4znGkEUSlSc" target="_blank" rel="noopener">Watch the video</a></p>
       </div>`,
+      titleFr: '[Commande] Kyoufu Allback (cover de Umika)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/allback.webp" alt="Kyoufu Allback"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en juillet 2023</p>
+        <p class="illu-desc">Commande réalisée pour Umika (<a class="illu-handle" href="https://x.com/000umika000" target="_blank" rel="noopener">@000umika000</a>) : une miniature pour son cover vidéo de « Kyoufu Allback » (Yukopi).</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=4znGkEUSlSc" target="_blank" rel="noopener">Voir la vidéo</a></p>
+      </div>`,
     },
     illust_ramuneko: {
       title: '【お仕事絵】アイドルグッズのイラスト依頼',
@@ -1017,6 +1526,13 @@
         <div class="mwork__divider"></div>
         <p class="illu-date">Created March 2023</p>
         <p class="illu-desc">Commissioned by idol Mizuumi Ramune (<a class="illu-handle" href="https://x.com/mizuumiramune" target="_blank" rel="noopener">@mizuumiramune</a>) for a print T-shirt illustration sold at her birthday event. A newly drawn piece created specifically for merchandise.</p>
+      </div>`,
+      titleFr: '[Commande] Illustration pour produits dérivés d’idole',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ramuneko.webp" alt="Illustration pour produits dérivés d'idole"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mars 2023</p>
+        <p class="illu-desc">Commande réalisée pour l'idole Mizuumi Ramune (<a class="illu-handle" href="https://x.com/mizuumiramune" target="_blank" rel="noopener">@mizuumiramune</a>) : une illustration pour un t-shirt imprimé vendu lors de son événement d'anniversaire. Œuvre inédite conçue spécifiquement pour un produit dérivé.</p>
       </div>`,
     },
     illust_aota: {
@@ -1036,6 +1552,14 @@
         <p class="illu-date">Created March 2023</p>
         <p class="illu-desc">Commissioned for a thumbnail for a "Kawaikute Gomen" (by HoneyWorks) cover video. Includes background change and original title logo creation.</p>
         <p class="illu-desc">Client name and video link are withheld out of rights consideration.</p>
+      </div>`,
+      titleFr: '[Commande] Kawaikute Gomen',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/aota.webp" alt="Kawaikute Gomen"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mars 2023</p>
+        <p class="illu-desc">Commande réalisée pour une miniature de cover vidéo de « Kawaikute Gomen » (HoneyWorks). Comprend un changement de fond et la création du logo du titre.</p>
+        <p class="illu-desc">Le nom de l'interprète et le lien de la vidéo ne sont pas indiqués par respect des droits.</p>
       </div>`,
     },
     illust_bloody: {
@@ -1070,6 +1594,21 @@
         <p class="illu-desc">Commissioned for a still illustration for a song cover MV. Includes facial expression variants.</p>
         <p class="illu-desc">Client name and video link are withheld out of rights consideration.</p>
       </div>`,
+      titleFr: '[Commande] Bloody Mary',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/bloody.webp" alt="Principal"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/bloody-eos.webp" alt="Yeux ouverts, souriant"><figcaption>Yeux ouverts, souriant</figcaption></figure>
+          <figure><img src="../images/works/illust/original/bloody-eo.webp" alt="Yeux ouverts, neutre"><figcaption>Yeux ouverts, neutre</figcaption></figure>
+          <figure><img src="../images/works/illust/original/bloody-ecs.webp" alt="Yeux fermés, souriant"><figcaption>Yeux fermés, souriant</figcaption></figure>
+          <figure><img src="../images/works/illust/original/bloody-ec.webp" alt="Yeux fermés, neutre"><figcaption>Yeux fermés, neutre</figcaption></figure>
+          <figure><img src="../images/works/illust/original/bloody-back.webp" alt="Fond seul"><figcaption>Fond seul</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en mars 2023</p>
+        <p class="illu-desc">Commande réalisée pour une illustration destinée à un MV de cover musical. Comprend des variantes d'expression.</p>
+        <p class="illu-desc">Le nom de l'interprète et le lien de la vidéo ne sont pas indiqués par respect des droits.</p>
+      </div>`,
     },
     illust_nonokawai: {
       title: '【お仕事絵】可愛くてごめん/高梨のの(cover)',
@@ -1101,6 +1640,20 @@
         <p class="illu-desc">Commissioned by Takanashi Nono (<a class="illu-handle" href="https://x.com/TAKANASHInono" target="_blank" rel="noopener">@TAKANASHInono</a>) for a thumbnail for their "Kawaikute Gomen" (by HoneyWorks) cover video. Includes original title logo and expression variants.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=SCSWWhqsmQI" target="_blank" rel="noopener">Watch the video</a></p>
       </div>`,
+      titleFr: '[Commande] Kawaikute Gomen (cover de Takanashi Nono)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/nonokawai.webp" alt="Principal"><figcaption class="illu-cap">sample（50%）</figcaption></figure>
+          <figure><img src="../images/works/illust/original/nonokawai1.webp" alt="Variante 1"><figcaption>Variante 1</figcaption></figure>
+          <figure><img src="../images/works/illust/original/nonokawai2.webp" alt="Variante 2"><figcaption>Variante 2</figcaption></figure>
+          <figure><img src="../images/works/illust/original/nonokawai3.webp" alt="Variante 3"><figcaption>Variante 3</figcaption></figure>
+          <figure><img src="../images/works/illust/original/nonokawai4.webp" alt="Variante 4"><figcaption>Variante 4</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en février 2023</p>
+        <p class="illu-desc">Commande réalisée pour Takanashi Nono (<a class="illu-handle" href="https://x.com/TAKANASHInono" target="_blank" rel="noopener">@TAKANASHInono</a>) : une miniature pour son cover vidéo de « Kawaikute Gomen » (HoneyWorks). Comprend la création du logo du titre et des variantes d'expression.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=SCSWWhqsmQI" target="_blank" rel="noopener">Voir la vidéo</a></p>
+      </div>`,
     },
     illust_chibi: {
       title: 'ちびキャラまとめ',
@@ -1128,6 +1681,18 @@
         <p class="illu-date">Various past works</p>
         <p class="illu-desc">A collection of chibi characters I've drawn over the years. I occasionally run free events on X — feel free to follow and check in!</p>
       </div>`,
+      titleFr: 'Recueil de personnages chibi',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/chibi1.webp" alt="Mon personnage"><figcaption>Mon personnage</figcaption></figure>
+          <figure><img src="../images/works/illust/original/chibi2.webp" alt="Fond d'écran chibi de Yamazaki Sui"><figcaption>Fond d'écran chibi de Yamazaki Sui</figcaption></figure>
+          <figure><img src="../images/works/illust/original/chibi3.webp" alt="Événement chibi 1"><figcaption>Événement chibi 1</figcaption></figure>
+          <figure><img src="../images/works/illust/original/chibi4.webp" alt="Événement chibi 2"><figcaption>Événement chibi 2</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Œuvres passées</p>
+        <p class="illu-desc">Un recueil de personnages chibi réalisés au fil des années. J'organise de temps en temps des événements gratuits sur X — n'hésitez pas à me suivre et à jeter un œil de temps à autre !</p>
+      </div>`,
     },
     illust_chiikawaii: {
       title: '【お仕事絵】可愛くてごめん(cover by ちぃ)',
@@ -1147,6 +1712,14 @@
         <p class="illu-desc">Commissioned by Chii (<a class="illu-handle" href="https://x.com/chii1402" target="_blank" rel="noopener">@chii1402</a>) for a thumbnail for their "Kawaikute Gomen" (by HoneyWorks) cover video. Includes original title logo creation.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=abT7wIAYHxk" target="_blank" rel="noopener">Watch the video</a></p>
       </div>`,
+      titleFr: '[Commande] Kawaikute Gomen (cover de Chii)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/chiikawaii.webp" alt="Kawaikute Gomen"><figcaption class="illu-cap">sample（40%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en décembre 2022</p>
+        <p class="illu-desc">Commande réalisée pour Chii (<a class="illu-handle" href="https://x.com/chii1402" target="_blank" rel="noopener">@chii1402</a>) : une miniature pour son cover vidéo de « Kawaikute Gomen » (HoneyWorks). Comprend la création du logo du titre.</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=abT7wIAYHxk" target="_blank" rel="noopener">Voir la vidéo</a></p>
+      </div>`,
     },
     illust_myselfheader: {
       title: '自分用のXヘッダーイラスト',
@@ -1163,6 +1736,13 @@
         <div class="mwork__divider"></div>
         <p class="illu-date">Created January 2022</p>
         <p class="illu-desc">A header illustration for my own X profile, featuring my signature character. Packed with my favorite things: sweets and the color pink.</p>
+      </div>`,
+      titleFr: 'Bannière X personnelle',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/myselfheader.webp" alt="Bannière X"><figcaption class="illu-cap">taille réelle</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en janvier 2022</p>
+        <p class="illu-desc">Une bannière pour mon propre profil X, mettant en scène mon personnage emblématique. Remplie de mes choses préférées : les sucreries et la couleur rose.</p>
       </div>`,
     },
     illust_sayu: {
@@ -1182,6 +1762,14 @@
         <p class="illu-date">Created November 2021</p>
         <p class="illu-desc">Commissioned for an image illustration and MV for an original song. Includes facial expression variants, detailed background artwork, and special visual effects for the PV.</p>
         <p class="illu-desc">※ The song has not been released publicly, so the title and related links are withheld.</p>
+      </div>`,
+      titleFr: '[Commande] Illustration pour chanson originale',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/sayu.webp" alt="Illustration pour chanson originale"><figcaption class="illu-cap">sample（40%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en novembre 2021</p>
+        <p class="illu-desc">Commande réalisée pour une illustration d'image et un MV pour une chanson originale. Comprend des variantes d'expression, un fond détaillé et des effets visuels spéciaux pour le PV.</p>
+        <p class="illu-desc">※ La chanson n'étant pas publiée, son titre et les liens associés ne sont pas indiqués.</p>
       </div>`,
     },
     illust_melon: {
@@ -1212,6 +1800,19 @@
         <p class="illu-desc">Commissioned for an image illustration for an original song. Includes facial expression variants, detailed background artwork, and special visual effects for the PV.</p>
         <p class="illu-desc">※ The song has not been released publicly, so the title and related links are withheld.</p>
       </div>`,
+      titleFr: '[Commande] Illustration pour chanson originale',
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/illust/original/骸骨ｘ人物ｘ背景.webp" alt="Crâne x personnage x fond"><figcaption>Crâne × personnage × fond sample(40%)</figcaption></figure>
+          <figure><img src="../images/works/illust/original/死骸ｘ人物ｘ背景.webp" alt="Cadavre x personnage x fond"><figcaption>Cadavre × personnage × fond sample(40%)</figcaption></figure>
+          <figure><img src="../images/works/illust/original/骸骨ｘ背景.webp" alt="Crâne x fond"><figcaption>Crâne × fond sample(40%)</figcaption></figure>
+          <figure><img src="../images/works/illust/original/死骸ｘ背景.webp" alt="Cadavre x fond"><figcaption>Cadavre × fond sample(40%)</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en novembre 2021</p>
+        <p class="illu-desc">Commande réalisée pour une illustration d'image pour une chanson originale. Comprend des variantes d'expression, un fond détaillé et des effets visuels spéciaux pour le PV.</p>
+        <p class="illu-desc">※ La chanson n'étant pas publiée, son titre et les liens associés ne sont pas indiqués.</p>
+      </div>`,
     },
     illust_rabuka: {
       title: '【お仕事絵】ラブカ？(cover by 惑星のパンくん)',
@@ -1230,6 +1831,14 @@
         <p class="illu-date">Created April 2021</p>
         <p class="illu-desc">Commissioned by Wakusei no Pankun (<a class="illu-handle" href="https://x.com/chimpanzeevoice" target="_blank" rel="noopener">@chimpanzeevoice</a>) for a thumbnail for their "Rabuka?" (by Hiiragi Kirai) cover video.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=srwVDj8pPdk" target="_blank" rel="noopener">Watch the video</a></p>
+      </div>`,
+      titleFr: '[Commande] Rabuka? (cover de Wakusei no Pankun)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/rabuka.webp" alt="Rabuka?"><figcaption class="illu-cap">sample（60%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en avril 2021</p>
+        <p class="illu-desc">Commande réalisée pour Wakusei no Pankun (<a class="illu-handle" href="https://x.com/chimpanzeevoice" target="_blank" rel="noopener">@chimpanzeevoice</a>) : une miniature pour son cover vidéo de « Rabuka? » (Hiiragi Kirai).</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=srwVDj8pPdk" target="_blank" rel="noopener">Voir la vidéo</a></p>
       </div>`,
     },
     illust_ready: {
@@ -1250,6 +1859,14 @@
         <p class="illu-desc">Commissioned by Wakusei no Pankun (<a class="illu-handle" href="https://x.com/chimpanzeevoice" target="_blank" rel="noopener">@chimpanzeevoice</a>) for a thumbnail for their "Ready Made" (by Surii) cover video.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=P52wOB_FQLM" target="_blank" rel="noopener">Watch the video</a></p>
       </div>`,
+      titleFr: '[Commande] Ready Made (cover de Wakusei no Pankun)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ready.webp" alt="Ready Made"><figcaption class="illu-cap">sample（60%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en avril 2021</p>
+        <p class="illu-desc">Commande réalisée pour Wakusei no Pankun (<a class="illu-handle" href="https://x.com/chimpanzeevoice" target="_blank" rel="noopener">@chimpanzeevoice</a>) : une miniature pour son cover vidéo de « Ready Made » (Surii).</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=P52wOB_FQLM" target="_blank" rel="noopener">Voir la vidéo</a></p>
+      </div>`,
     },
     illust_ussewa: {
       title: '【お仕事絵】うっせぇわ(cover by 惑星のパンくん)',
@@ -1268,6 +1885,14 @@
         <p class="illu-date">Created February 2021</p>
         <p class="illu-desc">Commissioned by Wakusei no Pankun (<a class="illu-handle" href="https://x.com/chimpanzeevoice" target="_blank" rel="noopener">@chimpanzeevoice</a>) for a thumbnail for their "Usseewa" (by Syudou) cover video.</p>
         <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=RFQ8NXTRxiw" target="_blank" rel="noopener">Watch the video</a></p>
+      </div>`,
+      titleFr: '[Commande] Usseewa (cover de Wakusei no Pankun)',
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ussewa.webp" alt="Usseewa"><figcaption class="illu-cap">sample（60%）</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en février 2021</p>
+        <p class="illu-desc">Commande réalisée pour Wakusei no Pankun (<a class="illu-handle" href="https://x.com/chimpanzeevoice" target="_blank" rel="noopener">@chimpanzeevoice</a>) : une miniature pour son cover vidéo de « Usseewa » (Syudou).</p>
+        <p class="illu-link">▶ <a href="https://www.youtube.com/watch?v=RFQ8NXTRxiw" target="_blank" rel="noopener">Voir la vidéo</a></p>
       </div>`,
     },
   };
@@ -1328,10 +1953,11 @@
     const data = WORK_MODAL_DATA[key];
     if (!data) return;
     currentModalKey = key;
-    const isEn = currentLang === 'en';
-    document.getElementById('wm-title').textContent    = (isEn && data.titleEn) ? data.titleEn : data.title;
+    const titleKey = currentLang === 'fr' ? 'titleFr' : currentLang === 'en' ? 'titleEn' : null;
+    const htmlKey  = currentLang === 'fr' ? 'htmlFr'  : currentLang === 'en' ? 'htmlEn'  : null;
+    document.getElementById('wm-title').textContent    = (titleKey && data[titleKey]) ? data[titleKey] : data.title;
     document.getElementById('wm-subtitle').textContent = data.subtitle;
-    document.getElementById('wm-body').innerHTML       = (isEn && data.htmlEn)  ? data.htmlEn  : data.html;
+    document.getElementById('wm-body').innerHTML       = (htmlKey && data[htmlKey])  ? data[htmlKey]  : data.html;
 
     /* クリックしたカードの中心を transform-origin に設定 */
     const wmBox = workModal.querySelector('.wm-box');
@@ -1379,6 +2005,7 @@
     } else if (card.dataset.realTitleJa) {
       card.dataset.titleJa = card.dataset.realTitleJa;
       if (card.dataset.realTitleEn) card.dataset.titleEn = card.dataset.realTitleEn;
+      if (card.dataset.realTitleFr) card.dataset.titleFr = card.dataset.realTitleFr;
       const titleEl = card.querySelector('.work-title');
       if (titleEl) titleEl.textContent = card.dataset.realTitleJa.replace(/【[^】]*】/g, '').trim();
     }
@@ -1416,6 +2043,13 @@
       sortOld:           '古い順',
       tabIllust:         'イラスト',
       tabLogo:           'ロゴ',
+      tabSchedule:       '配信関連',
+      filterAll:         'すべて',
+      filterOverlay:     'オーバーレイ',
+      filterBg:          '配信背景',
+      filterSchedule:    'スケジュール表',
+      filterThumb:       'サムネイル',
+      filterProfile:     'プロフィールカード',
       'canDo.icon':      'アイコン',
       'canDo.header':    'ヘッダー',
       'canDo.thumbnail': 'サムネイル',
@@ -1434,6 +2068,13 @@
       sortOld:           'Oldest',
       tabIllust:         'Illustration',
       tabLogo:           'Logo',
+      tabSchedule:       'Streaming',
+      filterAll:         'All',
+      filterOverlay:     'Overlay',
+      filterBg:          'Stream Background',
+      filterSchedule:    'Schedule',
+      filterThumb:       'Thumbnail',
+      filterProfile:     'Profile Card',
       'canDo.icon':      'Icon',
       'canDo.header':    'Header',
       'canDo.thumbnail': 'Thumbnail',
@@ -1442,7 +2083,56 @@
       'canDo.animated':  'Animated Art',
       'canDo.goods':     'Goods Illustration',
     },
+    fr: {
+      pageTitle:         'Illustration Works | Gurunya',
+      title:             'Works',
+      contact:           'Contact',
+      simulator:         'Simulateur de tarifs',
+      preRequest:        'Avant de faire une demande',
+      sortNew:           'Plus récent',
+      sortOld:           'Plus ancien',
+      tabIllust:         'Illustration',
+      tabLogo:           'Logo',
+      tabSchedule:       'Diffusion',
+      filterAll:         'Tout',
+      filterOverlay:     'Overlay',
+      filterBg:          'Arrière-plan',
+      filterSchedule:    'Planning',
+      filterThumb:       'Miniature',
+      filterProfile:     'Carte de profil',
+      'canDo.icon':      'Icône',
+      'canDo.header':    'Bannière',
+      'canDo.thumbnail': 'Miniature',
+      'canDo.still':     'Illustration',
+      'canDo.standing':  'Personnage debout',
+      'canDo.animated':  'Illustration animée',
+      'canDo.goods':     'Illustration produits dérivés',
+    },
   };
+
+  /* alt・aria-label・title のように、テキストではなく属性なので
+     data-i18nでは切り替えられないものを言語ごとに差し替える
+     画面には出ないが、読み上げソフトや画像が表示できないときに読まれるため、
+     日本語のままにせず3言語そろえる
+       data-alt-ja  / data-alt-en  / data-alt-fr   → alt
+       data-aria-ja / data-aria-en / data-aria-fr  → aria-label
+       data-tip-ja  / data-tip-en  / data-tip-fr   → title（マウスを乗せたときの吹き出し） */
+  function applyLangAttrs(root, lang) {
+    const pick = (ds, key) =>
+      lang === 'ja' ? ds[key + 'Ja']
+    : lang === 'fr' ? (ds[key + 'Fr'] || ds[key + 'En'] || ds[key + 'Ja'])
+    : (ds[key + 'En'] || ds[key + 'Ja']);
+
+    const swap = (sel, dsKey, attrName) => {
+      root.querySelectorAll(sel).forEach(el => {
+        const v = pick(el.dataset, dsKey);
+        if (v) el.setAttribute(attrName, v);
+      });
+    };
+    swap('[data-alt-ja]', 'alt', 'alt');
+    swap('[data-aria-ja]', 'aria', 'aria-label');
+    swap('[data-tip-ja]', 'tip', 'title');
+  }
 
   function applyLang(lang) {
     currentLang = lang;
@@ -1457,12 +2147,18 @@
       if (i18n[lang][key] !== undefined) el.textContent = i18n[lang][key];
     });
 
+    /* ページ全体の alt・aria-label・title も切り替える（ヘッダーやボタン類） */
+    applyLangAttrs(document, lang);
+
     /* カードタイトル・お仕事絵ラベルの切り替え */
     document.querySelectorAll('.work-card').forEach(card => {
       const titleEl = card.querySelector('.work-title');
       const labelEl = card.querySelector('.work-label');
       if (!titleEl) return;
-      if (lang === 'en') {
+      if (lang === 'fr') {
+        titleEl.textContent = (card.dataset.titleFr || card.dataset.titleEn || '').replace(/^\[.*?\]\s*/, '').trim();
+        if (labelEl) labelEl.textContent = 'Commande';
+      } else if (lang === 'en') {
         titleEl.textContent = (card.dataset.titleEn || '').replace(/^\[.*?\]\s*/, '').trim();
         if (labelEl) labelEl.textContent = 'Commission';
       } else {
@@ -1471,6 +2167,23 @@
           const m = (card.dataset.titleJa || '').match(/【([^】]*)】/);
           if (m) labelEl.textContent = m[1];
         }
+      }
+
+      /* サムネイルの alt にも作品名を入れる。
+         空のままだと画像検索に出ず、読み上げでも「画像」としか読まれないため。
+         data-title-* から作るので、カードを増やしても自動で付く。
+         ロック中のカードは正式タイトルを伏せ、プレースホルダーのままにする。 */
+      const thumb = card.querySelector('.work-thumb img');
+      if (thumb) {
+        const unlocked = !!card.dataset.unlock && !card.classList.contains('work-card--locked');
+        const pick = (real, plain) =>
+          (unlocked && card.dataset[real]) ? card.dataset[real] : (card.dataset[plain] || '');
+        let t;
+        if (lang === 'fr')      t = pick('realTitleFr', 'titleFr') || pick('realTitleEn', 'titleEn');
+        else if (lang === 'en') t = pick('realTitleEn', 'titleEn');
+        else                    t = pick('realTitleJa', 'titleJa');
+        t = t.replace(/【[^】]*】/g, '').replace(/^\[.*?\]\s*/, '').trim();
+        if (t) thumb.alt = t;
       }
     });
 
@@ -1578,11 +2291,65 @@
     }
   });
 
-  /* 初期タブに合わせてカードを表示／非表示 */
+  /* === タブ＋絞り込みの表示制御 ===
+     タブ（イラスト／ロゴ／配信関連）でまず大きく分け、
+     配信関連の中だけ data-cat でさらに絞り込めるようにしている。
+     カードは「タブが一致」かつ「絞り込みが一致」の両方を満たすときだけ表示する。 */
   const initialTab = document.querySelector('.tab-btn.is-active')?.dataset.tab || 'illust';
-  document.querySelectorAll('.work-card').forEach(card => {
-    if (card.dataset.category !== initialTab) card.style.display = 'none';
+  let currentTab = initialTab;
+  let currentFilter = 'all';
+
+  function updateCards() {
+    document.querySelectorAll('.work-card').forEach(card => {
+      const tabOk = card.dataset.category === currentTab;
+      const filterOk = currentFilter === 'all' || card.dataset.cat === currentFilter;
+      card.style.display = (tabOk && filterOk) ? '' : 'none';
+    });
+  }
+
+  /* 絞り込みバーの出し入れ。
+     作品が1件も無い項目のボタンは隠すので、
+     作品を足せばその項目のボタンが自動で出てくる（HTMLは触らなくてよい）。 */
+  function updateFilterBar() {
+    const bar = document.getElementById('works-filter');
+    if (!bar) return;
+    const useFilter = currentTab === 'schedule';
+    bar.style.display = useFilter ? '' : 'none';
+    if (!useFilter) return;
+
+    let shown = 0;
+    bar.querySelectorAll('.filter-btn').forEach(btn => {
+      const f = btn.dataset.filter;
+      if (f === 'all') { btn.style.display = ''; return; }
+      const n = [...document.querySelectorAll('.work-card')]
+        .filter(c => c.dataset.category === currentTab && c.dataset.cat === f).length;
+      btn.style.display = n > 0 ? '' : 'none';
+      if (n > 0) shown++;
+    });
+    /* 絞り込める項目が1つしか無いなら、バー自体を出す意味がない */
+    if (shown <= 1) bar.style.display = 'none';
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    currentFilter = 'all';
+    const bar = document.getElementById('works-filter');
+    if (bar) bar.querySelectorAll('.filter-btn').forEach(b =>
+      b.classList.toggle('is-active', b.dataset.filter === 'all'));
+    updateFilterBar();
+    updateCards();
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentFilter = btn.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(b =>
+        b.classList.toggle('is-active', b === btn));
+      updateCards();
+    });
   });
+
+  switchTab(initialTab);
 
   /* === タブ切り替え（スライダーpill付き） === */
   const tabSlider = document.querySelector('.tab-slider');
@@ -1640,10 +2407,7 @@
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
       moveSlider(btn);
-      const tab = btn.dataset.tab;
-      document.querySelectorAll('.work-card').forEach(card => {
-        card.style.display = card.dataset.category === tab ? '' : 'none';
-      });
+      switchTab(btn.dataset.tab);
     });
   });
 

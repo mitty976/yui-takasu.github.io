@@ -4,29 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/assets/img/favicon.png" type="image/png">
-  <title>Yui Takasu | Web Design & Illustration</title>
-  <meta name="description" content="Webデザイナー・イラストレーター Yui Takasu のポートフォリオ。Webデザイン・イラスト・Live2Dなど幅広い制作実績を掲載しています。">
+  <!-- 「ぐるにゃ」で検索されたときに見つかるよう、屋号を先頭に置いている。
+       イラスト＝ぐるにゃ／デザイン＝Yui-Takasu の2つの名義を両方入れる -->
+  <title>ぐるにゃ（Yui-Takasu）｜イラスト・Webデザイン</title>
+  <meta name="description" content="イラストレーター「ぐるにゃ」／Webデザイナー「Yui-Takasu」のポートフォリオ。VTuber立ち絵・アイコン・ロゴ・LP・バナー・動くイラストなどの制作実績を掲載しています。">
 
   <!-- OGP -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://www.yui-takasu.com/">
-  <meta property="og:title"       content="Yui Takasu | Web Design & Illustration">
-  <meta property="og:description" content="Webデザイナー・イラストレーター Yui Takasu のポートフォリオ。Webデザイン・イラスト・Live2Dなど幅広い制作実績を掲載しています。">
+  <meta property="og:title"       content="ぐるにゃ（Yui-Takasu）｜イラスト・Webデザイン">
+  <meta property="og:description" content="イラストレーター「ぐるにゃ」／Webデザイナー「Yui-Takasu」のポートフォリオ。VTuber立ち絵・アイコン・ロゴ・LP・バナー・動くイラストなどの制作実績を掲載しています。">
   <meta property="og:image"       content="https://www.yui-takasu.com/assets/img/ogp.png">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale"      content="ja_JP">
-  <meta property="og:site_name"   content="Yui Takasu Portfolio">
+  <meta property="og:site_name"   content="ぐるにゃ / Yui-Takasu Portfolio">
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:site"        content="@mitty976">
-  <meta name="twitter:title"       content="Yui Takasu | Web Design & Illustration">
-  <meta name="twitter:description" content="Webデザイナー・イラストレーター Yui Takasu のポートフォリオ。Webデザイン・イラスト・Live2Dなど幅広い制作実績を掲載しています。">
+  <meta name="twitter:title"       content="ぐるにゃ（Yui-Takasu）｜イラスト・Webデザイン">
+  <meta name="twitter:description" content="イラストレーター「ぐるにゃ」／Webデザイナー「Yui-Takasu」のポートフォリオ。VTuber立ち絵・アイコン・ロゴ・LP・バナー・動くイラストなどの制作実績を掲載しています。">
   <meta name="twitter:image"       content="https://www.yui-takasu.com/assets/img/ogp.png">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://www.yui-takasu.com/">
+
+  <!-- 構造化データ：検索エンジンに「ぐるにゃ＝Yui-Takasu という一人の制作者」だと伝える。
+       sameAs に各アカウントを並べることで、ココナラやXのプロフィールと
+       このサイトが同一人物のものだと機械的に結び付けられる。
+       アカウントが増えたら sameAs に足すこと。 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "ぐるにゃ",
+    "alternateName": ["Gurunya", "Yui-Takasu", "ぐるにゃ（Yui-Takasu）"],
+    "url": "https://www.yui-takasu.com/",
+    "image": "https://www.yui-takasu.com/assets/img/ogp.png",
+    "jobTitle": ["イラストレーター", "Webデザイナー"],
+    "description": "VTuber立ち絵・アイコン・ロゴ・動くイラストのイラストレーター「ぐるにゃ」／LP・バナー・ブランディングのWebデザイナー「Yui-Takasu」。",
+    "knowsLanguage": ["ja", "en", "fr"],
+    "sameAs": [
+      "https://x.com/mitty976",
+      "https://coconala.com/users/1524205",
+      "https://skeb.jp/@mitty976"
+    ]
+  }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -231,6 +256,8 @@
     #logo-guru { opacity: 0; }
 
     .logo-card__name {
+      /* h1にしたので、見出しの既定マージンを打ち消して見た目を元のままに保つ */
+      margin: 0;
       font-size: 20px;
       letter-spacing: 0.18em;
       font-family: 'Georgia', serif;
@@ -519,15 +546,17 @@
     <div class="center-logo" id="center-logo">
       <a class="logo-card" id="logo-card" href="about.html">
         <div class="logo-inner" id="logo-yui">
-          <span class="logo-card__name">Yui-Takasu</span>
+          <!-- ページの主題を示す見出し。検索エンジンが最初に読む要素なので h1 にしている -->
+          <h1 class="logo-card__name">Yui-Takasu</h1>
           <span class="logo-card__divider"></span>
           <span class="logo-card__sub">Design & Illustration</span>
         </div>
         <!-- ぐるにゃロゴ＋サイン -->
         <div class="logo-inner" id="logo-guru">
-          <img src="assets/img/guru-logo.png" alt="ぐるにゃ" class="guru-logo">
+          <!-- このページは言語切り替えを持たず日英併記で作っているため、altも両方を入れる -->
+          <img src="assets/img/guru-logo.png" alt="ぐるにゃ / Gurunya" class="guru-logo">
           <span class="guru-credit">Illustration by ぐるにゃ (@mitty976)</span>
-          <img src="assets/img/guru-sign.png" alt="サイン" class="guru-sign">
+          <img src="assets/img/guru-sign.png" alt="ぐるにゃのサイン / Gurunya signature" class="guru-sign">
         </div>
       </a>
       <!-- ロゴ左移動後に下からスライドアップする名刺 -->
