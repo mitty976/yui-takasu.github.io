@@ -113,12 +113,15 @@ body.is-loaded {
 
 /* JP/EN */
 .lang-switch {
+  position: relative;
   display: flex;
   gap: 6px;
   align-items: center;
 }
 
 .lang-btn {
+  position: relative;
+  z-index: 1;
   background: none;
   border: none;
   font-family: var(--font-en);
@@ -126,14 +129,55 @@ body.is-loaded {
   color: rgba(74,42,58,0.45);
   cursor: pointer;
   letter-spacing: 0.05em;
-  padding: 4px 0;
-  transition: all 0.2s;
-}
-.lang-btn.is-active {
-  background: var(--color-btn);
-  color: #fff;
-  border-radius: 20px;
+  /* 転がる四角と大きさを揃えるため、選択中でなくても同じ余白をとる */
   padding: 4px 14px;
+  transition: color 0.25s ease;
+}
+/* 背景は .lang-pill が担当するので、ここでは文字色だけ変える */
+.lang-btn.is-active { color: #fff; }
+
+/* === 選択中を示す四角。押した言語のところまで転がっていく ===
+   Downloads/tips-3「転がるCSSアニメーション」の考え方。
+   右下（または左下）を軸に90度回して、回りきったところで位置を確定し、
+   最後に少しだけ跳ね返らせて止める。移動量と向きは illust.js が変数で渡す。 */
+.lang-pill {
+  position: absolute;
+  z-index: 0;
+  top: var(--lang-pill-top, 0);
+  left: var(--lang-pill-left, 0);
+  width: var(--lang-pill-width, 0);
+  height: var(--lang-pill-height, 0);
+  background: var(--color-btn);
+  border-radius: 8px;
+  pointer-events: none;
+  transition: background 0.6s ease;
+}
+.lang-pill.is-rolling-right {
+  transform-origin: right bottom;
+  animation: lang-roll 0.55s ease-out both;
+}
+.lang-pill.is-rolling-left {
+  transform-origin: left bottom;
+  animation: lang-roll-left 0.55s ease-out both;
+}
+
+@keyframes lang-roll {
+  0%    { transform: rotate(0deg); }
+  50%   { transform: rotate(90deg); }
+  50.1% { transform: translateX(var(--lang-roll-x)); }
+  75%   { transform: translateX(var(--lang-roll-x)) rotate(8deg); }
+  100%  { transform: translateX(var(--lang-roll-x)); }
+}
+@keyframes lang-roll-left {
+  0%    { transform: rotate(0deg); }
+  50%   { transform: rotate(-90deg); }
+  50.1% { transform: translateX(var(--lang-roll-x)); }
+  75%   { transform: translateX(var(--lang-roll-x)) rotate(-8deg); }
+  100%  { transform: translateX(var(--lang-roll-x)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-pill.is-rolling-right,
+  .lang-pill.is-rolling-left { animation: none; }
 }
 
 /* === 季節切り替えボタン === */
@@ -236,23 +280,34 @@ body.is-loaded {
   flex-direction: column;
   align-items: center;
   min-height: 0;
-  padding-top: 32px;
+  /* 両端の余白を30px → 50pxに広げる（2026-09-30）。
+     page-wrapper の padding 28px に足して効く */
+  padding: 32px 18px 0;
 }
 
 .sidebar-logo {
-  width: 300px;
+  /* サイドバーにプロフィール画像とSNSが増えたので、案のバランスに合わせて縮めた（2026-09-30） */
+  width: 327px;
   height: auto;
   position: relative;
   z-index: 2;
   margin-bottom: -16px;
+  /* 位置の微調整（2026-09-30）。relative なので周りのレイアウトは動かない。
+     うさぎとcopyrightを画面内に入れるため、下へのずらしをやめた */
+  top: 0;
+  left: 45px;
 }
 
 .sidebar-chara {
-  width: 220px;
-  left: 25%;
+  width: 196px;
+  /* もとは left:25% でアーチ形カードの右上に乗せていたが、
+     カードを削除したので中央に戻した（2026-09-30） */
   height: auto;
   position: relative;
-  z-index: 1;
+  z-index: 3;
+  margin-top: -152px;
+  /* 位置の微調整（2026-09-30） */
+  left: -130px;
   animation: floatChara 3.5s ease-in-out infinite;
 }
 
@@ -312,10 +367,14 @@ body.is-loaded {
   letter-spacing: 0.05em;
 }
 
+/* サイドバーからヘッダーへ移したので、全幅ではなく文字ぶんの幅にする */
 .simulator-btn {
-  display: block;
-  width: 100%;
-  padding: 11px;
+  display: inline-block;
+  /* 言語切り替えと高さを揃えるため少し下げる（2026-10-01） */
+  position: relative;
+  top: 7px;
+  padding: 9px 22px;
+  white-space: nowrap;
   background: var(--color-btn);
   color: #fff;
   border: none;
@@ -333,7 +392,8 @@ body.is-loaded {
 
 /* ご依頼する前のお願い */
 .pre-request-link {
-  display: block;
+  /* サイドバーからヘッダーへ移したので、中央寄せの余白をやめて横並びに乗るようにする */
+  display: inline-block;
   text-align: center;
   font-size: 12px;
   font-family: var(--font-title);
@@ -343,8 +403,9 @@ body.is-loaded {
   border: 1.5px solid var(--color-border);
   border-radius: 24px;
   cursor: pointer;
-  margin: 8px auto 0;
+  margin: 0;
   width: fit-content;
+  white-space: nowrap;
   padding: 7px 22px;
   transition: background 0.2s, color 0.2s, border-color 0.6s ease;
   text-decoration: none;
@@ -415,6 +476,9 @@ body.is-loaded {
 
 .sidebar-copy {
   margin-top: auto;
+  /* BGMを外したぶん、位置を微調整（2026-09-30） */
+  position: relative;
+  top: 0;
   padding: 12px 0 8px;
   font-size: 9.5px;
   color: rgba(74,42,58,0.45);
@@ -422,7 +486,8 @@ body.is-loaded {
   letter-spacing: 0.04em;
 }
 
-.sidebar    { flex: 3.5; max-width: 320px; width: auto; }
+/* Aboutを入れるため 320px → 450px に広げた（2026-09-30） */
+.sidebar    { flex: 3.5; max-width: 450px; width: auto; }
 .works-main { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; margin-right: -28px; margin-bottom: -28px; }
 
 /* === Page Top === */
@@ -664,6 +729,8 @@ body.is-loaded {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  /* ページ内インデックスで飛ぶときに、ぬるっと動かす */
+  scroll-behavior: smooth;
 }
 
 /* スクロールバー */
@@ -685,7 +752,8 @@ body.is-loaded {
   border: 1.5px solid var(--color-border);
   border-radius: 24px;
   padding: 10px 18px;
-  margin-bottom: 32px;
+  /* インデックスとの間を詰めて、作品カードを上まで寄せる（2026-09-30） */
+  margin-bottom: 10px;
   font-size: 12px;
   color: var(--color-accent);
   transition: border-color 0.6s ease;
@@ -720,6 +788,161 @@ body.is-loaded {
   font-size: 11px;
   opacity: 0.75;
   letter-spacing: 0.03em;
+}
+
+/* === サイドバー上段：プロフィール画像と受注状況の吊り札 ===
+   デザイン案どおり、丸いプロフィール画像の右に吊り札を並べる。
+   紐はサイドバーの上端から下りてくるので、この枠は position:relative にしない
+   （relative にすると紐の基準がここになって上まで伸ばせない）。 */
+.sidebar-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  padding: 0 14px;
+  /* 窮屈に見えたので上段ごと10px下げる。下のAboutも連動して下がる（2026-09-30） */
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+/* 左側：プロフィール画像と各サービスのリンクを縦に積む */
+.sidebar-top__left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  /* ゾーンごと左へ寄せる（2026-09-30） */
+  position: relative;
+  left: -20px;
+}
+.sidebar-avatar {
+  width: 193px;
+  height: 193px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  /* 吊り札の上端とのバランスをとって少し下げる（2026-09-30） */
+  margin-top: 15px;
+}
+
+/* === 受注状況の吊り札 ===
+   紐で吊るされた札が上から落ちてきて、カランカランと揺れて止まる。
+   3階層に分けているのは、X方向の振り・Y方向の落下・回転の揺れを
+   それぞれ別の要素に持たせるため（1要素だと transform が競合する）。
+   読み込み直後に走ってローダーの裏で終わらないよう、
+   body に is-ready が付いてから発火させる。 */
+.status-sign {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  max-width: 168px;
+}
+.status-sign__inner { position: relative; }
+
+/* 紐。デザイン案どおり、サイドバーの上端から札の穴まで伸ばす */
+.status-sign__inner::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% - 14px);
+  left: 50%;
+  width: 2px;
+  height: 102px;
+  transform: translateX(-50%);
+  background: var(--color-border);
+  border-radius: 999px;
+  z-index: 0;
+}
+
+.status-sign .status-bar {
+  position: relative;
+  z-index: 1;
+  /* 札の中身は中央寄せにして、吊り下がった見た目に合わせる */
+  align-items: center;
+  text-align: center;
+  /* 縦長の札にする。中身が少なくても高さを保つ */
+  min-height: 268px;
+  justify-content: flex-start;
+  /* ピル（受注状況バッジ）と中身の間の余白（2026-09-30） */
+  gap: 20px;
+  /* 紐を通す穴のぶん、上を広くとる */
+  padding: 22px 12px 16px;
+  margin-bottom: 0;
+  font-size: 11px;
+  /* 穴のあたりを支点にして揺れる */
+  transform-origin: 50% 7%;
+  box-shadow: 0 4px 10px -6px rgba(120,80,60,0.35);
+}
+/* 紐を通す穴 */
+.status-sign .status-bar::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--color-border);
+}
+.status-sign .status-bar__list { align-items: center; gap: 8px; }
+.status-sign .status-bar__item { text-align: center; line-height: 1.6; }
+/* 中央寄せなので「イラスト：」の幅そろえは外す。ラベルは行頭で改行させる */
+.status-sign .status-bar__label { min-width: 0; display: block; }
+/* 受注状況の2行から一段離す（2026-09-30） */
+.status-sign .status-bar__note { font-size: 10px; line-height: 1.5; margin-top: 16px; }
+
+/* === サイドバーの各サービスリンク ===
+   プロフィール画像の下・吊り札の左に置く。
+   アイコンの大きさは変えず、間隔を詰めて5つを1列に収める */
+.sidebar-sns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  /* アイコン26px×5＝130px。幅168pxに収まるので折り返さず1列になる */
+  gap: 6px;
+  width: 168px;
+}
+.sidebar-sns a {
+  display: inline-flex;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.sidebar-sns a:hover { transform: translateY(-3px); opacity: 0.8; }
+.sidebar-sns__icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* 落ちてきて揺れる。body.is-ready が付いてから動き出す */
+body.is-ready .status-sign        { animation: sign-swing-x 0.84s ease-in-out both; }
+body.is-ready .status-sign__inner { animation: sign-drop-y  0.84s ease-in-out both; }
+body.is-ready .status-sign .status-bar { animation: sign-shake 0.84s ease-in-out both; }
+
+@keyframes sign-swing-x {
+  from { transform: translateX(22%); }
+  40%  { transform: translateX(-11%); }
+  70%  { transform: translateX(5%); }
+  to   { transform: translateX(0); }
+}
+@keyframes sign-drop-y {
+  from { transform: translateY(-150%); }
+  40%  { transform: translateY(20%); }
+  60%  { transform: translateY(0); }
+  80%  { transform: translateY(8%); }
+  to   { transform: translateY(0); }
+}
+@keyframes sign-shake {
+  from { transform: rotate(42deg); }
+  40%  { transform: rotate(-13deg); }
+  70%  { transform: rotate(6deg); }
+  to   { transform: rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.is-ready .status-sign,
+  body.is-ready .status-sign__inner,
+  body.is-ready .status-sign .status-bar { animation: none; }
 }
 
 @keyframes poyopon {
@@ -859,6 +1082,10 @@ body.is-loaded {
 .tab-slider.is-moving-right { animation: slime-right 0.62s linear forwards; }
 .tab-slider.is-moving-left  { animation: slime-left  0.62s linear forwards; }
 
+/* ページ内インデックスを絶対配置する基準。
+   スクロールしないこの要素を基準にすることで、常に同じ位置に見える */
+.works-main { position: relative; }
+
 .works-sort {
   position: relative;
   display: flex;
@@ -870,7 +1097,8 @@ body.is-loaded {
   background: linear-gradient(to bottom, transparent 44px, rgba(255,255,255,0.85) 44px);
 }
 
-.works-sort::before {
+.works-sort::before,
+.section-sheet::before {
   content: '';
   position: absolute;
   top: 0;
@@ -883,6 +1111,22 @@ body.is-loaded {
       top / 60px 40px repeat-x,
     linear-gradient(to bottom, transparent 40px, rgba(255,255,255,0.85) 40px);
   filter: drop-shadow(0 -4px 6px color-mix(in srgb, var(--color-border) 45%, transparent));
+}
+
+
+/* === おレビュー／ご依頼方法のページの白いカードエリア ===
+   お作業実績（.works-sort ＋ .works-grid）と同じ見た目になるように、
+   波形装飾つきの白い面を1枚用意する（2026-10-01） */
+.section-sheet {
+  position: relative;
+  flex: 1;
+  margin: 0 -28px;
+  /* 上の余白は作品ページに合わせる。
+     作品ページは「波形62px ＋ 並び替えの行 ＋ グリッドの余白24px」で124pxぶん空くので、
+     ここも同じだけ空けて、カードの頭が付箋に隠れないようにする（2026-10-01） */
+  padding: 124px 32px 18px;
+  /* 上44px（::beforeの高さ分）は透明、それ以降を白にする */
+  background: linear-gradient(to bottom, transparent 44px, rgba(255,255,255,0.85) 44px);
 }
 
 .sort-btn {
@@ -1258,6 +1502,282 @@ body.is-loaded {
   .main-title { font-size: 32px; }
 }
 
+/* ロゴを h1 にしたので、見出しの既定マージンを打ち消す（見た目は変えない） */
+.sidebar-logo-heading { margin: 0; line-height: 0; }
+
+/* 言語切り替えをサイドバー左上へ。
+   .sidebar は align-items:center なので、align-self で左寄せにする。
+   上と左に少し余白を空ける */
+/* デザイン案にならって、プロフィール画像の上・中央に置く（2026-09-30）。
+   料金シミュレーターのボタンと高さを揃えるため少し上げている（2026-10-01） */
+.lang-switch--side {
+  align-self: center;
+  margin: 2px 0 14px;
+  position: relative;
+  top: -8px;
+}
+
+/* ヘッダーに移した2つのボタン。狭い画面では折り返す */
+.site-header .header-left { flex-wrap: wrap; gap: 10px; }
+
+/* === サイドバーのAbout（誰が描いているかを見せる枠） === */
+.sidebar-about {
+  width: 100%;
+  padding: 0 6px 6px;
+  text-align: left;
+}
+.sidebar-about__title {
+  font-family: var(--font-title);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin: 0 0 8px;
+}
+.sidebar-about__lead {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--color-accent);
+  margin: 0 0 10px;
+}
+.sidebar-about__meta {
+  margin: 0;
+  font-size: 10.5px;
+  line-height: 1.7;
+  color: var(--color-accent);
+  opacity: 0.85;
+}
+.sidebar-about__meta dt { font-weight: 600; margin-top: 6px; }
+.sidebar-about__meta dd { margin: 0 0 0 0.5em; opacity: 0.85; }
+
+/* === ページ内インデックス ===
+   works-scroll-area がスクロールする入れ物なので、その中で sticky が効く。
+   ページが縦に長くなっても、どこからでもセクションに飛べる。 */
+/* ページ内インデックス。
+   ・ボタンは縦に積む
+   ・白いカードエリアの左上にめり込ませる（左へ46pxはみ出し、残りは中に入る）
+   ・スクロールしない .works-main の中に絶対配置して常に見えるようにする
+   縦位置（top）は白いエリアの上端（波形の下）に合わせて illust.js が入れる。 */
+.section-index {
+  position: absolute;
+  left: -46px;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  /* stretch で3つの付箋の幅が自動で揃う（いちばん長いものに合わせる）。
+     max-width を超える長さ（主にフランス語）は折り返して2行になる */
+  align-items: stretch;
+  max-width: 118px;
+  gap: 8px;
+  background: none;
+  padding: 0;
+}
+.section-index__link {
+  position: relative;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--color-accent);
+  background: rgba(255,255,255,0.93);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 5px 16px;
+  /* 幅を揃えるので、文字は中央寄せ。長い言語は折り返す。
+     高さを揃えたとき（JSのequalizeHeight）に文字が上寄りにならないよう縦も中央 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.4;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.section-index__link:hover { background: var(--color-works); }
+.section-index__link.is-active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+/* ===========================================================
+   インデックスの見た目（付箋風）
+   ホバーで左上の角だけがめくれる。本体は動かさない。
+   =========================================================== */
+
+/* --- 案B：付箋風 ---------------------------------------- */
+.section-index--note { gap: 12px; }
+.section-index--note .section-index__link {
+  border: none;
+  border-radius: 2px 2px 3px 3px;
+  padding: 10px 22px 11px;
+  background: rgba(255,255,255,0.95);
+  /* 紙が浮いている影。下側だけ強くする */
+  box-shadow: 0 1px 2px rgba(120,80,60,0.10), 0 5px 8px -4px rgba(120,80,60,0.18);
+  transform: rotate(-2.4deg);
+  transition: transform 0.28s cubic-bezier(.2,.8,.3,1), box-shadow 0.28s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.section-index--note .section-index__link:nth-child(even) { transform: rotate(2.6deg); }
+/* 付箋側も同じ。本体は動かさず、角だけめくれる */
+.section-index--note .section-index__link:hover {
+  transform: rotate(-2.4deg);
+}
+.section-index--note .section-index__link:nth-child(even):hover {
+  transform: rotate(2.6deg);
+}
+.section-index--note .section-index__link.is-active {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* インデックスを押したときの覆い（.section-veil）は 2026-10-01 に廃止。
+   付箋はスクロールではなくページの差し替えで切り替える。 */
+
+
+/* ===========================================================
+   蛇腹折り（Codrops「3D Thumbnail Hover Effects」の手法）
+   https://tympanus.net/codrops/2012/06/18/3d-thumbnail-hover-effects/
+     ・親に perspective を置く
+     ・各スライスに transform-style: preserve-3d と
+       transform-origin: left center を与え、rotate3d(0,1,0,±deg) で回す
+   あちらは画像を5分割していたが、ここは文字ボタンなので
+   背景だけを4枚のスライスに分け、文字（.fold-label）は前面に固定する。
+   スライスは illust.js が自動で作る。
+   =========================================================== */
+/* ★ボタン本体は動かさない。めくれるのは左上の角だけ。
+   本体を傾けたり浮かせたりすると、めくれていない右下まで動いてしまう。 */
+
+/* めくれた部分は紙が無くなった場所なので、本体を切り欠いて背景を見せる。
+   通常時も頂点数を同じ5つにしておかないと、切り欠きが動かない。 */
+.section-index__link {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  transition: clip-path 0.42s cubic-bezier(.2,.8,.3,1),
+              background-color 0.2s ease, color 0.2s ease;
+}
+.section-index__link:hover {
+  clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px);
+}
+
+/* 切り欠いた縁に落ちる影。紙が持ち上がって下に隙間ができた表現 */
+.fold-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  opacity: 0;
+  background: linear-gradient(135deg,
+    rgba(120,80,60,0.34) 0 46%,
+    rgba(120,80,60,0.10) 49%,
+    transparent 52%);
+  transition: opacity 0.42s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.section-index__link:hover .fold-shade { opacity: 1; }
+
+.fold-label { position: relative; z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .section-index__link, .fold-shade { transition: none; }
+  .section-index__link:hover { clip-path: none; }
+}
+
+/* --- 左上からめくれる動き（2案に共通） -------------------
+   Codrops「3D Thumbnail Hover Effects」の考え方を使っている。
+   https://tympanus.net/codrops/2012/06/18/3d-thumbnail-hover-effects/
+     ・親に perspective を置いて3D空間を作る
+     ・子を transform-origin（回転の軸）を端に寄せて rotate3d で回す
+   ここでは左上の角を、折り目（左下→右上の対角線）を軸にめくっている。
+
+   3枚重ねで作っている：
+     ::before … めくれ上がる紙そのもの（回転する）
+     ::after  … めくれた跡。紙が持ち上がって暗くなった部分
+   平面のグラデーションを拡大するだけだと「めくれた絵」にしかならず、
+   実際に紙が起き上がる立体感が出ないため、3D回転にしている。 */
+.section-index--note .section-index__link {
+  perspective: 420px;
+  /* perspective-origin は既定（中央）のまま。
+     左上に寄せると、折り返した紙が視点の奥へ回り込んで見えなくなる */
+}
+
+/* めくれた跡の影は .fold-shade（実要素）が担当するので、::after は使わない */
+
+/* めくれ上がる紙。対角線を軸にまわす */
+.section-index--note .section-index__link::before {
+  content: '';
+  position: absolute;
+  /* 切り欠いた角とぴったり重ならないよう、左と上へ3pxずらす（ゆいさん指定） */
+  top: -3px;
+  left: -3px;
+  width: 26px;
+  height: 26px;
+  /* めくれた紙の「裏側」。
+     白いままだと下の白いボタンと同化して見えないので、
+     少し沈んだベージュにして、折り目に近いほど暗くする */
+  background: linear-gradient(135deg,
+    #f3e7df 0 30%,
+    #e3cec1 65%,
+    #cfb3a2 100%);
+  clip-path: polygon(0 0, 100% 0, 0 100%);   /* 左上の三角だけ */
+  /* 折り目は三角形の斜辺（右上→左下）。その線は要素の中心を通るので、
+     軸の位置は 50% 50%。右下(100% 100%)にすると軸が斜辺から外れ、
+     紙が本体の裏側へ回り込んで見えなくなる */
+  transform-origin: 50% 50%;
+  transform: rotate3d(-1, 1, 0, 0deg);       /* 通常はめくれていない */
+  /* 通常時は隠しておく。
+     疑似要素は表と裏で色を変えられないので、出しっぱなしにすると
+     めくれていないのに紙の裏（白い三角）が見えてしまうため。
+     opacity はごく短時間で切り替え、回転が始まった瞬間に現れるようにする */
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(.2,.8,.3,1),
+              box-shadow 0.45s ease,
+              opacity 0.1s ease;
+  pointer-events: none;
+}
+.section-index--note .section-index__link:hover::before {
+  opacity: 1;
+  /* 180度で完全に折り返すと紙が本体に貼り付いて見えなくなるので、
+     155度で止めて「めくれかけ」にする。紙に厚みがある感じも出る */
+  transform: rotate3d(-1, 1, 0, 155deg);
+  box-shadow: -3px 3px 7px rgba(120,80,60,0.28);
+}
+
+/* 動きを減らす設定にしている人には、めくれを出さない */
+@media (prefers-reduced-motion: reduce) {
+  .section-index--note .section-index__link::before { transition: none; }
+}
+
+/* === 各セクション（Work / Review / ご依頼の流れ） === */
+/* 付箋はページの切り替えとして働く。表示中のセクションだけを出す。
+   スクロールで移動すると「飛んだ」感じが出るので、中身ごと差し替える（2026-10-01） */
+/* margin-bottom はセクションを縦に並べていた頃の名残。
+   ページ切り替えにした今は、白いエリアが画面の下から浮く原因になるので外した（2026-10-01） */
+.page-section { display: none; }
+/* 白いカードエリアを画面の下まで伸ばすため、表示中のページは縦のflexにする */
+.page-section.is-shown { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.page-section__title {
+  font-family: var(--font-title);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  text-align: center;
+  /* インデックスのすぐ下に来るので、上下とも詰める */
+  margin: 2px 0 10px;
+}
+.page-section__note {
+  font-size: 12px;
+  color: var(--color-accent);
+  opacity: 0.55;
+  text-align: center;
+  padding: 48px 0;
+}
+@media (max-width: 480px) {
+  .section-index { gap: 4px; padding: 10px 0 12px; }
+  .section-index__link { font-size: 10.5px; padding: 4px 11px; letter-spacing: 0.02em; }
+  .page-section { margin-bottom: 48px; }
+  .page-section__title { font-size: 17px; }
+}
+
 /* 配信関連タブの絞り込みバー。
    項目が増えても横に溢れないよう flex-wrap: wrap で折り返す */
 .works-filter {
@@ -1319,4 +1839,89 @@ body.is-loaded {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+/* === 英語・フランス語のとき、ロゴとうさぎを隠す ===
+   日本語より文章が長く、サイドバーに入りきらないため。
+   copyright だけは残す（applyLang が html-root の lang を切り替える）。 */
+html[lang="en"] .sidebar-logo-heading,
+html[lang="en"] .sidebar-chara,
+html[lang="fr"] .sidebar-logo-heading,
+html[lang="fr"] .sidebar-chara {
+  display: none;
+}
+
+/* === おレビューのカード ===
+   作品カードと同じ3列。文量がまちまちなので高さは中身に合わせる。 */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* カードの幅を作品カード（.works-grid）と揃えるため、同じ gap にする */
+  gap: 48px;
+  align-content: start;
+  padding-bottom: 28px;
+}
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 16px 18px 14px;
+  box-shadow: 0 2px 6px -4px rgba(120,80,60,0.25);
+}
+.review-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0;
+}
+.review-card__stars {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #e3a93f;
+  white-space: nowrap;
+}
+/* 4つ星のときの残り1つ。同じ★を薄く重ねて5つに見せる */
+.review-card__stars-off { color: rgba(120,80,60,0.22); }
+.review-card__cat {
+  font-size: 10.5px;
+  color: var(--color-accent);
+  background: var(--color-works);
+  border-radius: 20px;
+  padding: 3px 10px;
+  letter-spacing: 0.03em;
+}
+.review-card__text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--color-accent);
+}
+.review-card__name {
+  margin: 0;
+  font-size: 11px;
+  text-align: right;
+  color: rgba(74,42,58,0.55);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 1100px) {
+  .review-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  .review-grid { grid-template-columns: 1fr; }
+}
+
+/* おレビューの一言（抜粋であることの断り） */
+.section-lead {
+  /* 見出しとの間、白エリアとの間を空ける（2026-10-01） */
+  margin: 14px 0 28px;
+  font-size: 11.5px;
+  text-align: center;
+  color: var(--color-accent);
+  opacity: 0.6;
+  letter-spacing: 0.03em;
 }

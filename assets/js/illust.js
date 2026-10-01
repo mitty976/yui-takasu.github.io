@@ -200,6 +200,9 @@
       document.body.appendChild(Sakura.canvas);
     }
     loader.classList.add('is-gone');
+    /* 受注状況の吊り札はローダーが明けてから落とす。
+       読み込み直後に走らせるとローダーの裏で終わってしまう */
+    document.body.classList.add('is-ready');
   }
 
   lInit();
@@ -516,6 +519,33 @@
         <p class="illu-desc">Fan art pour Hakki Kai (<a class="illu-handle" href="https://x.com/Hakki_kai24" target="_blank" rel="noopener">@Hakki_kai24</a>), VTuber au thème de boulanger. La scène saisit un moment de pétrissage dans le fournil, avec au premier plan les croissants et les melon pan qui attendent la cuisson, afin de restituer l'atmosphère de la boutique elle-même. Le four en inox et le mobilier gris apaisent l'image, laissant les bruns du pain cuit et du tablier jouer le rôle d'accents chauds.</p>
         <p class="illu-note">Remake de la première version dessinée en mai 2026, dont les couleurs ont été reprises avec plus de précision en septembre 2026.</p>
         <p class="illu-desc">※ Cette illustration ne peut être utilisée par quiconque d'autre que Hakki Kai sans son autorisation.</p>
+      </div>`,
+    },
+    illust_aretete: {
+      title: '【ＦＡ】アール・テテ様‐テテ国の誕生日',
+      titleEn: '[Fan art] Are Tete — A Birthday in the Nation of Tete',
+      titleFr: '[Fan art] Are Tete — Un anniversaire au pays de Tete',
+      subtitle: 'Still illustration / SD chibi',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/FAアールテテ誕生日イラスト.webp" alt="アール・テテ様ファンアート"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 07月 18日 制作</p>
+        <p class="illu-desc">アール・テテ様（<a class="illu-handle" href="https://x.com/AreTete_Vtuber" target="_blank" rel="noopener">@AreTete_Vtuber</a>）へのお誕生日ファンアートです。テテ国の新年でもあるお誕生日をお祝いする場面として、ピンクのソファを玉座に見立て、ハートのバルーンと贈り物で画面の四隅を囲みました。銀からピンクへ抜ける髪と白い衣装を主役に置き、背景をごく淡いピンクでまとめることで、赤いバルーンとケーキのいちごだけが強い色として残るようにしています。</p>
+        <p class="illu-note">ケーキの上には王冠をかぶったちびテテ様を添えて、本体の凛としたお顔との落差を作りました。ご依頼の合間に時間を割いて描き上げた一枚です。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/FAアールテテ誕生日イラスト.webp" alt="Are Tete fan art"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created 18 July 2026</p>
+        <p class="illu-desc">Birthday fan art for Are Tete (<a class="illu-handle" href="https://x.com/AreTete_Vtuber" target="_blank" rel="noopener">@AreTete_Vtuber</a>). To celebrate a birthday that doubles as New Year's Day in the nation of Tete, the pink sofa stands in for a throne, with heart balloons and gifts framing the four corners of the image. The hair fading from silver to pink and the white outfit lead the composition, while the background is kept to a very pale pink so that only the red balloons and the strawberries on the cake remain as strong colors.</p>
+        <p class="illu-note">A chibi Tete wearing a crown sits on top of the cake, set against the composed expression of the main figure. A piece drawn in the gaps between commissions.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/FAアールテテ誕生日イラスト.webp" alt="Fan art Are Tete"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé le 18 juillet 2026</p>
+        <p class="illu-desc">Fan art d'anniversaire pour Are Tete (<a class="illu-handle" href="https://x.com/AreTete_Vtuber" target="_blank" rel="noopener">@AreTete_Vtuber</a>). Pour fêter un anniversaire qui fait aussi office de nouvel an au pays de Tete, le canapé rose tient lieu de trône, tandis que les ballons en cœur et les cadeaux encadrent les quatre coins de l'image. La chevelure passant de l'argent au rose et la tenue blanche mènent la composition, le fond restant d'un rose très pâle pour que seuls les ballons rouges et les fraises du gâteau subsistent comme couleurs fortes.</p>
+        <p class="illu-note">Une version chibi de Tete, couronne sur la tête, est posée sur le gâteau, en contraste avec le visage posé du personnage principal. Une illustration réalisée entre deux commandes.</p>
       </div>`,
     },
     illust_kamishiro: {
@@ -2049,6 +2079,25 @@
       statusIllust:      '<span class="status-bar__label">イラスト：</span><strong>10月上旬</strong>着手、<strong>10月中下旬以降</strong>納品可能',
       statusDesign:      '<span class="status-bar__label">デザイン：</span><strong>10月上旬</strong>着手、<strong>10月中旬以降</strong>納品可能',
       statusNote:        'お急ぎの場合は短縮納期・最短納期も承ります。',
+      /* サイドバーのAbout。段落は <br> で区切る（data-i18n-html で差し込む） */
+      aboutTitle:        'About',
+      aboutLead:         '2026年3月より、兼業から専業のフリーランスイラストレーターとして活動しています。<br>「こういう雰囲気にしたい」という、まだ言葉になりきらない段階からご一緒するのが好きで、ご本人でも言い表せていなかった部分まで拾って描くよう心がけています。<br>VTuber様向けのイラストを中心に、立ち絵と表情差分からLive2D向けのパーツ分け、待機画面・サムネイル・ロゴなどのデザインや動画編集・オリジナルPV制作まで、配信画面に映るものはひと通りお任せいただけます。',
+      aboutToolsLabel:   '制作ツール',
+      aboutEnvLabel:     '作業環境',
+      /* ページ内インデックスと各セクションの見出し。
+         インデックスは3つとも5文字に揃えて、付箋の幅がバラバラにならないようにする */
+      idxWork:           'お作業実績',
+      idxReview:         'おレビュー',
+      idxRequest:        'ご依頼方法',
+      secWork:           'Work',
+      secReview:         'レビュー',
+      secRequest:        'ご依頼の流れ',
+      secReviewNote:     '（お客様からいただいたお声がここに入ります）',
+      reviewLead:        "ココナラやつなぐなどでいただいたレビューより抜粋",
+      reqTabIllust:      "イラスト",
+      reqTabLogo:        "ネームロゴ",
+      reqTabStream:      "配信関連デザイン",
+      secRequestNote:    '（ご依頼の流れ・条件・注意事項がここに入ります）',
       filterAll:         'すべて',
       filterOverlay:     'オーバーレイ',
       filterBg:          '配信背景',
@@ -2078,6 +2127,22 @@
       statusIllust:      '<span class="status-bar__label">Illustration:</span> starting <strong>early October</strong>, delivery from <strong>mid-to-late October</strong>',
       statusDesign:      '<span class="status-bar__label">Design:</span> starting <strong>early October</strong>, delivery from <strong>mid-October</strong>',
       statusNote:        'Rush and express turnaround are also available on request.',
+      aboutTitle:        'About',
+      aboutLead:         'Since March 2026 I have worked full time as a freelance illustrator.<br>I like joining a project while the idea is still taking shape, and I try to draw even the parts you may not have been able to put into words yourself.<br>My work centers on illustration for VTubers: from character art and expression variants to artwork separated into parts for Live2D, design work such as standby screens, thumbnails and logos, video editing and original music videos — everything that appears on the stream itself.',
+      aboutToolsLabel:   'Tools',
+      aboutEnvLabel:     'Setup',
+      idxWork:           'Work',
+      idxReview:         'Review',
+      idxRequest:        'How to Order',
+      secWork:           'Work',
+      secReview:         'Review',
+      secRequest:        'How to Order',
+      secReviewNote:     '(Client feedback goes here)',
+      reviewLead:        "Selected reviews received on Coconala, Tsunagu and elsewhere",
+      reqTabIllust:      "Illustration",
+      reqTabLogo:        "Name logo",
+      reqTabStream:      "Stream design",
+      secRequestNote:    '(The ordering process, terms and notes go here)',
       filterAll:         'All',
       filterOverlay:     'Overlay',
       filterBg:          'Stream Background',
@@ -2107,6 +2172,22 @@
       statusIllust:      "<span class=\"status-bar__label\">Illustration :</span> prise en charge <strong>début octobre</strong>, livraison à partir de <strong>mi-octobre à fin octobre</strong>",
       statusDesign:      "<span class=\"status-bar__label\">Design :</span> prise en charge <strong>début octobre</strong>, livraison à partir de <strong>mi-octobre</strong>",
       statusNote:        'Des délais raccourcis ou express sont également possibles sur demande.',
+      aboutTitle:        'À propos',
+      aboutLead:         "Depuis mars 2026, je travaille à plein temps comme illustratrice indépendante.<br>J'aime accompagner un projet dès le stade où l'idée n'est pas encore mise en mots, et je m'efforce de dessiner jusqu'aux détails que vous n'auriez pas su formuler vous-même.<br>Mon travail est centré sur l'illustration pour les VTubers : des illustrations de personnage et variantes d'expression au découpage en parties pour Live2D, en passant par le design d'écrans d'attente, de miniatures et de logos, le montage vidéo et la réalisation de clips originaux — tout ce qui apparaît à l'écran pendant un stream.",
+      aboutToolsLabel:   'Outils',
+      aboutEnvLabel:     'Environnement',
+      idxWork:           'Work',
+      idxReview:         'Avis',
+      idxRequest:        'Comment commander',
+      secWork:           'Work',
+      secReview:         'Avis',
+      secRequest:        'Comment commander',
+      secReviewNote:     '(Les retours des clients viendront ici)',
+      reviewLead:        "Sélection d'avis reçus sur Coconala, Tsunagu et ailleurs",
+      reqTabIllust:      "Illustration",
+      reqTabLogo:        "Logo de nom",
+      reqTabStream:      "Design pour stream",
+      secRequestNote:    '(Le déroulement de la commande, les conditions et les remarques viendront ici)',
       filterAll:         'Tout',
       filterOverlay:     'Overlay',
       filterBg:          'Arrière-plan',
@@ -2147,6 +2228,108 @@
     swap('[data-tip-ja]', 'tip', 'title');
   }
 
+  /* === おレビュー ===
+     ココナラ・つなぐでいただいた評価。
+     規約と転載のことがあるので、本文は原文そのままではなく言い回しを変えたもの、
+     お名前は頭文字だけにしてある（数字だけのお名前は「匿名様」に寄せた）。
+     s=星の数 / c=カテゴリ / n=お名前 / t=本文。配列は [日本語, 英語, フランス語] の順。 */
+  const REVIEWS = [
+    { s:5, c:['立ち絵','Character art','Illustration de personnage'], n:['N様','N','N'],
+      t:['IRIAM用の立ち絵をお願いしました。仕上がりの完成度はもちろん、こちらの意見をしっかり聞いてくださって助かりました。',
+         'I ordered character art for IRIAM. The finished quality was excellent, and they listened carefully to what I had to say, which was a great help.',
+         "J'ai commandé une illustration de personnage pour IRIAM. La qualité du résultat était au rendez-vous, et mes remarques ont été écoutées avec attention, ce qui m'a beaucoup aidé."] },
+    { s:5, c:['MV制作','Music video','Clip musical'], n:['K様','K','K'],
+      t:['今回もいつもどおり良いものを作っていただき、とても助かりました！',
+         'Once again they made something great, just as always. It was a big help!',
+         "Comme toujours, le résultat était excellent. Cela m'a beaucoup aidé !"] },
+    { s:5, c:['立ち絵','Character art','Illustration de personnage'], n:['R様','R','R'],
+      t:['タッチがとても細やかで、大満足しています。',
+         'The linework is wonderfully detailed. I am completely satisfied.',
+         "Le trait est d'une grande finesse. Je suis pleinement satisfait."] },
+    { s:5, c:['立ち絵','Character art','Illustration de personnage'], n:['匿名様','Anonymous','Anonyme'],
+      t:['とても素敵なイラストを描いていただきました！',
+         'They drew a truly lovely illustration for me!',
+         'Une illustration vraiment magnifique !'] },
+    { s:5, c:['立ち絵','Character art','Illustration de personnage'], n:['匿名様','Anonymous','Anonyme'],
+      t:['IRIAMで使う立ち絵をお願いしました。仕上がりは本当に満足のいくもので、素晴らしいの一言です。制作中のやり取りも丁寧で、初めての依頼でしたがとても話しやすかったです。またお願いしたいと思える方でした。',
+         'I ordered character art to use on IRIAM. The result was genuinely satisfying — wonderful is the only word for it. Communication during the work was careful too, and although it was my first commission, they were very easy to talk to. Someone I would gladly order from again.',
+         "J'ai commandé une illustration de personnage pour IRIAM. Le résultat est vraiment satisfaisant, tout simplement magnifique. Les échanges pendant la réalisation étaient attentionnés et, bien que ce fût ma première commande, la conversation a été très facile. Quelqu'un à qui je ferais de nouveau appel avec plaisir."] },
+    { s:5, c:['配信OP・ED・待機画面','Stream OP, ED & standby screen',"Génériques et écran d'attente"], n:['N様','N','N'],
+      t:['丁寧かつ迅速に対応していただきました。依頼時のやり取りもスムーズで、説明の足りない部分まで汲み取っていただけて大変助かりました。また依頼したいと思います。',
+         'Careful and quick from start to finish. The exchanges when placing the order went smoothly, and they picked up on the parts I had not explained well, which helped enormously. I would like to order again.',
+         "Un travail soigné et rapide. Les échanges au moment de la commande ont été fluides, et les points que j'avais mal expliqués ont été compris malgré tout, ce qui m'a beaucoup aidé. Je recommanderai."] },
+    { s:5, c:['立ち絵','Character art','Illustration de personnage'], n:['匿名様','Anonymous','Anonyme'],
+      t:['細部まで要望に応えてくださり、丁寧なお取引でした。本当に感謝しかありません。',
+         'They met my requests down to the smallest detail, and the whole exchange was courteous. I am truly grateful.',
+         "Mes demandes ont été satisfaites jusque dans les moindres détails, et l'ensemble de l'échange a été courtois. Je ne peux qu'exprimer ma gratitude."] },
+    { s:5, c:['立ち絵','Character art','Illustration de personnage'], n:['匿名様','Anonymous','Anonyme'],
+      t:['納品も早く、対応もとても良く親切にしていただきました。またお願いすると思います。',
+         'Delivery was fast and the service was attentive and kind. I expect I will order again.',
+         'La livraison a été rapide et le suivi attentionné et aimable. Je pense refaire appel à ses services.'] },
+    { s:5, c:['イラスト','Illustration','Illustration'], n:['K様','K','K'],
+      t:['毎回丁寧に対応してくださり、すごく助かっています。',
+         'Every single time the work is careful. It helps me a great deal.',
+         "À chaque fois, le travail est soigné. Cela m'aide énormément."] },
+    { s:5, c:['SNSアイコン・ヘッダー','Social icon & header','Icône et bannière'], n:['K様','K','K'],
+      t:['一つひとつ丁寧に作っていただきました。自分の中ではめちゃくちゃ大満足で、依頼して大正解だったと思っています。',
+         'Every piece was made with care. I am extremely happy with them, and ordering was absolutely the right call.',
+         "Chaque élément a été réalisé avec soin. J'en suis extrêmement satisfait : commander était vraiment le bon choix."] },
+    { s:5, c:['Xヘッダー','X header','Bannière X'], n:['S様','S','S'],
+      t:['写真をもとにXのヘッダーイラストを描いていただきました。とてもきれいで可愛らしい仕上がりでしたし、何よりやり取りが素晴らしいと感じました。',
+         'They drew an X header illustration based on my photo. The result was beautiful and charming, and above all the communication was excellent.',
+         'Une bannière X a été dessinée à partir de ma photo. Le résultat est beau et charmant, et surtout les échanges ont été excellents.'] },
+    { s:5, c:['歌ってみた・配信用サムネ','Cover song & stream thumbnail','Miniature pour reprise et stream'], n:['T様','T','T'],
+      t:['迅速丁寧に制作してくださいました。とても素敵に仕上げていただき嬉しかったです。',
+         'Quick and careful work. I was delighted with how lovely it turned out.',
+         "Un travail rapide et soigné. J'ai été ravi du résultat, vraiment réussi."] },
+    { s:5, c:['ロゴデザイン','Logo design','Création de logo'], n:['J様','J','J'],
+      t:['とても可愛いロゴを制作いただきました。要望を丁寧に汲んでくださり、理想以上に素敵なものをいただけました。',
+         'They made a very cute logo for me. They took my requests to heart and delivered something even better than I had imagined.',
+         "Un logo très mignon. Mes demandes ont été comprises avec attention et le résultat dépasse ce que j'avais imaginé."] },
+    { s:5, c:['ロゴデザイン','Logo design','Création de logo'], n:['O様','O','O'],
+      t:['とっても素敵なロゴを制作してくださいました。やり取りも丁寧でスムーズでした。',
+         'They made a really lovely logo. The communication was courteous and smooth as well.',
+         'Un logo vraiment réussi. Les échanges ont également été courtois et fluides.'] },
+    { s:5, c:['ロゴデザイン','Logo design','Création de logo'], n:['匿名様','Anonymous','Anonyme'],
+      t:['モチーフたっぷりの、とても可愛い名前ロゴに仕上げていただきました。またぜひお願いしたいです。',
+         'They turned my name into a very cute logo, packed with motifs. I would love to order again.',
+         'Mon nom est devenu un logo très mignon, riche en motifs. Je recommanderai avec plaisir.'] },
+    { s:5, c:['ロゴデザイン','Logo design','Création de logo'], n:['S様','S','S'],
+      t:['とても素敵な作品を作成していただきました。次の機会にもぜひお願いしたいです。',
+         'A wonderful piece of work. I would certainly like to order again next time.',
+         'Un travail magnifique. Je ferai de nouveau appel à ses services.'] },
+    { s:5, c:['ロゴデザイン','Logo design','Création de logo'], n:['匿名様','Anonymous','Anonyme'],
+      t:['イメージ通りの素敵なロゴに仕上げていただきました。細やかなお気遣いで安心してお任せでき、とても可愛く制作いただけて嬉しかったです。',
+         'The logo came out exactly as I had pictured it. Their attentiveness made it easy to leave everything in their hands, and I was delighted with how cute it turned out.',
+         "Le logo correspond exactement à ce que j'avais en tête. Son attention aux détails m'a permis de tout lui confier en confiance, et le résultat, très mignon, m'a enchanté."] },
+    { s:5, c:['ロゴデザイン','Logo design','Création de logo'], n:['A様','A','A'],
+      t:['とても可愛く素敵な作品で、依頼をして本当に良かったです。',
+         'A very cute and lovely piece — I am really glad I ordered.',
+         "Une création très mignonne et réussie : je suis vraiment content d'avoir commandé."] },
+  ];
+
+  /* レビューを並べる。言語が変わるたびに組み直す */
+  function renderReviews(lang) {
+    const grid = document.getElementById('review-grid');
+    if (!grid) return;
+    const i = lang === 'en' ? 1 : lang === 'fr' ? 2 : 0;
+    grid.innerHTML = REVIEWS.map(r => {
+      const on  = '★'.repeat(r.s);
+      const off = '★'.repeat(5 - r.s);
+      return '<article class="review-card">'
+        + '<p class="review-card__head">'
+        + '<span class="review-card__stars" aria-label="' + r.s + ' / 5">' + on
+        + (off ? '<span class="review-card__stars-off">' + off + '</span>' : '')
+        + '</span>'
+        + '<span class="review-card__cat">' + r.c[i] + '</span>'
+        + '</p>'
+        + '<p class="review-card__text">' + r.t[i] + '</p>'
+        + '<p class="review-card__name">' + r.n[i] + '</p>'
+        + '</article>';
+    }).join('');
+  }
+
+
   function applyLang(lang) {
     currentLang = lang;
     document.querySelectorAll('[data-lang]').forEach(btn => {
@@ -2169,6 +2352,10 @@
 
     /* ページ全体の alt・aria-label・title も切り替える（ヘッダーやボタン類） */
     applyLangAttrs(document, lang);
+
+    /* おレビューは data-i18n ではなくJSのデータから組み立てているので、
+       言語が変わるたびに並べ直す */
+    if (typeof renderReviews === 'function') renderReviews(lang);
 
     /* カードタイトル・お仕事絵ラベルの切り替え */
     document.querySelectorAll('.work-card').forEach(card => {
@@ -2233,7 +2420,7 @@
   function openModal()  { modalOverlay.classList.add('is-open'); }
   function closeModal() { modalOverlay.classList.remove('is-open'); }
 
-  openBtn.addEventListener('click', openModal);
+  openBtn?.addEventListener('click', openModal);
   closeBtn.addEventListener('click', closeModal);
   modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
@@ -2277,7 +2464,10 @@
     let bgmOn     = false; // リフレッシュ後は常にOFFで開始（autoplay制限・UI不整合を防ぐ）
     let targetVol = parseFloat(localStorage.getItem('bgm-vol') ?? '0.3');
 
-    bgmVolSlider.value = targetVol;
+    /* BGMを廃止したページでは要素が無い。
+       この関数の中には他の処理も同居しているので return せず、
+       BGM関連の行だけを要素がある時に限って動かす（2026-09-30） */
+    if (bgmVolSlider) bgmVolSlider.value = targetVol;
 
     function fadeVol(audio, to, ms = 600) {
       const from  = audio.volume;
@@ -2315,7 +2505,7 @@
      タブ（イラスト／ロゴ／配信関連）でまず大きく分け、
      配信関連の中だけ data-cat でさらに絞り込めるようにしている。
      カードは「タブが一致」かつ「絞り込みが一致」の両方を満たすときだけ表示する。 */
-  const initialTab = document.querySelector('.tab-btn.is-active')?.dataset.tab || 'illust';
+  const initialTab = document.querySelector('#sec-work .tab-btn.is-active')?.dataset.tab || 'illust';
   let currentTab = initialTab;
   let currentFilter = 'all';
 
@@ -2372,7 +2562,7 @@
   switchTab(initialTab);
 
   /* === タブ切り替え（スライダーpill付き） === */
-  const tabSlider = document.querySelector('.tab-slider');
+  const tabSlider = document.querySelector('#sec-work .tab-slider');
 
   function moveSlider(targetBtn) {
     const fromLeft  = tabSlider.offsetLeft;
@@ -2396,7 +2586,7 @@
 
   /* 初期位置をセット */
   requestAnimationFrame(() => {
-    const activeBtn = document.querySelector('.tab-btn.is-active');
+    const activeBtn = document.querySelector('#sec-work .tab-btn.is-active');
     if (activeBtn && tabSlider) {
       tabSlider.style.setProperty('--pill-left',  activeBtn.offsetLeft  + 'px');
       tabSlider.style.setProperty('--pill-width', activeBtn.offsetWidth + 'px');
@@ -2405,26 +2595,32 @@
 
   /* アニメ終了後：アクティブボタンの実座標で --pill-* を上書き（位置ずれ防止） */
   tabSlider.addEventListener('animationend', () => {
-    const activeBtn = document.querySelector('.tab-btn.is-active');
+    const activeBtn = document.querySelector('#sec-work .tab-btn.is-active');
     if (!activeBtn) return;
     tabSlider.classList.remove('is-moving-right', 'is-moving-left');
     tabSlider.style.setProperty('--pill-left',  activeBtn.offsetLeft  + 'px');
     tabSlider.style.setProperty('--pill-width', activeBtn.offsetWidth + 'px');
   });
 
-  /* リサイズ時：ボタン幅・位置が変わるので --pill-* をリアルタイム再同期 */
-  window.addEventListener('resize', () => {
-    const activeBtn = document.querySelector('.tab-btn.is-active');
+  /* ボタン幅・位置が変わったときに --pill-* を合わせ直す */
+  function syncTabSlider() {
+    const activeBtn = document.querySelector('#sec-work .tab-btn.is-active');
     if (!activeBtn) return;
     tabSlider.classList.remove('is-moving-right', 'is-moving-left');
     tabSlider.style.setProperty('--pill-left',  activeBtn.offsetLeft  + 'px');
     tabSlider.style.setProperty('--pill-width', activeBtn.offsetWidth + 'px');
-  });
+  }
 
-  document.querySelectorAll('.tab-btn').forEach(btn => {
+  window.addEventListener('resize', syncTabSlider);
+  /* 言語を切り替えるとボタンの文字数が変わって幅も変わる。
+     合わせ直さないと、ピルが前の言語の幅のまま残ってずれる（2026-10-01） */
+  document.querySelectorAll('[data-lang]').forEach(b =>
+    b.addEventListener('click', () => setTimeout(syncTabSlider, 80)));
+
+  document.querySelectorAll('#sec-work .tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (btn.classList.contains('is-active')) return;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
+      document.querySelectorAll('#sec-work .tab-btn').forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
       moveSlider(btn);
       switchTab(btn.dataset.tab);
@@ -2459,7 +2655,7 @@
     });
   });
 
-    bgmToggle.addEventListener('click', () => {
+    bgmToggle?.addEventListener('click', () => {
       bgmOn = !bgmOn;
       localStorage.setItem('bgm', bgmOn ? 'on' : 'off');
       bgmIcon.src = bgmOn ? '../assets/img/icon-music.png' : '../assets/img/icon-mute.png';
@@ -2474,7 +2670,7 @@
       }
     });
 
-    bgmVolSlider.addEventListener('input', () => {
+    bgmVolSlider?.addEventListener('input', () => {
       targetVol = parseFloat(bgmVolSlider.value);
       localStorage.setItem('bgm-vol', targetVol);
       if (bgmOn) audioBgm.volume = targetVol;
@@ -2482,7 +2678,7 @@
 
     /* タブ・ウィンドウ切り替え時：音を止めてUIもOFFに揃える */
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden && bgmOn && !audioBgm.paused) {
+      if (document.hidden && bgmOn && audioBgm && !audioBgm.paused) {
         audioBgm.pause();
         bgmOn = false;
         bgmIcon.src = '../assets/img/icon-mute.png';
@@ -2508,6 +2704,266 @@
       e.stopPropagation();
     }
   }, true);
+
+  /* === インデックスのボタンを「蛇腹に折れる」作りにする ===
+     Codrops「3D Thumbnail Hover Effects」の手法。
+     https://tympanus.net/codrops/2012/06/18/3d-thumbnail-hover-effects/
+     あちらは画像を5枚のスライスに分け、background-position をずらして
+     1枚の絵が折れているように見せていた（分割は jQuery でやっている）。
+
+     ここは画像ではなく文字のボタンなので、そのままは使えない。
+     → 背景だけを4枚のスライスに分けて折り、文字は前面に固定する。
+       文字まで折ると読めなくなるため。
+     スライスはJSで作る。HTMLに書くとボタンを増やすたびに手で足すことになる。 */
+  (function buildFoldSlices() {
+    document.querySelectorAll('.section-index__link').forEach(link => {
+      if (link.querySelector('.fold-label')) return;   /* 二重生成の防止 */
+
+      const label = document.createElement('span');
+      label.className = 'fold-label';
+      label.textContent = link.textContent.trim();
+
+      /* ★data-i18n をリンク本体から文字の入れ物へ移す。
+         applyLang は [data-i18n] の textContent を丸ごと書き換えるので、
+         リンクに付いたままだと言語を切り替えた瞬間に影の要素まで消える。 */
+      if (link.dataset.i18n) {
+        label.dataset.i18n = link.dataset.i18n;
+        delete link.dataset.i18n;
+      }
+
+      /* 浮いた紙の下に落ちる影。CSSの ::before と ::after は
+         角のめくれで使っているので、影は実要素として足す */
+      const shade = document.createElement('span');
+      shade.className = 'fold-shade';
+
+      link.textContent = '';
+      link.appendChild(shade);
+      link.appendChild(label);
+    });
+  })();
+
+  /* === ページ内インデックスの縦位置を受注状況の下に合わせる ===
+     インデックスは .works-main に絶対配置しているので、top をJSで入れる。
+     受注状況の高さは言語によって変わる（英仏は文が長く折り返す）ため、
+     CSSで固定値を書くとずれてしまう。 */
+
+
+
+  /* === 言語切り替えの「転がる四角」 ===
+     Downloads/tips-3「転がるCSSアニメーション」の考え方を使っている。
+     選択中のボタンの上に四角を重ねておき、別の言語を押したら
+     その位置まで転がして動かす。
+     アニメーション中は transform で動かし、終わったら left を書き換えて
+     transform を外す（次の転がりの起点をずらさないため）。 */
+  (function initLangPill() {
+    const wrap = document.getElementById('lang-switch');
+    if (!wrap) return;
+    const pill = wrap.querySelector('.lang-pill');
+    const btns = [...wrap.querySelectorAll('.lang-btn')];
+    if (!pill || !btns.length) return;
+
+    /* いま選ばれているボタンにぴったり重ねる（アニメーションなし） */
+    function fit(btn) {
+      if (!btn) return;
+      pill.classList.remove('is-rolling-right', 'is-rolling-left');
+      pill.style.removeProperty('--lang-roll-x');
+      pill.style.setProperty('--lang-pill-left',   btn.offsetLeft   + 'px');
+      pill.style.setProperty('--lang-pill-top',    btn.offsetTop    + 'px');
+      pill.style.setProperty('--lang-pill-width',  btn.offsetWidth  + 'px');
+      pill.style.setProperty('--lang-pill-height', btn.offsetHeight + 'px');
+    }
+
+    function rollTo(btn) {
+      const fromLeft = parseFloat(getComputedStyle(pill).getPropertyValue('--lang-pill-left')) || 0;
+      const toLeft   = btn.offsetLeft;
+      const dx       = toLeft - fromLeft;
+
+      /* 同じ位置なら転がす必要がない。幅が変わる場合だけ合わせ直す */
+      if (Math.abs(dx) < 1) { fit(btn); return; }
+
+      pill.classList.remove('is-rolling-right', 'is-rolling-left');
+      void pill.offsetWidth;                      /* reflow でアニメをやり直す */
+      pill.style.setProperty('--lang-roll-x', dx + 'px');
+      pill.classList.add(dx > 0 ? 'is-rolling-right' : 'is-rolling-left');
+
+      /* 転がり終わったら、位置を left に移してtransformを外す */
+      pill.addEventListener('animationend', () => fit(btn), { once: true });
+    }
+
+    btns.forEach(btn => btn.addEventListener('click', () => {
+      /* applyLang が is-active を付け替えるので、こちらは位置だけ受け持つ */
+      rollTo(btn);
+    }));
+
+    /* 言語によってボタンの幅は変わらないが、
+       フォントの読み込みや画面幅の変化でずれることがあるので測り直す */
+    window.addEventListener('resize', () => fit(wrap.querySelector('.lang-btn.is-active')));
+    window.addEventListener('load',   () => fit(wrap.querySelector('.lang-btn.is-active')));
+    requestAnimationFrame(() => fit(wrap.querySelector('.lang-btn.is-active')));
+  })();
+
+  /* === ご依頼方法のタブ ===
+     見た目はお作業実績のタブと同じ（.works-tab のCSSをそのまま使う）。
+     お作業実績のタブ処理は #sec-work に限定してあるので、ここは独立して動かす。
+     中身（ご依頼の流れ本文）はこれから作るので、今は見た目の切り替えだけ。 */
+  (function initRequestTab() {
+    const wrap = document.getElementById('request-tab');
+    if (!wrap) return;
+    const slider = wrap.querySelector('.tab-slider');
+    const btns   = [...wrap.querySelectorAll('.tab-btn')];
+    if (!slider || !btns.length) return;
+
+    function syncSlider() {
+      const active = wrap.querySelector('.tab-btn.is-active');
+      if (!active) return;
+      slider.classList.remove('is-moving-right', 'is-moving-left');
+      slider.style.setProperty('--pill-left',  active.offsetLeft  + 'px');
+      slider.style.setProperty('--pill-width', active.offsetWidth + 'px');
+    }
+
+    function moveSlider(target) {
+      const fromLeft  = slider.offsetLeft;
+      const fromWidth = slider.offsetWidth;
+      const toLeft    = target.offsetLeft;
+      const toWidth   = target.offsetWidth;
+
+      slider.style.setProperty('--pill-left',  fromLeft  + 'px');
+      slider.style.setProperty('--pill-width', fromWidth + 'px');
+      slider.style.setProperty('--from-left',  fromLeft  + 'px');
+      slider.style.setProperty('--from-width', fromWidth + 'px');
+      slider.style.setProperty('--to-left',    toLeft    + 'px');
+      slider.style.setProperty('--to-width',   toWidth   + 'px');
+
+      slider.classList.remove('is-moving-right', 'is-moving-left');
+      void slider.offsetWidth;   /* reflow でアニメをリスタート */
+      slider.classList.add(toLeft > fromLeft ? 'is-moving-right' : 'is-moving-left');
+    }
+
+    btns.forEach(btn => btn.addEventListener('click', () => {
+      if (btn.classList.contains('is-active')) return;
+      btns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      moveSlider(btn);
+      /* 中身ができたら、ここで btn.dataset.req に応じたパネルを出す */
+    }));
+
+    slider.addEventListener('animationend', syncSlider);
+    window.addEventListener('resize', syncSlider);
+    /* 言語を切り替えると文字数が変わってボタン幅も変わる */
+    document.querySelectorAll('[data-lang]').forEach(b =>
+      b.addEventListener('click', () => setTimeout(syncSlider, 80)));
+    requestAnimationFrame(syncSlider);
+  })();
+
+  /* 初期表示（日本語）のぶんを先に組み立てておく */
+  renderReviews('ja');
+
+  (function placeSectionIndex() {
+    const idx  = document.getElementById('section-index');
+    const main = document.querySelector('.works-main');
+    const sort = document.querySelector('.works-sort');
+    if (!idx || !main || !sort) return;
+
+    /* .works-sort の上端から44pxが波形装飾、その下が白いカードエリア。
+       付箋の上端を波形の中に食い込ませる高さに置く（2026-09-30）。
+
+       ただし .works-sort は「お作業実績」ページの中にあるので、
+       おレビュー／ご依頼方法を開くと消えてしまう。
+       基準が無くなって付箋が画面の上まで飛ぶため、
+       お作業実績を表示しているときの高さを覚えておいて、
+       どのページでも同じ位置に置く（2026-10-01）。 */
+    const scroller = document.querySelector('.works-scroll-area');
+    let offsetFromScroller = null;
+
+    function place() {
+      if (!scroller) return;
+      const scTop   = scroller.getBoundingClientRect().top;
+      const mainTop = main.getBoundingClientRect().top;
+
+      /* 波形が見えているページでは、その位置を測って覚えておく */
+      if (sort.offsetParent !== null) {
+        offsetFromScroller = sort.getBoundingClientRect().top - scTop;
+      }
+      /* まだ一度も測れていない場合の保険 */
+      const offset = offsetFromScroller != null ? offsetFromScroller : 104;
+
+      idx.style.top = Math.round(scTop - mainTop + offset + 6) + 'px';
+    }
+
+    /* 付箋の高さを揃える。
+       フランス語など長い言語はボタンが2行になるので、
+       いちばん高いものに合わせて全部そろえる（幅はCSSのstretchで既に揃っている） */
+    function equalizeHeight() {
+      const links = idx.querySelectorAll('.section-index__link');
+      links.forEach(a => { a.style.minHeight = ''; });
+      let max = 0;
+      links.forEach(a => { max = Math.max(max, a.offsetHeight); });
+      links.forEach(a => { a.style.minHeight = max + 'px'; });
+    }
+
+    function refresh() { equalizeHeight(); place(); }
+    refresh();
+    window.addEventListener('resize', refresh);
+    /* 画像やフォントの読み込みでレイアウトが動いたあとにも測り直す。
+       初回だけで済ませると、確定前の位置のままズレて残る */
+    window.addEventListener('load', refresh);
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(refresh);
+      ro.observe(main);
+      ro.observe(sort);
+    }
+    /* 言語を切り替えると文字数が変わって行数・受注状況の高さが変わるので、そのあとも測り直す */
+    document.querySelectorAll('[data-lang]').forEach(b =>
+      b.addEventListener('click', () => setTimeout(refresh, 60)));
+  })();
+
+  /* === ページ内インデックス：いま見ているセクションのボタンを光らせる ===
+     スクロールする入れ物は window ではなく .works-scroll-area。
+
+     IntersectionObserver ではなく、スクロール位置から計算する方式にしている。
+     理由：Work（作品47件）に対して Review と ご依頼の流れ は短いので、
+     いちばん下までスクロールしても、その2つが画面の上部まで来ない。
+     監視の帯に入らないままアクティブにならず、ずっとWorkが光ってしまう。
+     → 「最下部まで来たら最後のセクション」を明示的に扱う必要がある。 */
+  (function () {
+    const links = [...document.querySelectorAll('.section-index__link')];
+    if (!links.length) return;
+    const scroller = document.querySelector('.works-scroll-area');
+    const sections = links
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+    if (!sections.length || !scroller) return;
+
+    const setActive = id => links.forEach(a =>
+      a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
+
+    /* ★付箋はページの切り替え。
+       スクロールして移動すると「飛んだ」感じが出るので、
+       表示するセクションそのものを差し替える。
+       拡大する覆い（.section-veil）は見た目が悪かったので外した（2026-10-01）。 */
+
+    /* 指定のセクションだけを表示して、先頭から読めるようにする */
+    function showSection(id) {
+      sections.forEach(s => s.classList.toggle('is-shown', s.id === id));
+      setActive(id);
+      const prev = scroller.style.scrollBehavior;
+      scroller.style.scrollBehavior = 'auto';
+      scroller.scrollTop = 0;
+      scroller.style.scrollBehavior = prev;
+      /* セクションによって中身の高さが変わるので、付箋の位置を測り直す */
+      window.dispatchEvent(new Event('resize'));
+    }
+
+    links.forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      if (!document.getElementById(id)) return;
+      showSection(id);
+    }));
+
+    /* 1ページ＝1セクションなので、スクロール位置から光らせる処理は不要 */
+    setActive((sections.find(s => s.classList.contains('is-shown')) || sections[0]).id);
+  })();
 
   // 動画のループを強制ON
   document.querySelectorAll('video').forEach(v => { v.loop = true; });

@@ -71,33 +71,92 @@
 
   <!-- サイドバー：最上部から始まる -->
   <aside class="sidebar">
-    <img src="../assets/img/guru-logo.png" alt="ぐるにゃ" data-alt-ja="ぐるにゃ" data-alt-en="Gurunya" data-alt-fr="Gurunya" class="sidebar-logo">
+
+    <!-- 言語切り替え。ヘッダーからサイドバー左上へ移動した -->
+    <div class="lang-switch lang-switch--side" id="lang-switch">
+      <!-- 選択中を示す四角。押した言語のところまで「転がって」移動する（illust.js が動かす） -->
+      <span class="lang-pill" aria-hidden="true"></span>
+      <button class="lang-btn is-active" data-lang="ja">JP</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
+
+    <!-- ★上段：左にプロフィール画像と各サービスのリンク、右に受注状況の吊り札 -->
+    <div class="sidebar-top">
+      <div class="sidebar-top__left">
+        <img src="../assets/img/me.png" class="sidebar-avatar"
+             alt="ぐるにゃのプロフィール画像"
+             data-alt-ja="ぐるにゃのプロフィール画像"
+             data-alt-en="Gurunya's profile picture"
+             data-alt-fr="Photo de profil de Gurunya">
+
+        <!-- 各サービスへのリンク。プロフィール画像の下・吊り札の左に置く -->
+        <nav class="sidebar-sns" aria-label="各サービスへのリンク"
+             data-aria-ja="各サービスへのリンク" data-aria-en="Links to services" data-aria-fr="Liens vers les services">
+          <a href="https://twitter.com/mitty976" target="_blank" rel="noopener" aria-label="X（Twitter）">
+            <img src="../assets/img/images/X.png" alt="X" class="sidebar-sns__icon">
+          </a>
+          <a href="mailto:mayuyu9766@gmail.com" aria-label="Mail" data-aria-ja="メール" data-aria-en="Email" data-aria-fr="E-mail">
+            <img src="../assets/img/images/mail.png" alt="Mail" data-alt-ja="メール" data-alt-en="Email" data-alt-fr="E-mail" class="sidebar-sns__icon">
+          </a>
+          <a href="https://coconala.com/users/1524205" target="_blank" rel="noopener" aria-label="Coconala">
+            <img src="../assets/img/images/coconala.png" alt="Coconala" class="sidebar-sns__icon">
+          </a>
+          <a href="https://tsunagu.cloud/products/95782" target="_blank" rel="noopener" aria-label="つなぐ">
+            <img src="../assets/img/images/tunagu.png" alt="つなぐ" data-alt-ja="つなぐ" data-alt-en="Tsunagu" data-alt-fr="Tsunagu" class="sidebar-sns__icon">
+          </a>
+          <a href="https://skeb.jp/@mitty976" target="_blank" rel="noopener" aria-label="Skeb">
+            <img src="../assets/img/images/Skeb.png" alt="Skeb" class="sidebar-sns__icon">
+          </a>
+        </nav>
+      </div>
+
+      <!-- 受注状況。作品カードエリアの上からサイドバーへ移して吊り札にした。
+           紐で吊るされた札が上から落ちてきて揺れる（読み込み後に body.is-ready で発火）。
+           日付を変えるときは、この3行と illust.js の i18n辞書
+           （statusIllust / statusDesign / statusNote）を3言語ぶん揃えて直すこと -->
+      <div class="status-sign">
+        <div class="status-sign__inner">
+          <div class="status-bar">
+            <span class="status-bar__badge" data-i18n="statusBadge">📋 受注状況</span>
+            <div class="status-bar__list">
+              <span class="status-bar__item" data-i18n-html="statusIllust"><span class="status-bar__label">イラスト：</span><strong>10月上旬</strong>着手、<strong>10月中下旬以降</strong>納品可能</span>
+              <span class="status-bar__item" data-i18n-html="statusDesign"><span class="status-bar__label">デザイン：</span><strong>10月上旬</strong>着手、<strong>10月中旬以降</strong>納品可能</span>
+              <span class="status-bar__note" data-i18n="statusNote">お急ぎの場合は短縮納期・最短納期も承ります。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ★About：作品だけでなく「誰が描いているか」を見せるための枠。
+         文章はまだ仮。ゆいさんの添削後に差し替える。 -->
+    <section class="sidebar-about">
+      <h2 class="sidebar-about__title" data-i18n="aboutTitle">About</h2>
+      <!-- 段落が3つあるので data-i18n-html（innerHTML置換）を使う -->
+      <p class="sidebar-about__lead" data-i18n-html="aboutLead">2026年3月より、兼業から専業のフリーランスイラストレーターとして活動しています。<br>「こういう雰囲気にしたい」という、まだ言葉になりきらない段階からご一緒するのが好きで、ご本人でも言い表せていなかった部分まで拾って描くよう心がけています。<br>VTuber様向けのイラストを中心に、立ち絵と表情差分からLive2D向けのパーツ分け、待機画面・サムネイル・ロゴなどのデザインや動画編集・オリジナルPV制作まで、配信画面に映るものはひと通りお任せいただけます。</p>
+      <dl class="sidebar-about__meta">
+        <dt data-i18n="aboutToolsLabel">制作ツール</dt>
+        <dd>CLIP STUDIO PAINT / Photoshop / Illustrator / After Effects / Live2D</dd>
+        <dt data-i18n="aboutEnvLabel">作業環境</dt>
+        <dd>Windows 11</dd>
+      </dl>
+    </section>
+
+    <!-- ヘッダーの「Works」を消したので、代わりにロゴを h1 にしている。
+         h1 はページの主題を検索エンジンに伝える見出しで、1ページに1つ必要。
+         デザイン案にならって About の下へ移した。 -->
+    <h1 class="sidebar-logo-heading">
+      <img src="../assets/img/guru-logo.png" alt="ぐるにゃ" data-alt-ja="ぐるにゃ" data-alt-en="Gurunya" data-alt-fr="Gurunya" class="sidebar-logo">
+    </h1>
+
     <img src="../assets/img/alcohol-usa.png" alt="" class="sidebar-chara" aria-hidden="true">
 
-    <div class="sidebar-card">
-      <ul class="can-do-list">
-        <li class="can-do--funwari" data-i18n="canDo.icon">アイコン</li>
-        <li class="can-do--funwari" data-i18n="canDo.header">ヘッダー</li>
-        <li class="can-do--funwari" data-i18n="canDo.thumbnail">サムネイル</li>
-        <li class="can-do--niku"    data-i18n="canDo.still">一枚絵</li>
-        <li class="can-do--niku"    data-i18n="canDo.standing">立ち絵</li>
-        <li class="can-do--niku"    data-i18n="canDo.animated">動くイラスト</li>
-        <li class="can-do--funwari" data-i18n="canDo.goods">グッズイラスト</li>
-      </ul>
-      <p class="can-do-etc">...etc.</p>
-      <a href="../simulator.html" class="simulator-btn" data-i18n="simulator">料金シミュレーター</a>
-    </div>
+    <!-- アーチ形のカード（できることリスト）は削除した。
+         料金シミュレーターとご依頼する前のお願いはヘッダーへ移した。 -->
 
-    <button type="button" class="pre-request-link" id="open-prerequest" data-i18n="preRequest">ご依頼する前のお願い</button>
-
-    <div class="bgm-ctrl" id="bgm-ctrl">
-      <input class="bgm-vol" type="range" id="bgm-vol" min="0" max="1" step="0.05" value="0.3" aria-label="音量" data-aria-ja="音量" data-aria-en="Volume" data-aria-fr="Volume">
-      <button class="bgm-toggle" id="bgm-toggle" aria-label="BGM ON/OFF">
-        <img id="bgm-icon" src="../assets/img/icon-mute.png" width="18" height="18" alt="BGM">
-      </button>
-    </div>
-    <p class="bgm-credit">♪ 春の訪れ / マニーラ様</p>
-    <audio id="audio-bgm" src="../assets/audio/spring.mp3" loop preload="none"></audio>
+    <!-- BGMは廃止したので、音量ボタン・クレジット・audio要素を外した（2026-09-30）。
+         illust.js のBGM処理は要素が無ければ何もしないようにしてある -->
 
     <p class="sidebar-copy">copyright all rights reserved by ぐるにゃ</p>
   </aside>
@@ -105,13 +164,12 @@
   <!-- メインカラム（ヘッダー＋コンテンツ） -->
   <div class="main-column">
     <header class="site-header">
+      <!-- 「Works」の見出しと言語切り替えはここから外した。
+           見出し → サイドバーのロゴを h1 に／言語切り替え → サイドバー左上へ。
+           空いたぶんに、サイドバーから移してきた2つのボタンを置いている。 -->
       <div class="header-left">
-        <h1 class="main-title" data-i18n="title">Works</h1>
-        <div class="lang-switch">
-          <button class="lang-btn is-active" data-lang="ja">JP</button>
-          <button class="lang-btn" data-lang="en">EN</button>
-          <button class="lang-btn" data-lang="fr">FR</button>
-        </div>
+        <a href="../simulator.html" class="simulator-btn" data-i18n="simulator">料金シミュレーター</a>
+        <!-- 「ご依頼する前のお願い」ボタンは 2026-10-01 に削除。モーダル本体（#modal-prerequest）は残してある -->
       </div>
       <nav class="header-nav">
         <a href="../index.html" aria-label="ホームへ戻る" data-aria-ja="ホームへ戻る" data-aria-en="Back to home" data-aria-fr="Retour à l'accueil" class="home-link">
@@ -141,25 +199,35 @@
 
   <!-- メインエリア -->
   <main class="works-main">
+
+    <!-- ★ページ内インデックス（付箋風）
+         ・作品カードエリアの左端より外へはみ出して置く
+         ・スクロールしても常に見えている必要があるので、
+           スクロールしない .works-main の中に position:absolute で固定する
+           （スクロールする .works-scroll-area の中に入れると、
+             はみ出した分が overflow で切れてしまう）
+         ・縦位置は受注状況の下に合わせて illust.js が計算する
+         セクションを増やすときは、ここに1行足して下に <section> を作る -->
+    <nav class="section-index section-index--note" id="section-index" aria-label="ページ内の見出し"
+         data-aria-ja="ページ内の見出し" data-aria-en="Page sections" data-aria-fr="Sections de la page">
+      <a class="section-index__link is-active" href="#sec-work"    data-i18n="idxWork">お作業実績</a>
+      <a class="section-index__link"           href="#sec-review"  data-i18n="idxReview">おレビュー</a>
+      <a class="section-index__link"           href="#sec-request" data-i18n="idxRequest">ご依頼方法</a>
+    </nav>
+
     <div class="works-scroll-area">
       <!-- 受注状況バナー -->
-      <div class="status-bar">
-        <span class="status-bar__badge" data-i18n="statusBadge">📋 受注状況</span>
-        <div class="status-bar__list">
-          <!-- 受注状況。日付を変えるときは、この3行と illust.js の i18n辞書
-               （statusIllust / statusDesign / statusNote）を3言語ぶん揃えて直すこと -->
-          <span class="status-bar__item" data-i18n-html="statusIllust"><span class="status-bar__label">イラスト：</span><strong>10月上旬</strong>着手、<strong>10月中下旬以降</strong>納品可能</span>
-          <span class="status-bar__item" data-i18n-html="statusDesign"><span class="status-bar__label">デザイン：</span><strong>10月上旬</strong>着手、<strong>10月中旬以降</strong>納品可能</span>
-          <span class="status-bar__note" data-i18n="statusNote">お急ぎの場合は短縮納期・最短納期も承ります。</span>
-        </div>
-      </div>
+      <!-- ■ Work -->
+      <section class="page-section is-shown" id="sec-work">
+        <h2 class="page-section__title" data-i18n="secWork">Work</h2>
 
-      <div class="works-tab">
-        <span class="tab-slider"></span>
-        <button class="tab-btn is-active" data-tab="illust" data-i18n="tabIllust">イラスト</button>
-        <button class="tab-btn" data-tab="logo" data-i18n="tabLogo">ロゴ</button>
-        <button class="tab-btn" data-tab="schedule" data-i18n="tabSchedule">配信関連</button>
-      </div>
+        <!-- 作品の種類タブ。Workセクションの中身なので、この section の内側に置く -->
+        <div class="works-tab">
+          <span class="tab-slider"></span>
+          <button class="tab-btn is-active" data-tab="illust" data-i18n="tabIllust">イラスト</button>
+          <button class="tab-btn" data-tab="logo" data-i18n="tabLogo">ロゴ</button>
+          <button class="tab-btn" data-tab="schedule" data-i18n="tabSchedule">配信関連</button>
+        </div>
 
       <!-- 配信関連タブの絞り込み。
            作品が1件も無い項目のボタンは illust.js が自動で隠すので、
@@ -292,6 +360,21 @@
             </div>
           </div>
           <p class="work-title">【お仕事絵】速水シュウ様‐立ち絵＋表情差分</p>
+        </a>
+
+        <a class="work-card" data-category="illust" data-date="2026-07-18"
+           data-title-ja="【ＦＡ】アール・テテ様‐テテ国の誕生日"
+           data-title-en="[Fan art] Are Tete — A Birthday in the Nation of Tete"
+           data-title-fr="[Fan art] Are Tete — Un anniversaire au pays de Tete"
+           data-modal="illust_aretete" href="#">
+          <div class="work-thumb">
+            <img src="../images/works/illust/FAアールテテ誕生日イラスト.jpg" alt="" loading="lazy">
+            <div class="work-tags">
+              <span class="work-tag">Still illustration</span>
+              <span class="work-tag">SD chibi</span>
+            </div>
+          </div>
+          <p class="work-title">【ＦＡ】アール・テテ様‐テテ国の誕生日</p>
         </a>
 
         <a class="work-card" data-category="illust" data-date="2026-07-10"
@@ -901,6 +984,42 @@
         </a>
 
       </div><!-- /works-grid -->
+      </section><!-- /#sec-work -->
+
+      <!-- ■ Review：お客様の声。
+           ★ココナラ経由の分は要約かぼかしで載せる（原文を丸ごと載せない）。
+             ココナラ以外（つなぐ・直接依頼・X経由）で許可が取れた分だけ原文で載せてよい。
+             ココナラのトークルームで掲載許可を聞くのは外部誘導とみなされる恐れがあるため禁止。 -->
+      <section class="page-section" id="sec-review">
+        <h2 class="page-section__title" data-i18n="secReview">レビュー</h2>
+        <p class="section-lead" data-i18n="reviewLead">ココナラやつなぐなどでいただいたレビューより抜粋</p>
+        <!-- .section-sheet はお作業実績と同じ白いカードエリア（波形装飾つき） -->
+        <div class="section-sheet">
+          <!-- レビューは illust.js の REVIEWS から組み立てる。
+               文面は原文のままではなく言い回しを変えたもの、お名前は頭文字だけにしてある。
+               件数を増やすときは illust.js の REVIEWS に足す（3言語ぶん） -->
+          <div class="review-grid" id="review-grid"></div>
+        </div>
+      </section>
+
+      <!-- ■ ご依頼の流れ：受付状況・流れ・条件・注意事項など -->
+      <section class="page-section" id="sec-request">
+        <h2 class="page-section__title" data-i18n="secRequest">ご依頼の流れ</h2>
+
+        <!-- お作業実績と同じ見た目のタブ。中身（ご依頼の流れ本文）はこれから作る。
+             .tab-btn のJSは #sec-work に限定してあるので、ここは別の処理で動かしている -->
+        <div class="works-tab request-tab" id="request-tab">
+          <span class="tab-slider"></span>
+          <button class="tab-btn is-active" data-req="illust" data-i18n="reqTabIllust">イラスト</button>
+          <button class="tab-btn" data-req="logo" data-i18n="reqTabLogo">ネームロゴ</button>
+          <button class="tab-btn" data-req="stream" data-i18n="reqTabStream">配信関連デザイン</button>
+        </div>
+
+        <div class="section-sheet">
+          <p class="page-section__note" data-i18n="secRequestNote">（ご依頼の流れ・条件・注意事項がここに入ります）</p>
+        </div>
+      </section>
+
     </div><!-- /works-scroll-area -->
   </main>
   </div><!-- /main-column -->
@@ -965,7 +1084,7 @@
 
     <div class="modal-en modal-block" data-prereq-lang="en">
       <p class="modal-head">■ Work Requests (Illustration)</p>
-      <p class="modal-text">For illustration requests, please contact me via Skeb, Coconala, or X (DM).<br>Including budget and schedule helps ensure a smooth response.<br><br>Copyright will not be transferred or waived. Unauthorized use, redistribution, or AI training of my works is strictly prohibited.</p>
+      <p class="modal-text">For illustration requests, please contact me via Skeb, Coconala, or X (DM).<br>Including budget and schedule helps ensure a smooth response.<br>Copyright will not be transferred or waived. Unauthorized use, redistribution, or AI training of my works is strictly prohibited.</p>
     </div>
 
     <div class="modal-fr modal-block" data-prereq-lang="fr">
