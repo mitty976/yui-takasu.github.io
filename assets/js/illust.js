@@ -2659,18 +2659,8 @@
   /* 初期表示：デフォルトJPでモーダル言語ブロックを初期化 */
   applyLang('ja');
 
-  /* === モーダル === */
-  const modalOverlay  = document.getElementById('modal-prerequest');
-  const openBtn       = document.getElementById('open-prerequest');
-  const closeBtn      = document.getElementById('modal-close');
-
-  function openModal()  { modalOverlay.classList.add('is-open'); }
-  function closeModal() { modalOverlay.classList.remove('is-open'); }
-
-  openBtn?.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-  modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  /* 「ご依頼する前のお願い」モーダルは 2026-10-02 に削除。
+     中身はご依頼方法のタブへ移した。 */
 
   /* === Page Top === */
   const pageTop      = document.getElementById('page-top');
