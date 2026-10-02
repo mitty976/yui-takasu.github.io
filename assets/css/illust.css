@@ -2184,5 +2184,9 @@ html[lang="fr"] .sidebar-chara {
   .sidebar { padding-top: 8px; }
   /* 英仏は同じ級数でも大きく見えるので、少しだけ落とす */
   html[lang="en"] .status-sign .status-bar,
-  html[lang="fr"] .status-sign .status-bar { font-size: 10.5px; }
+  html[lang="fr"] .status-sign .status-bar { font-size: 9.5px; }
+  html[lang="en"] .status-sign .status-bar__badge,
+  html[lang="fr"] .status-sign .status-bar__badge { font-size: 9.5px; }
+  html[lang="en"] .status-sign .status-bar__note,
+  html[lang="fr"] .status-sign .status-bar__note { font-size: 8.5px; }
 }
