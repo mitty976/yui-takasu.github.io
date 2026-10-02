@@ -2330,6 +2330,252 @@
   }
 
 
+
+  /* === ご依頼方法の本文 ===
+     タブごとの内容（REQUEST_TABS）と、その下に常に出る共通の案内（REQUEST_COMMON）。
+     文面は [日本語, 英語, フランス語] の順。英仏はこのあと追加する。
+     修正回数：イラスト ラフ3回＋色味3回／ロゴ2回／配信関連2回＋2回／動画 絵コンテ2回＋完成後1回 */
+  const REQUEST_TABS = {
+    illust: {
+      made: ['制作内容', 'What I make', 'Prestations'],
+      madeBody: [
+        '立ち絵・表情差分・一枚絵・アイコン・ヘッダー・SDキャラ・配信OP／EDなど。<br>動くイラスト（Live2D向けのパーツ分け、まばたき・口・呼吸などのアニメーション）は<strong>オプション</strong>で承ります。',
+        "Character art, expression variants, single illustrations, icons, headers, SD chibi characters, stream openings and endings, and more.<br>Animated illustrations (part separation for Live2D, blinking, mouth and breathing motion) are available as an <strong>option</strong>.", "Illustrations de personnage, variantes d'expression, illustrations uniques, icônes, bannières, personnages SD (chibi), génériques de début et de fin, etc.<br>Les illustrations animées (découpage pour Live2D, clignements, bouche, respiration) sont proposées en <strong>option</strong>."],
+      deliver: ['納品内容', 'What you receive', 'Livrables'],
+      deliverList: [
+        ['透過PNG（ご希望に応じて他の形式も対応）',
+         'Live2D向けパーツ分けの場合は<strong>PSDデータ</strong>',
+         '納品後、モデラー様からパーツの追加・修正のご連絡があった場合は<strong>無料で対応</strong>いたします'],
+        ["Transparent PNG (other formats on request)","A <strong>PSD file</strong> when the work includes part separation for Live2D","If your modeller asks for parts to be added or adjusted after delivery, I handle it <strong>free of charge</strong>"],
+        ["PNG transparent (autres formats sur demande)","Un fichier <strong>PSD</strong> lorsque la commande inclut le découpage pour Live2D","Si votre modélisateur demande des ajouts ou des retouches de pièces après la livraison, je m'en charge <strong>gratuitement</strong>"]],
+      flow: ['ご依頼の流れ', 'How it works', 'Déroulement'],
+      flowList: [
+        ['<strong>ご相談・お見積もり</strong>',
+         '<strong>ご依頼確定・お支払い</strong>',
+         '<strong>ラフ案</strong> — 構図・デザインをご確認いただきます（<strong>修正3回まで無料</strong>）',
+         '<strong>線画・着色</strong>',
+         '<strong>色味修正</strong> — 完成後の色味調整を承ります（<strong>3回まで無料</strong>）',
+         '<strong>納品</strong>'],
+        ["<strong>Enquiry and quote</strong>","<strong>Order confirmed, payment</strong>","<strong>Rough draft</strong> — you check the composition and design (<strong>up to 3 free revisions</strong>)","<strong>Line art and colouring</strong>","<strong>Colour adjustment</strong> — tweaks to the finished colours (<strong>up to 3 free</strong>)","<strong>Delivery</strong>"],
+        ["<strong>Demande et devis</strong>","<strong>Commande confirmée, paiement</strong>","<strong>Croquis</strong> — vous validez la composition et le design (<strong>jusqu'à 3 retouches offertes</strong>)","<strong>Encrage et mise en couleur</strong>","<strong>Ajustement des couleurs</strong> — retouches sur les couleurs finales (<strong>jusqu'à 3 offertes</strong>)","<strong>Livraison</strong>"]],
+      flowNote: [
+        '線画・着色に進んだあとは<strong>色味修正のみ</strong>となります。色味修正では対応できない塗り方の変更・塗り直しは、別途お見積もりとなります。',
+        "Once we move on to line art and colouring, only <strong>colour adjustments</strong> are possible. A change of rendering style or a full repaint is quoted separately.", "Une fois l'encrage et la mise en couleur commencés, seuls les <strong>ajustements de couleur</strong> sont possibles. Un changement de technique ou une reprise complète fait l'objet d'un devis distinct."],
+      ng: ['お受けできない内容', 'What I cannot take on', 'Ce que je ne peux pas réaliser'],
+      ngList: [
+        ['メガ・モンスター・ホラー／グロ・初老の男性／女性・奇抜な髪型・版権物・許可のないファンアート／夢絵',
+         'すでにAI等で制作されたイラストで活動中のキャラクター・配信者様について、<strong>現在のキャラクターの描き直し・追加制作</strong>はお受けしておりません（アカウントごと新しく作り直される場合はお受けできます）',
+         '有償依頼を公開されている活動者様のファンアートは、ご本人の許可が明示されている場合のみお受けできます'],
+        ["Mega and giant creatures, monsters, horror and gore, elderly men or women, highly unconventional hairstyles, licensed characters, and fan art or self-insert art without permission","For characters and streamers already active with AI-generated artwork, I do not take on <strong>redraws or additional artwork of the current character</strong> (a fresh start on a new account is fine)","Fan art of creators who openly accept paid commissions is possible only where they have given explicit permission"],
+        ["Créatures géantes, monstres, horreur et gore, hommes ou femmes âgés, coiffures très extravagantes, personnages sous licence, fan art ou « dream art » sans autorisation","Pour les personnages et streamers déjà en activité avec des illustrations générées par IA, je n'accepte ni <strong>reprise ni ajout sur le personnage actuel</strong> (un nouveau départ sur un nouveau compte est possible)","Le fan art de créateurs qui acceptent publiquement les commandes payantes n'est possible qu'avec leur autorisation explicite"]],
+      tpl: ['ご用意いただけると嬉しいもの（ご依頼テンプレート）', 'Helpful to have (request template)', 'Ce qui aide (modèle de demande)'],
+      tplLead: ['わかる範囲でご記入ください。', 'Fill in what you can.', 'Remplissez ce que vous pouvez.'],
+      tplBody: [
+        '■ お名前（活動名）：\n■ ご希望のイラスト（立ち絵／一枚絵／アイコン／ヘッダー／SDキャラ など）：\n■ 用途（配信・アイコン・印刷など）：\n■ 描写範囲（等身：胸上・腰上・太ももまで・全身／SD：1.5〜3頭身）：\n■ 背景（なし・単色／簡易背景／描き込みあり）：\n■ ポーズ・構図のご希望：\n■ 年齢（顔のバランス・等身に反映します）：\n■ 身長（等身に反映します）：\n■ 性格（表情に反映します）：\n■ イメージカラー（複数いただけると助かります）：\n■ 全体のデザイン：\n■ ご希望の表情差分（立ち絵の場合）：\n■ 特殊なご要望（ぬいぐるみを抱える・後ろにおばけ など／別途お見積もり）：\n■ 参考画像：',
+        "■ Name (as you go by):\n■ Type of illustration (character art / single illustration / icon / header / SD chibi, etc.):\n■ Intended use (streaming, icon, print, etc.):\n■ Framing (full scale: chest-up, waist-up, thigh-up, full body / SD: 1.5–3 heads tall):\n■ Background (none or flat colour / simple / fully painted):\n■ Pose and composition:\n■ Age (reflected in facial balance and proportions):\n■ Height (reflected in proportions):\n■ Personality (reflected in expressions):\n■ Image colours (several are helpful):\n■ Overall design:\n■ Expression variants you would like (for character art):\n■ Special requests (holding a plush toy, a ghost floating behind, etc. — quoted separately):\n■ Reference images:", "■ Nom (sous lequel vous vous présentez) :\n■ Type d'illustration (illustration de personnage / illustration unique / icône / bannière / SD chibi, etc.) :\n■ Usage prévu (stream, icône, impression, etc.) :\n■ Cadrage (échelle normale : buste, taille, mi-cuisses, corps entier / SD : 1,5 à 3 têtes) :\n■ Arrière-plan (aucun ou couleur unie / simple / entièrement peint) :\n■ Pose et composition :\n■ Âge (influe sur l'équilibre du visage et les proportions) :\n■ Taille (influe sur les proportions) :\n■ Caractère (influe sur les expressions) :\n■ Couleurs de référence (plusieurs sont utiles) :\n■ Design général :\n■ Variantes d'expression souhaitées (pour une illustration de personnage) :\n■ Demandes particulières (serrer une peluche, un fantôme qui flotte derrière, etc. — devis séparé) :\n■ Images de référence :"],
+      tplNote: [
+        '<strong>細かくいただけるほど、そのぶん描き込みます。</strong>「パーカー・ロングスカート」のような箇条書きでも大丈夫です。<br>おまかせでも問題ありませんが、だいたいの丈感やイメージの分かる参考画像をいただけると嬉しいです。',
+        "<strong>The more detail you give, the more I can draw in.</strong> A list such as \"hoodie, long skirt\" is perfectly fine.<br>Leaving it to me is no problem at all, but a reference image that shows roughly the length and the mood is a great help.", "<strong>Plus vous me donnez de détails, plus je peux enrichir le dessin.</strong> Une simple liste comme « sweat à capuche, jupe longue » convient très bien.<br>Me laisser carte blanche ne pose aucun problème, mais une image de référence montrant à peu près les longueurs et l'ambiance m'aide beaucoup."],
+      extra: [
+        '<p class="req-callout"><strong>キャラクターデザイン料について</strong><br>参考になる画像を<strong>1枚でもいただければ、キャラクターデザイン料（+¥5,000）は頂きません。</strong>上半身のアイコンやちびキャラの画像でも構いません。「こういう雰囲気で」というお言葉と、服の参考になる商品写真などの組み合わせでも大丈夫です。お手元にイメージに近いものがあれば、ご添付いただけると助かります。</p>',
+        "<p class=\"req-callout\"><strong>About the character design fee</strong><br><strong>If you can send even one reference image, the character design fee (+¥5,000) is waived.</strong> An icon of the upper body or a chibi illustration is fine. A few words about the mood together with, say, a product photo of the clothing you have in mind also works. If you have anything close to your idea at hand, do attach it.</p>", "<p class=\"req-callout\"><strong>À propos des frais de création de personnage</strong><br><strong>Une seule image de référence suffit pour que les frais de création de personnage (+5 000 ¥) ne soient pas facturés.</strong> Une icône du buste ou une illustration chibi convient. Quelques mots sur l'ambiance accompagnés, par exemple, de la photo d'un vêtement qui vous plaît fonctionnent aussi. Si vous avez sous la main quelque chose de proche de votre idée, n'hésitez pas à le joindre.</p>"],
+    },
+
+    logo: {
+      made: ['制作内容', 'What I make', 'Prestations'],
+      madeBody: [
+        'キャラクターやモチーフを組み込んだ、装飾たっぷりのオリジナルデコロゴをお作りします。',
+        "A richly decorated original logo that works your character and its motifs into the lettering.", "Un logo original très décoré, qui intègre votre personnage et ses motifs dans le lettrage."],
+      plan: ['プラン', 'Plans', 'Formules'],
+      planList: [
+        ['<strong>シンプル</strong> — キャラクターのモチーフを1点だけ添えた、すっきりした構成です',
+         '<strong>デコ</strong> — キャラクターのモチーフを複数点あしらった、装飾の多い構成です',
+         '<strong>デコデコ</strong> — 文字そのものをモチーフに置き換えてデザインし、相棒キャラクター（ちびキャラ）を1点お描きします'],
+        ["<strong>Simple</strong> — a clean composition with a single motif from your character","<strong>Deco</strong> — a more decorated composition with several motifs from your character","<strong>Deco Deco</strong> — the lettering itself is rebuilt out of motifs, plus one companion character (chibi) drawn for you"],
+        ["<strong>Simple</strong> — une composition épurée avec un seul motif tiré de votre personnage","<strong>Déco</strong> — une composition plus ornée, avec plusieurs motifs de votre personnage","<strong>Déco Déco</strong> — le lettrage lui-même est composé de motifs, accompagné d'un personnage compagnon (chibi) dessiné pour vous"]],
+      planNote: ['料金は料金シミュレーターでご確認いただけます。', "Prices are available in the price simulator.", "Les tarifs sont consultables dans le simulateur de prix."],
+      madeList: [
+        ['文字デザイン（書体・装飾込み）',
+         '立ち絵や参考画像からキャラのモチーフを抽出',
+         '代表マスコット1体＋目を引くモチーフを組み込み',
+         '世界観に合った小物・装飾を散りばめます',
+         'かわいい・かっこいい・和風・ゴシックなど幅広いテイストに対応'],
+        ["Lettering design (typeface and ornament included)","Motifs taken from your character art or reference images","One signature mascot plus eye-catching motifs worked into the logo","Small items and ornaments that suit your world","A wide range of styles: cute, cool, Japanese, gothic and more"],
+        ["Création typographique (police et ornements compris)","Motifs extraits de votre illustration de personnage ou de vos références","Une mascotte emblématique et des motifs marquants intégrés au logo","Petits objets et ornements assortis à votre univers","Styles variés : mignon, cool, japonais, gothique, etc."]],
+      deliver: ['納品内容', 'What you receive', 'Livrables'],
+      deliverList: [
+        ['透過PNG（PSDでの納品も対応可）',
+         '<strong>最大6バリエーション</strong>（白枠・枠あり・枠なし × 影付き・影なし）',
+         '個人商用利用可（配信・グッズ・SNS等）'],
+        ["Transparent PNG (PSD also available)","<strong>Up to 6 variations</strong> (white outline / with frame / without frame × with shadow / without shadow)","Personal commercial use permitted (streaming, merchandise, social media and so on)"],
+        ["PNG transparent (PSD également possible)","<strong>Jusqu'à 6 variantes</strong> (contour blanc / avec cadre / sans cadre × avec ombre / sans ombre)","Usage commercial personnel autorisé (stream, goodies, réseaux sociaux, etc.)"]],
+      flow: ['ご依頼の流れ', 'How it works', 'Déroulement'],
+      flowList: [
+        ['<strong>ご相談・お見積もり</strong>',
+         '<strong>ご依頼確定・お支払い</strong>',
+         '<strong>ラフ案</strong>（<strong>修正2回まで無料</strong>）',
+         '<strong>清書・調整</strong>',
+         '<strong>納品</strong>'],
+        ["<strong>Enquiry and quote</strong>","<strong>Order confirmed, payment</strong>","<strong>Rough draft</strong> (<strong>up to 2 free revisions</strong>)","<strong>Final artwork and adjustments</strong>","<strong>Delivery</strong>"],
+        ["<strong>Demande et devis</strong>","<strong>Commande confirmée, paiement</strong>","<strong>Croquis</strong> (<strong>jusqu'à 2 retouches offertes</strong>)","<strong>Mise au net et ajustements</strong>","<strong>Livraison</strong>"]],
+      flowNote: [
+        '制作期間は<strong>着手日からおよそ10日間</strong>です。ご依頼からすぐ着手できない場合があるため、着手予定日は事前にお伝えします。',
+        "Production takes roughly <strong>10 days from the start date</strong>. I cannot always begin straight away, so I will let you know the expected start date in advance.", "La réalisation demande environ <strong>10 jours à compter du démarrage</strong>. Je ne peux pas toujours commencer immédiatement : je vous communique la date de démarrage prévue à l'avance."],
+      tpl: ['ご用意いただけると嬉しいもの（ご依頼テンプレート）', 'Helpful to have (request template)', 'Ce qui aide (modèle de demande)'],
+      tplLead: ['わかる範囲でご記入ください。', 'Fill in what you can.', 'Remplissez ce que vous pouvez.'],
+      tplBody: [
+        '■ ご希望のプラン（シンプル／デコ／デコデコ／おまかせ）：\n■ 表記（漢字・ひらがな・英字など、正確な綴り）：\n■ 文字数が多い場合、改行してもよいですか（1行で収めたい／2行に分けてよい）：\n■ 使う場所（配信画面・サムネイル・名刺・グッズなど）：\n■ イメージ（可愛い／クール／和風／ゴシック など）：\n■ イメージカラー：\n■ 入れたいモチーフ（音符・リボン・星など）：\n■ 立ち絵・参考画像（モチーフを抽出します）：',
+        "■ Plan (Simple / Deco / Deco Deco / leave it to you):\n■ Spelling (kanji, kana, Latin letters — the exact form):\n■ If the name runs long, may I break it over two lines? (keep to one line / two lines are fine):\n■ Where it will be used (stream screen, thumbnails, business cards, merchandise, etc.):\n■ Mood (cute / cool / Japanese / gothic, etc.):\n■ Image colours:\n■ Motifs to include (music notes, ribbons, stars, etc.):\n■ Character art or reference images (I take the motifs from these):", "■ Formule (Simple / Déco / Déco Déco / au choix de l'artiste) :\n■ Orthographe exacte (kanji, kana, caractères latins) :\n■ Si le nom est long, puis-je le répartir sur deux lignes ? (une seule ligne / deux lignes acceptées) :\n■ Où il sera utilisé (écran de stream, miniatures, cartes de visite, goodies, etc.) :\n■ Ambiance (mignon / cool / japonais / gothique, etc.) :\n■ Couleurs de référence :\n■ Motifs à intégrer (notes de musique, rubans, étoiles, etc.) :\n■ Illustration de personnage ou images de référence (j'y puise les motifs) :"],
+      tplNote: [
+        '<strong>細かくいただけるほど、装飾やモチーフを多く盛り込めます。</strong>「リボン」「星」「音符」のような箇条書きでも大丈夫です。<br>おまかせでも問題ありませんが、好きなテイストや雰囲気の分かる参考画像をいただけると嬉しいです。',
+        "<strong>The more detail you give, the more ornament and motifs I can work in.</strong> A list such as \"ribbon, star, music note\" is perfectly fine.<br>Leaving it to me is no problem at all, but a reference image showing the style you like is a great help.", "<strong>Plus vous me donnez de détails, plus je peux intégrer d'ornements et de motifs.</strong> Une simple liste comme « ruban, étoile, note de musique » convient très bien.<br>Me laisser carte blanche ne pose aucun problème, mais une image de référence montrant le style qui vous plaît m'aide beaucoup."],
+    },
+
+    stream: {
+      made: ['制作内容', 'What I make', 'Prestations'],
+      madeBody: ['待機画面・サムネイル・配信スケジュール表など。', "Standby screens, thumbnails, stream schedule graphics and the like.", "Écrans d'attente, miniatures, plannings de stream et autres visuels du même ordre."],
+      deliver: ['納品内容', 'What you receive', 'Livrables'],
+      deliverList: [
+        ['透過PNG／JPG（用途に合わせた解像度でお渡しします）'],
+        ["Transparent PNG / JPG, at a resolution suited to how you will use it"],
+        ["PNG transparent / JPG, à une résolution adaptée à l'usage prévu"]],
+      flow: ['ご依頼の流れ', 'How it works', 'Déroulement'],
+      flowList: [
+        ['<strong>ご相談・お見積もり</strong>',
+         '<strong>ご依頼確定・お支払い</strong>',
+         '<strong>ラフ案</strong>（<strong>修正2回まで無料</strong>）',
+         '<strong>制作</strong>',
+         '<strong>色味修正</strong>（<strong>2回まで無料</strong>）',
+         '<strong>納品</strong>'],
+        ["<strong>Enquiry and quote</strong>","<strong>Order confirmed, payment</strong>","<strong>Rough draft</strong> (<strong>up to 2 free revisions</strong>)","<strong>Production</strong>","<strong>Colour adjustment</strong> (<strong>up to 2 free</strong>)","<strong>Delivery</strong>"],
+        ["<strong>Demande et devis</strong>","<strong>Commande confirmée, paiement</strong>","<strong>Croquis</strong> (<strong>jusqu'à 2 retouches offertes</strong>)","<strong>Réalisation</strong>","<strong>Ajustement des couleurs</strong> (<strong>jusqu'à 2 offertes</strong>)","<strong>Livraison</strong>"]],
+      flowNote: [
+        '制作に進んだあとは色味修正のみとなります。色味修正では対応できない作り直しは、別途お見積もりとなります。',
+        "Once production has begun, only colour adjustments are possible. Anything that needs rebuilding is quoted separately.", "Une fois la réalisation commencée, seuls les ajustements de couleur sont possibles. Tout ce qui demande une refonte fait l'objet d'un devis distinct."],
+      tpl: ['ご用意いただけると嬉しいもの（ご依頼テンプレート）', 'Helpful to have (request template)', 'Ce qui aide (modèle de demande)'],
+      tplLead: ['わかる範囲でご記入ください。', 'Fill in what you can.', 'Remplissez ce que vous pouvez.'],
+      tplBody: [
+        '■ 用途（待機画面・サムネイル・スケジュール表 など）：\n■ 配信プラットフォーム（YouTube・IRIAM・Twitch など）：\n■ 入れたい文字（タイトル・時間・曜日など）：\n■ 使用する立ち絵・イラスト（世界観や身につけていらっしゃるものを画面に落とし込みます）：\n■ イメージカラー：\n■ イメージ（参考にしたい画像があれば）：',
+        "■ Use (standby screen / thumbnail / schedule graphic, etc.):\n■ Streaming platform (YouTube, IRIAM, Twitch, etc.):\n■ Text to include (title, times, days of the week, etc.):\n■ Character art or illustrations to use (I bring your world, and the things your character wears, into the design):\n■ Image colours:\n■ Mood (a reference image if you have one):", "■ Usage (écran d'attente / miniature / planning, etc.) :\n■ Plateforme de diffusion (YouTube, IRIAM, Twitch, etc.) :\n■ Texte à intégrer (titre, horaires, jours de la semaine, etc.) :\n■ Illustration de personnage à utiliser (j'en reprends l'univers et les éléments que porte votre personnage) :\n■ Couleurs de référence :\n■ Ambiance (une image de référence si vous en avez une) :"],
+      tplNote: [
+        '<strong>細かくいただけるほど、世界観を画面に落とし込めます。</strong>「落ち着いた色で」「文字は大きめに」のような箇条書きでも大丈夫です。<br>おまかせでも問題ありませんが、雰囲気の分かる参考画像をいただけると嬉しいです。',
+        "<strong>The more detail you give, the better I can bring your world onto the screen.</strong> A list such as \"muted colours, larger text\" is perfectly fine.<br>Leaving it to me is no problem at all, but a reference image showing the mood is a great help.", "<strong>Plus vous me donnez de détails, mieux je peux transposer votre univers à l'écran.</strong> Une simple liste comme « couleurs sobres, texte plus grand » convient très bien.<br>Me laisser carte blanche ne pose aucun problème, mais une image de référence montrant l'ambiance m'aide beaucoup."],
+    },
+
+    video: {
+      made: ['制作内容', 'What I make', 'Prestations'],
+      madeBody: ['オリジナルPV・MV制作。', "Original promotional videos and music videos.", "Clips promotionnels et clips musicaux originaux."],
+      deliver: ['納品内容', 'What you receive', 'Livrables'],
+      deliverList: [['mp4'], ["mp4"], ["mp4"]],
+      flow: ['ご依頼の流れ', 'How it works', 'Déroulement'],
+      flowList: [
+        ['<strong>ご相談・お見積もり</strong> — 尺・使用する楽曲・立ち絵素材の有無をお知らせください',
+         '<strong>ご依頼確定・お支払い</strong>',
+         '<strong>構成・絵コンテ</strong>（<strong>修正2回まで無料</strong>）',
+         '<strong>制作</strong>',
+         '<strong>確認・修正</strong>（<strong>2回まで無料</strong>）',
+         '<strong>納品</strong>'],
+        ["<strong>Enquiry and quote</strong> — let me know the length, the track, and whether you already have character art","<strong>Order confirmed, payment</strong>","<strong>Structure and storyboard</strong> (<strong>up to 2 free revisions</strong>)","<strong>Production</strong>","<strong>Review and revisions</strong> (<strong>up to 2 free</strong>)","<strong>Delivery</strong>"],
+        ["<strong>Demande et devis</strong> — indiquez la durée, le morceau et si vous disposez déjà d'une illustration de personnage","<strong>Commande confirmée, paiement</strong>","<strong>Structure et storyboard</strong> (<strong>jusqu'à 2 retouches offertes</strong>)","<strong>Réalisation</strong>","<strong>Vérification et retouches</strong> (<strong>jusqu'à 2 offertes</strong>)","<strong>Livraison</strong>"]],
+      flowNote: [
+        'イラストの制作も含むご依頼の場合は、<strong>イラストの修正2回・動画の修正2回</strong>まで無料で承ります。',
+        "If the request also includes drawing the illustrations, you have <strong>2 free revisions on the illustrations and 2 on the video</strong>.", "Si la commande inclut également la réalisation des illustrations, vous disposez de <strong>2 retouches offertes sur les illustrations et de 2 sur la vidéo</strong>."],
+      tpl: ['ご用意いただけると嬉しいもの（ご依頼テンプレート）', 'Helpful to have (request template)', 'Ce qui aide (modèle de demande)'],
+      tplLead: ['わかる範囲でご記入ください。', 'Fill in what you can.', 'Remplissez ce que vous pouvez.'],
+      tplBody: [
+        '■ 楽曲（音源の権利確認をお願いします）：\n■ 尺（フル／ショート）：\n■ 使用する立ち絵・イラスト（他の方が描かれたものは、その方の許可をお願いします）：\n■ 入れたい歌詞・テロップ：\n■ イメージ（参考にしたい動画があればURLを）：',
+        "■ Track (please confirm the rights to the audio):\n■ Length (full / short):\n■ Character art or illustrations to use (if someone else drew them, please obtain their permission):\n■ Lyrics or captions to include:\n■ Mood (a link to a reference video if you have one):", "■ Morceau (merci de vérifier les droits sur la bande sonore) :\n■ Durée (version complète / courte) :\n■ Illustrations à utiliser (si elles ont été dessinées par quelqu'un d'autre, merci d'obtenir son autorisation) :\n■ Paroles ou sous-titres à intégrer :\n■ Ambiance (le lien d'une vidéo de référence si vous en avez une) :"],
+      tplNote: [
+        '<strong>細かくいただけるほど、演出を詰められます。</strong>「サビで切り替えたい」「歌詞を出したい」のような箇条書きでも大丈夫です。<br>おまかせでも問題ありませんが、こうしたいという雰囲気の分かる参考動画をいただけると嬉しいです。',
+        "<strong>The more detail you give, the further I can take the staging.</strong> A list such as \"cut on the chorus, show the lyrics\" is perfectly fine.<br>Leaving it to me is no problem at all, but a reference video showing what you have in mind is a great help.", "<strong>Plus vous me donnez de détails, plus je peux pousser la mise en scène.</strong> Une simple liste comme « changer de plan au refrain, afficher les paroles » convient très bien.<br>Me laisser carte blanche ne pose aucun problème, mais une vidéo de référence montrant ce que vous avez en tête m'aide beaucoup."],
+    },
+  };
+
+  /* どのタブでも最後に出る一文 */
+  const REQUEST_TPL_NOTE = [
+    '<strong>細かくいただけるほど、そのぶん描き込みます。</strong>「パーカー・ロングスカート」のような箇条書きでも大丈夫です。<br>おまかせでも問題ありませんが、だいたいの丈感やイメージの分かる参考画像をいただけると嬉しいです。',
+    '', ''];
+
+  /* タブの下に常に出る共通の案内 */
+  const REQUEST_COMMON = [
+    { h: ['お支払いについて', 'Payment', 'Paiement'],
+      list: [['<strong>銀行振込</strong>、または<strong>ココナラ・つなぐ・SKIMA</strong>を通してのお支払いに対応しています',
+              '<strong>前払い</strong>です。お支払い確認をもってご依頼確定となります',
+              'お支払い後のキャンセル・返金は承っておりません',
+              'ご希望の内容によっては、ご依頼確定後に追加料金が発生する場合があります'], ["Payment by <strong>bank transfer</strong>, or through <strong>Coconala, Tsunagu or SKIMA</strong>","<strong>Payment is made in advance.</strong> The order is confirmed once payment is received","Cancellations and refunds are not possible once payment has been made","Depending on what you ask for, additional charges may arise after the order is confirmed"], ["Paiement par <strong>virement bancaire</strong> ou via <strong>Coconala, Tsunagu ou SKIMA</strong>","<strong>Le paiement se fait à l'avance.</strong> La commande est confirmée dès réception du paiement","Aucune annulation ni aucun remboursement ne sont possibles une fois le paiement effectué","Selon votre demande, des frais supplémentaires peuvent survenir après la confirmation de la commande"]] },
+    { h: ['納期について', 'Schedule', 'Délais'],
+      list: [['通常納期・短縮納期・最短納期からお選びいただけます（目安は料金シミュレーターをご覧ください）',
+              '<strong>ご依頼いただいた順に対応</strong>しております。修正回数やお返事の頻度によって、納品日が前後する場合があります',
+              '記念日など日付の決まっているものはお早めにご相談ください'], ["Standard, shortened and express turnaround are available (see the price simulator for estimates)","I work <strong>in the order requests come in</strong>. The delivery date can move depending on the number of revisions and how quickly we exchange messages","For anything tied to a date, such as an anniversary, please get in touch early"], ["Délais standard, raccourci ou express au choix (estimations dans le simulateur de prix)","Je traite les commandes <strong>dans leur ordre d'arrivée</strong>. La date de livraison peut varier selon le nombre de retouches et la rapidité de nos échanges","Pour tout ce qui est lié à une date précise, comme un anniversaire, pensez à me contacter tôt"]] },
+    { h: ['お返事について', 'Replies', 'Réponses'],
+      list: [['お見積もりから<strong>5日以上</strong>お返事がない場合は、スケジュール確保ができないためキャンセル扱いとさせていただきます',
+              'ご依頼確定後、<strong>理由なく2日以上</strong>お返事がない場合は、ラフ段階でも清書し、完成データをお送りしてクローズとさせていただきます'], ["If I do not hear back for <strong>5 days or more</strong> after sending a quote, I cannot hold the slot and the request is treated as cancelled","If there is no reply for <strong>2 days or more without reason</strong> after the order is confirmed, I will finish the piece from wherever it stands, send the final file and close the request"], ["Sans réponse de votre part pendant <strong>5 jours ou plus</strong> après l'envoi du devis, je ne peux pas réserver le créneau et la demande est considérée comme annulée","Sans réponse pendant <strong>2 jours ou plus et sans motif</strong> après la confirmation de la commande, je termine l'illustration en l'état, vous envoie le fichier final et clôture la demande"]] },
+    { h: ['著作権・ご利用範囲', 'Copyright and usage', 'Droits et utilisation'],
+      list: [['著作権の譲渡・放棄は<strong>原則として</strong>行っておりません。企業様・事務所所属の方に限り、ご事情をお伺いしたうえで対応いたします',
+              'ラフ画の保存・公開、自作発言、二次加工、二次配布は禁止しております',
+              '納品後のイラスト・制作途中データの、<strong>画像生成AIへの学習・生成利用</strong>はご遠慮ください',
+              '商用でお使いの場合は<strong>商用利用ライセンス（+¥5,000）</strong>が必要です',
+              'グッズ化は、1種類目はライセンスの範囲内、2種類目から二次利用料を頂戴します'], ["<strong>As a rule</strong>, copyright is neither transferred nor waived. For companies and artists belonging to an agency, I can discuss it after hearing the circumstances","Saving or publishing rough drafts, claiming the work as your own, altering it or redistributing it are not permitted","Please do not use delivered illustrations or work-in-progress files for <strong>training or generation with image-generating AI</strong>","Commercial use requires a <strong>commercial licence (+¥5,000)</strong>","For merchandise, the first product type falls within the licence; a secondary usage fee applies from the second type onwards"], ["<strong>En principe</strong>, les droits d'auteur ne sont ni cédés ni abandonnés. Pour les entreprises et les artistes affiliés à une agence, j'en discute après avoir pris connaissance de la situation","Conserver ou publier les croquis, s'attribuer l'œuvre, la modifier ou la redistribuer ne sont pas autorisés","Merci de ne pas utiliser les illustrations livrées ni les fichiers en cours pour <strong>l'entraînement ou la génération par une IA d'images</strong>","Un usage commercial nécessite une <strong>licence commerciale (+5 000 ¥)</strong>","Pour les goodies, le premier type de produit est couvert par la licence ; des frais de réutilisation sont dus à partir du deuxième"]] },
+    { h: ['制作物の掲載について', 'Showing the work', 'Publication des travaux'],
+      list: [['制作物は実績としてポートフォリオサイトやXに掲載させていただきます（Sample表記・縮小掲載）',
+              '<strong>掲載不可オプション</strong>をお選びでない場合は、掲載を承諾いただいたものとみなします',
+              '公開までお時間をいただきたい場合は、<strong>掲載可能な時期</strong>をお知らせいただければ対応いたします'], ["I show finished work on this portfolio site and on X (marked Sample, at reduced size)","Unless you choose the <strong>no-publication option</strong>, I take it that you are happy for the work to be shown","If you would like to wait before it goes public, let me know <strong>when it may be shown</strong> and I will hold it until then"], ["Je présente les travaux terminés sur ce portfolio et sur X (mention Sample, en taille réduite)","Sauf si vous choisissez l'<strong>option de non-publication</strong>, je considère que la présentation du travail est acceptée","Si vous préférez attendre avant la publication, indiquez-moi <strong>à partir de quand</strong> elle est possible et je patienterai"]] },
+    { h: ['お値引きについて', 'Discounts', 'Remises'],
+      body: ['リピーター様割引や端数切り捨てなどは、こちらからご提案いたします。恐れ入りますが、大幅なお値引き交渉はお受けできません。', "Returning-customer discounts and rounding down are things I offer myself. I am afraid I cannot take on substantial haggling.", "Les remises fidélité et les arrondis à la baisse sont des gestes que je propose moi-même. Je ne peux malheureusement pas accepter de négociation importante sur les tarifs."] },
+    { h: ['未成年の方へ', 'For minors', 'Pour les mineurs'],
+      body: ['保護者の方の同意を得たうえでご依頼ください。同意が確認できない場合はお断りいたします。', "Please order with the consent of a parent or guardian. Where that consent cannot be confirmed, I have to decline.", "Merci de commander avec l'accord d'un parent ou tuteur. Sans confirmation de cet accord, je suis contrainte de refuser."] },
+  ];
+
+  /* ご依頼方法の本文を組み立てる。言語が変わるたびに呼ぶ */
+  function renderRequest(lang) {
+    const box = document.getElementById('request-body');
+    if (!box) return;
+    const i = lang === 'en' ? 1 : lang === 'fr' ? 2 : 0;
+    /* 英仏がまだ入っていない項目は日本語で出す（空文字のまま出さない） */
+    const t = a => (a && (a[i] || a[0])) || '';
+    const li = a => {
+      const arr = (a && (a[i] && a[i].length ? a[i] : a[0])) || [];
+      return arr.length ? '<ul class="req-list">' + arr.map(x => '<li>' + x + '</li>').join('') + '</ul>' : '';
+    };
+    const ol = a => {
+      const arr = (a && (a[i] && a[i].length ? a[i] : a[0])) || [];
+      return arr.length ? '<ol class="req-steps">' + arr.map(x => '<li>' + x + '</li>').join('') + '</ol>' : '';
+    };
+
+    const active = document.querySelector('#request-tab .tab-btn.is-active');
+    const key = (active && active.dataset.req) || 'illust';
+    const d = REQUEST_TABS[key];
+
+    let html = '<div class="req-panel">';
+    html += '<h3 class="req-h">' + t(d.made) + '</h3>';
+    if (d.madeBody) html += '<p class="req-p">' + t(d.madeBody) + '</p>';
+    if (d.madeList) html += li(d.madeList);
+    if (d.plan) {
+      html += '<h3 class="req-h">' + t(d.plan) + '</h3>' + li(d.planList);
+      if (d.planNote) html += '<p class="req-note">' + t(d.planNote) + '</p>';
+    }
+    html += '<h3 class="req-h">' + t(d.deliver) + '</h3>' + li(d.deliverList);
+    html += '<h3 class="req-h">' + t(d.flow) + '</h3>' + ol(d.flowList);
+    if (d.flowNote) html += '<p class="req-note">' + t(d.flowNote) + '</p>';
+    if (d.ng) html += '<h3 class="req-h">' + t(d.ng) + '</h3>' + li(d.ngList);
+    html += '<h3 class="req-h">' + t(d.tpl) + '</h3>';
+    html += '<p class="req-p">' + t(d.tplLead) + '</p>';
+    html += '<pre class="req-tpl">' + t(d.tplBody) + '</pre>';
+    if (d.tplNote) html += '<p class="req-note">' + t(d.tplNote) + '</p>';
+    if (d.extra) html += t(d.extra);
+    html += '</div>';
+
+    html += '<div class="req-common">';
+    REQUEST_COMMON.forEach(sec => {
+      html += '<h3 class="req-h req-h--common">' + t(sec.h) + '</h3>';
+      if (sec.body) html += '<p class="req-p">' + t(sec.body) + '</p>';
+      if (sec.list) html += li(sec.list);
+    });
+    html += '</div>';
+
+    box.innerHTML = html;
+  }
+
   function applyLang(lang) {
     currentLang = lang;
     document.querySelectorAll('[data-lang]').forEach(btn => {
@@ -2356,6 +2602,7 @@
     /* おレビューは data-i18n ではなくJSのデータから組み立てているので、
        言語が変わるたびに並べ直す */
     if (typeof renderReviews === 'function') renderReviews(lang);
+    if (typeof renderRequest === 'function') renderRequest(lang);
 
     /* カードタイトル・お仕事絵ラベルの切り替え */
     document.querySelectorAll('.work-card').forEach(card => {
@@ -2844,7 +3091,10 @@
       btns.forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
       moveSlider(btn);
-      /* 中身ができたら、ここで btn.dataset.req に応じたパネルを出す */
+      /* 本文を押したタブのものに差し替える */
+      if (typeof renderRequest === 'function') {
+        renderRequest(document.getElementById('html-root').lang || 'ja');
+      }
     }));
 
     slider.addEventListener('animationend', syncSlider);
@@ -2857,6 +3107,7 @@
 
   /* 初期表示（日本語）のぶんを先に組み立てておく */
   renderReviews('ja');
+  renderRequest('ja');
 
   (function placeSectionIndex() {
     const idx  = document.getElementById('section-index');

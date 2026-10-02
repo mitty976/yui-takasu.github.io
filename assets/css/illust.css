@@ -1492,6 +1492,9 @@ body.is-ready .status-sign .status-bar { animation: sign-shake 0.84s ease-in-out
   .header-nav {
     gap: 14px;
   }
+  /* 画面の下に .sim-cart の料金シミュレーターが固定で出るので、
+     ヘッダー側のボタンは消す（上下に2つ並んでしまうため・2026-10-02） */
+  .header-left { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -1924,4 +1927,195 @@ html[lang="fr"] .sidebar-chara {
   color: var(--color-accent);
   opacity: 0.6;
   letter-spacing: 0.03em;
+}
+
+/* ページ末尾のコピーライト（スマホ・タブレットのみ）。
+   サイドバーが上に来るぶん、サイドバー側のものは隠してこちらを出す */
+.page-copy-mobile { display: none; }
+
+/* === スマホ・タブレット：1ページの縦長に組み直す（2026-10-02） ===
+   これまで .sidebar ごと display:none にしていたため、
+   プロフィール・受注状況・About・SNSがまるごと見えなくなっていた。 */
+@media (max-width: 768px) {
+  .sidebar {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    flex: none;
+    padding: 18px 14px 4px;
+  }
+  /* プロフィール画像と吊り札は横に並べると入らないので縦に積む */
+  .sidebar-top {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 0;
+    margin-bottom: 18px;
+    padding: 0;
+  }
+  .sidebar-top__left { left: 0; gap: 14px; }
+  .sidebar-avatar { margin-top: 0; }
+  .status-sign { max-width: 230px; width: 100%; }
+  /* 紐はサイドバー上端まで伸ばす必要がないので短くする */
+  .status-sign__inner::before { height: 34px; }
+  .sidebar-sns { width: auto; gap: 18px; }
+  .sidebar-about { padding: 0 4px 4px; }
+  .sidebar-logo { top: 0; left: 0; width: 220px; }
+  .sidebar-chara { left: 0; width: 150px; margin-top: 10px; }
+  /* コピーライトはページの最後へ回す */
+  .sidebar-copy { display: none; }
+  .page-copy-mobile {
+    display: block;
+    padding: 18px 0 8px;
+    font-size: 9.5px;
+    color: rgba(74,42,58,0.45);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* 付箋は絶対配置をやめて、作品の上に横並びで置く。
+     PCのように左へはみ出させると画面外で切れてしまうため */
+  .section-index {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: none;
+    margin: 0 0 12px;
+    gap: 10px;
+  }
+  .section-index--note .section-index__link {
+    min-height: 0 !important;
+    padding: 8px 16px 9px;
+  }
+}
+
+/* === ご依頼方法の本文 === */
+.request-body {
+  max-width: 820px;
+  margin: 0 auto;
+  padding-bottom: 28px;
+  color: var(--color-accent);
+  text-align: left;
+}
+.req-h {
+  font-family: var(--font-title);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  margin: 26px 0 10px;
+  padding-left: 12px;
+  border-left: 3px solid var(--color-btn);
+  line-height: 1.5;
+}
+.req-panel > .req-h:first-child { margin-top: 0; }
+.req-p {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+.req-list,
+.req-steps {
+  margin: 0 0 10px;
+  padding-left: 1.4em;
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+.req-list li,
+.req-steps li { margin-bottom: 4px; }
+.req-steps { padding-left: 1.5em; }
+.req-steps li::marker { font-weight: 700; }
+/* 補足の一文。本文より一段弱く見せる */
+.req-note {
+  margin: 4px 0 10px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.85;
+  opacity: 0.9;
+}
+/* コピーして使えるご依頼テンプレート */
+.req-tpl {
+  margin: 0 0 10px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.85);
+  border: 1px dashed var(--color-border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 2;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+/* キャラクターデザイン料のような、目を留めてほしい案内 */
+.req-callout {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  background: var(--color-works);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+/* タブの下に続く共通の案内 */
+.req-common {
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--color-border);
+}
+.req-h--common { font-size: 13px; }
+
+@media (max-width: 768px) {
+  .request-body { max-width: none; }
+  .req-h { font-size: 13px; margin: 20px 0 8px; }
+  .req-p, .req-list, .req-steps { font-size: 12px; }
+  .req-tpl { font-size: 11.5px; line-height: 1.9; }
+}
+
+/* === ヘッダーはHomeだけにする（2026-10-02） ===
+   X・ココナラ・Skeb・メールはサイドバーの「各サービスへのリンク」に集約したので、
+   ヘッダーからは外す。区切り線もいらなくなる。 */
+.header-nav > a:not(.home-link) { display: none; }
+.home-link {
+  padding-right: 0;
+  border-right: none;
+  margin-right: 0;
+}
+
+@media (max-width: 768px) {
+  /* スマホ・タブレットでは Home を左上に置く（料金シミュレーターはヘッダーから消してある） */
+  .site-header { justify-content: flex-start; }
+
+  /* うさぎは縦が長くなるので出さない */
+  .sidebar-chara { display: none; }
+
+  /* 受注状況は吊り札をやめて、画面下の料金シミュレーターの上に出す。
+     紐と穴は消して、ふつうのカードにする */
+  .status-sign {
+    position: fixed;
+    left: 14px;
+    right: 14px;
+    bottom: calc(66px + env(safe-area-inset-bottom, 0px));
+    z-index: 90;
+    max-width: none;
+    width: auto;
+  }
+  .status-sign__inner::before,
+  .status-sign .status-bar::before { display: none; }
+  .status-sign .status-bar {
+    min-height: 0;
+    gap: 6px;
+    padding: 9px 14px 10px;
+    border-radius: 14px;
+    font-size: 10.5px;
+    box-shadow: 0 4px 14px -6px rgba(120,80,60,0.4);
+  }
+  .status-sign .status-bar__badge { font-size: 10px; padding: 2px 10px; }
+  .status-sign .status-bar__list { gap: 2px; }
+  .status-sign .status-bar__item { line-height: 1.55; }
+  /* PCの縦長の札では「イラスト：」で改行していたが、横長になるので1行に戻す */
+  .status-sign .status-bar__label { display: inline; }
+  .status-sign .status-bar__note { margin-top: 5px; font-size: 9.5px; }
+  /* 上段は受注状況が抜けるので、プロフィール画像とリンクだけになる */
+  .sidebar-top { gap: 14px; margin-bottom: 14px; }
 }

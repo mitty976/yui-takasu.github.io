@@ -105,6 +105,9 @@
           <a href="https://tsunagu.cloud/products/95782" target="_blank" rel="noopener" aria-label="つなぐ">
             <img src="../assets/img/images/tunagu.png" alt="つなぐ" data-alt-ja="つなぐ" data-alt-en="Tsunagu" data-alt-fr="Tsunagu" class="sidebar-sns__icon">
           </a>
+          <a href="https://fr.fiverr.com/mitty976?source=gig_page" target="_blank" rel="noopener" aria-label="Fiverr">
+            <img src="../assets/img/images/fiverr.png" alt="Fiverr" class="sidebar-sns__icon">
+          </a>
           <a href="https://skeb.jp/@mitty976" target="_blank" rel="noopener" aria-label="Skeb">
             <img src="../assets/img/images/Skeb.png" alt="Skeb" class="sidebar-sns__icon">
           </a>
@@ -1013,15 +1016,21 @@
           <button class="tab-btn is-active" data-req="illust" data-i18n="reqTabIllust">イラスト</button>
           <button class="tab-btn" data-req="logo" data-i18n="reqTabLogo">ネームロゴ</button>
           <button class="tab-btn" data-req="stream" data-i18n="reqTabStream">配信関連デザイン</button>
+          <button class="tab-btn" data-req="video" data-i18n="reqTabVideo">動画編集</button>
         </div>
 
         <div class="section-sheet">
-          <p class="page-section__note" data-i18n="secRequestNote">（ご依頼の流れ・条件・注意事項がここに入ります）</p>
+          <!-- タブごとの本文と、下に続く共通の案内は illust.js の REQUEST から組み立てる -->
+          <div class="request-body" id="request-body"></div>
         </div>
       </section>
 
     </div><!-- /works-scroll-area -->
   </main>
+
+  <!-- スマホ・タブレットではサイドバーが上に来るので、
+       コピーライトだけページの最後にもう一度置く（PCでは非表示） -->
+  <p class="page-copy-mobile">copyright all rights reserved by ぐるにゃ</p>
   </div><!-- /main-column -->
 
 </div><!-- /page-wrapper -->
