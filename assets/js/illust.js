@@ -194,7 +194,12 @@
     lAnim = requestAnimationFrame(lDrawSplit);
   }
 
+  let lDone = false;
   function loaderHide() {
+    if (lDone) return;          /* 二重に呼ばれても一度だけ */
+    lDone = true;
+    clearTimeout(lSafety);
+    cancelAnimationFrame(lAnim);
     if (typeof Sakura !== 'undefined' && Sakura.canvas) {
       Sakura.canvas.style.zIndex = '30';
       document.body.appendChild(Sakura.canvas);
@@ -204,6 +209,15 @@
        読み込み直後に走らせるとローダーの裏で終わってしまう */
     document.body.classList.add('is-ready');
   }
+
+  /* 端末が遅いと requestAnimationFrame の間隔が開いて、
+     カーテンが開ききらないまま画面に残ってしまう。
+     最長3秒で必ず閉じる（2026-10-02） */
+  const lSafety = setTimeout(loaderHide, 3000);
+  /* 別のタブに移るとアニメーションが止まるので、戻ってきたら閉じておく */
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) loaderHide();
+  }, { once: true });
 
   lInit();
   lAnim = requestAnimationFrame(lDraw);
