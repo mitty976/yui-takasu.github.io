@@ -2190,3 +2190,24 @@ html[lang="fr"] .sidebar-chara {
   html[lang="en"] .status-sign .status-bar__note,
   html[lang="fr"] .status-sign .status-bar__note { font-size: 8.5px; }
 }
+
+/* === スマホ・タブレットの余白とインデックスの大きさ（2026-10-02） === */
+@media (max-width: 768px) {
+  /* 上に固定したHome・言語切り替えとプロフィール画像が重ならないよう余白をとる */
+  .sidebar { padding-top: 56px; padding-bottom: 16px; }
+  /* ロゴの下にインデックスが続くので、めり込まないよう負の余白を解除する */
+  .sidebar-logo { margin-bottom: 0; }
+  .section-index { margin: 16px 0 16px; }
+  /* 指でも押しやすい大きさに */
+  .section-index--note .section-index__link {
+    font-size: 14px;
+    padding: 13px 22px 14px;
+  }
+}
+@media (max-width: 480px) {
+  .section-index--note .section-index__link {
+    font-size: 13.5px;
+    padding: 12px 20px 13px;
+    letter-spacing: 0.04em;
+  }
+}
