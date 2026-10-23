@@ -1229,6 +1229,14 @@ function calcTotal() {
   totalJPY += licJPY;
   totalUSD += licUSD;
 
+  /* 端数調整：500円未満は切り捨て、500〜999円は500円に揃える。
+     もとの価格は1,000円単位だが、リピーター割引（10%）などで端数が出るため、
+     すべての計算が終わったここで丸める。実際のお見積もりと同じ扱い。
+     ドル・ユーロは別の通貨なので調整しない（2026-10-24） */
+  const roundedJPY = Math.floor(totalJPY / 500) * 500;
+  const roundCutJ  = totalJPY - roundedJPY;
+  totalJPY = roundedJPY;
+
   const totalEl = document.getElementById('totalAmount');
   const totalStr = currentCurrency === 'USD' ? '$' + totalUSD.toLocaleString('en-US')
                   : currentCurrency === 'EUR' ? '€' + Math.round(totalUSD * EUR_RATE).toLocaleString('fr-FR')
@@ -1248,7 +1256,7 @@ function calcTotal() {
     const bYen = cur.radios.i_base ? parseInt(cur.radios.i_base) : 0;
     updateGoodsRates(bYen, usdOf(bYen));
   }
-  renderBreakdown(breakdown, rev, maxRush);
+  renderBreakdown(breakdown, rev, maxRush, roundCutJ);
   updatePieceTabs();
 }
 
@@ -1261,7 +1269,7 @@ function rushLabelOf(el) {
       || tl('納期', 'Rush', 'Délai');
 }
 
-function renderBreakdown(breakdown, rev) {
+function renderBreakdown(breakdown, rev, maxRush, roundCutJ) {
   const tagOf = t => '<span class="sim-total-selected-tag">' + t + '</span>';
   /* 下部バー：点数を切り替えても他の点数で選んだものが消えないよう、全点数ぶん出す。
      納期は点数ごとの項目なので、その点数のタグの並びに入れる */
@@ -1326,6 +1334,13 @@ function renderBreakdown(breakdown, rev) {
   });
 
   if (rev > 0) rows += row('', tl('追加修正 ×', 'Extra revisions ×', 'Retouches sup. ×') + rev, formatAmt(rev * 1500));
+
+  /* 端数調整は日本円のときだけ出す（ドル・ユーロでは調整していないため） */
+  if (roundCutJ > 0 && currentCurrency === 'JPY') {
+    rows += row('receipt-item--discount',
+      tl('端数調整', 'Rounding', 'Arrondi'),
+      '−¥' + roundCutJ.toLocaleString('ja-JP'));
+  }
 
   rows += '<hr class="receipt-divider" style="animation-delay:' + ((delay++) * 0.06) + 's">';
   const totalEl = document.getElementById('totalAmount');
@@ -2260,7 +2275,7 @@ const TRANS_EN = {
   note_live2d:   '※ After Effects finishing is included with all Live2D orders. Video editing and integration with streaming software are not included, but feel free to consult us.',
   design_top:    '※ Design prices are market-rate estimates. Final pricing confirmed upon consultation.',
   design_qty:    '50% of the base price is added for each additional piece.',
-  total_note:    '※ Final pricing is confirmed through consultation.<br>Budget concerns are always welcome — share your vision and budget, and I\'ll do my best to accommodate you.<br>Feel free to reach out via Coconala or X (Twitter) DM.',
+  total_note:    '※ Final pricing is confirmed through consultation.<br>When I prepare the quote, I round the total down to the nearest ¥500 (e.g. ¥12,800 → ¥12,500, ¥1,400 → ¥1,000).<br>Budget concerns are always welcome — share your vision and budget, and I\'ll do my best to accommodate you.<br>Feel free to reach out via Coconala or X (Twitter) DM.',
 };
 
 const TRANS_FR = {
@@ -2574,7 +2589,7 @@ const TRANS_FR = {
   note_live2d:   '※ La finition After Effects est incluse avec toutes les commandes Live2D. Le montage vidéo et l\'intégration au logiciel de streaming ne sont pas inclus, mais n\'hésitez pas à me consulter.',
   design_top:    '※ Les prix de design sont des estimations basées sur le marché. Le tarif final est confirmé lors de la consultation.',
   design_qty:    '50 % du prix de base est ajouté pour chaque pièce supplémentaire.',
-  total_note:    '※ Le tarif final est confirmé lors de la consultation.<br>N\'hésitez pas à me faire part de vos contraintes budgétaires — partagez votre vision et votre budget, et je ferai de mon mieux pour m\'adapter.<br>N\'hésitez pas à me contacter via Coconala ou par DM sur X (Twitter).',
+  total_note:    '※ Le tarif final est confirmé lors de la consultation.<br>Lors du devis, j\'arrondis le total à la baisse par tranches de 500 ¥ (ex. 12 800 ¥ → 12 500 ¥, 1 400 ¥ → 1 000 ¥).<br>N\'hésitez pas à me faire part de vos contraintes budgétaires — partagez votre vision et votre budget, et je ferai de mon mieux pour m\'adapter.<br>N\'hésitez pas à me contacter via Coconala ou par DM sur X (Twitter).',
   /* Live2Dノート（⚠なし版） */
   '動くイラスト（⑥番）をご依頼の場合はパーツ分けが料金に含まれますので、こちらはチェック不要です。動くイラストのpsdデータをご希望の場合は事前にご相談ください。':
     'Si vous commandez une animation Live2D (section ⑥), le PSD en calques est déjà inclus — inutile de cocher cette case. Si vous souhaitez uniquement le PSD d\'une illustration classique, merci de me consulter à l\'avance.',
