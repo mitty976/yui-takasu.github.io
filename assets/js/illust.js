@@ -452,26 +452,26 @@
   /* === ワークモーダル === */
   const WORK_MODAL_DATA = {
     illust_yureikurage: {
-      title: '【オリジナル】ユウレイクラゲ',
-      titleEn: '[Original] Yuurei Kurage',
-      titleFr: '[Original] Yuurei Kurage',
+      title: '【オリジナル】Mystery',
+      titleEn: '[Original] Mystery',
+      titleFr: '[Original] Mystery',
       subtitle: 'Still illustration',
       html: `<div class="mwork mwork--illu">
-        <figure class="illu-main"><img src="../images/works/illust/original/ユウレイクラゲサイン入り.webp" alt="ユウレイクラゲ"><figcaption class="illu-cap">sample</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/illust/original/mystery.webp" alt="Mystery"><figcaption class="illu-cap">sample</figcaption></figure>
         <div class="mwork__divider"></div>
         <p class="illu-date">2026年 10月 23日 制作</p>
         <p class="illu-desc">沈んだ図書館の奥、鳥かごの中に封じられた、脳に錠前をかけられた少女。<br>天使のうさぎと悪魔のうさぎは、その封印をめぐって対立している。<br>なぜ少女は封じられたのか。なぜ天使は彼女を行かせないのか。<br>そして、この鳥かごに閉じ込められているのは、本当に少女だけなのだろうか。</p>
         <p class="illu-note">VGenチャレンジ（2026年10月・テーマ「Mystery」）参加作品です。</p>
       </div>`,
       htmlEn: `<div class="mwork mwork--illu">
-        <figure class="illu-main"><img src="../images/works/illust/original/ユウレイクラゲサイン入り.webp" alt="Yuurei Kurage"><figcaption class="illu-cap">sample</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/illust/original/mystery.webp" alt="Mystery"><figcaption class="illu-cap">sample</figcaption></figure>
         <div class="mwork__divider"></div>
         <p class="illu-date">Created 23 October 2026</p>
         <p class="illu-desc">Deep in a sunken library, a girl sealed inside a birdcage, a padlock fastened to her brain.<br>An angel rabbit and a devil rabbit stand on opposite sides of that seal.<br>Why was she sealed away? Why will the angel not let her go?<br>And is the girl really the only thing locked inside this cage?</p>
         <p class="illu-note">An entry for the VGen Challenge (October 2026, theme: "Mystery").</p>
       </div>`,
       htmlFr: `<div class="mwork mwork--illu">
-        <figure class="illu-main"><img src="../images/works/illust/original/ユウレイクラゲサイン入り.webp" alt="Yuurei Kurage"><figcaption class="illu-cap">sample</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/illust/original/mystery.webp" alt="Mystery"><figcaption class="illu-cap">sample</figcaption></figure>
         <div class="mwork__divider"></div>
         <p class="illu-date">Créé le 23 octobre 2026</p>
         <p class="illu-desc">Au fond d'une bibliothèque engloutie, une jeune fille scellée dans une cage à oiseaux, un cadenas fixé à son cerveau.<br>Un lapin ange et un lapin démon s'opposent au sujet de ce sceau.<br>Pourquoi a-t-elle été scellée ? Pourquoi l'ange refuse-t-il de la laisser partir ?<br>Et la jeune fille est-elle vraiment la seule chose enfermée dans cette cage ?</p>
