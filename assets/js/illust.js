@@ -451,6 +451,97 @@
 
   /* === ワークモーダル === */
   const WORK_MODAL_DATA = {
+    illust_yureikurage: {
+      title: '【オリジナル】ユウレイクラゲ',
+      titleEn: '[Original] Yuurei Kurage',
+      titleFr: '[Original] Yuurei Kurage',
+      subtitle: 'Still illustration',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ユウレイクラゲサイン入り.webp" alt="ユウレイクラゲ"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 10月 23日 制作</p>
+        <p class="illu-desc">沈んだ図書館の奥、鳥かごの中に封じられた、脳に錠前をかけられた少女。<br>天使のうさぎと悪魔のうさぎは、その封印をめぐって対立している。<br>なぜ少女は封じられたのか。なぜ天使は彼女を行かせないのか。<br>そして、この鳥かごに閉じ込められているのは、本当に少女だけなのだろうか。</p>
+        <p class="illu-note">VGenチャレンジ（2026年10月・テーマ「Mystery」）参加作品です。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ユウレイクラゲサイン入り.webp" alt="Yuurei Kurage"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created 23 October 2026</p>
+        <p class="illu-desc">Deep in a sunken library, a girl sealed inside a birdcage, a padlock fastened to her brain.<br>An angel rabbit and a devil rabbit stand on opposite sides of that seal.<br>Why was she sealed away? Why will the angel not let her go?<br>And is the girl really the only thing locked inside this cage?</p>
+        <p class="illu-note">An entry for the VGen Challenge (October 2026, theme: "Mystery").</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ユウレイクラゲサイン入り.webp" alt="Yuurei Kurage"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé le 23 octobre 2026</p>
+        <p class="illu-desc">Au fond d'une bibliothèque engloutie, une jeune fille scellée dans une cage à oiseaux, un cadenas fixé à son cerveau.<br>Un lapin ange et un lapin démon s'opposent au sujet de ce sceau.<br>Pourquoi a-t-elle été scellée ? Pourquoi l'ange refuse-t-il de la laisser partir ?<br>Et la jeune fille est-elle vraiment la seule chose enfermée dans cette cage ?</p>
+        <p class="illu-note">Une participation au VGen Challenge (octobre 2026, thème « Mystery »).</p>
+      </div>`,
+    },
+    illust_ibaramizumi: {
+      title: '【お仕事絵】棘羅ミズミ様‐立ち絵＋表情差分',
+      titleEn: '[Commission] Ibara Mizumi — Full Illustration & Expression Variants',
+      titleFr: "[Commande] Ibara Mizumi — Illustration complète et variantes d'expression",
+      subtitle: 'Character design / Expression variants',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ibaramizumi.webp" alt="棘羅ミズミ様"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 10月 15日 納品</p>
+        <p class="illu-desc">Nebulal所属の棘羅ミズミ様（<a class="illu-handle" href="https://x.com/ibaramizumi" target="_blank" rel="noopener">@ibaramizumi</a>）より、IRIAM用の全身立ち絵をキャラクターデザインから承りました。モチーフは深海魚のイバラヒゲです。黒いコートの裾は魚の尾のように透かし、実物の目立つヒレが3つであることに合わせて、ヒレも3つに絞っています。尻尾もありますが、コートに隠れて見えない形に収めました。首元から胸元へ落ちるチェーンは、お名前の「棘羅」と茨を重ねたものです。髪のピンクのインナーカラーと八重歯で、整ったお顔立ちの中に崩しを入れました。</p>
+        <p class="illu-note">IRIAM ver4.1／ver4 の両方に対応。表情差分は全12枚（読み取り用のお顔、ご希望の7種、サービスの2種、口元差分3種）を 2000×4000px のPNGでご納品しました。ギザギザの歯はリギングでの認識に支障がなかったため、読み取り用のお顔にも採用しています。</p>
+        <p class="illu-note">2026年12月に初配信を予定されています。</p>
+        <p class="illu-link">▶ <a href="https://x.com/ibaramizumi/status/2113103297577992343" target="_blank" rel="noopener">ご本人が公開されたお姿を見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ibaramizumi.webp" alt="Ibara Mizumi"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Delivered 15 October 2026</p>
+        <p class="illu-desc">Commissioned by Ibara Mizumi (<a class="illu-handle" href="https://x.com/ibaramizumi" target="_blank" rel="noopener">@ibaramizumi</a>) of Nebulal for a full-body character illustration for IRIAM, starting from the character design. The motif is the ibarahige, a deep-sea fish known in English as the Pacific grenadier. The hem of the black coat is left translucent like a fish's tail, and the fins are kept to three, matching the three prominent fins of the real fish. There is a tail as well, tucked out of sight beneath the coat. The chain falling from the collar to the chest layers in the thorns of "ibara" in the name. The pink inner colour in the hair and the pointed teeth break up an otherwise composed face.</p>
+        <p class="illu-note">Compatible with both IRIAM ver4.1 and ver4. Twelve expression images in total (the face used for tracking, the seven requested, two more as a bonus, and three mouth variants) were delivered as 2000×4000px PNGs. The jagged teeth caused no problems for rigging, so they were kept in the tracking face as well.</p>
+        <p class="illu-note">Her first stream is planned for December 2026.</p>
+        <p class="illu-link">▶ <a href="https://x.com/ibaramizumi/status/2113103297577992343" target="_blank" rel="noopener">See the artwork as published</a></p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/ibaramizumi.webp" alt="Ibara Mizumi"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Livré le 15 octobre 2026</p>
+        <p class="illu-desc">Commande réalisée pour Ibara Mizumi (<a class="illu-handle" href="https://x.com/ibaramizumi" target="_blank" rel="noopener">@ibaramizumi</a>), du groupe Nebulal : une illustration de personnage en pied pour IRIAM, à partir de la création du personnage. Le motif est l'ibarahige, un poisson des grands fonds appelé grenadier du Pacifique. Le bas du manteau noir reste translucide à la manière d'une nageoire caudale, et les nageoires ont été limitées à trois, comme les trois nageoires les plus visibles du poisson réel. Une queue est également présente, dissimulée sous le manteau. La chaîne qui descend du col vers la poitrine fait écho aux épines de « ibara » dans le nom. La mèche intérieure rose et les canines pointues viennent rompre un visage par ailleurs très posé.</p>
+        <p class="illu-note">Compatible IRIAM ver4.1 et ver4. Douze images d'expression au total (le visage servant au tracking, les sept demandées, deux offertes et trois variantes de bouche) ont été livrées en PNG 2000×4000 px. Les dents en dents de scie ne posant aucun problème au rigging, elles ont été conservées sur le visage de tracking.</p>
+        <p class="illu-note">Son premier stream est prévu pour décembre 2026.</p>
+        <p class="illu-link">▶ <a href="https://x.com/ibaramizumi/status/2113103297577992343" target="_blank" rel="noopener">Voir l'illustration telle qu'elle a été publiée</a></p>
+      </div>`,
+    },
+    illust_chibishidare: {
+      title: '【お仕事絵】黒丸しだれ様‐ちびキャラ',
+      titleEn: '[Commission] Kuromaru Shidare — SD Chibi',
+      titleFr: '[Commande] Kuromaru Shidare — Chibi SD',
+      subtitle: 'SD chibi',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/chibishidare.webp" alt="黒丸しだれ様ちびキャラ"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 10月 07日 納品</p>
+        <p class="illu-desc">りみれす！所属・黒丸しだれ様（<a class="illu-handle" href="https://x.com/shidare_kuro" target="_blank" rel="noopener">@shidare_kuro</a>）より、ちびキャラのご依頼をいただきました。以前お描きした立ち絵の和装をSDに落とし込み、扇子を構えたポーズでまとめています。裾へ向かって淡くなる桜色のグラデーションと花の模様は、お名前の「しだれ」に合わせたものです。左右を反転してお使いいただけるよう、襟元は前合わせが見えない形に整えました。</p>
+        <p class="illu-note">商用利用込みのちびキャラです。表情差分に加え、反転したときにも使えるよう、ピンクメッシュの位置とオッドアイの色を左右入れ替えた差分もご用意しています。</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_kuromarushidare">立ち絵の作品を見る</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/chibishidare.webp" alt="Kuromaru Shidare SD chibi"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Delivered 7 October 2026</p>
+        <p class="illu-desc">Commissioned by Kuromaru Shidare (<a class="illu-handle" href="https://x.com/shidare_kuro" target="_blank" rel="noopener">@shidare_kuro</a>) of Rimiresu! for an SD chibi. The traditional outfit from the full illustration drawn earlier was carried over into chibi proportions, posed with a folding fan. The sakura-pink gradient fading toward the hem and the floral pattern follow the "shidare" (weeping cherry) in the name. The collar was drawn without a visible overlap, so the artwork can be flipped horizontally.</p>
+        <p class="illu-note">Includes a commercial licence. Alongside the expression variant, a mirrored set is included, with the pink streak and the odd-eye colours swapped left to right.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_kuromarushidare">View the full illustration</a></p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/illust/original/chibishidare.webp" alt="Chibi SD de Kuromaru Shidare"><figcaption class="illu-cap">sample</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Livré le 7 octobre 2026</p>
+        <p class="illu-desc">Commande réalisée pour Kuromaru Shidare (<a class="illu-handle" href="https://x.com/shidare_kuro" target="_blank" rel="noopener">@shidare_kuro</a>), du groupe Rimiresu! : un personnage SD (chibi). La tenue traditionnelle de l'illustration complète réalisée précédemment a été transposée en proportions chibi, éventail à la main. Le dégradé rose sakura vers le bas et le motif floral reprennent le « shidare » (cerisier pleureur) du nom. Le col a été dessiné sans croisement visible, afin que l'illustration puisse être retournée horizontalement.</p>
+        <p class="illu-note">Licence commerciale incluse. Outre la variante d'expression, une version miroir est fournie, avec la mèche rose et les couleurs des yeux vairons inversées.</p>
+        <p class="illu-link">▶ <a href="#" data-modal-jump="illust_kuromarushidare">Voir l'illustration complète</a></p>
+      </div>`,
+    },
+
     illust_kaikunschedule: {
       title: '【お仕事絵】白旗かい様‐週間配信スケジュール表',
       titleEn: '[Commission] Hakki Kai — Weekly Stream Schedule',
@@ -2075,6 +2166,25 @@
   workModal.addEventListener('click', e => { if (e.target === workModal) closeWorkModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWorkModal(); });
 
+  /* カードのラベル（タイトルの【】の中身）を英語・フランス語でどう出すか。
+     ここに無いものは、そのまま日本語を出す（2026-10-24） */
+  const CARD_LABEL_I18N = {
+    'お仕事絵':   { en: 'Commission', fr: 'Commande' },
+    'ＦＡ':       { en: 'Fan art',    fr: 'Fan art' },
+    'FA':         { en: 'Fan art',    fr: 'Fan art' },
+    'オリジナル': { en: 'Original',   fr: 'Original' },
+    /* 既存カードの表記ゆれ */
+    '仕事絵':     { en: 'Commission', fr: 'Commande' },
+    'ご依頼もの': { en: 'Commission', fr: 'Commande' },
+  };
+  function labelFor(titleJa, lang) {
+    const m = (titleJa || '').match(/【([^】]*)】/);
+    if (!m) return '';
+    const key = m[1];
+    if (lang === 'ja') return key;
+    return (CARD_LABEL_I18N[key] && CARD_LABEL_I18N[key][lang]) || key;
+  }
+
   /* === JP/EN 切り替え === */
   const i18n = {
     ja: {
@@ -2625,10 +2735,10 @@
       if (!titleEl) return;
       if (lang === 'fr') {
         titleEl.textContent = (card.dataset.titleFr || card.dataset.titleEn || '').replace(/^\[.*?\]\s*/, '').trim();
-        if (labelEl) labelEl.textContent = 'Commande';
+        if (labelEl) labelEl.textContent = labelFor(card.dataset.titleJa, 'fr');
       } else if (lang === 'en') {
         titleEl.textContent = (card.dataset.titleEn || '').replace(/^\[.*?\]\s*/, '').trim();
-        if (labelEl) labelEl.textContent = 'Commission';
+        if (labelEl) labelEl.textContent = labelFor(card.dataset.titleJa, 'en');
       } else {
         titleEl.textContent = (card.dataset.titleJa || '').replace(/【[^】]*】/g, '').trim();
         if (labelEl) {
