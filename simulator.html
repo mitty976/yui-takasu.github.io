@@ -233,7 +233,7 @@
         </div>
         <div class="sim-extra-char-wrap">
           <span class="sim-extra-char-label">追加キャラクター</span>
-          <span class="sim-extra-char-price" id="extraPersonPrice" data-pre="+" data-suf=" / 人" data-suf-en=" / person" data-suf-fr=" / personne">+¥5,000〜</span>
+          <span class="sim-extra-char-price" id="extraPersonPrice" data-pre="+" data-suf=" / 人" data-suf-en=" / person" data-suf-fr=" / personne">+¥4,800〜</span>
           <div class="sim-counter-controls" id="extraCharControls">
             <button class="sim-counter-btn sim-counter-btn--minus" onclick="changeCount('i_extraPerson', -1)">−</button>
             <span class="sim-counter-num" id="i_extraPersonNum">0</span>
@@ -346,6 +346,37 @@
           <span class="sim-option-price">¥9,000</span>
         </label>
 
+      </div>
+
+      <!-- 塗り方（等身キャラのみ） -->
+      <div class="sim-paint" data-show="normal">
+        <h3 class="sim-paint-title">塗り方</h3>
+        <div class="sim-options">
+          <label class="sim-option">
+            <input type="radio" name="i_paint" value="-4000">
+            <span class="sim-option-label">
+              <span class="sim-option-name">簡易</span>
+              <span class="sim-option-price">−¥4,000</span>
+            </span>
+            <span class="sim-paint-desc">影をくっきり分けた、すっきりしたアニメ・セル塗り。配信素材・動画イラスト用におすすめです。</span>
+          </label>
+          <label class="sim-option">
+            <input type="radio" name="i_paint" value="0" checked>
+            <span class="sim-option-label">
+              <span class="sim-option-name">通常</span>
+              <span class="sim-option-price">＋¥0</span>
+            </span>
+            <span class="sim-paint-desc">基本は2段階の陰影で、髪のツヤや服のシワを描写します。配信用立ち絵・アイコンなど、幅広い用途に向いています。</span>
+          </label>
+          <label class="sim-option">
+            <input type="radio" name="i_paint" value="4000">
+            <span class="sim-option-label">
+              <span class="sim-option-name">プレミアム</span>
+              <span class="sim-option-price">＋¥4,000</span>
+            </span>
+            <span class="sim-paint-desc">髪の毛流れや束感、光の反射、レース・革・金属などの素材感まで細かく描き込みます。グッズや、大きく見せたい一枚に向いています。</span>
+          </label>
+        </div>
       </div>
 
     </div>

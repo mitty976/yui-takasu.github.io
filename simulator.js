@@ -48,7 +48,7 @@ const counts = {
 };
 const countPrices = {
   d_qty:           0,
-  i_extraPerson:   6500,
+  i_extraPerson:   4800,
   i_expression:    1500,
   i_expression_sd: 1000,
   i_costume:       4000,
@@ -758,14 +758,19 @@ function updateFilter() {
   const baseEl = document.querySelector('input[name="i_base"]:checked');
   const isSD = baseEl ? baseEl.dataset.type === 'sd' : false;
 
-  /* 追加キャラ料金切り替え */
-  const newExtraPrice = isSD ? 5000 : 6500;
-  countPrices.i_extraPerson = newExtraPrice;
+  /* 追加キャラ料金：選んだベース料金の80%（3体目以降も同率）。
+     ベース未選択のあいだはHTMLの初期表示（一番安い1.5頭身の80%＝¥4,800〜）を残す */
+  const baseYenForExtra = baseEl ? parseInt(baseEl.value, 10) : 0;
+  const newExtraPrice = Math.round(baseYenForExtra * 0.8);
+  /* ドルはFiverr実績テーブルの80%。円額から¥150/$で換算し直すと実績価格から外れる */
+  const newExtraUsd = Math.round(usdOf(baseYenForExtra) * 0.8);
   const extraPriceEl = document.getElementById('extraPersonPrice');
   if (extraPriceEl && baseEl) {
+    countPrices.i_extraPerson = newExtraPrice;
     extraPriceEl.dataset.yen = String(newExtraPrice);
+    extraPriceEl.dataset.usd = String(newExtraUsd);
     const suf = tl(extraPriceEl.dataset.suf, extraPriceEl.dataset.sufEn, extraPriceEl.dataset.sufFr);
-    extraPriceEl.textContent = extraPriceEl.dataset.pre + formatAmt(newExtraPrice) + (suf || '');
+    extraPriceEl.textContent = extraPriceEl.dataset.pre + formatPair(newExtraPrice, newExtraUsd) + (suf || '');
   }
 
   /* 高解像度データの料金切り替え（SDは¥2,000・等身は¥3,500） */
@@ -813,13 +818,18 @@ function updateFilter() {
   if (!document.querySelector('input[name="i_live2d"]:checked')) {
     document.querySelector('input[name="i_live2d"][value="0"]').checked = true;
   }
+  /* 塗り方が未選択になった場合は「通常」に戻す */
+  if (!document.querySelector('input[name="i_paint"]:checked')) {
+    const paintDefault = document.querySelector('input[name="i_paint"][value="0"]');
+    if (paintDefault) paintDefault.checked = true;
+  }
 }
 
 /* === 複数点オーダー：点数ごとの状態 === */
 /* フォームは1つのまま、点数を切り替えるときに内容を保存・復元する。
    DOMを複製するとidが重複して既存コードが壊れるため、この方式にしている。
    納期・リピーター割引・追加修正は注文全体で1回なので、点数ごとには保存しない */
-const PIECE_RADIOS = ['i_base', 'i_bg', 'i_design', 'i_live2d', 'i_goods_scope', 'd_base', 'v_plan', 'v_permit',
+const PIECE_RADIOS = ['i_base', 'i_paint', 'i_bg', 'i_design', 'i_live2d', 'i_goods_scope', 'd_base', 'v_plan', 'v_permit',
                      'i_rush', 'd_rush', 'v_rush'];
 const PIECE_CHECKS = [
   'i_commercial', 'i_nosns', 'i_copyright', 'i_highres', 'i_print',
@@ -1020,10 +1030,23 @@ function computePiece(st) {
       addBase(baseYen, baseUsd);
       items.push({ name: labelOf(baseEl), yen: baseYen });
     }
-    const extraYen = isSD ? 5000 : 6500;
+    /* 追加キャラはベース料金の80%（3体目以降も同率）。
+       ドルは衣装差分と同じく、ベースのUSD額に％を掛ける */
+    const extraYen = Math.round(baseYen * 0.8);
+    const extraUsd = Math.round(baseUsd * 0.8);
     if (c('i_extraPerson') > 0) {
-      addBase(c('i_extraPerson') * extraYen, c('i_extraPerson') * usdOf(extraYen));
-      items.push({ name: tr('追加キャラクター') + ' ×' + c('i_extraPerson'), yen: c('i_extraPerson') * extraYen });
+      addBase(c('i_extraPerson') * extraYen, c('i_extraPerson') * extraUsd);
+      items.push({ name: tr('追加キャラクター') + ' ×' + c('i_extraPerson'),
+                   yen: c('i_extraPerson') * extraYen, usd: c('i_extraPerson') * extraUsd });
+    }
+    /* 塗り方（等身キャラのみ）。ベース料金の増減だが割引の対象には入れない */
+    if (!isSD) {
+      const paintEl  = radioEl('i_paint', st.radios.i_paint);
+      const paintVal = paintEl ? parseInt(paintEl.value, 10) : 0;
+      if (paintVal !== 0) {
+        addY(paintVal);
+        items.push({ name: tr('塗り方') + tl('：', ': ', ' : ') + labelOf(paintEl), yen: paintVal });
+      }
     }
     const designEl  = radioEl('i_design', st.radios.i_design);
     const designVal = designEl ? parseInt(designEl.value) : 0;
@@ -1933,7 +1956,8 @@ const SUFFIX_FR = {
 
 function initPriceEls() {
   document.querySelectorAll('.sim-option-price, .sim-counter-price').forEach(el => {
-    const m = el.textContent.match(/(＋|\+)?¥([\d,]+)(.*)/);
+    /* 「−¥4,000」のような引き算の表記も符号ごと覚える（塗り方の簡易など） */
+    const m = el.textContent.match(/(＋|\+|−|-)?¥([\d,]+)(.*)/);
     if (m) {
       el.dataset.yen   = parseInt(m[2].replace(/,/g, ''));
       el.dataset.pre   = m[1] || '';
@@ -1947,7 +1971,10 @@ function initPriceEls() {
 function updatePriceEls() {
   document.querySelectorAll('[data-yen]').forEach(el => {
     const suf = tl(el.dataset.suf, el.dataset.sufEn, el.dataset.sufFr);
-    el.textContent = el.dataset.pre + formatAmt(parseInt(el.dataset.yen)) + (suf || '');
+    const yen = parseInt(el.dataset.yen);
+    /* data-usd があるものは％計算で出した金額。円から換算し直さずその値で出す */
+    const amt = el.dataset.usd !== undefined ? formatPair(yen, parseInt(el.dataset.usd)) : formatAmt(yen);
+    el.textContent = el.dataset.pre + amt + (suf || '');
   });
 }
 
@@ -2180,6 +2207,16 @@ const TRANS_EN = {
   'SDの中で一番等身キャラ寄り。体のラインはSDキャラなりによく出るように描ける。アクションポーズも映えてかっこかわいい系にも◎':
     'The most proportional among chibis. Action poses shine and it suits cool-cute styles too!',
   '追加キャラクター人数': 'Additional Characters',
+  /* 塗り方（等身キャラのみ） */
+  '塗り方': 'Paint Style',
+  '簡易': 'Simple',
+  '通常': 'Standard',
+  '影をくっきり分けた、すっきりしたアニメ・セル塗り。配信素材・動画イラスト用におすすめです。':
+    'Crisp, clearly separated shadows for a clean anime / cel-shaded look. Recommended for stream assets and video illustrations.',
+  '基本は2段階の陰影で、髪のツヤや服のシワを描写します。配信用立ち絵・アイコンなど、幅広い用途に向いています。':
+    'Two levels of shading as standard, with hair highlights and fabric folds. Suits a wide range of uses such as stream models and icons.',
+  '髪の毛流れや束感、光の反射、レース・革・金属などの素材感まで細かく描き込みます。グッズや、大きく見せたい一枚に向いています。':
+    'Detailed rendering of hair flow and strands, light reflections, and textures such as lace, leather and metal. Suited to merchandise and pieces meant to be seen large.',
   'デザイン済み（参考画像あり）': 'Already Designed (with ref)',
   'デザインなし（キャラデザインから依頼）': 'No Design (from scratch)',
   'なし / 単色・透過': 'None / Solid / Transparent',
@@ -2498,6 +2535,16 @@ const TRANS_FR = {
   'SDの中で一番等身キャラ寄り。体のラインはSDキャラなりによく出るように描ける。アクションポーズも映えてかっこかわいい系にも◎':
     'La plus proportionnée parmi les chibis. Les poses d\'action ressortent bien, idéal pour un style cool et mignon à la fois !',
   '追加キャラクター人数': 'Personnages Supplémentaires',
+  /* 塗り方（等身キャラのみ） */
+  '塗り方': 'Style de Coloration',
+  '簡易': 'Simple',
+  '通常': 'Standard',
+  '影をくっきり分けた、すっきりしたアニメ・セル塗り。配信素材・動画イラスト用におすすめです。':
+    'Des ombres nettes et bien délimitées, pour un rendu anime / cel-shading épuré. Recommandé pour les éléments de stream et les illustrations vidéo.',
+  '基本は2段階の陰影で、髪のツヤや服のシワを描写します。配信用立ち絵・アイコンなど、幅広い用途に向いています。':
+    'Deux niveaux d\'ombrage de base, avec les reflets des cheveux et les plis des vêtements. Convient à de nombreux usages : modèles de stream, icônes, etc.',
+  '髪の毛流れや束感、光の反射、レース・革・金属などの素材感まで細かく描き込みます。グッズや、大きく見せたい一枚に向いています。':
+    'Rendu détaillé des mèches et du mouvement des cheveux, des reflets de lumière et des matières comme la dentelle, le cuir ou le métal. Idéal pour le merchandising et les pièces à montrer en grand.',
   'デザイン済み（参考画像あり）': 'Déjà Désigné (avec référence)',
   'デザインなし（キャラデザインから依頼）': 'Sans Design (à créer)',
   'なし / 単色・透過': 'Aucun / Uni / Transparent',
@@ -2638,7 +2685,7 @@ function switchLang(lang) {
     titleEl.textContent = T.title;
     if (totalLabelEl) totalLabelEl.textContent = T['お見積もり合計（目安）'];
     /* セクション見出し・選択肢名・カウンターラベル */
-    document.querySelectorAll('.sim-card h2, .sim-option-name, .sim-counter-label, .sim-pose-desc, .sim-base-type-tab span, .sim-kind-tab, .sim-extra-char-label, .sim-tabs .sim-tab, .sim-kind-group-label, .sim-step-label, .price-consult').forEach(el => {
+    document.querySelectorAll('.sim-card h2, .sim-paint-title, .sim-option-name, .sim-counter-label, .sim-pose-desc, .sim-paint-desc, .sim-base-type-tab span, .sim-kind-tab, .sim-extra-char-label, .sim-tabs .sim-tab, .sim-kind-group-label, .sim-step-label, .price-consult').forEach(el => {
       const jp = el.dataset.jp || getJpText(el);
       if (!el.dataset.jp) el.dataset.jp = jp;
       const tr = T[jp];
