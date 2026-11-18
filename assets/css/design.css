@@ -335,6 +335,8 @@
       line-height: 1.8;
       margin-top: 10px;
     }
+    /* 説明文は大きいカードのときだけ出す（普通のカードに戻した作品はHTMLに残したまま隠す） */
+    .work-card:not([data-featured]) .work-featured-desc { display: none; }
 
     /* === 作品カード === */
     .work-card {
