@@ -3806,6 +3806,166 @@
       </div>
 
     </div>`
+    },
+    atelier_manager: {
+      title: 'Atelier Manager｜クリエイター向け 仕事管理アプリ',
+      titleEn: 'Atelier Manager — Desktop App for Freelance Creators',
+      titleFr: 'Atelier Manager — Application de bureau pour créateurs indépendants',
+      subtitle: 'Desktop App / UI/UX / Frontend / AI Integration',
+      html: `
+    <div class="mwork">
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"../images/works/web/original/atelier-manager/ja/01.webp",
+              "alt":{"ja":"Atelier Manager｜依頼管理","en":"Atelier Manager — Requests","fr":"Atelier Manager — Gestion des demandes"},
+              "label":{"ja":"依頼管理","en":"Requests","fr":"Demandes"}
+            },
+            {
+              "src":"../images/works/web/original/atelier-manager/ja/02.webp",
+              "alt":{"ja":"Atelier Manager｜時間の管理","en":"Atelier Manager — Time","fr":"Atelier Manager — Gestion du temps"},
+              "label":{"ja":"時間の管理","en":"Time","fr":"Temps"}
+            },
+            {
+              "src":"../images/works/web/original/atelier-manager/ja/03.webp",
+              "alt":{"ja":"Atelier Manager｜1日の時間割","en":"Atelier Manager — Daily timetable","fr":"Atelier Manager — Emploi du temps quotidien"},
+              "label":{"ja":"1日の時間割","en":"Daily Timetable","fr":"Emploi du temps"}
+            },
+            {
+              "src":"../images/works/web/original/atelier-manager/ja/04.webp",
+              "alt":{"ja":"Atelier Manager｜AI機能","en":"Atelier Manager — AI features","fr":"Atelier Manager — Fonctions IA"},
+              "label":{"ja":"AI機能","en":"AI Features","fr":"Fonctions IA"}
+            },
+            {
+              "src":"../images/works/web/original/atelier-manager/ja/05.webp",
+              "alt":{"ja":"Atelier Manager｜お金と顧客","en":"Atelier Manager — Money and clients","fr":"Atelier Manager — Finances et clients"},
+              "label":{"ja":"お金と顧客","en":"Money & Clients","fr":"Finances & clients"}
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="../images/works/web/original/atelier-manager/ja/01.webp"
+            alt="Atelier Manager｜依頼管理">
+        </figure>
+      </section>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <p class="mwork__lead">
+          フリーランスのイラストレーター・デザイナーとして、依頼・制作・収支をひとつで管理するために設計したWindowsデスクトップアプリです。<br><br>
+          複数の受注サイトに散らばる依頼、納期、作業時間、手数料を一か所にまとめ、「今なにをすればいいか」がすぐ分かることを目指しました。実際の業務で毎日使いながら改善を続けています。
+        </p>
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>納期までの日数でカードの色が段階的に変わり、優先度がひと目で分かる</li>
+            <li>月ごとの案件スケジュールと生活リズム（睡眠・運動・集中しやすい時間帯）から、1日の時間割を自動で作成。案件は1件ずつ進め、休憩は強制しない</li>
+            <li>円グラフの時間割は、クリックで選んで端をドラッグで時間を調整、外へドラッグで削除できる直感的な操作</li>
+            <li>AIは「入力の手間を減らす」役割に限定。依頼文やトークルームのスクリーンショットの読み取り、一言での予定追加、料金シミュレーターの自動選択を行い、保存・削除・金額の確定は必ず本人が行う設計</li>
+            <li>AIの実行方法を API／Claude Code で切り替え可能。APIキーはOSの暗号化機能で端末内にのみ保存</li>
+            <li>データはローカルに保存し、自動バックアップと、外部からの書き換えの検知で消失を防止</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>課題整理</strong>：受注サイトごとに分かれた依頼・納期・作業時間・手数料の管理の手間を洗い出し</li>
+            <li><strong>情報設計</strong>：依頼 → スケジュール → 時間割 → 収益・経費へとつながるデータ構造を設計</li>
+            <li><strong>UI設計</strong>：横長・縦置きモニターの両方で使えるレイアウト、テーマ・フォントの切り替え</li>
+            <li><strong>実装・運用</strong>：実務で使いながら改善（例：予定が細かく分かれる問題に対し、休憩の自動挿入をやめ、同じ作業を1つにまとめる処理へ変更）</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>使用技術</dt><dd>Electron / electron-builder / JavaScript / HTML / CSS / SVG / safeStorage / JSON / Git</dd>
+              <dt>AI機能の連携</dt><dd>Anthropic SDK / Claude Code CLI（アプリ内の読み取り・うさぎ機能で使用）</dd>
+              <dt>制作範囲</dt><dd>企画 / UI・UX設計 / フロントエンド実装 / デスクトップアプリ化 / AI連携</dd>
+            </dl>
+          </div>
+          <p class="mwork__related">※画面の依頼・顧客・金額はすべて架空のサンプルデータです。</p>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <p class="mwork__lead">
+          A Windows desktop app I designed to manage requests, production, and income in one place as a freelance illustrator and designer.<br><br>
+          It brings together requests, deadlines, work hours, and platform fees scattered across multiple commission sites, so that "what to do now" is clear at a glance. I use it every day in my own work and keep improving it.
+        </p>
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Request cards change color step by step as deadlines approach, making priorities clear at a glance</li>
+            <li>Automatically builds a daily timetable from the monthly project schedule and personal rhythm (sleep, exercise, peak focus hours) — one project at a time, with no forced breaks</li>
+            <li>Circular timetable with direct manipulation: click to select, drag edges to adjust time, drag outside to remove</li>
+            <li>AI is limited to reducing input effort — reading request messages and chat screenshots, adding plans from a single sentence, and auto-selecting price simulator options. Saving, deleting, and confirming prices always stay with the user</li>
+            <li>Switchable AI engine (API / Claude Code); the API key is encrypted with the OS and stored only on the device</li>
+            <li>Local data storage with automatic backups and detection of external file changes to prevent data loss</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Problem Definition</strong>: Identified the overhead of tracking requests, deadlines, work hours, and fees across multiple platforms</li>
+            <li><strong>Information Architecture</strong>: Designed a data flow from requests → schedule → daily timetable → income and expenses</li>
+            <li><strong>UI Design</strong>: Layouts that work on both landscape and portrait monitors, with switchable themes and fonts</li>
+            <li><strong>Build &amp; Iterate</strong>: Improved through daily real-world use (e.g. replaced automatic break insertion with merging of continuous work blocks to avoid fragmented plans)</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Tech</dt><dd>Electron / electron-builder / JavaScript / HTML / CSS / SVG / safeStorage / JSON / Git</dd>
+              <dt>AI Feature Integration</dt><dd>Anthropic SDK / Claude Code CLI (used for in-app reading and the rabbit assistant)</dd>
+              <dt>Scope</dt><dd>Planning / UI &amp; UX design / Frontend / Desktop packaging / AI integration</dd>
+            </dl>
+          </div>
+          <p class="mwork__related">All requests, clients, and amounts shown are fictional sample data.</p>
+        </div>
+      </div>
+
+      <!-- FR -->
+      <div class="mwork__langblock" data-langblock="fr" hidden>
+        <p class="mwork__lead">
+          Une application de bureau Windows que j'ai conçue pour gérer en un seul endroit les demandes, la production et les revenus, en tant qu'illustratrice et designeuse indépendante.<br><br>
+          Elle rassemble les demandes, les échéances, les heures de travail et les frais de plateforme dispersés entre plusieurs sites de commande, afin que « ce qu'il faut faire maintenant » soit clair d'un coup d'œil. Je l'utilise chaque jour dans mon propre travail et continue de l'améliorer.
+        </p>
+        <div class="mwork__divider mwork__points">
+          <h3>Axes de conception</h3>
+          <ul>
+            <li>Les cartes de demande changent de couleur par étapes à l'approche de l'échéance, rendant les priorités visibles d'un coup d'œil</li>
+            <li>Création automatique de l'emploi du temps quotidien à partir du planning mensuel des projets et du rythme personnel (sommeil, exercice, heures de concentration) — un projet à la fois, sans pauses imposées</li>
+            <li>Emploi du temps circulaire à manipulation directe : cliquer pour sélectionner, glisser les bords pour ajuster l'heure, glisser vers l'extérieur pour supprimer</li>
+            <li>L'IA se limite à réduire la saisie — lecture des messages de demande et des captures d'écran de discussion, ajout de plans en une phrase, sélection automatique des options du simulateur de prix. L'enregistrement, la suppression et la validation des prix restent toujours entre les mains de l'utilisatrice</li>
+            <li>Moteur d'IA commutable (API / Claude Code) ; la clé API est chiffrée par le système d'exploitation et stockée uniquement sur l'appareil</li>
+            <li>Données stockées localement, avec sauvegardes automatiques et détection des modifications externes du fichier pour éviter toute perte</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Processus</h3>
+          <ol>
+            <li><strong>Définition du problème</strong> : identification de la charge liée au suivi des demandes, échéances, heures de travail et frais sur plusieurs plateformes</li>
+            <li><strong>Architecture de l'information</strong> : conception d'un flux de données des demandes → planning → emploi du temps quotidien → revenus et dépenses</li>
+            <li><strong>Design UI</strong> : mises en page adaptées aux écrans horizontaux comme verticaux, avec thèmes et polices commutables</li>
+            <li><strong>Développement et amélioration</strong> : améliorée au fil de l'usage quotidien réel (ex. : remplacement de l'insertion automatique de pauses par la fusion des blocs de travail continus, pour éviter des plans trop morcelés)</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Technologies</dt><dd>Electron / electron-builder / JavaScript / HTML / CSS / SVG / safeStorage / JSON / Git</dd>
+              <dt>Intégration de l'IA</dt><dd>Anthropic SDK / Claude Code CLI (utilisés pour la lecture dans l'application et l'assistant lapin)</dd>
+              <dt>Périmètre</dt><dd>Planification / Design UI &amp; UX / Frontend / Application de bureau / Intégration de l'IA</dd>
+            </dl>
+          </div>
+          <p class="mwork__related">Toutes les demandes, clients et montants affichés sont des données d'exemple fictives.</p>
+        </div>
+      </div>
+
+    </div>`
     }
   });
 

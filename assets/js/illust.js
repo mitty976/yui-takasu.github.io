@@ -569,6 +569,47 @@
         <p class="illu-note">Livré en deux versions : un exemplaire rempli et un modèle vierge. Le ruban de dates et les lignes de chaque jour peuvent être réécrits chaque semaine, et l'image affichée sur l'écran du smartphone peut également être remplacée.</p>
       </div>`,
     },
+
+    /* その他タブ：自作アプリ。英語・フランス語では英語版の画面画像を出す */
+    illust_atelier_manager: {
+      title: '【自主制作】Atelier Manager‐クリエイター向け 仕事管理アプリ',
+      titleEn: '[Personal Project] Atelier Manager — Work Manager for Creators',
+      titleFr: '[Projet personnel] Atelier Manager — Gestionnaire de travail pour créateurs',
+      subtitle: 'Desktop App / UI/UX',
+      html: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/ja/01.webp" alt="Atelier Manager 依頼管理"><figcaption class="illu-cap">依頼管理</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/ja/02.webp" alt="Atelier Manager 時間の管理"><figcaption class="illu-cap">時間の管理</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/ja/03.webp" alt="Atelier Manager 1日の時間割"><figcaption class="illu-cap">1日の時間割</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/ja/04.webp" alt="Atelier Manager AI機能"><figcaption class="illu-cap">AI機能</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/ja/05.webp" alt="Atelier Manager お金と顧客"><figcaption class="illu-cap">お金と顧客</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 11月 制作</p>
+        <p class="illu-desc">フリーランスのイラストレーター・デザイナーとして、依頼・制作・収支をひとつで管理するために設計したWindowsデスクトップアプリです。複数の受注サイトに散らばる依頼、納期、作業時間、手数料を一か所にまとめ、「今なにをすればいいか」がすぐ分かることを目指しました。実際の業務で毎日使いながら改善を続けています。</p>
+        <p class="illu-note">納期までの日数でカードの色が変わる依頼管理、生活リズムから組む1日の時間割、トークルームのスクリーンショットから依頼内容を読み取るAI機能、サイトごとの手数料を含めた収支の集計などを備えています。画面の依頼・顧客・金額はすべて架空のサンプルデータです。</p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/01.webp" alt="Atelier Manager requests"><figcaption class="illu-cap">Requests</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/02.webp" alt="Atelier Manager time"><figcaption class="illu-cap">Time</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/03.webp" alt="Atelier Manager daily timetable"><figcaption class="illu-cap">Daily Timetable</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/04.webp" alt="Atelier Manager AI features"><figcaption class="illu-cap">AI Features</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/05.webp" alt="Atelier Manager money and clients"><figcaption class="illu-cap">Money &amp; Clients</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created November 2026</p>
+        <p class="illu-desc">A Windows desktop app I designed to manage requests, production, and income in one place as a freelance illustrator and designer. It brings together requests, deadlines, work hours, and platform fees scattered across multiple commission sites, so that "what to do now" is clear at a glance. I use it every day in my own work and keep improving it.</p>
+        <p class="illu-note">Features include request cards that change color as deadlines approach, a daily timetable built from personal rhythm, AI that reads request details from chat screenshots, and income tracking that accounts for each platform's fees. All requests, clients, and amounts shown are fictional sample data.</p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/01.webp" alt="Atelier Manager — demandes"><figcaption class="illu-cap">Demandes</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/02.webp" alt="Atelier Manager — temps"><figcaption class="illu-cap">Temps</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/03.webp" alt="Atelier Manager — emploi du temps quotidien"><figcaption class="illu-cap">Emploi du temps</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/04.webp" alt="Atelier Manager — fonctions IA"><figcaption class="illu-cap">Fonctions IA</figcaption></figure>
+        <figure class="illu-main"><img src="../images/works/web/original/atelier-manager/en/05.webp" alt="Atelier Manager — finances et clients"><figcaption class="illu-cap">Finances &amp; clients</figcaption></figure>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Créé en novembre 2026</p>
+        <p class="illu-desc">Une application de bureau Windows que j'ai conçue pour gérer en un seul endroit les demandes, la production et les revenus, en tant qu'illustratrice et designeuse indépendante. Elle rassemble les demandes, les échéances, les heures de travail et les frais de plateforme dispersés entre plusieurs sites de commande, afin que « ce qu'il faut faire maintenant » soit clair d'un coup d'œil. Je l'utilise chaque jour dans mon propre travail et continue de l'améliorer.</p>
+        <p class="illu-note">Parmi les fonctions : des cartes de demande qui changent de couleur à l'approche de l'échéance, un emploi du temps quotidien construit selon le rythme personnel, une IA qui lit les détails d'une demande à partir de captures d'écran de discussion, et un suivi des revenus tenant compte des frais de chaque plateforme. Toutes les demandes, clients et montants affichés sont des données d'exemple fictives.</p>
+      </div>`,
+    },
     illust_wokka: {
       title: '【お仕事絵】wokka様‐グッズ用イラスト',
       titleEn: '[Commission] wokka — Merchandise Illustration',
@@ -2173,6 +2214,7 @@
     'ＦＡ':       { en: 'Fan art',    fr: 'Fan art' },
     'FA':         { en: 'Fan art',    fr: 'Fan art' },
     'オリジナル': { en: 'Original',   fr: 'Original' },
+    '自主制作':   { en: 'Personal Project', fr: 'Projet personnel' },
     /* 既存カードの表記ゆれ */
     '仕事絵':     { en: 'Commission', fr: 'Commande' },
     'ご依頼もの': { en: 'Commission', fr: 'Commande' },
@@ -2198,6 +2240,7 @@
       tabIllust:         'イラスト',
       tabLogo:           'ロゴ',
       tabSchedule:       '配信関連',
+      tabOther:          'その他',
       /* 受注状況バナー。日付を変えるときは illust/index.html の初期表示も同じ内容に直すこと */
       statusBadge:       '📋 受注状況',
       statusIllust:      "<span class=\"status-bar__label\">イラスト：</span><strong>11月下旬</strong>より着手可能",
@@ -2247,6 +2290,7 @@
       tabIllust:         'Illustration',
       tabLogo:           'Logo',
       tabSchedule:       'Streaming',
+      tabOther:          'Other',
       statusBadge:       '📋 Availability',
       statusIllust:      "<span class=\"status-bar__label\">Illustration:</span> available from <strong>late November</strong>",
       statusDesign:      "<span class=\"status-bar__label\">Design:</span> available from <strong>mid-November</strong>",
@@ -2292,6 +2336,7 @@
       tabIllust:         'Illustration',
       tabLogo:           'Logo',
       tabSchedule:       'Diffusion',
+      tabOther:          'Autres',
       statusBadge:       '📋 Disponibilité',
       statusIllust:      "<span class=\"status-bar__label\">Illustration :</span> disponible à partir de <strong>fin novembre</strong>",
       statusDesign:      "<span class=\"status-bar__label\">Design :</span> disponible à partir de <strong>mi-novembre</strong>",
