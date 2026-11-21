@@ -3863,7 +3863,8 @@
             <li>納期までの日数でカードの色が段階的に変わり、優先度がひと目で分かる</li>
             <li>月ごとの案件スケジュールと生活リズム（睡眠・運動・集中しやすい時間帯）から、1日の時間割を自動で作成。案件は1件ずつ進め、休憩は強制しない</li>
             <li>円グラフの時間割は、クリックで選んで端をドラッグで時間を調整、外へドラッグで削除できる直感的な操作</li>
-            <li>AIは「入力の手間を減らす」役割に限定。依頼文やトークルームのスクリーンショットの読み取り、一言での予定追加、料金シミュレーターの自動選択を行い、保存・削除・金額の確定は必ず本人が行う設計</li>
+            <li>AIは入力の手間を減らすアシスタントとして組み込み。依頼文やトークルームのスクリーンショットの読み取り、一言での予定追加、料金シミュレーターの自動選択に加え、うさぎに話しかけて時間割・やることを手直しできる。消す前には必ず確認を取り、案件・クライアント・金額は本人だけが変更できる設計</li>
+            <li>「マネージャーに相談する」では、営業・依頼・ポートフォリオサイト・Live2D の作業を、相談先とクライアントごとのタブに分けて、会話しながら頼める。ファイルの送付（貼り付け・ドロップ）に対応し、変更は差分で確かめていつでも元に戻せる。サイトの公開は、内容を確認してからボタンで行う</li>
             <li>AIの実行方法を API／Claude Code で切り替え可能。APIキーはOSの暗号化機能で端末内にのみ保存</li>
             <li>データはローカルに保存し、自動バックアップと、外部からの書き換えの検知で消失を防止</li>
           </ul>
@@ -3881,7 +3882,7 @@
           <div class="mwork__note">
             <dl>
               <dt>使用技術</dt><dd>Electron / electron-builder / JavaScript / HTML / CSS / SVG / safeStorage / JSON / Git</dd>
-              <dt>AI機能の連携</dt><dd>Anthropic SDK / Claude Code CLI（アプリ内の読み取り・うさぎ機能で使用）</dd>
+              <dt>AI機能の連携</dt><dd>Anthropic SDK / Claude Code CLI（読み取り・うさぎ・マネージャーに相談する で使用）</dd>
               <dt>制作範囲</dt><dd>企画 / UI・UX設計 / フロントエンド実装 / デスクトップアプリ化 / AI連携</dd>
             </dl>
           </div>
@@ -3901,7 +3902,8 @@
             <li>Request cards change color step by step as deadlines approach, making priorities clear at a glance</li>
             <li>Automatically builds a daily timetable from the monthly project schedule and personal rhythm (sleep, exercise, peak focus hours) — one project at a time, with no forced breaks</li>
             <li>Circular timetable with direct manipulation: click to select, drag edges to adjust time, drag outside to remove</li>
-            <li>AI is limited to reducing input effort — reading request messages and chat screenshots, adding plans from a single sentence, and auto-selecting price simulator options. Saving, deleting, and confirming prices always stay with the user</li>
+            <li>AI is built in as an assistant that reduces input effort — reading request messages and chat screenshots, adding plans from a single sentence, and auto-selecting price simulator options, plus a rabbit assistant you can talk to for adjusting the timetable and to-dos. It always asks before deleting anything, and only the user can change projects, clients, and prices</li>
+            <li>"Ask the Manager" lets you delegate sales, client requests, portfolio site, and Live2D work through conversation, organized into tabs by category and by client. You can send files (paste or drop), every change is shown as a diff and can be undone, and the site is published with a button only after reviewing the changes</li>
             <li>Switchable AI engine (API / Claude Code); the API key is encrypted with the OS and stored only on the device</li>
             <li>Local data storage with automatic backups and detection of external file changes to prevent data loss</li>
           </ul>
@@ -3919,7 +3921,7 @@
           <div class="mwork__note">
             <dl>
               <dt>Tech</dt><dd>Electron / electron-builder / JavaScript / HTML / CSS / SVG / safeStorage / JSON / Git</dd>
-              <dt>AI Feature Integration</dt><dd>Anthropic SDK / Claude Code CLI (used for in-app reading and the rabbit assistant)</dd>
+              <dt>AI Feature Integration</dt><dd>Anthropic SDK / Claude Code CLI (used for reading, the rabbit assistant, and "Ask the Manager")</dd>
               <dt>Scope</dt><dd>Planning / UI &amp; UX design / Frontend / Desktop packaging / AI integration</dd>
             </dl>
           </div>
@@ -3939,7 +3941,8 @@
             <li>Les cartes de demande changent de couleur par étapes à l'approche de l'échéance, rendant les priorités visibles d'un coup d'œil</li>
             <li>Création automatique de l'emploi du temps quotidien à partir du planning mensuel des projets et du rythme personnel (sommeil, exercice, heures de concentration) — un projet à la fois, sans pauses imposées</li>
             <li>Emploi du temps circulaire à manipulation directe : cliquer pour sélectionner, glisser les bords pour ajuster l'heure, glisser vers l'extérieur pour supprimer</li>
-            <li>L'IA se limite à réduire la saisie — lecture des messages de demande et des captures d'écran de discussion, ajout de plans en une phrase, sélection automatique des options du simulateur de prix. L'enregistrement, la suppression et la validation des prix restent toujours entre les mains de l'utilisatrice</li>
+            <li>L'IA est intégrée comme une assistante qui réduit la saisie — lecture des messages de demande et des captures d'écran de discussion, ajout de plans en une phrase, sélection automatique des options du simulateur de prix, ainsi qu'un assistant lapin à qui l'on peut parler pour ajuster l'emploi du temps et les tâches. Elle demande toujours confirmation avant de supprimer, et seule l'utilisatrice peut modifier les projets, les clients et les montants</li>
+            <li>« Demander au manager » permet de confier par la conversation le travail commercial, les demandes des clients, le site portfolio et Live2D, organisé en onglets par catégorie et par client. On peut envoyer des fichiers (coller ou glisser-déposer), chaque modification s'affiche sous forme de différences et peut être annulée, et le site n'est publié par un bouton qu'après vérification</li>
             <li>Moteur d'IA commutable (API / Claude Code) ; la clé API est chiffrée par le système d'exploitation et stockée uniquement sur l'appareil</li>
             <li>Données stockées localement, avec sauvegardes automatiques et détection des modifications externes du fichier pour éviter toute perte</li>
           </ul>
@@ -3957,7 +3960,7 @@
           <div class="mwork__note">
             <dl>
               <dt>Technologies</dt><dd>Electron / electron-builder / JavaScript / HTML / CSS / SVG / safeStorage / JSON / Git</dd>
-              <dt>Intégration de l'IA</dt><dd>Anthropic SDK / Claude Code CLI (utilisés pour la lecture dans l'application et l'assistant lapin)</dd>
+              <dt>Intégration de l'IA</dt><dd>Anthropic SDK / Claude Code CLI (utilisés pour la lecture, l'assistant lapin et « Demander au manager »)</dd>
               <dt>Périmètre</dt><dd>Planification / Design UI &amp; UX / Frontend / Application de bureau / Intégration de l'IA</dd>
             </dl>
           </div>

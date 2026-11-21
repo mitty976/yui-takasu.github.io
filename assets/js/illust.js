@@ -587,7 +587,7 @@
         <div class="mwork__divider"></div>
         <p class="illu-date">2026年 11月 制作</p>
         <p class="illu-desc">フリーランスのイラストレーター・デザイナーとして、依頼・制作・収支をひとつで管理するために設計したWindowsデスクトップアプリです。複数の受注サイトに散らばる依頼、納期、作業時間、手数料を一か所にまとめ、「今なにをすればいいか」がすぐ分かることを目指しました。実際の業務で毎日使いながら改善を続けています。</p>
-        <p class="illu-note">納期までの日数でカードの色が変わる依頼管理、生活リズムから組む1日の時間割、トークルームのスクリーンショットから依頼内容を読み取るAI機能、サイトごとの手数料を含めた収支の集計などを備えています。画面の依頼・顧客・金額はすべて架空のサンプルデータです。</p>
+        <p class="illu-note">納期までの日数でカードの色が変わる依頼管理、生活リズムから組む1日の時間割、トークルームのスクリーンショットから依頼内容を読み取るAI機能、サイトごとの手数料を含めた収支の集計などを備えています。「マネージャーに相談する」では、営業・依頼・サイト更新などの作業を、クライアントごとのタブで会話しながら頼めます。画面の依頼・顧客・金額はすべて架空のサンプルデータです。</p>
       </div>`,
       htmlEn: `<div class="mwork mwork--illu">
         <div class="illu-variants">
@@ -600,7 +600,7 @@
         <div class="mwork__divider"></div>
         <p class="illu-date">Created November 2026</p>
         <p class="illu-desc">A Windows desktop app I designed to manage requests, production, and income in one place as a freelance illustrator and designer. It brings together requests, deadlines, work hours, and platform fees scattered across multiple commission sites, so that "what to do now" is clear at a glance. I use it every day in my own work and keep improving it.</p>
-        <p class="illu-note">Features include request cards that change color as deadlines approach, a daily timetable built from personal rhythm, AI that reads request details from chat screenshots, and income tracking that accounts for each platform's fees. All requests, clients, and amounts shown are fictional sample data.</p>
+        <p class="illu-note">Features include request cards that change color as deadlines approach, a daily timetable built from personal rhythm, AI that reads request details from chat screenshots, and income tracking that accounts for each platform's fees. With "Ask the Manager," sales, client requests, and site updates can be delegated through conversation, in tabs organized by client. All requests, clients, and amounts shown are fictional sample data.</p>
       </div>`,
       htmlFr: `<div class="mwork mwork--illu">
         <div class="illu-variants">
@@ -613,7 +613,7 @@
         <div class="mwork__divider"></div>
         <p class="illu-date">Créé en novembre 2026</p>
         <p class="illu-desc">Une application de bureau Windows que j'ai conçue pour gérer en un seul endroit les demandes, la production et les revenus, en tant qu'illustratrice et designeuse indépendante. Elle rassemble les demandes, les échéances, les heures de travail et les frais de plateforme dispersés entre plusieurs sites de commande, afin que « ce qu'il faut faire maintenant » soit clair d'un coup d'œil. Je l'utilise chaque jour dans mon propre travail et continue de l'améliorer.</p>
-        <p class="illu-note">Parmi les fonctions : des cartes de demande qui changent de couleur à l'approche de l'échéance, un emploi du temps quotidien construit selon le rythme personnel, une IA qui lit les détails d'une demande à partir de captures d'écran de discussion, et un suivi des revenus tenant compte des frais de chaque plateforme. Toutes les demandes, clients et montants affichés sont des données d'exemple fictives.</p>
+        <p class="illu-note">Parmi les fonctions : des cartes de demande qui changent de couleur à l'approche de l'échéance, un emploi du temps quotidien construit selon le rythme personnel, une IA qui lit les détails d'une demande à partir de captures d'écran de discussion, et un suivi des revenus tenant compte des frais de chaque plateforme. Avec « Demander au manager », le travail commercial, les demandes des clients et les mises à jour du site peuvent être confiés par la conversation, dans des onglets organisés par client. Toutes les demandes, clients et montants affichés sont des données d'exemple fictives.</p>
       </div>`,
     },
     illust_wokka: {
