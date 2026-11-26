@@ -616,6 +616,9 @@ body.is-loaded {
   to    { opacity: 1; transform: scale(1, 1); }
 }
 
+/* 画面の細部まで見せたい作品用（キャラ設定ルーレットなど） */
+.wm-box--wide { width: min(1040px, 94vw) !important; }
+
 .wm-box {
   background: var(--color-bg);
   border-radius: 20px;
@@ -673,6 +676,24 @@ body.is-loaded {
 .illu-date { font-size: 11px; color: var(--color-accent); opacity: 0.65; margin-bottom: 12px; letter-spacing: 0.04em; }
 .illu-desc { font-size: 13px; color: var(--color-accent); line-height: 1.85; margin-bottom: 12px; }
 .illu-note { font-size: 12px; color: var(--color-accent); opacity: 0.8; line-height: 1.85; margin-bottom: 12px; }
+/* 実際に触れる作品への導線。見るだけの作品と違う点なので目立たせる */
+.illu-cta-wrap { margin: 16px 0 4px; }
+.illu-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 30px;
+  border-radius: 999px;
+  background: var(--color-btn);
+  color: #fff;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(74, 42, 58, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.illu-cta:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(74, 42, 58, 0.26); }
+.illu-cta::after { content: '↗'; font-size: 12px; opacity: 0.85; }
 /* 本文内で目立たせたくない一節（例：元所属先の表記）をグレーに落とす */
 .illu-muted { opacity: 0.45; }
 .illu-link { font-size: 12px; margin-top: 16px; }
@@ -2057,6 +2078,16 @@ html[lang="fr"] .sidebar-chara {
   font-size: 12.5px;
   line-height: 1.9;
 }
+/* 案内文のなかのリンク（キャラ設定ルーレットなど） */
+.req-link {
+  color: var(--color-btn);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.req-link:hover { opacity: 0.75; }
+
 /* タブの下に続く共通の案内 */
 .req-common {
   margin-top: 36px;

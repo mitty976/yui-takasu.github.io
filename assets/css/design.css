@@ -750,6 +750,11 @@
       scrollbar-color: var(--color-border) transparent;
       transition: background 0.6s ease;
     }
+    /* 画面の細部まで見せたい作品用の幅広モーダル（キャラ設定ルーレットなど）。
+       画像の高さ上限も上げないと、幅を広げても画像が小さいままになる */
+    .modal-box--wide { max-width: 1040px; }
+    .modal-box--wide .mwork__img { max-height: 620px; }
+
     .modal-box::-webkit-scrollbar { width: 4px; }
     .modal-box::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
 
@@ -1025,6 +1030,34 @@
     .mwork__note dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
     .mwork__note dt { font-weight: 500; color: rgba(42,58,46,0.7); white-space: nowrap; }
     .mwork__note dd { color: #2a3a2e; }
+    /* 実際に触れる作品への導線。他の作品と違う点なので目立たせる */
+    .mwork__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 14px 0 2px;
+      padding: 13px 30px;
+      border-radius: 999px;
+      background: var(--color-accent);
+      color: #fff;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 4px 14px rgba(42, 58, 46, 0.18);
+    }
+    .mwork__cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(42, 58, 46, 0.24);
+    }
+    .mwork__cta::after { content: '↗'; font-size: 13px; opacity: 0.85; }
+    .mwork__ctanote {
+      margin: 7px 0 0;
+      font-size: 11.5px;
+      color: rgba(42, 58, 46, 0.6);
+      line-height: 1.6;
+    }
+
     .mwork__related {
       margin-top: 10px;
       font-size: 11.5px;

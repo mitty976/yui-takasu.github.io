@@ -3807,6 +3807,172 @@
 
     </div>`
     },
+    character_roulette: {
+      title: 'キャラ設定ルーレット｜Grimoire of Characters',
+      titleEn: 'Character Roulette — Grimoire of Characters',
+      titleFr: 'Roulette de personnages — Grimoire of Characters',
+      subtitle: 'Web App / Canvas 2D / Frontend / Personal Project',
+      wide: true,
+      html: `
+    <div class="mwork">
+
+      <section class="mwork__media" data-gallery>
+        <figure class="modal__figure"
+          data-set='[
+            {
+              "src":"../images/works/roulette/grimoire.webp",
+              "alt":{"ja":"キャラ設定ルーレット｜魔導書のスタイル","en":"Character Roulette — Grimoire style","fr":"Roulette de personnages — style grimoire"},
+              "label":{"ja":"魔導書のスタイル","en":"Grimoire style","fr":"Style grimoire"}
+            },
+            {
+              "src":"../images/works/roulette/tarot.webp",
+              "alt":{"ja":"キャラ設定ルーレット｜タロットのスタイル","en":"Character Roulette — Tarot style","fr":"Roulette de personnages — style tarot"},
+              "label":{"ja":"タロットのスタイル","en":"Tarot style","fr":"Style tarot"}
+            },
+            {
+              "src":"../images/works/roulette/mobile.webp",
+              "alt":{"ja":"キャラ設定ルーレット｜スマートフォン表示","en":"Character Roulette — mobile layout","fr":"Roulette de personnages — affichage mobile"},
+              "label":{"ja":"スマートフォン表示","en":"Mobile layout","fr":"Affichage mobile"}
+            }
+          ]'>
+
+          <img class="mwork__img"
+            src="../images/works/roulette/grimoire.webp"
+            alt="キャラ設定ルーレット｜魔導書のスタイル">
+        </figure>
+      </section>
+
+      <!-- JP -->
+      <div class="mwork__langblock" data-langblock="jp">
+        <p class="mwork__lead">
+          キャラクターの種族・モチーフ・服装・髪型・目の色までを、回して決めるWebアプリです。<br><br>
+          VTuber様のイラストをお受けするなかで、「イメージはあるけれど言葉にならない」というご相談が多かったことから作りました。気に入った項目だけ固定して、残りをもう一度引き直せます。
+        </p>
+
+        <a class="mwork__cta" href="../roulette/index.html?skin=tarot&lang=ja" target="_blank" rel="noopener">実際に回してみる</a>
+        <p class="mwork__ctanote">ブラウザでそのまま動きます。スマートフォンにも対応しています。</p>
+
+        <div class="mwork__divider mwork__points">
+          <h3>設計ポイント</h3>
+          <ul>
+            <li>辻褄の合う組み合わせだけを出す。人種 → 系統 → 種類と決まるたび、後ろの項目の候補がその都度絞り込まれる</li>
+            <li>指定した項目は必ず守る。すべてを満たす組み合わせが無いときは、イメージカラー → モチーフ → 服装 → 体型 の順に縛りをゆるめ、どこまで譲れば成り立つかを探す</li>
+            <li>盤・札・背景の演出はすべて Canvas 2D で描画。画像素材を使わずコードだけで組んでいる</li>
+            <li>2つのスタイル（タロット／魔導書）で、盤の造形・配色・演出・ボタンの文言まで丸ごと入れ替わる。仕組みは共有したまま見た目だけを差し替える構造</li>
+            <li>性別は回さずに選ぶ形。性別で人種・髪型・体型を絞らない設計にしている</li>
+            <li><code>prefers-reduced-motion</code> に対応し、動きを減らす設定の端末では演出を止める</li>
+            <li>決まった内容は設定シートとして書き出し、そのままご依頼時のテンプレートに使える</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>制作プロセス</h3>
+          <ol>
+            <li><strong>項目の洗い出し</strong>：実際のご依頼でうかがっている設定を16項目に整理</li>
+            <li><strong>依存関係の設計</strong>：どの項目がどの項目に依存するかを図にして、回す順番を決定</li>
+            <li><strong>実装</strong>：候補を絞り込む仕組みと、指定を守りながら解を探す処理を作成</li>
+            <li><strong>演出とスタイル</strong>：Canvas 2D で盤と札を描き、スタイルごとに差し替えられる構造へ</li>
+            <li><strong>デスクトップアプリ化</strong>：Electron で手元用のアプリとしても動くように</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>使用技術</dt><dd>JavaScript / Canvas 2D API / HTML / CSS / Electron</dd>
+              <dt>制作範囲</dt><dd>企画 / 設定データ作成 / UI設計 / フロントエンド実装</dd>
+              <dt>制作期間</dt><dd>2026年11月</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="mwork__langblock" data-langblock="en" hidden>
+        <p class="mwork__lead">
+          A web app that rolls for a character's race, motifs, outfit, hairstyle and eye colour.<br><br>
+          I built it because so many VTuber clients told me they had an image in mind but could not put it into words. You can lock the parts you like and re-roll the rest.
+        </p>
+
+        <a class="mwork__cta" href="../roulette/index.html?skin=tarot&lang=en" target="_blank" rel="noopener">Try it yourself</a>
+        <p class="mwork__ctanote">Runs directly in the browser, and works on phones too.</p>
+
+        <div class="mwork__divider mwork__points">
+          <h3>Design Focus</h3>
+          <ul>
+            <li>Only produces combinations that hold together — as race, family and kind are decided, the candidates for every later item are narrowed accordingly</li>
+            <li>Locked items are always respected. When nothing satisfies them all, the constraints are relaxed in order (image colour → motif → outfit → body type) to find how far to give before a solution exists</li>
+            <li>The wheel, cards and background effects are all drawn with Canvas 2D — no image assets, only code</li>
+            <li>Two styles (Tarot / Grimoire) swap the wheel's form, palette, effects and even the button wording, while the underlying logic stays shared</li>
+            <li>Gender is chosen rather than rolled, and choosing it never narrows race, hairstyle or body type</li>
+            <li>Respects <code>prefers-reduced-motion</code> and stops the effects on devices set to reduce motion</li>
+            <li>The result can be exported as a character sheet and used as a request template as is</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Process</h3>
+          <ol>
+            <li><strong>Defining the items</strong>: Organised the settings I actually ask clients about into 16 items</li>
+            <li><strong>Dependency design</strong>: Mapped which item depends on which, and set the rolling order</li>
+            <li><strong>Build</strong>: Wrote the narrowing logic and the solver that keeps locked items intact</li>
+            <li><strong>Effects and styles</strong>: Drew the wheel and cards in Canvas 2D, structured so styles can be swapped</li>
+            <li><strong>Desktop build</strong>: Packaged with Electron so it also runs as a local app</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Tech</dt><dd>JavaScript / Canvas 2D API / HTML / CSS / Electron</dd>
+              <dt>Scope</dt><dd>Concept / Settings data / UI design / Frontend development</dd>
+              <dt>Created</dt><dd>November 2026</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- FR -->
+      <div class="mwork__langblock" data-langblock="fr" hidden>
+        <p class="mwork__lead">
+          Une application web qui tire au sort l'espèce, les motifs, la tenue, la coiffure et la couleur des yeux d'un personnage.<br><br>
+          Je l'ai créée parce que beaucoup de VTubers me disaient avoir une image en tête sans réussir à la formuler. On peut figer ce que l'on aime et relancer le reste.
+        </p>
+
+        <a class="mwork__cta" href="../roulette/index.html?skin=tarot&lang=fr" target="_blank" rel="noopener">Essayer la roulette</a>
+        <p class="mwork__ctanote">Fonctionne directement dans le navigateur, y compris sur téléphone.</p>
+
+        <div class="mwork__divider mwork__points">
+          <h3>Axes de conception</h3>
+          <ul>
+            <li>Ne propose que des combinaisons cohérentes : à mesure que l'espèce, la famille et le type sont fixés, les candidats des éléments suivants se réduisent</li>
+            <li>Les éléments figés sont toujours respectés. Quand aucune combinaison ne les satisfait tous, les contraintes sont relâchées dans l'ordre (couleur d'image → motif → tenue → silhouette) pour trouver jusqu'où céder</li>
+            <li>La roue, les cartes et les effets de fond sont entièrement dessinés en Canvas 2D, sans aucune image, uniquement avec du code</li>
+            <li>Deux styles (tarot / grimoire) changent la forme de la roue, les couleurs, les effets et jusqu'au texte des boutons, la logique restant commune</li>
+            <li>Le genre se choisit au lieu d'être tiré, et ce choix ne restreint ni l'espèce, ni la coiffure, ni la silhouette</li>
+            <li>Prend en charge <code>prefers-reduced-motion</code> et coupe les effets sur les appareils configurés ainsi</li>
+            <li>Le résultat s'exporte en fiche de personnage, utilisable telle quelle comme modèle de commande</li>
+          </ul>
+        </div>
+
+        <div class="mwork__process">
+          <h3>Processus</h3>
+          <ol>
+            <li><strong>Définition des éléments</strong> : organisation en 16 éléments des réglages que je demande réellement aux clients</li>
+            <li><strong>Conception des dépendances</strong> : cartographie des dépendances entre éléments et choix de l'ordre de tirage</li>
+            <li><strong>Développement</strong> : écriture de la réduction des candidats et du solveur qui préserve les éléments figés</li>
+            <li><strong>Effets et styles</strong> : dessin de la roue et des cartes en Canvas 2D, structuré pour permuter les styles</li>
+            <li><strong>Version bureau</strong> : empaquetage avec Electron pour un usage local</li>
+          </ol>
+
+          <div class="mwork__note">
+            <dl>
+              <dt>Technologies</dt><dd>JavaScript / Canvas 2D API / HTML / CSS / Electron</dd>
+              <dt>Périmètre</dt><dd>Concept / Données de réglages / Design UI / Développement front-end</dd>
+              <dt>Réalisation</dt><dd>Novembre 2026</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>`
+    },
     atelier_manager: {
       title: 'Atelier Manager｜クリエイター向け 仕事管理アプリ',
       titleEn: 'Atelier Manager — Desktop App for Freelance Creators',
@@ -3819,27 +3985,27 @@
         <figure class="modal__figure"
           data-set='[
             {
-              "src":"../images/works/web/original/atelier-manager/ja/01.webp",
+              "src":{"ja":"../images/works/web/original/atelier-manager/ja/01.webp","en":"../images/works/web/original/atelier-manager/en/01.webp","fr":"../images/works/web/original/atelier-manager/en/01.webp"},
               "alt":{"ja":"Atelier Manager｜依頼管理","en":"Atelier Manager — Requests","fr":"Atelier Manager — Gestion des demandes"},
               "label":{"ja":"依頼管理","en":"Requests","fr":"Demandes"}
             },
             {
-              "src":"../images/works/web/original/atelier-manager/ja/02.webp",
+              "src":{"ja":"../images/works/web/original/atelier-manager/ja/02.webp","en":"../images/works/web/original/atelier-manager/en/02.webp","fr":"../images/works/web/original/atelier-manager/en/02.webp"},
               "alt":{"ja":"Atelier Manager｜時間の管理","en":"Atelier Manager — Time","fr":"Atelier Manager — Gestion du temps"},
               "label":{"ja":"時間の管理","en":"Time","fr":"Temps"}
             },
             {
-              "src":"../images/works/web/original/atelier-manager/ja/03.webp",
+              "src":{"ja":"../images/works/web/original/atelier-manager/ja/03.webp","en":"../images/works/web/original/atelier-manager/en/03.webp","fr":"../images/works/web/original/atelier-manager/en/03.webp"},
               "alt":{"ja":"Atelier Manager｜1日の時間割","en":"Atelier Manager — Daily timetable","fr":"Atelier Manager — Emploi du temps quotidien"},
               "label":{"ja":"1日の時間割","en":"Daily Timetable","fr":"Emploi du temps"}
             },
             {
-              "src":"../images/works/web/original/atelier-manager/ja/04.webp",
+              "src":{"ja":"../images/works/web/original/atelier-manager/ja/04.webp","en":"../images/works/web/original/atelier-manager/en/04.webp","fr":"../images/works/web/original/atelier-manager/en/04.webp"},
               "alt":{"ja":"Atelier Manager｜AI機能","en":"Atelier Manager — AI features","fr":"Atelier Manager — Fonctions IA"},
               "label":{"ja":"AI機能","en":"AI Features","fr":"Fonctions IA"}
             },
             {
-              "src":"../images/works/web/original/atelier-manager/ja/05.webp",
+              "src":{"ja":"../images/works/web/original/atelier-manager/ja/05.webp","en":"../images/works/web/original/atelier-manager/en/05.webp","fr":"../images/works/web/original/atelier-manager/en/05.webp"},
               "alt":{"ja":"Atelier Manager｜お金と顧客","en":"Atelier Manager — Money and clients","fr":"Atelier Manager — Finances et clients"},
               "label":{"ja":"お金と顧客","en":"Money & Clients","fr":"Finances & clients"}
             }
@@ -4053,6 +4219,13 @@
         ? (rawLabel[currentLang] || rawLabel.en || rawLabel.ja || `${idx + 1} / ${set.length}`)
         : (rawLabel || `${idx + 1} / ${set.length}`);
 
+      /* srcも {"ja":..,"en":..,"fr":..} 形式に対応。
+         画面に日本語が写り込む作品は、英語・フランス語のときに英語版の画像へ差し替える */
+      const rawSrc = item.src;
+      const srcUrl = (rawSrc && typeof rawSrc === 'object')
+        ? (rawSrc[currentLang] || rawSrc.en || rawSrc.ja || '')
+        : rawSrc;
+
       /* altもlabelと同じく {"ja":..,"en":..,"fr":..} 形式に対応（文字列のままでも可） */
       const rawAlt = item.alt;
       const altTxt = (rawAlt && typeof rawAlt === 'object')
@@ -4065,7 +4238,11 @@
       /* 言語切り替え（textOnly）でもaltを更新する必要があるため、returnより前で反映する */
       img.alt = altTxt;
 
-      if (opts.textOnly) return;
+      if (opts.textOnly) {
+        /* 言語で画像そのものが変わる作品は、文字だけの更新でも差し替える */
+        if (img.getAttribute('src') !== srcUrl) img.src = srcUrl;
+        return;
+      }
 
       let ghost = null;
       if (img.currentSrc || img.src) {
@@ -4097,7 +4274,7 @@
         img.onload = null; img.onerror = null;
       };
 
-      img.src = item.src;
+      img.src = srcUrl;
       if (img.complete) finish();
 
       prevBtn.disabled = (idx === 0);
@@ -4302,6 +4479,10 @@
         btn.classList.toggle('is-active', active);
         btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
+
+      /* 画面の細部まで見せたい作品は幅広で開く（データ側で wide: true を指定） */
+      const boxEl = modalOverlay.querySelector('.modal-box');
+      if (boxEl) boxEl.classList.toggle('modal-box--wide', !!data.wide);
 
       modalOverlay.classList.add('is-open');
       modalOverlay.setAttribute('aria-hidden', 'false');

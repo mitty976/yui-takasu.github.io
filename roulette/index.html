@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>キャラ設定ルーレット｜Grimoire of Characters</title>
+<meta name="description" content="回すだけで種族・モチーフ・服装・髪型・目の色までが決まるキャラ設定ルーレット。気に入った項目は固定したまま、残りだけ引き直せます。">
+<link rel="canonical" href="https://www.yui-takasu.com/roulette/">
+<!-- SNSに貼られたときの見え方 -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.yui-takasu.com/roulette/">
+<meta property="og:title" content="キャラ設定ルーレット｜Grimoire of Characters">
+<meta property="og:description" content="回すだけで種族・モチーフ・服装・髪型・目の色までが決まるキャラ設定ルーレット。気に入った項目は固定したまま、残りだけ引き直せます。">
+<meta property="og:image" content="https://www.yui-takasu.com/images/works/roulette/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Yui-Takasu">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+<link rel="stylesheet" href="themes/tarot.css" data-skin="tarot">
+<link rel="stylesheet" href="themes/grimoire.css" data-skin="grimoire" media="not all">
+<link rel="stylesheet" href="base.css">
+<!-- 公開版だけの上書き。アプリ本体のCSSは触らず、見せ方だけここで調整する -->
+<link rel="stylesheet" href="public.css">
+</head>
+<body>
+<canvas id="sky"></canvas><canvas id="fx"></canvas>
+<header id="bar"><div id="tray"><nav id="skins" data-i18n-aria="スタイル" aria-label="スタイル"></nav></div><button id="skinTab" data-i18n-aria="スタイルを切り替える" aria-label="スタイルを切り替える" aria-expanded="false" aria-controls="tray"></button></header>
+<!-- 表示言語。公開版だけの切り替え -->
+<nav id="langs" aria-label="Language"><button type="button" data-lang="ja">JP</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="fr">FR</button></nav>
+<!-- 作った人のサイトへ戻る導線。言語切り替えと向かい合う位置にまとめる -->
+<nav id="home" aria-label="Site">
+  <a href="../illust/index.html" data-i18n="ポートフォリオ">ポートフォリオ</a>
+  <span class="ask-wrap">
+    <button type="button" id="askBtn" aria-expanded="false" aria-controls="askPop" data-i18n="ご依頼はこちら">ご依頼はこちら</button>
+    <!-- 窓口は料金シミュレーターと同じ。日本語のときだけ つなぐ・ココナラも出す -->
+    <div class="ask-pop" id="askPop" hidden>
+      <a href="https://tsunagu.cloud/products/95782" target="_blank" rel="noopener" data-ask-lang="ja">
+        <img src="../assets/img/images/tunagu.png" alt=""><span>つなぐ</span></a>
+      <a href="https://coconala.com/users/1524205" target="_blank" rel="noopener" data-ask-lang="ja">
+        <img src="../assets/img/images/coconala.png" alt=""><span>Coconala</span></a>
+      <a href="https://twitter.com/mitty976" target="_blank" rel="noopener" data-ask-lang="both">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg>
+        <span>X (Twitter)</span></a>
+      <a href="https://fr.fiverr.com/mitty976?source=gig_page" target="_blank" rel="noopener" data-ask-lang="intl">
+        <img src="../assets/img/images/fiverr.png" alt=""><span>Fiverr</span></a>
+      <a href="mailto:mayuyu9766@gmail.com" data-ask-lang="intl">
+        <svg viewBox="0 -960 960 960" aria-hidden="true"><path fill="currentColor" d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/></svg>
+        <span>Email</span></a>
+    </div>
+  </span>
+</nav>
+<main class="shell">
+  <div class="spread" id="spread">
+    <section class="page left" id="stage">
+      <!-- 性別は回さずに自分で選ぶ。選んでも他の項目は絞らない -->
+      <div class="gender" id="gender" role="group" data-i18n-aria="性別" aria-label="性別"></div>
+      <h1 id="title"></h1>
+      <div class="wheel"><canvas id="wheel" role="img" data-i18n-aria="ルーレット" aria-label="ルーレット"></canvas><div id="reveal" aria-hidden="true"></div></div>
+      <p id="now" aria-live="polite"></p>
+      <div class="actions"><button id="one"></button><button id="all"></button><button id="copy" data-i18n="設定をコピー">設定をコピー</button><button id="clear" data-i18n="指定をすべて外す">指定をすべて外す</button></div>
+      <p id="hint" role="status"></p>
+    </section>
+    <section class="page right">
+      <div class="entry"><div id="wash"></div><p id="path"></p><h2 id="kind"></h2><p id="note"></p></div>
+      <div class="list" id="list"></div>
+    </section>
+  </div>
+</main>
+<dialog id="picker">
+  <div class="pickbox">
+    <h2 id="pickTitle"></h2>
+    <p id="pickHelp"></p>
+    <input id="q" type="search" data-i18n-ph="さがす" data-i18n-aria="さがす" placeholder="さがす" aria-label="さがす">
+    <div id="opts"></div>
+    <label id="moreRow"><input type="checkbox" id="more"> <span data-i18n="残りはルーレットで足す">残りはルーレットで足す</span></label>
+    <div class="pickbtns"><button id="cancel" data-i18n="閉じる">閉じる</button><button id="unfix" data-i18n="ルーレットに戻す">ルーレットに戻す</button><button id="ok"></button></div>
+  </div>
+</dialog>
+<dialog id="copyDlg">
+  <div class="pickbox">
+    <h2 data-i18n="キャラクター設定">キャラクター設定</h2>
+    <p id="copied" role="status"></p>
+    <textarea id="sheet" rows="14" data-i18n-aria="キャラクター設定（書き換えられます）" aria-label="キャラクター設定（書き換えられます）"></textarea>
+    <div class="pickbtns"><button id="closeCopy" data-i18n="閉じる">閉じる</button><button id="recopy" class="main" data-i18n="もう一度コピー">もう一度コピー</button></div>
+  </div>
+</dialog>
+<footer class="pub-foot">
+  <span class="pub-copy">copyright all rights reserved by ぐるにゃ</span>
+</footer>
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="engine.js"></script>
+<script src="solve.js"></script>
+<script src="core.js"></script>
+<script src="themes/tarot.js"></script>
+<script src="themes/grimoire.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

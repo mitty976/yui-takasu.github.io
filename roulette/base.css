@@ -1,0 +1,54 @@
+/* どのスタイルでも共通の部分。色は各スタイルの --ui-* を使う */
+:root { --bar: 0px; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; min-height: 100vh; overflow-x: hidden; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { opacity: .4; cursor: default; }
+#sky, #fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#sky { z-index: -1; } #fx { z-index: 20; }
+/* スタイルの切り替え：右上のつまみを押すと、引き出しが横から出る */
+#bar { position: absolute; z-index: 25; top: 14px; right: 0; }
+#skinTab { position: relative; z-index: 1; float: right; width: 30px; height: 46px; padding: 0; border: 1px solid var(--ui-line); border-right: 0; border-radius: 10px 0 0 10px;
+  background: linear-gradient(currentColor, currentColor) center 15px / 12px 2px no-repeat, linear-gradient(currentColor, currentColor) center 22px / 12px 2px no-repeat, linear-gradient(currentColor, currentColor) center 29px / 12px 2px no-repeat, var(--ui-panel); color: var(--ui-ptext); }
+#skinTab:hover, #skinTab[aria-expanded=true] { color: var(--ui-on); background-color: var(--ui-accent); }
+#skinTab:focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 2px; }
+/* 引き出しは、枠の中で横に滑る（閉じている間は枠ごと見えない） */
+#tray { position: absolute; top: 0; right: 30px; overflow: hidden; visibility: hidden; transition: visibility 0s .32s; }
+#skins { display: flex; flex-direction: column; gap: 4px; min-width: 148px; padding: 12px; border: 1px solid var(--ui-line); border-right: 0; border-radius: 10px 0 0 10px; background: var(--ui-panel); transform: translateX(100%); transition: transform .32s cubic-bezier(.3, .8, .3, 1); }
+#bar.open #tray { visibility: visible; transition-delay: 0s; }
+#bar.open #skins { transform: none; }
+#skins button { padding: 8px 14px; border: 0; border-left: 3px solid transparent; border-radius: 0 6px 6px 0; background: none; color: var(--ui-ptext); font-size: 15px; text-align: left; }
+#skins button:hover:enabled { background: var(--ui-field); }
+#skins button[aria-pressed=true] { border-left-color: var(--ui-accent); background: var(--ui-field); font-weight: 700; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { #skins, #tray { transition: none; } }
+#reveal { position: absolute; z-index: 21; left: 50%; top: 48.5%; opacity: 0; pointer-events: none; width: max-content; max-width: 92vw; transform: translate(-50%, -50%); text-align: center; }
+#reveal span { display: inline-block; }
+/* 性別：回す項目ではないので、盤の外に控えめに置く */
+.gender { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0 0 10px; }
+.gender button { padding: 5px 16px; border: 1px solid var(--ui-line); border-radius: 999px; background: transparent; font-size: 13px; opacity: .75; }
+.gender button:hover { opacity: 1; }
+.gender button[aria-pressed="true"] { background: var(--ui-accent); color: var(--ui-on); border-color: var(--ui-accent); font-weight: 700; opacity: 1; }
+
+#hint { margin: 8px 0 0; font-size: 13px; }
+#hint:empty { display: none; }
+.sw i { display: none; }
+.btns { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+.card.fixed .fix { background: var(--ui-accent) !important; border-color: var(--ui-accent) !important; color: var(--ui-on) !important; font-weight: 700; opacity: 1; }
+.actions #clear { font-size: 14px; }
+
+#picker, #copyDlg { width: min(720px, calc(100vw - 24px)); max-height: min(780px, calc(100vh - 40px)); padding: 0; border: 2px solid var(--ui-accent); border-radius: 12px; background: var(--ui-panel); color: var(--ui-ptext); }
+#picker::backdrop, #copyDlg::backdrop { background: rgb(0 0 0 / .55); }
+.pickbox { display: flex; flex-direction: column; gap: 10px; max-height: min(776px, calc(100vh - 44px)); padding: 18px; }
+.pickbox h2 { margin: 0; font-size: 21px; } .pickbox p { margin: 0; font-size: 14px; min-height: 1.5em; }
+#sheet { flex: 1; min-height: 160px; width: 100%; resize: vertical; padding: 10px 12px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-field); color: inherit; font: inherit; line-height: 1.6; }
+#q { font: inherit; padding: 8px 12px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-field); color: inherit; }
+#opts { flex: 1; min-height: 120px; overflow-y: auto; }
+#opts h3 { margin: 12px 0 5px; font-size: 14px; }
+.optrow { display: flex; flex-wrap: wrap; gap: 6px; }
+.opt { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-field); font-size: 15px; }
+.opt i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgb(0 0 0 / .35); }
+.opt[aria-pressed=true] { background: var(--ui-accent); color: var(--ui-on); border-color: var(--ui-accent); }
+.pickbtns { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.pickbtns button { padding: 8px 18px; border: 1px solid var(--ui-line); border-radius: 8px; background: var(--ui-field); }
+.pickbtns #ok, .pickbtns .main { background: var(--ui-accent); border-color: var(--ui-accent); color: var(--ui-on); font-weight: 700; }

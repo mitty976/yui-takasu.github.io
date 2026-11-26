@@ -1,0 +1,202 @@
+/* ===== 公開版だけの上書き =====
+   アプリ本体（base.css・themes/）は手元のものをそのまま使い、
+   ポートフォリオで見せるときの振る舞いだけをここで変える。
+   本体を更新して上書きコピーしても、このファイルは残る。 */
+
+/* スタイル切り替えは作品として見せたい部分なので、
+   引き出しに隠さず上部中央に並べたままにする */
+#skinTab { display: none; }
+
+/* 本体が持っている --bar（上のバーの高さ）を使って中身を下げ、
+   タロットの盤や魔導書の本にタブが重ならないようにする */
+:root { --bar: 58px; }
+body {
+  padding-top: var(--bar);
+  padding-bottom: 22px;              /* 下の著作権表示のぶん */
+  min-height: calc(100vh - var(--bar) - 22px);
+}
+
+#bar {
+  top: 12px;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#tray {
+  position: static;
+  overflow: visible;
+  visibility: visible;
+  transition: none;
+}
+#skins {
+  flex-direction: row;
+  min-width: 0;
+  padding: 5px;
+  gap: 4px;
+  border-right: 1px solid var(--ui-line);
+  border-radius: 999px;
+  transform: none;
+  transition: none;
+}
+#skins button {
+  padding: 7px 24px;
+  border-left: 0;
+  border-radius: 999px;
+  text-align: center;
+}
+#skins button[aria-pressed="true"] {
+  border-left-color: transparent;
+  background: var(--ui-accent);
+  color: var(--ui-on);
+}
+
+/* 表示言語の切り替え。スタイルのタブと向かい合う位置に置く */
+#langs {
+  position: absolute;
+  z-index: 25;
+  top: 14px;
+  left: 16px;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--ui-line);
+  border-radius: 999px;
+  background: var(--ui-panel);
+}
+#langs button {
+  padding: 4px 11px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ui-ptext);
+  font-size: 12px;
+  letter-spacing: .06em;
+  opacity: .7;
+}
+#langs button:hover { opacity: 1; }
+#langs button[aria-pressed="true"] {
+  background: var(--ui-accent);
+  color: var(--ui-on);
+  font-weight: 700;
+  opacity: 1;
+}
+
+/* 英語・フランス語は語が長いので、カードの文字を横書きにして読めるようにする */
+html[lang="en"] .value,
+html[lang="fr"] .value {
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  /* 縦書き前提の指定だと横書きでは小さくなりすぎるので、カード幅を基準に取り直す */
+  font-size: clamp(11px, 13cqw, 17px) !important;
+  line-height: 1.25;
+  padding: 0 5px;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+html[lang="en"] #kind,
+html[lang="fr"] #kind { line-height: 1.2; }
+
+/* 作った人へ戻る導線。上は控えめに、下は依頼につながるように */
+#home {
+  position: absolute;
+  z-index: 25;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+}
+/* それぞれ独立したピル */
+#home > a,
+#home button {
+  padding: 5px 15px;
+  border: 1px solid var(--ui-line);
+  border-radius: 999px;
+  background: var(--ui-panel);
+  color: var(--ui-ptext);
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-decoration: none;
+  opacity: .85;
+}
+#home > a:hover,
+#home button:hover,
+#home button[aria-expanded="true"] {
+  opacity: 1;
+  background: var(--ui-accent);
+  color: var(--ui-on);
+  border-color: var(--ui-accent);
+}
+
+/* 相談先の一覧。料金シミュレーターと同じ窓口をここでも選べるようにする */
+.ask-wrap { position: relative; }
+.ask-pop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 172px;
+  padding: 8px;
+  border: 1px solid var(--ui-line);
+  border-radius: 12px;
+  background: var(--ui-panel);
+  box-shadow: 0 10px 28px rgb(0 0 0 / .35);
+}
+.ask-pop[hidden] { display: none; }
+.ask-pop a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--ui-ptext);
+  font-size: 13px;
+  text-decoration: none;
+}
+.ask-pop a:hover { background: var(--ui-field); }
+.ask-pop img,
+.ask-pop svg { width: 18px; height: 18px; flex: none; object-fit: contain; }
+
+/* 画面下の帯。依頼ページへの導線と著作権表示を1行に並べる */
+.pub-foot {
+  position: fixed;
+  right: 16px;
+  bottom: 5px;
+  z-index: 26;
+  text-shadow: 0 1px 4px rgb(0 0 0 / .55);
+}
+.pub-copy {
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--ui-text);
+  opacity: .7;
+  pointer-events: none;
+}
+
+/* 画面が狭いときは浮かせずに上へ積む。見出しと重ならないようにするため */
+@media (max-width: 560px) {
+  /* タブ自体が場所を取るので、上の余白は戻す */
+  :root { --bar: 0px; }
+  body { padding-top: 0; padding-bottom: 0; min-height: 100vh; }
+  #bar {
+    position: static;
+    transform: none;
+    width: max-content;
+    margin: 10px auto 2px;
+  }
+  #skins button { padding: 7px 16px; font-size: 14px; }
+  /* 縦に長くなるので、固定せずページの終わりに置く */
+  .pub-foot {
+    position: static;
+    padding: 14px 14px 20px;
+    text-align: center;
+  }
+  #home {
+    position: static;
+    width: max-content;
+    margin: 8px auto 0;
+  }
+}

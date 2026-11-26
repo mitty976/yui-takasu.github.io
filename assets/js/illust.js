@@ -570,6 +570,51 @@
       </div>`,
     },
 
+    /* その他タブ：自作のWebアプリ。ブラウザでそのまま触れる */
+    illust_character_roulette: {
+      title: '【自主制作】キャラ設定ルーレット‐Grimoire of Characters',
+      titleEn: '[Personal Project] Character Roulette — Grimoire of Characters',
+      titleFr: '[Projet personnel] Roulette de personnages — Grimoire of Characters',
+      subtitle: 'Web App / Canvas 2D',
+      wide: true,
+      html: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/roulette/grimoire.webp" alt="キャラ設定ルーレット 魔導書のスタイル"><figcaption class="illu-cap">魔導書のスタイル</figcaption></figure>
+          <figure><img src="../images/works/roulette/tarot.webp" alt="キャラ設定ルーレット タロットのスタイル"><figcaption class="illu-cap">タロットのスタイル</figcaption></figure>
+          <figure><img src="../images/works/roulette/mobile.webp" alt="キャラ設定ルーレット スマートフォン表示"><figcaption class="illu-cap">スマートフォン表示</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">2026年 11月 制作</p>
+        <p class="illu-desc">キャラクターの種族・モチーフ・服装・髪型・目の色までを、回して決めるWebアプリです。「イメージはあるけれど言葉にならない」というご相談が多かったことから作りました。気に入った項目だけ固定して、残りをもう一度引き直せます。決まった内容は設定シートとして書き出せるので、そのままご依頼時の参考としてお使いいただけます。</p>
+        <p class="illu-note">辻褄の合う組み合わせだけが出るように作っており、人種・系統・種類が決まるたびに後ろの項目の候補が絞り込まれます。盤や札の演出はすべてコードで描いていて、タロットと魔導書の2つのスタイルを切り替えられます。性別は回さず自分で選ぶ形にして、性別で髪型や体型を限定しないようにしています。</p>
+        <p class="illu-cta-wrap"><a class="illu-cta" href="../roulette/index.html?skin=grimoire&lang=ja" target="_blank" rel="noopener">実際に回してみる</a></p>
+      </div>`,
+      htmlEn: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/roulette/grimoire.webp" alt="Character Roulette grimoire style"><figcaption class="illu-cap">Grimoire style</figcaption></figure>
+          <figure><img src="../images/works/roulette/tarot.webp" alt="Character Roulette tarot style"><figcaption class="illu-cap">Tarot style</figcaption></figure>
+          <figure><img src="../images/works/roulette/mobile.webp" alt="Character Roulette mobile layout"><figcaption class="illu-cap">Mobile layout</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Created in November 2026</p>
+        <p class="illu-desc">A web app that rolls for a character's race, motifs, outfit, hairstyle and eye colour. I built it because so many clients told me they had an image in mind but could not put it into words. Lock the parts you like, re-roll the rest, and export the result as a character sheet you can send with your request.</p>
+        <p class="illu-note">It only produces combinations that hold together — as race, family and kind are decided, the candidates for every later item narrow accordingly. The wheel and cards are drawn entirely in code, with two switchable styles (Tarot and Grimoire). Gender is chosen rather than rolled, and choosing it never limits hairstyle or body type.</p>
+        <p class="illu-cta-wrap"><a class="illu-cta" href="../roulette/index.html?skin=grimoire&lang=en" target="_blank" rel="noopener">Try it yourself</a></p>
+      </div>`,
+      htmlFr: `<div class="mwork mwork--illu">
+        <div class="illu-variants">
+          <figure><img src="../images/works/roulette/grimoire.webp" alt="Roulette de personnages style grimoire"><figcaption class="illu-cap">Style grimoire</figcaption></figure>
+          <figure><img src="../images/works/roulette/tarot.webp" alt="Roulette de personnages style tarot"><figcaption class="illu-cap">Style tarot</figcaption></figure>
+          <figure><img src="../images/works/roulette/mobile.webp" alt="Roulette de personnages affichage mobile"><figcaption class="illu-cap">Affichage mobile</figcaption></figure>
+        </div>
+        <div class="mwork__divider"></div>
+        <p class="illu-date">Réalisé en novembre 2026</p>
+        <p class="illu-desc">Une application web qui tire au sort l'espèce, les motifs, la tenue, la coiffure et la couleur des yeux d'un personnage. Je l'ai créée parce que beaucoup de clients avaient une image en tête sans réussir à la formuler. On fige ce que l'on aime, on relance le reste, et le résultat s'exporte en fiche de personnage à joindre à la commande.</p>
+        <p class="illu-note">Seules les combinaisons cohérentes sont proposées : à mesure que l'espèce, la famille et le type sont fixés, les candidats des éléments suivants se réduisent. La roue et les cartes sont entièrement dessinées en code, avec deux styles permutables (tarot et grimoire). Le genre se choisit au lieu d'être tiré, et ce choix ne limite ni la coiffure ni la silhouette.</p>
+        <p class="illu-cta-wrap"><a class="illu-cta" href="../roulette/index.html?skin=grimoire&lang=fr" target="_blank" rel="noopener">Essayer la roulette</a></p>
+      </div>`,
+    },
+
     /* その他タブ：自作アプリ。英語・フランス語では英語版の画面画像を出す */
     illust_atelier_manager: {
       title: '【自主制作】Atelier Manager‐クリエイター向け 仕事管理アプリ',
@@ -2143,6 +2188,8 @@
 
     /* クリックしたカードの中心を transform-origin に設定 */
     const wmBox = workModal.querySelector('.wm-box');
+    /* 画面の細部まで見せたい作品は幅広で開く（データ側で wide: true を指定） */
+    wmBox.classList.toggle('wm-box--wide', !!data.wide);
     if (originEl) {
       const r = originEl.getBoundingClientRect();
       const cx = r.left + r.width  / 2;
@@ -2671,6 +2718,14 @@
     '<strong>細かくいただけるほど、そのぶん描き込みます。</strong>「パーカー・ロングスカート」のような箇条書きでも大丈夫です。<br>おまかせでも問題ありませんが、だいたいの丈感やイメージの分かる参考画像をいただけると嬉しいです。',
     '', ''];
 
+  /* イラストタブの最後に出す、キャラ設定ルーレットへの案内。
+     「イメージはあるけれど言葉にならない」方に、先に遊んで固めていただくための導線 */
+  const ROULETTE_CALLOUT = [
+    '<p class="req-callout"><strong>キャラクターのイメージが固まっていないとき</strong><br>種族・モチーフ・服装・髪型・目の色までを回して決められる<a class="req-link" href="../roulette/index.html?skin=grimoire&lang=ja" target="_blank" rel="noopener">キャラ設定ルーレット</a>をご用意しています。気に入った項目だけ残して引き直すこともできますし、出てきた内容は設定シートとして書き出せるので、そのまま上のテンプレートにお使いいただけます。</p>',
+    '<p class="req-callout"><strong>If your character is not fixed yet</strong><br>I have made a <a class="req-link" href="../roulette/index.html?skin=grimoire&lang=en" target="_blank" rel="noopener">Character Roulette</a> that rolls for race, motifs, outfit, hairstyle and eye colour. You can keep the parts you like and re-roll the rest, and export the result as a character sheet to drop straight into the template above.</p>',
+    '<p class="req-callout"><strong>Si votre personnage n\'est pas encore défini</strong><br>J\'ai créé une <a class="req-link" href="../roulette/index.html?skin=grimoire&lang=fr" target="_blank" rel="noopener">roulette de personnages</a> qui tire au sort l\'espèce, les motifs, la tenue, la coiffure et la couleur des yeux. Vous pouvez garder ce qui vous plaît et relancer le reste, puis exporter le résultat en fiche à reporter directement dans le modèle ci-dessus.</p>',
+  ];
+
   /* タブの下に常に出る共通の案内 */
   const REQUEST_COMMON = [
     { h: ['お支払いについて', 'Payment', 'Paiement'],
@@ -2738,6 +2793,8 @@
     html += '<pre class="req-tpl">' + t(d.tplBody) + '</pre>';
     if (d.tplNote) html += '<p class="req-note">' + t(d.tplNote) + '</p>';
     if (d.extra) html += t(d.extra);
+    /* イラストのご依頼だけ、キャラ設定ルーレットへ案内する */
+    if (key === 'illust') html += t(ROULETTE_CALLOUT);
     html += '</div>';
 
     html += '<div class="req-common">';
@@ -3379,6 +3436,15 @@
 
     /* 1ページ＝1セクションなので、スクロール位置から光らせる処理は不要 */
     setActive((sections.find(s => s.classList.contains('is-shown')) || sections[0]).id);
+
+    /* #sec-request のように指定して開いたら、そのページから始める。
+       キャラ設定ルーレットから「ご依頼」で戻ってくるときに使う */
+    const openByHash = () => {
+      const id = location.hash.slice(1);
+      if (id && sections.some(s => s.id === id)) showSection(id);
+    };
+    openByHash();
+    window.addEventListener('hashchange', openByHash);
   })();
 
   // 動画のループを強制ON
